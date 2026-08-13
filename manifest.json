@@ -6,8 +6,8 @@
   "ui": "ui.html",
   "editorType": ["figma"],
   "networkAccess": {
-    "allowedDomains": ["https://docs.google.com", "https://*.googleusercontent.com"],
-    "reasoning": "Fetches a published-to-web Google Sheet as CSV so UX writers' copy can be pulled directly into the file."
+    "allowedDomains": ["https://docs.google.com"],
+    "reasoning": "Reads public Google Sheets data through the Google Visualization callback endpoint."
   },
   "documentAccess": "dynamic-page"
 }
