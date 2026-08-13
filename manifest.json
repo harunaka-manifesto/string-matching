@@ -1,0 +1,13 @@
+{
+  "name": "UX Copy Sync",
+  "id": "ux-copy-sync",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "networkAccess": {
+    "allowedDomains": ["https://docs.google.com", "https://*.googleusercontent.com"],
+    "reasoning": "Fetches a published-to-web Google Sheet as CSV so UX writers' copy can be pulled directly into the file."
+  },
+  "documentAccess": "dynamic-page"
+}
