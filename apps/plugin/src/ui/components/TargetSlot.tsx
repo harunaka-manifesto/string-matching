@@ -10,6 +10,7 @@ export function TargetSlot({
   replacement,
   disabled,
   onToggle,
+  onExclude,
   onLocate,
   onPreviewEnter,
   onPreviewLeave,
@@ -25,6 +26,7 @@ export function TargetSlot({
   replacement?: SheetValue;
   disabled: boolean;
   onToggle: () => void;
+  onExclude: () => void;
   onLocate: () => void;
   onPreviewEnter: () => void;
   onPreviewLeave: () => void;
@@ -98,9 +100,9 @@ export function TargetSlot({
                 className="row-action-button"
                 onClick={onToggle}
                 disabled={disabled}
-                aria-label={`Skip row ${index + 1}`}
+                aria-label={`Keep row ${index + 1} current`}
               >
-                Skip
+                Keep current
               </button>
             )}
           </div>
@@ -121,11 +123,12 @@ export function TargetSlot({
               canMoveUp={canMoveUp}
               canMoveDown={canMoveDown}
               onMove={(delta) => onMove(replacement.id, delta)}
+              onExclude={onExclude}
             />
           ) : (
             <div className="unassigned-placeholder">
-              No Sheet copy assigned
-              <span>This destination will remain unchanged.</span>
+              No copy assigned
+              <span>Will stay unchanged</span>
             </div>
           )}
         </div>
@@ -136,7 +139,7 @@ export function TargetSlot({
           data-droppable="false"
           aria-disabled="true"
         >
-          <strong>Skipped</strong>
+          <strong>Kept current</strong>
           <span>Will remain unchanged</span>
           <button
             ref={toggleRef}

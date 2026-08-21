@@ -60,8 +60,13 @@ Public Sheet test mode is deliberately opt-in for local/staging QA:
 ```bash
 pnpm --filter @ux-copy-sync/backend build
 ENABLE_PUBLIC_SHEET_TEST_MODE=true pnpm --filter @ux-copy-sync/backend start
-pnpm build:plugin:dev
+pnpm build:plugin:test
 ```
+
+The test build is the development plugin bundle with the “Test with a public
+Sheet” bypass enabled. It writes to `apps/plugin/dist`; running the production
+build afterward replaces that folder with a bundle where the bypass is
+intentionally disabled.
 
 The development build uses `http://localhost:8787` and Figma's
 `devAllowedDomains` network contract. Test mode accepts only public Viewer

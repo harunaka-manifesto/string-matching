@@ -1,6 +1,7 @@
 export function ActionFooter({
   phase,
   changed,
+  excluded,
   appliedCount,
   disabled,
   onApply,
@@ -8,6 +9,7 @@ export function ActionFooter({
 }: {
   phase: string;
   changed: number;
+  excluded: number;
   appliedCount: number;
   disabled: boolean;
   onApply: () => void;
@@ -31,12 +33,12 @@ export function ActionFooter({
           ? 'Fetching Sheet copy…'
           : phase === 'applying'
             ? 'Applying changes…'
-            : changed
-              ? `${changed} layer${changed === 1 ? '' : 's'} will change`
+            : changed || excluded
+              ? `${changed ? `${changed} change${changed === 1 ? '' : 's'}` : 'No changes'}${excluded ? ` · ${excluded} excluded` : ''}`
               : 'Everything in this review is already synced.'}
       </span>
       <button className="primary" onClick={onApply} disabled={disabled || phase !== 'review'}>
-        {phase === 'applying' ? 'Applying…' : `Apply ${changed ? `${changed} changes` : 'changes'}`}
+        {phase === 'applying' ? 'Applying…' : changed ? `Apply ${changed}` : 'No changes'}
       </button>
     </footer>
   );

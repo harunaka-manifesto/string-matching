@@ -17,19 +17,27 @@ import { TargetSlot } from './TargetSlot';
 
 export function PairingList({
   targets,
-  replacements,
+  activeCandidates,
+  excludedCandidates,
   disabled,
   onToggle,
   onMove,
+  onExclude,
+  onRestore,
+  onRestoreAt,
   onLocate,
   onPreviewTarget,
   previewEnabled,
 }: {
   targets: PairingTarget[];
-  replacements: SheetValue[];
+  activeCandidates: SheetValue[];
+  excludedCandidates: SheetValue[];
   disabled: boolean;
   onToggle: (layerId: string) => void;
   onMove: (replacementId: string, targetIndex: number) => void;
+  onExclude: (replacementId: string) => void;
+  onRestore: (replacementId: string) => void;
+  onRestoreAt: (replacementId: string, targetIndex: number) => void;
   onLocate: (layerId: string) => void;
   onPreviewTarget: (layerId: string | null) => void;
   previewEnabled: boolean;
@@ -38,19 +46,23 @@ export function PairingList({
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
-  const pairing = computePairing(targets, replacements);
+  const pairing = computePairing(targets, activeCandidates);
   const byTarget = new Map(
     pairing.active.map(({ target, replacement }) => [target.layerId, replacement]),
   );
   const activeIndex = new Map(
     targets.filter((target) => target.included).map((target, index) => [target.layerId, index]),
   );
-  const stats = pairingStats(targets, replacements);
+  const stats = pairingStats(targets, activeCandidates);
   const [activeReplacementId, setActiveReplacementId] = useState<string | undefined>();
   const [hoveredLayerId, setHoveredLayerId] = useState<string | null>(null);
   const [dragOverLayerId, setDragOverLayerId] = useState<string | null>(null);
-  const activeReplacement = replacements.find(
+  const [excludedOpen, setExcludedOpen] = useState(true);
+  const activeReplacement = [...activeCandidates, ...excludedCandidates].find(
     (replacement) => replacement.id === activeReplacementId,
+  );
+  const activeReplacementIsExcluded = Boolean(
+    activeReplacement && excludedCandidates.some((candidate) => candidate.id === activeReplacement.id),
   );
   const effectivePreviewLayerId = previewEnabled ? (dragOverLayerId ?? hoveredLayerId) : null;
 
@@ -65,7 +77,10 @@ export function PairingList({
     const replacementId = event.active.id.toString();
     if (over?.startsWith('slot:')) {
       const targetIndex = activeIndex.get(over.slice(5));
-      if (targetIndex !== undefined) onMove(replacementId, targetIndex);
+      if (targetIndex !== undefined) {
+        if (activeReplacementIsExcluded) onRestoreAt(replacementId, targetIndex);
+        else onMove(replacementId, targetIndex);
+      }
     }
     setActiveReplacementId(undefined);
     setDragOverLayerId(null);
@@ -74,13 +89,12 @@ export function PairingList({
   return (
     <section className="section review-section" aria-label="Review pairing">
       <div className="section-title review-title">
-        <span>
-          <span className="step">3</span>REVIEW PAIRING
-        </span>
+        <span>REVIEW</span>
         <span className="review-count">
-          {stats.changed} changes
+          {stats.changed} change{stats.changed === 1 ? '' : 's'}
           {stats.alreadySynced ? ` · ${stats.alreadySynced} synced` : ''}
-          {stats.skipped ? ` · ${stats.skipped} skipped` : ''}
+          {stats.skipped ? ` · ${stats.skipped} kept` : ''}
+          {excludedCandidates.length ? ` · ${excludedCandidates.length} excluded` : ''}
         </span>
       </div>
       <DndContext
@@ -107,8 +121,7 @@ export function PairingList({
           <span role="columnheader">FROM SHEET</span>
         </div>
         <p className="pairing-hint" data-testid="pairing-preview-hint">
-          Hover current copy to highlight it on canvas. Drag over a destination to preview where
-          Sheet copy will land.
+          Hover current copy to preview · drag Sheet copy to a destination
         </p>
         <div className="pairing-list">
           {targets.map((target, index) => (
@@ -131,20 +144,24 @@ export function PairingList({
               isCanvasPreviewed={effectivePreviewLayerId === target.layerId}
               canMoveUp={Boolean(
                 byTarget.get(target.layerId) &&
-                replacements.findIndex(
-                  (replacement) => replacement.id === byTarget.get(target.layerId)!.id,
+                  activeCandidates.findIndex(
+                    (replacement) => replacement.id === byTarget.get(target.layerId)!.id,
                 ) > 0,
               )}
               canMoveDown={Boolean(
                 byTarget.get(target.layerId) &&
-                replacements.findIndex(
+                activeCandidates.findIndex(
                   (replacement) => replacement.id === byTarget.get(target.layerId)!.id,
                 ) <
-                  replacements.length - 1,
+                  activeCandidates.length - 1,
               )}
               onMove={(id, delta) => {
-                const current = replacements.findIndex((replacement) => replacement.id === id);
+                const current = activeCandidates.findIndex((replacement) => replacement.id === id);
                 if (current >= 0) onMove(id, current + delta);
+              }}
+              onExclude={() => {
+                const replacement = byTarget.get(target.layerId);
+                if (replacement) onExclude(replacement.id);
               }}
             />
           ))}
@@ -152,22 +169,23 @@ export function PairingList({
         {pairing.unassigned.length > 0 && (
           <div className="unassigned">
             <div className="copy-label">
-              UNASSIGNED COPY <span>{pairing.unassigned.length}</span>
+              UNASSIGNED <span>{pairing.unassigned.length}</span>
             </div>
-            <p className="metadata">Not applied unless reassigned.</p>
+            <p className="metadata">Drag to a destination or exclude.</p>
             <div className="unassigned-list">
               {pairing.unassigned.map((replacement) => (
                 <CopyCard
                   key={replacement.id}
                   replacement={replacement}
                   disabled={disabled}
-                  canMoveUp={replacements.findIndex((item) => item.id === replacement.id) > 0}
+                  canMoveUp={activeCandidates.findIndex((item) => item.id === replacement.id) > 0}
                   canMoveDown={
-                    replacements.findIndex((item) => item.id === replacement.id) <
-                    replacements.length - 1
+                    activeCandidates.findIndex((item) => item.id === replacement.id) <
+                    activeCandidates.length - 1
                   }
+                  onExclude={() => onExclude(replacement.id)}
                   onMove={(delta) => {
-                    const current = replacements.findIndex((item) => item.id === replacement.id);
+                    const current = activeCandidates.findIndex((item) => item.id === replacement.id);
                     if (current >= 0) onMove(replacement.id, current + delta);
                   }}
                 />
@@ -175,10 +193,35 @@ export function PairingList({
             </div>
           </div>
         )}
+        {excludedCandidates.length > 0 && (
+          <details
+            className="excluded-tray"
+            open={excludedOpen}
+            onToggle={(event) => setExcludedOpen(event.currentTarget.open)}
+          >
+            <summary className="copy-label">
+              EXCLUDED FROM APPLY <span>{excludedCandidates.length}</span>
+            </summary>
+            <p className="metadata">These Sheet rows will not be applied.</p>
+            <div className="excluded-list">
+              {excludedCandidates.map((replacement) => (
+                <CopyCard
+                  key={replacement.id}
+                  replacement={replacement}
+                  variant="excluded"
+                  disabled={disabled}
+                  onRestore={() => onRestore(replacement.id)}
+                  onMove={() => undefined}
+                />
+              ))}
+            </div>
+          </details>
+        )}
         <DragOverlay dropAnimation={null}>
           {activeReplacement ? (
             <CopyCard
               replacement={activeReplacement}
+              variant={activeReplacementIsExcluded ? 'excluded' : 'active'}
               disabled
               dragOverlay
               onMove={() => undefined}

@@ -75,31 +75,50 @@ export function mockBridge(): UiBridge {
   };
   const emit = (message: PluginToUiMessage) => setTimeout(() => listener?.(message), 0);
   const params = new URLSearchParams(window.location.search);
-  const count = Math.min(100, Math.max(1, Number(params.get('targets') ?? targets.length)));
+  const conditionalFixture = params.get('fixture') === 'conditionals';
+  const count = conditionalFixture
+    ? 4
+    : Math.min(100, Math.max(1, Number(params.get('targets') ?? targets.length)));
   const activeTargets =
     count === targets.length
       ? targets
       : Array.from({ length: count }, (_, index) => ({
           ...targets[index % targets.length]!,
           id: `text-${index + 1}`,
-          name: `Copy layer ${index + 1}`,
-          originalCharacters: `Current copy ${index + 1}`,
-          originalName: `Copy layer ${index + 1}`,
+          name: conditionalFixture ? `Payment state ${index + 1}` : `Copy layer ${index + 1}`,
+          originalCharacters: conditionalFixture
+            ? ['Payment status', 'Payment status', 'Payment status', 'Payment note'][index]!
+            : `Current copy ${index + 1}`,
+          originalName: conditionalFixture
+            ? ['Payment status', 'Payment status', 'Payment status', 'Payment note'][index]!
+            : `Copy layer ${index + 1}`,
           y: index * 48,
         }));
   const longCopy = params.get('fixture') === 'long';
   const duplicateCopy = params.get('fixture') === 'duplicates';
   const syncedCopy = params.get('fixture') === 'synced';
-  const activeValues = Array.from({ length: count }, (_, index) => ({
+  const candidateCount = conditionalFixture ? 7 : count;
+  const conditionalValues = [
+    'Your payment is successful',
+    'Your payment is being processed',
+    'Your payment failed',
+    'Payment received',
+    'Payment is pending',
+    'We could not complete your payment',
+    'Try another payment method',
+  ];
+  const activeValues = Array.from({ length: candidateCount }, (_, index) => ({
     id: `D${18 + index}`,
-    value: duplicateCopy
-      ? 'Repeated approved copy'
-      : longCopy
-        ? `Long approved copy ${index + 1}. ${'This copy remains fully reviewable. '.repeat(12)}`
-        : values[index % values.length]!.value,
+    value: conditionalFixture
+      ? conditionalValues[index]!
+      : duplicateCopy
+        ? 'Repeated approved copy'
+        : longCopy
+          ? `Long approved copy ${index + 1}. ${'This copy remains fully reviewable. '.repeat(12)}`
+          : values[index % values.length]!.value,
     row: 18 + index,
     cell: `D${18 + index}`,
-  })).slice(0, params.get('fixture') === 'partial' ? Math.max(1, count - 2) : count);
+  })).slice(0, params.get('fixture') === 'partial' ? Math.max(1, count - 2) : candidateCount);
   const reviewTargets = syncedCopy
     ? activeTargets.map((target, index) =>
         index === 0
@@ -107,7 +126,11 @@ export function mockBridge(): UiBridge {
           : target,
       )
     : activeTargets;
-  const activeSource = { ...source, requestedCount: count };
+  const activeSource = {
+    ...source,
+    scannedThroughCell: `D${17 + activeValues.length}`,
+    requestedCount: candidateCount,
+  };
   const selection = {
     containerId: 'root',
     containerName: 'Checkout / Payment',
@@ -216,6 +239,10 @@ export function mockBridge(): UiBridge {
           }
           break;
         case 'apply-reviewed-pairs':
+          document.body.dataset.appliedReplacementIds = message.payload.pairs
+            .map((pair) => pair.replacementId)
+            .join(',');
+          document.body.dataset.appliedPairCount = String(message.payload.pairs.length);
           if (params.get('fixture') === 'stale-source')
             emit({
               type: 'apply-reviewed-pairs-result',

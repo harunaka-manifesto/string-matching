@@ -29,18 +29,19 @@ import {
 import { createPreview, validateFigmaPreview } from './snapshots';
 import { TargetPreviewManager } from './target-preview';
 
-const SETUP_WIDTH = 520;
-const REVIEW_WIDTH = 760;
-const UI_HEIGHT = 720;
+const SETUP_WIDTH = 420;
+const SETUP_HEIGHT = 460;
+const REVIEW_WIDTH = 520;
+const REVIEW_HEIGHT = 640;
 
-figma.showUI(__html__, { width: SETUP_WIDTH, height: UI_HEIGHT, themeColors: true });
+figma.showUI(__html__, { width: SETUP_WIDTH, height: SETUP_HEIGHT, themeColors: true });
 
 function resizeSetup(): void {
-  figma.ui.resize(SETUP_WIDTH, UI_HEIGHT);
+  figma.ui.resize(SETUP_WIDTH, SETUP_HEIGHT);
 }
 
 function resizeReview(): void {
-  figma.ui.resize(REVIEW_WIDTH, UI_HEIGHT);
+  figma.ui.resize(REVIEW_WIDTH, REVIEW_HEIGHT);
 }
 
 type StoredPreview = ReturnType<typeof createPreview> & {

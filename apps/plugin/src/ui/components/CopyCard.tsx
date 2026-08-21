@@ -6,6 +6,9 @@ export function CopyCard({
   replacement,
   disabled,
   onMove,
+  onExclude,
+  onRestore,
+  variant = 'active',
   canMoveUp = true,
   canMoveDown = true,
   dragOverlay = false,
@@ -13,6 +16,9 @@ export function CopyCard({
   replacement: SheetValue;
   disabled: boolean;
   onMove: (delta: -1 | 1) => void;
+  onExclude?: () => void;
+  onRestore?: () => void;
+  variant?: 'active' | 'excluded';
   canMoveUp?: boolean;
   canMoveDown?: boolean;
   dragOverlay?: boolean;
@@ -22,6 +28,7 @@ export function CopyCard({
   const long = replacement.value.split(/\r\n?|\n/).length > 4 || replacement.value.length > 240;
   const className = [
     'copy-card',
+    variant === 'excluded' ? 'is-excluded' : '',
     draggable.isDragging ? 'is-dragging' : '',
     dragOverlay ? 'drag-overlay-card' : '',
   ]
@@ -41,8 +48,12 @@ export function CopyCard({
         {...(dragOverlay ? {} : draggable.attributes)}
         {...(dragOverlay ? {} : draggable.listeners)}
         disabled={disabled || dragOverlay}
-        aria-label={`Drag ${replacement.cell} copy to move it between Figma rows`}
-        title="Drag to move between rows"
+        aria-label={
+          variant === 'excluded'
+            ? `Drag excluded ${replacement.cell} copy to restore it into a Figma row`
+            : `Drag ${replacement.cell} copy to move it between Figma rows`
+        }
+        title={variant === 'excluded' ? 'Drag onto a destination to restore' : 'Drag to reorder'}
       >
         <span aria-hidden="true">⠿</span>
       </button>
@@ -62,7 +73,29 @@ export function CopyCard({
                 {expanded ? 'Less' : 'More'}
               </button>
             )}
-            {!dragOverlay && (
+            {!dragOverlay && variant === 'active' && onExclude && (
+              <button
+                className="text-button candidate-action"
+                onClick={onExclude}
+                disabled={disabled}
+                aria-label={`Exclude ${replacement.cell} from this apply`}
+                title="Exclude from this apply"
+              >
+                Exclude
+              </button>
+            )}
+            {!dragOverlay && variant === 'excluded' && onRestore && (
+              <button
+                className="text-button candidate-action"
+                onClick={onRestore}
+                disabled={disabled}
+                aria-label={`Restore excluded ${replacement.cell}`}
+                title="Restore excluded copy"
+              >
+                Restore
+              </button>
+            )}
+            {!dragOverlay && variant === 'active' && (
               <span className="move-actions">
                 <button
                   className="icon-button"

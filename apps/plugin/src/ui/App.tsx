@@ -1,13 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import {
   PluginToUiMessageSchema,
   parseSheetCellUrl,
   type SheetSource as SheetSourceModel,
-  type SheetValue,
   type User,
 } from '@ux-copy-sync/contracts';
 import {
-  moveReplacement,
   pairingStats,
   reviewedPairs,
   type PairingTarget,
@@ -17,8 +15,13 @@ import { SelectionCard, type SelectionCardValue } from './components/SelectionCa
 import { SheetSource } from './components/SheetSource';
 import { PairingList } from './components/PairingList';
 import { ActionFooter } from './components/ActionFooter';
+import { ReviewContextBar } from './components/ReviewContextBar';
 import type { UiBridge } from './bridge';
 import type { AppPhase, AuthState } from './state/model';
+import {
+  candidateQueue,
+  candidateQueueReducer,
+} from './state/candidate-queue';
 import './styles.css';
 
 function requestId() {
@@ -40,7 +43,11 @@ export function App({ bridge }: { bridge: UiBridge }) {
   const [previewToken, setPreviewToken] = useState<string | undefined>();
   const [previewSource, setPreviewSource] = useState<SheetSourceModel | undefined>();
   const [targets, setTargets] = useState<PairingTarget[]>([]);
-  const [replacements, setReplacements] = useState<SheetValue[]>([]);
+  const [candidateQueueState, dispatchCandidateQueue] = useReducer(
+    candidateQueueReducer,
+    candidateQueue([]),
+  );
+  const [sourceEditorOpen, setSourceEditorOpen] = useState(false);
   const [error, setError] = useState<string | undefined>();
   const [staleKind, setStaleKind] = useState<'figma' | 'source' | undefined>();
   const [appliedCount, setAppliedCount] = useState(0);
@@ -108,7 +115,8 @@ export function App({ bridge }: { bridge: UiBridge }) {
             setPreviewToken(undefined);
             setPreviewSource(undefined);
             setTargets([]);
-            setReplacements([]);
+            dispatchCandidateQueue({ type: 'reset', values: [] });
+            setSourceEditorOpen(false);
             setStaleKind(undefined);
             setError(undefined);
             setSelectionValid(false);
@@ -166,7 +174,9 @@ export function App({ bridge }: { bridge: UiBridge }) {
               included: true,
             })),
           );
-          setReplacements(next.values);
+          dispatchCandidateQueue({ type: 'reset', values: next.values });
+          setCellUrl(next.source.cellUrl);
+          setSourceEditorOpen(false);
           setPhase('review');
           setStaleKind(undefined);
           setError(undefined);
@@ -257,7 +267,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
     if (!previewEnabled) clearPreviewTarget();
   }, [clearPreviewTarget, previewEnabled]);
   useEffect(() => () => clearPreviewTarget(), [clearPreviewTarget]);
-  const stats = pairingStats(targets, replacements);
+  const stats = pairingStats(targets, candidateQueueState.active);
   const reviewLocked =
     phase === 'fetching' ||
     phase === 'applying' ||
@@ -340,7 +350,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
     setAnnouncement('Applying changes…');
     send({
       type: 'apply-reviewed-pairs',
-      payload: { previewToken, pairs: reviewedPairs(targets, replacements) },
+      payload: { previewToken, pairs: reviewedPairs(targets, candidateQueueState.active) },
     });
   };
   const handleNewPreview = () => {
@@ -352,7 +362,8 @@ export function App({ bridge }: { bridge: UiBridge }) {
     setPreviewToken(undefined);
     setPreviewSource(undefined);
     setTargets([]);
-    setReplacements([]);
+    dispatchCandidateQueue({ type: 'reset', values: [] });
+    setSourceEditorOpen(false);
     setError(undefined);
     setStaleKind(undefined);
     setSelectionValid(false);
@@ -365,7 +376,9 @@ export function App({ bridge }: { bridge: UiBridge }) {
     if (!target) return;
     const rowNumber = targets.findIndex((item) => item.layerId === layerId) + 1;
     setAnnouncement(
-      target.included ? `Row ${rowNumber} skipped.` : `Row ${rowNumber} included again.`,
+      target.included
+        ? `Row ${rowNumber} will keep its current Figma copy.`
+        : `Row ${rowNumber} included again.`,
     );
     setTargets((current) =>
       current.map((item) =>
@@ -374,7 +387,25 @@ export function App({ bridge }: { bridge: UiBridge }) {
     );
   };
   const handleMove = (id: string, index: number) =>
-    setReplacements((current) => moveReplacement(current, id, index));
+    dispatchCandidateQueue({ type: 'move', id, index });
+  const handleExclude = (id: string) => {
+    const candidate = candidateQueueState.active.find((item) => item.id === id);
+    if (!candidate) return;
+    dispatchCandidateQueue({ type: 'exclude', id });
+    setAnnouncement(`Sheet ${candidate.cell} excluded from this apply.`);
+  };
+  const handleRestore = (id: string) => {
+    const candidate = candidateQueueState.excluded.find((item) => item.id === id);
+    if (!candidate) return;
+    dispatchCandidateQueue({ type: 'restore-end', id });
+    setAnnouncement(`Sheet ${candidate.cell} restored.`);
+  };
+  const handleRestoreAt = (id: string, index: number) => {
+    const candidate = candidateQueueState.excluded.find((item) => item.id === id);
+    if (!candidate) return;
+    dispatchCandidateQueue({ type: 'restore-at', id, index });
+    setAnnouncement(`Sheet ${candidate.cell} restored to row ${index + 1}.`);
+  };
   const handleLocate = (layerId: string) => {
     if (previewToken) send({ type: 'select-node', payload: { previewToken, layerId } });
   };
@@ -385,7 +416,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
     phase !== 'applying' &&
     (previewToken ? Boolean(pinnedSelection) : Boolean(selection && selectionValid)),
   );
-  const fetchLabel = sourceDirty ? 'Fetch new source' : 'Fetch copy';
+  const fetchLabel = sourceDirty ? 'Fetch new source' : 'Fetch';
 
   if (authState === 'checking' || authState === 'required' || authState === 'connecting')
     return (
@@ -428,63 +459,86 @@ export function App({ bridge }: { bridge: UiBridge }) {
         {announcement}
       </div>
       <header className="app-header">
-        <div>
+        <div className="app-header-copy">
           <h1 className="app-title">UX Copy Sync</h1>
-          <p className="app-subtitle">Review approved copy before changing the design.</p>
+          {!previewSource && <p className="app-subtitle">Sync Sheet copy to Figma.</p>}
         </div>
-        {user && (
-          <div className="account">
-            {user.email}{' '}
-            <button onClick={() => send({ type: 'auth:disconnect' })}>Disconnect</button>
-          </div>
-        )}
+        <div className="app-header-actions">
+          {authState === 'public-test' && (
+            <>
+              <span className="test-mode-indicator" title="Public Sheet · auth bypassed">
+                TEST
+              </span>
+              <button
+                className="header-action"
+                onClick={() => {
+                  handleNewPreview();
+                  setAuthState('required');
+                  send({ type: 'auth:exit-public-test' });
+                }}
+              >
+                Exit
+              </button>
+            </>
+          )}
+          {user && (
+            <div className="account">
+              <span className="account-email" title={user.email}>
+                {user.email}
+              </span>{' '}
+              <button className="header-action" onClick={() => send({ type: 'auth:disconnect' })}>
+                Disconnect
+              </button>
+            </div>
+          )}
+        </div>
       </header>
-      {authState === 'public-test' && (
-        <div className="test-banner">
-          <button
-            onClick={() => {
-              handleNewPreview();
-              setAuthState('required');
-              send({ type: 'auth:exit-public-test' });
-            }}
-          >
-            Exit test mode
-          </button>
-          <strong>TEST MODE</strong>Public Sheets only · Google sign-in bypassed
-        </div>
-      )}
       <main className="content">
-        <SelectionCard
-          selection={
-            phase === 'review' || phase === 'stale' || phase === 'applying' || phase === 'applied'
-              ? pinnedSelection
-              : selection
-          }
-          valid={
-            phase === 'review' || phase === 'stale' || phase === 'applying' || phase === 'applied'
-              ? true
-              : selectionValid
-          }
-          message={selectionMessage}
-          compact={Boolean(previewSource)}
-        />
-        <SheetSource
-          value={cellUrl}
-          parsed={localParsed}
-          disabled={phase === 'fetching' || phase === 'applying'}
-          canFetch={canFetch}
-          loading={phase === 'fetching'}
-          fetchLabel={fetchLabel}
-          hasPreview={Boolean(previewSource)}
-          error={urlError}
-          onChange={handleUrlChange}
-          onFetch={handleFetch}
-        />
-        {previewSource && (
-          <div className="source-provenance">
-            {previewSource.sheetTitle} · {previewSource.startCell} · {replacements.length} of{' '}
-            {targets.length} mapped
-          </div>
+        {previewSource ? (
+          <>
+            <ReviewContextBar
+              targetCount={targets.length}
+              source={previewSource}
+              sourceRowCount={
+                candidateQueueState.active.length + candidateQueueState.excluded.length
+              }
+              onChange={() => setSourceEditorOpen((current) => !current)}
+              editing={sourceEditorOpen}
+            />
+            {sourceEditorOpen && (
+              <SheetSource
+                value={cellUrl}
+                parsed={localParsed}
+                disabled={phase === 'fetching' || phase === 'applying'}
+                canFetch={canFetch}
+                loading={phase === 'fetching'}
+                fetchLabel={fetchLabel}
+                hasPreview
+                error={urlError}
+                onChange={handleUrlChange}
+                onFetch={handleFetch}
+              />
+            )}
+          </>
+        ) : (
+          <>
+            <SelectionCard
+              selection={selection}
+              valid={selectionValid}
+              message={selectionMessage}
+            />
+            <SheetSource
+              value={cellUrl}
+              parsed={localParsed}
+              disabled={phase === 'fetching' || phase === 'applying'}
+              canFetch={canFetch}
+              loading={phase === 'fetching'}
+              fetchLabel={fetchLabel}
+              error={urlError}
+              onChange={handleUrlChange}
+              onFetch={handleFetch}
+            />
+          </>
         )}
         {sourceDirty && (
           <div className="notice" role="status">
@@ -505,10 +559,14 @@ export function App({ bridge }: { bridge: UiBridge }) {
         {targets.length > 0 && (
           <PairingList
             targets={targets}
-            replacements={replacements}
+            activeCandidates={candidateQueueState.active}
+            excludedCandidates={candidateQueueState.excluded}
             disabled={reviewLocked}
             onToggle={handleToggle}
             onMove={handleMove}
+            onExclude={handleExclude}
+            onRestore={handleRestore}
+            onRestoreAt={handleRestoreAt}
             onLocate={handleLocate}
             onPreviewTarget={handlePreviewTarget}
             previewEnabled={previewEnabled}
@@ -524,6 +582,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
         <ActionFooter
           phase={phase}
           changed={stats.changed}
+          excluded={candidateQueueState.excluded.length}
           appliedCount={appliedCount}
           disabled={phase !== 'review' || reviewLocked || stats.changed === 0}
           onApply={handleApply}

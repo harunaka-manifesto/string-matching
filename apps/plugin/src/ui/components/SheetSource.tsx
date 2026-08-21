@@ -24,10 +24,8 @@ export function SheetSource({
   onFetch: () => void;
 }) {
   return (
-    <section className="section">
-      <div className="section-title">
-        <span className="step">2</span>SHEET STARTING CELL
-      </div>
+    <section className="section sheet-source-section">
+      <div className="section-title">SHEET SOURCE</div>
       <div className="source-row">
         <input
           value={value}
@@ -45,7 +43,7 @@ export function SheetSource({
           disabled={disabled || !parsed || !canFetch}
           aria-busy={loading}
         >
-          {loading ? 'Fetching…' : (fetchLabel ?? 'Fetch copy')}
+          {loading ? 'Fetching…' : (fetchLabel ?? 'Fetch')}
         </button>
       </div>
       <div className="source-hint">
@@ -53,9 +51,9 @@ export function SheetSource({
           ? null
           : parsed
             ? canFetch
-              ? `${parsed.startCell} will become the first copy candidate.`
+              ? `${parsed.startCell} detected`
               : 'Select one Frame, Component, or Instance first.'
-            : 'Paste a link to one Google Sheets starting cell.'}
+            : 'Paste a Google Sheets cell link.'}
       </div>
       {loading && (
         <div className="source-hint" role="status">
