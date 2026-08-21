@@ -40,6 +40,8 @@ function fakeNode(id: string, value = 'Old', name = 'Old layer'): FakeText {
 }
 
 const source = { id: 'r1', value: 'Hello\nworld' };
+const fakeRoot = () =>
+  ({ id: 'root', type: 'FRAME', parent: { id: 'page', type: 'PAGE', parent: null } }) as any;
 const preview = (): PreviewSnapshot => ({
   token: 'preview',
   pageId: 'page',
@@ -91,7 +93,7 @@ describe('apply pipeline', () => {
       sourceValues: [source],
       pairs: [{ layerId: 'text-1', replacementId: 'r1', value: source.value }],
       resolveNode: async () => node as any,
-      resolveRoot: async () => ({ id: 'root', type: 'FRAME' }) as any,
+      resolveRoot: async () => fakeRoot(),
       verifySource: async () => undefined,
       discoverSnapshots: () => preview().targets,
       currentPageId: 'page',
@@ -117,7 +119,7 @@ describe('apply pipeline', () => {
         sourceValues: [source],
         pairs: [{ layerId: 'text-1', replacementId: 'r1', value: source.value }],
         resolveNode: async () => node as any,
-        resolveRoot: async () => ({ id: 'root', type: 'FRAME' }) as any,
+        resolveRoot: async () => fakeRoot(),
         verifySource: async () => undefined,
         discoverSnapshots: () => preview().targets,
         currentPageId: 'page',
@@ -137,7 +139,7 @@ describe('apply pipeline', () => {
         sourceValues: [source],
         pairs: [{ layerId: 'text-1', replacementId: 'r1', value: source.value }],
         resolveNode: async () => node as any,
-        resolveRoot: async () => ({ id: 'root', type: 'FRAME' }) as any,
+        resolveRoot: async () => fakeRoot(),
         verifySource: async () => {
           throw new AppError('SOURCE_STALE', 'stale');
         },
@@ -167,7 +169,7 @@ describe('apply pipeline', () => {
           { layerId: 'text-2', replacementId: 'r2', value: 'Second' },
         ],
         resolveNode: async (id) => (id === 'text-1' ? first : second) as any,
-        resolveRoot: async () => ({ id: 'root', type: 'FRAME' }) as any,
+        resolveRoot: async () => fakeRoot(),
         verifySource: async () => undefined,
         discoverSnapshots: () => nextPreview.targets,
         currentPageId: 'page',
@@ -176,5 +178,43 @@ describe('apply pipeline', () => {
     expect(first.characters).toBe('Old');
     expect(first.name).toBe('Old layer');
     expect(second.characters).toBe('Old');
+  });
+
+  it('does not claim rollback when mixed styling cannot be proven restored', async () => {
+    const first = fakeNode('text-1') as any;
+    let styleChanged = false;
+    const originalInsert = first.insertCharacters.bind(first);
+    first.insertCharacters = (start: number, value: string) => {
+      styleChanged = true;
+      originalInsert(start, value);
+    };
+    first.getStyledTextSegments = () =>
+      styleChanged
+        ? [{ start: 0, end: first.characters.length, fontName: { family: 'Inter', style: 'Bold' } }]
+        : [
+            { start: 0, end: 3, fontName: { family: 'Inter', style: 'Regular' } },
+            { start: 3, end: 6, fontName: { family: 'Inter', style: 'Bold' } },
+          ];
+    const second = fakeNode('text-2');
+    second.insertCharacters = () => {
+      throw new Error('injected write failure');
+    };
+    const nextPreview = preview();
+    nextPreview.targets = [...nextPreview.targets, { ...nextPreview.targets[0]!, id: 'text-2' }];
+    await expect(
+      applyReviewedPairs({
+        preview: nextPreview,
+        sourceValues: [source, { id: 'r2', value: 'Second' }],
+        pairs: [
+          { layerId: 'text-1', replacementId: 'r1', value: source.value },
+          { layerId: 'text-2', replacementId: 'r2', value: 'Second' },
+        ],
+        resolveNode: async (id) => (id === 'text-1' ? first : second) as any,
+        resolveRoot: async () => fakeRoot(),
+        verifySource: async () => undefined,
+        discoverSnapshots: () => nextPreview.targets,
+        currentPageId: 'page',
+      }),
+    ).rejects.toMatchObject({ code: 'ROLLBACK_FAILED' });
   });
 });

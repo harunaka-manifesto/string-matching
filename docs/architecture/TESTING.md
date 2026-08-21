@@ -8,6 +8,8 @@ pnpm typecheck
 pnpm test
 pnpm test:ui
 pnpm build
+pnpm sandbox:check
+pnpm format:check
 ```
 
 Unit tests cover URL parsing, blank scans, 500-row bounds, source fingerprints,
@@ -16,9 +18,13 @@ duplicate cards, Workspace domain policy, OAuth poll consumption, retry/error
 mapping, route registration, and Apply preflight/rollback behavior.
 
 The Playwright harness runs the real React UI against a development-only mock
-bridge. Its fixture includes authenticated state, six targets, duplicate/long
-copy support, reorder controls, and Apply/success states. Production bundling
-tree-shakes the mock bridge and emits a self-contained Figma UI.
+bridge. Its fixtures cover authentication entry/reopen, invalid selection,
+loading, stale refresh, source edits, Skip/Include again, boundary reorder
+controls, long copy, and Apply/success states. Production bundling tree-shakes
+the mock bridge and emits a self-contained Figma UI. `sandbox:check` rejects
+browser Fetch helpers in the controller, browser-dependent URL validators in
+shared contracts consumed by the controller, and development flags in a
+production manifest.
 
 Manual Figma QA should use fixtures for a vertical form, same-row actions,
 hidden/transparent/partially clipped text, an Instance, mixed styles, locked

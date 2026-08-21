@@ -20,8 +20,9 @@ never logged or persisted by the backend.
 
 ## Code ownership
 
-- `packages/contracts`: Zod-validated network and plugin-message models,
-  stable error codes, source parser, and fingerprint canonicalization.
+- `packages/contracts`: runtime-neutral structural network and plugin-message
+  models, stable error codes, strict Sheet source parser, and fingerprint
+  canonicalization.
 - `packages/domain`: pure visual eligibility, Y→X ordering, pairing/insert
   reorder, blank filtering, and layer-name normalization.
 - `apps/plugin/src/main`: selection, current-page node-change freshness,
@@ -41,8 +42,9 @@ never logged or persisted by the backend.
 4. It establishes an undo boundary and synchronously updates changed nodes.
    Characters use the first-character style helper where supported; the final
    layer name is normalized copy and `autoRename` is deterministic.
-5. On an unexpected mutation failure it triggers undo, verifies backups, and
-   manually restores characters/name/autoRename when necessary.
+5. On an unexpected mutation failure it treats Figma undo as authoritative for
+   mixed-style text, verifies style/name/characters/autoRename, and uses the
+   manual fallback only when style restoration can be proven.
 
 There are no network calls or font awaits after mutation begins. A preview
 token is single-use and active pairs are validated against the fetched source

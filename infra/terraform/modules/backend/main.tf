@@ -1,5 +1,5 @@
 resource "google_project_service" "required" {
-  for_each = toset(["run.googleapis.com", "firestore.googleapis.com", "cloudkms.googleapis.com", "secretmanager.googleapis.com", "monitoring.googleapis.com"])
+  for_each = toset(["run.googleapis.com", "firestore.googleapis.com", "cloudkms.googleapis.com", "secretmanager.googleapis.com", "monitoring.googleapis.com", "cloudbuild.googleapis.com", "artifactregistry.googleapis.com"])
   project  = var.project_id
   service  = each.value
 }
@@ -10,11 +10,46 @@ resource "google_service_account" "backend" {
   display_name = "UX Copy Sync Cloud Run runtime"
 }
 
+data "google_project" "current" {
+  project_id = var.project_id
+}
+
+resource "google_artifact_registry_repository" "backend" {
+  project       = var.project_id
+  location      = var.region
+  repository_id = "${var.service_name}-images"
+  description   = "Container images for ${var.service_name}"
+  format        = "DOCKER"
+  depends_on    = [google_project_service.required]
+}
+
+resource "google_project_iam_member" "cloud_build_artifact_writer" {
+  project = var.project_id
+  role    = "roles/artifactregistry.writer"
+  member  = "serviceAccount:${data.google_project.current.number}@cloudbuild.gserviceaccount.com"
+}
+
 resource "google_firestore_database" "default" {
   project     = var.project_id
   name        = "(default)"
   location_id = var.firestore_location
   type        = "FIRESTORE_NATIVE"
+}
+
+resource "google_firestore_field" "auth_flow_ttl" {
+  project    = var.project_id
+  database   = google_firestore_database.default.name
+  collection = "authFlows"
+  field      = "purgeAt"
+  ttl_config {}
+}
+
+resource "google_firestore_field" "session_ttl" {
+  project    = var.project_id
+  database   = google_firestore_database.default.name
+  collection = "sessions"
+  field      = "purgeAt"
+  ttl_config {}
 }
 
 resource "google_kms_key_ring" "backend" {
@@ -174,6 +209,10 @@ resource "google_monitoring_alert_policy" "server_errors" {
 
 output "service_url" {
   value = google_cloud_run_v2_service.backend.uri
+}
+
+output "artifact_registry_repository" {
+  value = google_artifact_registry_repository.backend.name
 }
 
 output "kms_key_name" {

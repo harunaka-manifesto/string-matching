@@ -7,8 +7,10 @@
     "node": "22.x"
   },
   "scripts": {
-    "build": "pnpm --filter @ux-copy-sync/plugin build && pnpm --filter @ux-copy-sync/backend build",
+    "build": "pnpm build:plugin:prod && pnpm --filter @ux-copy-sync/backend build",
     "build:plugin": "pnpm --filter @ux-copy-sync/plugin build",
+    "build:plugin:dev": "PLUGIN_BUILD_MODE=development BACKEND_BASE_URL=http://localhost:8787 ENABLE_PUBLIC_SHEET_TEST_MODE=true pnpm --filter @ux-copy-sync/plugin build",
+    "build:plugin:prod": "PLUGIN_BUILD_MODE=production pnpm --filter @ux-copy-sync/plugin build",
     "dev:ui": "pnpm --filter @ux-copy-sync/plugin dev:ui",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc -b",
@@ -16,7 +18,8 @@
     "test:watch": "vitest",
     "test:ui": "playwright test",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "sandbox:check": "node scripts/check-plugin-sandbox.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",

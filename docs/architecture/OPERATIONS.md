@@ -2,10 +2,9 @@
 
 Use separate Google Cloud projects for development, staging, and production.
 Terraform provisions Cloud Run, Firestore native mode, a KMS key, Secret
-Manager entries, a dedicated runtime service account, IAM, and a Cloud Run 5xx
-alert. Firestore TTL policies for expired auth flows/sessions should be added
-in the project console or an organization Terraform module when the retention
-policy is approved.
+Manager entries, a dedicated runtime service account, IAM, Artifact Registry,
+Firestore TTL policies for expired auth flows/sessions, and a Cloud Run 5xx
+alert.
 
 Google Auth Platform setup remains manual: create an Internal audience in each
 project, create the web OAuth client, add the exact Cloud Run `/oauth/callback`

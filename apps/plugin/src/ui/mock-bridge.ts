@@ -98,7 +98,10 @@ export function mockBridge(): UiBridge {
   };
   const invalidSelection = params.get('selection') === 'invalid';
   const staleFixture = params.get('fixture') === 'stale-figma';
+  const staleSourceFixture = params.get('fixture') === 'stale-source';
   const entryFixture = params.get('fixture') === 'entry';
+  let staleSent = false;
+  let currentPreview = false;
   return {
     send: (message: UiToPluginMessage) => {
       switch (message.type) {
@@ -118,6 +121,9 @@ export function mockBridge(): UiBridge {
               selection: invalidSelection ? null : selection,
               valid: !invalidSelection,
               count: invalidSelection ? 0 : 1,
+              message: invalidSelection
+                ? 'Select one Frame, Component, or Instance first.'
+                : undefined,
             });
           }
           break;
@@ -137,10 +143,15 @@ export function mockBridge(): UiBridge {
             selection: invalidSelection ? null : selection,
             valid: !invalidSelection,
             count: invalidSelection ? 0 : 1,
+            message: invalidSelection
+              ? 'Select one Frame, Component, or Instance first.'
+              : undefined,
           });
           break;
         case 'fetch-preview':
-          emit({
+        case 'refresh-preview':
+          currentPreview = true;
+          const previewReady = {
             type: 'preview-ready',
             requestId: message.payload.requestId,
             previewToken: 'mock-preview',
@@ -149,18 +160,29 @@ export function mockBridge(): UiBridge {
             source: activeSource,
             values: activeValues,
             partial: activeValues.length < activeTargets.length,
-          });
-          if (staleFixture)
+          } as const;
+          if (params.get('fixture') === 'slow') setTimeout(() => listener?.(previewReady), 150);
+          else emit(previewReady);
+          if ((staleFixture || staleSourceFixture) && !staleSent)
             setTimeout(
               () =>
                 listener?.({
                   type: 'preview-stale',
                   previewToken: 'mock-preview',
-                  kind: 'figma',
-                  reason: 'The design changed after this review. Refresh before applying.',
+                  kind: staleSourceFixture ? 'source' : 'figma',
+                  reason: staleSourceFixture
+                    ? 'The Sheet copy changed after this review.'
+                    : 'The design changed after this review.',
                 }),
               25,
             );
+          staleSent = true;
+          break;
+        case 'cancel-fetch':
+          break;
+        case 'select-node':
+          if (currentPreview)
+            emit({ type: 'selection-state', selection: null, valid: false, count: 1 });
           break;
         case 'apply-reviewed-pairs':
           if (params.get('fixture') === 'stale-source')
@@ -170,7 +192,7 @@ export function mockBridge(): UiBridge {
               ok: false,
               error: {
                 code: 'SOURCE_STALE',
-                message: 'The Sheet copy changed after this review. Refresh before applying.',
+                message: 'The Sheet copy changed after this review.',
               },
             });
           else if (params.get('fixture') === 'locked')

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import type { SheetValue } from '@ux-copy-sync/contracts';
 import { normalizeLayerName, type PairingTarget } from '@ux-copy-sync/domain';
@@ -11,6 +12,8 @@ export function TargetSlot({
   onToggle,
   onLocate,
   onMove,
+  canMoveUp,
+  canMoveDown,
 }: {
   index: number;
   target: PairingTarget;
@@ -19,8 +22,19 @@ export function TargetSlot({
   onToggle: () => void;
   onLocate: () => void;
   onMove: (id: string, delta: -1 | 1) => void;
+  canMoveUp: boolean;
+  canMoveDown: boolean;
 }) {
-  const droppable = useDroppable({ id: `slot:${target.layerId}`, disabled });
+  const droppable = useDroppable({
+    id: `slot:${target.layerId}`,
+    disabled: disabled || !target.included,
+  });
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const previousIncluded = useRef(target.included);
+  useEffect(() => {
+    if (previousIncluded.current !== target.included) toggleRef.current?.focus();
+    previousIncluded.current = target.included;
+  }, [target.included]);
   const alreadySynced = Boolean(
     replacement &&
     target.originalText === replacement.value &&
@@ -29,12 +43,17 @@ export function TargetSlot({
   return (
     <article
       ref={droppable.setNodeRef}
-      className={`target-slot ${!target.included ? 'is-skipped' : ''} ${droppable.isOver ? 'is-over' : ''}`}
+      className={`target-slot ${!target.included ? 'is-skipped' : ''} ${target.included && droppable.isOver ? 'is-over' : ''}`}
     >
       <div className="slot-header">
         <span className="slot-number">{String(index + 1).padStart(2, '0')}</span>
         <strong title={target.layerName}>{target.layerName}</strong>
-        <button className="locate-button" onClick={onLocate} disabled={disabled}>
+        <button
+          className="locate-button"
+          onClick={onLocate}
+          disabled={disabled}
+          aria-label={`Locate ${target.layerName}`}
+        >
           Locate ↗
         </button>
       </div>
@@ -49,6 +68,8 @@ export function TargetSlot({
             <CopyCard
               replacement={replacement}
               disabled={disabled}
+              canMoveUp={canMoveUp}
+              canMoveDown={canMoveDown}
               onMove={(delta) => onMove(replacement.id, delta)}
             />
           ) : (
@@ -58,14 +79,26 @@ export function TargetSlot({
               <span>This layer will remain unchanged.</span>
             </div>
           )}
-          <button className="skip-button" onClick={onToggle} disabled={disabled}>
+          <button
+            ref={toggleRef}
+            className="skip-button"
+            onClick={onToggle}
+            disabled={disabled}
+            aria-label={`Skip ${target.layerName}`}
+          >
             Skip this layer
           </button>
         </>
       ) : (
         <>
           <div className="skipped-copy">Skipped · Figma copy will stay unchanged</div>
-          <button className="skip-button" onClick={onToggle} disabled={disabled}>
+          <button
+            ref={toggleRef}
+            className="skip-button"
+            onClick={onToggle}
+            disabled={disabled}
+            aria-label={`Include ${target.layerName} again`}
+          >
             Include again
           </button>
         </>

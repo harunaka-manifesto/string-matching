@@ -60,22 +60,24 @@ Public Sheet test mode is deliberately opt-in for local/staging QA:
 ```bash
 pnpm --filter @ux-copy-sync/backend build
 ENABLE_PUBLIC_SHEET_TEST_MODE=true pnpm --filter @ux-copy-sync/backend start
-ENABLE_PUBLIC_SHEET_TEST_MODE=true pnpm build:plugin
+pnpm build:plugin:dev
 ```
 
-Use `apps/plugin/manifest.development.json` when importing a local build. Test
-mode accepts only public Viewer Sheets and is never enabled by the production
-Terraform environment or production manifest.
+The development build uses `http://localhost:8787` and Figma's
+`devAllowedDomains` network contract. Test mode accepts only public Viewer
+Sheets and is never enabled by the production Terraform environment or
+production manifest.
 
 ## Build and import
 
 ```bash
-BACKEND_BASE_URL=https://your-backend.example.com pnpm build:plugin
+BACKEND_BASE_URL=https://your-backend.example.com pnpm build:plugin:prod
 ```
 
-Import `apps/plugin/dist/manifest.json` in Figma development mode. The build
-emits a self-contained `ui.html`, a bundled controller, and a manifest whose
-network allowlist contains only the configured backend origin.
+Import `apps/plugin/dist/manifest.json` in Figma development mode. This is the
+only runnable manifest; `apps/plugin/manifest.base.json` is a build template and
+must not be imported directly. The build emits a self-contained `ui.html`, a
+bundled controller, and validates that the manifest's `main`/`ui` paths exist.
 
 ## Deployment
 

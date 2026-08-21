@@ -16,6 +16,18 @@ describe('plugin message contracts', () => {
     ).toBe(true);
     expect(
       UiToPluginMessageSchema.safeParse({
+        type: 'refresh-preview',
+        payload: {
+          requestId: '2',
+          previewToken: 'preview',
+          cellUrl:
+            'https://docs.google.com/spreadsheets/d/1abcDEFghiJKLmnopQRS/edit#gid=1&range=D1',
+          mode: 'public-test',
+        },
+      }).success,
+    ).toBe(true);
+    expect(
+      UiToPluginMessageSchema.safeParse({
         type: 'apply-reviewed-pairs',
         payload: {
           previewToken: 'p',

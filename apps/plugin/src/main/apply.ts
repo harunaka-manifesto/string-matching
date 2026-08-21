@@ -10,7 +10,60 @@ import { loadFontsForNodes } from './fonts';
 import { sameTargetSnapshot, validateFigmaPreview } from './snapshots';
 
 type ApplyNode = TextNode & { autoRename?: boolean; hasMissingFont?: boolean };
-type ApplyBackup = { layerId: string; characters: string; name: string; autoRename: boolean };
+type ApplyBackup = {
+  layerId: string;
+  characters: string;
+  name: string;
+  autoRename: boolean;
+  styleFingerprint?: string;
+  complexStyle: boolean;
+};
+
+function styleFingerprint(node: ApplyNode): string | undefined {
+  try {
+    const getSegments = (
+      node as unknown as {
+        getStyledTextSegments?: (fields: string[], start?: number, end?: number) => unknown;
+      }
+    ).getStyledTextSegments;
+    if (getSegments)
+      return JSON.stringify(
+        getSegments.call(node, [
+          'fontName',
+          'fontSize',
+          'fontWeight',
+          'fills',
+          'strokes',
+          'textDecoration',
+          'textCase',
+          'letterSpacing',
+          'lineHeight',
+          'hyperlink',
+          'openTypeFeatures',
+        ]),
+      );
+    if (typeof node.getRangeAllFontNames === 'function')
+      return JSON.stringify(node.getRangeAllFontNames(0, node.characters.length));
+  } catch {
+    return undefined;
+  }
+  return undefined;
+}
+
+function hasComplexStyle(node: ApplyNode): boolean {
+  try {
+    const getSegments = (
+      node as unknown as {
+        getStyledTextSegments?: (fields: string[], start?: number, end?: number) => unknown[];
+      }
+    ).getStyledTextSegments;
+    if (getSegments)
+      return getSegments.call(node, ['fontName', 'fontSize', 'fills', 'strokes']).length > 1;
+    return node.getRangeAllFontNames(0, node.characters.length).length > 1;
+  } catch {
+    return true;
+  }
+}
 
 export function replaceTextUsingFirstStyle(node: ApplyNode, nextCharacters: string): void {
   if (node.characters === nextCharacters) return;
@@ -136,6 +189,8 @@ export async function applyReviewedPairs(input: {
           characters: textNode.characters,
           name: textNode.name,
           autoRename: textNode.autoRename ?? false,
+          styleFingerprint: styleFingerprint(textNode),
+          complexStyle: hasComplexStyle(textNode),
         },
         changes: textNode.characters !== pair.value || textNode.name !== normalized,
       });
@@ -150,6 +205,11 @@ export async function applyReviewedPairs(input: {
         'The design changed pages. Refresh the preview before applying.',
       );
     const api = figma as PluginAPI & { commitUndo?: () => void; triggerUndo?: () => void };
+    if (changes.some((item) => item.backup.complexStyle) && !api.triggerUndo)
+      throw new AppError(
+        'ROLLBACK_FAILED',
+        'This text uses mixed styling and the Figma undo API is unavailable. No changes were made.',
+      );
     api.commitUndo?.();
     const written: typeof changes = [];
     try {
@@ -160,14 +220,28 @@ export async function applyReviewedPairs(input: {
       }
       api.commitUndo?.();
     } catch (cause) {
+      console.error('[UX Copy Sync] Apply mutation failed.', {
+        name: cause instanceof Error ? cause.name : typeof cause,
+      });
+      let undoSucceeded = false;
       try {
-        api.triggerUndo?.();
+        if (!api.triggerUndo) throw new Error('Figma undo is unavailable.');
+        api.triggerUndo();
+        undoSucceeded = true;
       } catch {
-        // Manual backups below remain the fallback when the host undo API fails.
+        // Plain/single-style text can still use the verified fallback below.
       }
       let rollbackFailed = false;
       for (const item of [...written].reverse()) {
         try {
+          const currentStyle = styleFingerprint(item.node);
+          const styleRestored =
+            item.backup.styleFingerprint !== undefined &&
+            currentStyle === item.backup.styleFingerprint;
+          if (!styleRestored && item.backup.complexStyle) {
+            rollbackFailed = true;
+            continue;
+          }
           if (item.node.characters !== item.backup.characters)
             item.node.characters = item.backup.characters;
           item.node.name = item.backup.name;
@@ -175,7 +249,10 @@ export async function applyReviewedPairs(input: {
           if (
             item.node.characters !== item.backup.characters ||
             item.node.name !== item.backup.name ||
-            item.node.autoRename !== item.backup.autoRename
+            item.node.autoRename !== item.backup.autoRename ||
+            (item.backup.styleFingerprint !== undefined &&
+              styleFingerprint(item.node) !== item.backup.styleFingerprint) ||
+            (item.backup.styleFingerprint === undefined && undoSucceeded)
           )
             rollbackFailed = true;
         } catch {
@@ -187,7 +264,6 @@ export async function applyReviewedPairs(input: {
         rollbackFailed
           ? 'The apply failed and the document could not be fully restored.'
           : `The apply failed and changes were rolled back.`,
-        { cause: cause instanceof Error ? cause.message : String(cause) },
       );
     }
     preview.applied = true;

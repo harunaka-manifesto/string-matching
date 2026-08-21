@@ -30,6 +30,8 @@ export function App({ bridge }: { bridge: UiBridge }) {
   const [enabledPublicTestMode, setEnabledPublicTestMode] = useState(false);
   const [user, setUser] = useState<User | undefined>();
   const [selection, setSelection] = useState<SelectionCardValue>(null);
+  const [selectionValid, setSelectionValid] = useState(false);
+  const [selectionMessage, setSelectionMessage] = useState<string | undefined>();
   const [pinnedSelection, setPinnedSelection] = useState<SelectionCardValue>(null);
   const [cellUrl, setCellUrl] = useState('');
   const [parsedUrl, setParsedUrl] = useState<ReturnType<typeof parseSheetCellUrl> | null>(null);
@@ -42,7 +44,9 @@ export function App({ bridge }: { bridge: UiBridge }) {
   const [error, setError] = useState<string | undefined>();
   const [staleKind, setStaleKind] = useState<'figma' | 'source' | undefined>();
   const [appliedCount, setAppliedCount] = useState(0);
+  const [announcement, setAnnouncement] = useState('');
   const pollTimer = useRef<number | undefined>();
+  const fetchTimeout = useRef<number | undefined>();
   const pollInFlight = useRef(false);
   const fetchId = useRef<string | undefined>();
   const phaseRef = useRef(phase);
@@ -56,6 +60,23 @@ export function App({ bridge }: { bridge: UiBridge }) {
       window.clearInterval(pollTimer.current);
       pollTimer.current = undefined;
     }
+  };
+  const stopFetchTimeout = () => {
+    if (fetchTimeout.current !== undefined) {
+      window.clearTimeout(fetchTimeout.current);
+      fetchTimeout.current = undefined;
+    }
+  };
+  const startFetchTimeout = (id: string) => {
+    stopFetchTimeout();
+    fetchTimeout.current = window.setTimeout(() => {
+      if (fetchId.current !== id) return;
+      send({ type: 'cancel-fetch', payload: { requestId: id } });
+      fetchId.current = undefined;
+      setPhase('idle');
+      setError('The backend request timed out. Try again.');
+      setAnnouncement('The backend request timed out.');
+    }, 25_000);
   };
   const send = bridge.send;
 
@@ -76,6 +97,9 @@ export function App({ bridge }: { bridge: UiBridge }) {
                 : 'required',
           );
           if (!next.authenticated && next.mode !== 'public-test') {
+            if (fetchId.current)
+              send({ type: 'cancel-fetch', payload: { requestId: fetchId.current } });
+            stopFetchTimeout();
             fetchId.current = undefined;
             setPhase('idle');
             setPreviewToken(undefined);
@@ -84,11 +108,14 @@ export function App({ bridge }: { bridge: UiBridge }) {
             setReplacements([]);
             setStaleKind(undefined);
             setError(undefined);
+            setSelectionValid(false);
+            setSelectionMessage(undefined);
           }
           if (next.authenticated || next.mode === 'public-test')
             send({ type: 'get-selection-state' });
           break;
         case 'auth-started':
+          setAnnouncement('Sign-in opened in your browser.');
           stopPolling();
           pollTimer.current = window.setInterval(() => {
             if (pollInFlight.current) return;
@@ -99,25 +126,33 @@ export function App({ bridge }: { bridge: UiBridge }) {
         case 'auth-poll':
           pollInFlight.current = false;
           if (next.status === 'complete') stopPolling();
+          if (next.status === 'complete') setAnnouncement('Sign-in complete.');
           if (next.status === 'failed') {
             stopPolling();
             setAuthState('required');
             setError(next.error?.message);
+            setAnnouncement('Sign-in failed.');
           }
           break;
         case 'auth-cancelled':
           stopPolling();
           setAuthState('required');
+          setAnnouncement('Sign-in cancelled.');
           break;
         case 'selection-state':
           setSelection(next.selection);
+          setSelectionValid(next.valid);
+          setSelectionMessage(next.message);
           if (phaseRef.current === 'idle') setPinnedSelection(next.selection);
           break;
         case 'preview-ready':
           if (fetchId.current !== next.requestId) break;
+          stopFetchTimeout();
           previewTokenRef.current = next.previewToken;
           setPreviewToken(next.previewToken);
           setPinnedSelection(next.selection);
+          setSelectionValid(true);
+          setSelectionMessage(undefined);
           setPreviewSource(next.source);
           setTargets(
             next.targets.map((target) => ({
@@ -132,12 +167,14 @@ export function App({ bridge }: { bridge: UiBridge }) {
           setPhase('review');
           setStaleKind(undefined);
           setError(undefined);
+          setAnnouncement(`Fetched ${next.values.length} non-empty Sheet strings.`);
           break;
         case 'preview-stale':
           if (next.previewToken === previewTokenRef.current) {
             setPhase('stale');
             setStaleKind(next.kind);
             setError(next.reason);
+            setAnnouncement(next.reason);
           }
           break;
         case 'apply-reviewed-pairs-result':
@@ -146,23 +183,31 @@ export function App({ bridge }: { bridge: UiBridge }) {
             setAppliedCount(next.result.appliedCount);
             setPhase('applied');
             setError(undefined);
+            setAnnouncement(
+              `Updated ${next.result.appliedCount} layer${next.result.appliedCount === 1 ? '' : 's'}.`,
+            );
           } else if (next.error?.code === 'SOURCE_STALE') {
             setPhase('stale');
             setStaleKind('source');
             setError(next.error.message);
+            setAnnouncement(next.error.message);
           } else if (next.error?.code === 'PREVIEW_STALE') {
             setPhase('stale');
             setStaleKind('figma');
             setError(next.error.message);
+            setAnnouncement(next.error.message);
           } else {
             setPhase('review');
             setError(next.error?.message ?? 'The changes could not be applied.');
+            setAnnouncement(next.error?.message ?? 'The changes could not be applied.');
           }
           break;
         case 'error':
           if (!next.requestId || next.requestId === fetchId.current) {
+            stopFetchTimeout();
             setPhase((current) => (current === 'fetching' ? 'idle' : current));
             setError(next.error.message);
+            setAnnouncement(next.error.message);
           }
           break;
       }
@@ -171,6 +216,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
     return () => {
       unsubscribe();
       stopPolling();
+      stopFetchTimeout();
     };
     // The bridge is intentionally stable for the lifetime of the plugin.
   }, []);
@@ -194,8 +240,11 @@ export function App({ bridge }: { bridge: UiBridge }) {
 
   const handleUrlChange = (value: string) => {
     if (phase === 'fetching') {
+      if (fetchId.current) send({ type: 'cancel-fetch', payload: { requestId: fetchId.current } });
+      stopFetchTimeout();
       fetchId.current = undefined;
       setPhase('idle');
+      setAnnouncement('Fetch cancelled.');
     }
     setCellUrl(value);
     if (!value.trim()) {
@@ -212,13 +261,39 @@ export function App({ bridge }: { bridge: UiBridge }) {
     }
   };
 
-  const handleFetch = () => {
-    if (!localParsed || !selection) return;
+  const handleRefresh = () => {
+    if (!previewToken || !localParsed || phase === 'fetching' || phase === 'applying') return;
     const id = requestId();
     fetchId.current = id;
+    startFetchTimeout(id);
     setPhase('fetching');
     setError(undefined);
     setStaleKind(undefined);
+    setAnnouncement('Refreshing review…');
+    send({
+      type: 'refresh-preview',
+      payload: {
+        requestId: id,
+        previewToken,
+        cellUrl,
+        mode: authState === 'public-test' ? 'public-test' : 'authenticated',
+      },
+    });
+  };
+
+  const handleFetch = () => {
+    if (previewToken) {
+      handleRefresh();
+      return;
+    }
+    if (!localParsed || !selection || !selectionValid) return;
+    const id = requestId();
+    fetchId.current = id;
+    startFetchTimeout(id);
+    setPhase('fetching');
+    setError(undefined);
+    setStaleKind(undefined);
+    setAnnouncement('Fetching Sheet copy…');
     send({
       type: 'fetch-preview',
       payload: {
@@ -232,12 +307,15 @@ export function App({ bridge }: { bridge: UiBridge }) {
     if (!previewToken || stats.changed === 0 || sourceDirty) return;
     setPhase('applying');
     setError(undefined);
+    setAnnouncement('Applying changes…');
     send({
       type: 'apply-reviewed-pairs',
       payload: { previewToken, pairs: reviewedPairs(targets, replacements) },
     });
   };
   const handleNewPreview = () => {
+    if (fetchId.current) send({ type: 'cancel-fetch', payload: { requestId: fetchId.current } });
+    stopFetchTimeout();
     if (previewToken) send({ type: 'discard-preview', payload: { previewToken } });
     setPhase('idle');
     setPreviewToken(undefined);
@@ -246,19 +324,36 @@ export function App({ bridge }: { bridge: UiBridge }) {
     setReplacements([]);
     setError(undefined);
     setStaleKind(undefined);
+    setSelectionValid(false);
+    setSelectionMessage(undefined);
+    setAnnouncement('Ready to build a new preview.');
     send({ type: 'get-selection-state' });
   };
-  const handleToggle = (layerId: string) =>
+  const handleToggle = (layerId: string) => {
+    const target = targets.find((item) => item.layerId === layerId);
+    if (!target) return;
+    setAnnouncement(
+      target.included ? `${target.layerName} skipped.` : `${target.layerName} included again.`,
+    );
     setTargets((current) =>
-      current.map((target) =>
-        target.layerId === layerId ? { ...target, included: !target.included } : target,
+      current.map((item) =>
+        item.layerId === layerId ? { ...item, included: !item.included } : item,
       ),
     );
+  };
   const handleMove = (id: string, index: number) =>
     setReplacements((current) => moveReplacement(current, id, index));
   const handleLocate = (layerId: string) => {
     if (previewToken) send({ type: 'select-node', payload: { previewToken, layerId } });
   };
+
+  const canFetch = Boolean(
+    localParsed &&
+    phase !== 'fetching' &&
+    phase !== 'applying' &&
+    (previewToken ? Boolean(pinnedSelection) : Boolean(selection && selectionValid)),
+  );
+  const fetchLabel = sourceDirty ? 'Fetch new source' : 'Fetch copy';
 
   if (authState === 'checking' || authState === 'required' || authState === 'connecting')
     return (
@@ -273,6 +368,11 @@ export function App({ bridge }: { bridge: UiBridge }) {
         enabledPublicTestMode={enabledPublicTestMode}
         error={error}
         onConnect={() => {
+          setAuthState('connecting');
+          setError(undefined);
+          send({ type: 'auth:start' });
+        }}
+        onReopen={() => {
           setAuthState('connecting');
           setError(undefined);
           send({ type: 'auth:start' });
@@ -292,6 +392,9 @@ export function App({ bridge }: { bridge: UiBridge }) {
 
   return (
     <div className="app-shell">
+      <div className="sr-only" aria-live="polite">
+        {announcement}
+      </div>
       <header className="app-header">
         <div>
           <h1 className="app-title">UX Copy Sync</h1>
@@ -325,11 +428,20 @@ export function App({ bridge }: { bridge: UiBridge }) {
               ? pinnedSelection
               : selection
           }
+          valid={
+            phase === 'review' || phase === 'stale' || phase === 'applying' || phase === 'applied'
+              ? true
+              : selectionValid
+          }
+          message={selectionMessage}
         />
         <SheetSource
           value={cellUrl}
           parsed={localParsed}
           disabled={phase === 'fetching' || phase === 'applying'}
+          canFetch={canFetch}
+          loading={phase === 'fetching'}
+          fetchLabel={fetchLabel}
           error={urlError}
           onChange={handleUrlChange}
           onFetch={handleFetch}
@@ -339,22 +451,24 @@ export function App({ bridge }: { bridge: UiBridge }) {
             {previewSource.spreadsheetTitle ?? 'Google Sheet'} · {previewSource.sheetTitle} ·
             starting {previewSource.startCell}
             <br />
-            {replacements.length} non-empty string{replacements.length === 1 ? '' : 's'} found
-            {replacements.length < targets.length
-              ? ` · ${targets.length - replacements.length} layer${targets.length - replacements.length === 1 ? '' : 's'} will remain unchanged`
-              : ''}
+            Fetched {replacements.length} non-empty string{replacements.length === 1 ? '' : 's'} for{' '}
+            {targets.length} detected layer{targets.length === 1 ? '' : 's'}
           </div>
         )}
         {sourceDirty && (
           <div className="notice" role="status">
-            The Sheet link changed after this review. Fetch again before applying.
+            This Sheet link changed after the review. Fetch new source before applying.
           </div>
         )}
         {staleKind && (
           <div className="notice" role="status">
             {staleKind === 'source'
-              ? 'The Sheet copy changed after this review. Refresh before applying.'
-              : 'The design changed after this review. Refresh before applying.'}
+              ? 'The Sheet copy changed after this review.'
+              : 'The design changed after this review.'}
+            <br />
+            <button className="secondary" onClick={handleRefresh} disabled={phase === 'fetching'}>
+              Refresh review
+            </button>
           </div>
         )}
         {targets.length > 0 && (

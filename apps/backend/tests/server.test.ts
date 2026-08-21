@@ -90,4 +90,22 @@ describe('backend routes', () => {
     ).toBe(200);
     await app.close();
   });
+
+  it('responds to allowed Figma CORS preflight requests', async () => {
+    const config = loadConfig({
+      NODE_ENV: 'test',
+      CORS_ALLOWED_ORIGINS: 'https://www.figma.com',
+      ALLOWED_GOOGLE_WORKSPACE_DOMAIN: 'company.test',
+      SESSION_TOKEN_PEPPER: 'test',
+    });
+    const app = await buildServer({ config, dependencies: dependencies(config) });
+    const response = await app.inject({
+      method: 'OPTIONS',
+      url: '/v1/auth/start',
+      headers: { origin: 'https://www.figma.com', 'access-control-request-method': 'POST' },
+    });
+    expect(response.statusCode).toBe(204);
+    expect(response.headers['access-control-allow-origin']).toBe('https://www.figma.com');
+    await app.close();
+  });
 });

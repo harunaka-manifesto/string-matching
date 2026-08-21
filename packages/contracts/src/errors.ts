@@ -18,6 +18,7 @@ export const ErrorCodeSchema = z.enum([
   'INVALID_SELECTION_COUNT',
   'UNSUPPORTED_SELECTION',
   'NO_ELIGIBLE_TEXT',
+  'TARGET_LIMIT_EXCEEDED',
   'PREVIEW_NOT_FOUND',
   'PREVIEW_STALE',
   'PREVIEW_ALREADY_APPLIED',
@@ -26,6 +27,7 @@ export const ErrorCodeSchema = z.enum([
   'APPLY_FAILED',
   'ROLLBACK_FAILED',
   'INVALID_REQUEST',
+  'INVALID_BACKEND_RESPONSE',
   'INTERNAL_ERROR',
 ]);
 
@@ -70,5 +72,6 @@ function defaultStatus(code: ErrorCode): number {
     return 404;
   if (code === 'SHEET_RATE_LIMITED') return 429;
   if (code === 'INVALID_REQUEST' || code === 'SHEET_URL_INVALID') return 400;
+  if (code === 'INVALID_BACKEND_RESPONSE') return 502;
   return 422;
 }

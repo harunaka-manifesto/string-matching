@@ -16,7 +16,7 @@ export default defineConfig({
   },
   define: {
     'import.meta.env.VITE_BACKEND_BASE_URL': JSON.stringify(
-      process.env.BACKEND_BASE_URL ?? 'http://127.0.0.1:8787',
+      process.env.BACKEND_BASE_URL ?? 'http://localhost:8787',
     ),
   },
 });

@@ -32,10 +32,10 @@ export class PublicSheetProvider {
 
   async copy(cellUrl: string, requestedCount: number): Promise<SheetCopyResponse> {
     const parsed = parseSheetCellUrl(cellUrl);
-    const query = encodeURIComponent(
-      `select ${parsed.columnLabel} offset ${parsed.startRow - 1} limit ${this.scanLimit}`,
-    );
-    const url = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(parsed.spreadsheetId)}/gviz/tq?gid=${parsed.gid}&tqx=out:json&tq=${query}`;
+    const range = `${parsed.columnLabel}${parsed.startRow}:${parsed.columnLabel}${parsed.startRow + this.scanLimit - 1}`;
+    const url =
+      `https://docs.google.com/spreadsheets/d/${encodeURIComponent(parsed.spreadsheetId)}/gviz/tq` +
+      `?gid=${parsed.gid}&range=${encodeURIComponent(range)}&headers=0&tqx=out:json`;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 15_000);
     try {

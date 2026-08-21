@@ -1,4 +1,9 @@
-import { AppError, type RootType, type TargetSnapshot } from '@ux-copy-sync/contracts';
+import {
+  AppError,
+  MAX_PLUGIN_TARGETS,
+  type RootType,
+  type TargetSnapshot,
+} from '@ux-copy-sync/contracts';
 import {
   collectVisuallyPresentText,
   orderByVisualReading,
@@ -7,7 +12,7 @@ import {
 
 export const SUPPORTED_ROOTS = new Set<RootType>(['FRAME', 'COMPONENT', 'INSTANCE']);
 
-type FigmaNodeLike = BaseNode & {
+export type FigmaNodeLike = BaseNode & {
   absoluteBoundingBox?: { x: number; y: number; width: number; height: number } | null;
   opacity?: number;
   clipsContent?: boolean;
@@ -94,6 +99,35 @@ export function currentSelectionSummary(): SelectionSummary | null {
   if (selection.length !== 1 || !SUPPORTED_ROOTS.has(selection[0]!.type as RootType)) return null;
   const root = selection[0] as FigmaNodeLike;
   return selectionSummary(root);
+}
+
+export function containingPageId(node: BaseNode | null): string | null {
+  let current: BaseNode | null = node;
+  while (current) {
+    if (current.type === 'PAGE') return current.id;
+    current = current.parent;
+  }
+  return null;
+}
+
+export function previewRelevantNodeIds(
+  root: FigmaNodeLike,
+  targets: readonly FigmaTextNodeLike[],
+): Set<string> {
+  const ids = new Set<string>([root.id]);
+  for (const target of targets) {
+    let current: BaseNode | null = target;
+    while (current) {
+      ids.add(current.id);
+      if (current.id === root.id) break;
+      current = current.parent;
+    }
+  }
+  return ids;
+}
+
+export function targetCountIsSupported(count: number): boolean {
+  return count <= MAX_PLUGIN_TARGETS;
 }
 
 export function isDescendantOf(node: BaseNode | null, rootId: string): boolean {

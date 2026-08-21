@@ -7,10 +7,14 @@ export function CopyCard({
   replacement,
   disabled,
   onMove,
+  canMoveUp = true,
+  canMoveDown = true,
 }: {
   replacement: SheetValue;
   disabled: boolean;
   onMove: (delta: -1 | 1) => void;
+  canMoveUp?: boolean;
+  canMoveDown?: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
   const sortable = useSortable({ id: replacement.id, disabled });
@@ -31,7 +35,7 @@ export function CopyCard({
         {...sortable.attributes}
         {...sortable.listeners}
         disabled={disabled}
-        aria-label={`Move Sheet copy from ${replacement.cell}`}
+        aria-label={`Reorder Sheet copy from ${replacement.cell}`}
         title="Drag to reorder"
       >
         ⠿
@@ -41,23 +45,27 @@ export function CopyCard({
         <span>Sheet · {replacement.cell}</span>
         <span className="copy-actions">
           {long && (
-            <button className="text-button" onClick={() => setExpanded((current) => !current)}>
+            <button
+              className="text-button"
+              onClick={() => setExpanded((current) => !current)}
+              aria-label={`${expanded ? 'Show less' : 'Show more'} for ${replacement.cell}`}
+            >
               {expanded ? 'Show less' : 'Show more'}
             </button>
           )}
           <button
             className="icon-button"
             onClick={() => onMove(-1)}
-            disabled={disabled}
-            aria-label="Move copy up"
+            disabled={disabled || !canMoveUp}
+            aria-label={`Move ${replacement.cell} copy up`}
           >
             ↑
           </button>
           <button
             className="icon-button"
             onClick={() => onMove(1)}
-            disabled={disabled}
-            aria-label="Move copy down"
+            disabled={disabled || !canMoveDown}
+            aria-label={`Move ${replacement.cell} copy down`}
           >
             ↓
           </button>

@@ -4,5 +4,7 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args: ['push', '${_IMAGE}']
 substitutions:
-  _IMAGE: gcr.io/example/ux-copy-sync:latest
+  _IMAGE: '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/ux-copy-sync:$SHORT_SHA'
+  _REGION: asia-southeast1
+  _REPOSITORY: ux-copy-sync-images
 images: ['${_IMAGE}']

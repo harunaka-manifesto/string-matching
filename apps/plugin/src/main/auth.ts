@@ -1,8 +1,8 @@
 import { AppError, type AuthPollResponse, type User } from '@ux-copy-sync/contracts';
 import { APP_SESSION_KEY, pluginConfig } from './config';
-import { BackendClient } from './backend-client';
+import { BackendClient, sameOriginUrl } from './backend-client';
 
-type Flow = { flowId: string; readKey: string; expiresAt: string };
+type Flow = { flowId: string; readKey: string; expiresAt: string; browserUrl: string };
 
 export class AuthManager {
   private flow: Flow | undefined;
@@ -36,9 +36,12 @@ export class AuthManager {
   }
 
   async start(): Promise<Flow> {
+    if (this.flow && Date.parse(this.flow.expiresAt) > Date.now()) {
+      figma.openExternal(this.flow.browserUrl);
+      return this.flow;
+    }
     const response = await this.client.startAuth();
-    const url = new URL(response.browserUrl);
-    if (url.origin !== new URL(pluginConfig.backendBaseUrl).origin)
+    if (!sameOriginUrl(response.browserUrl, pluginConfig.backendBaseUrl))
       throw new AppError(
         'AUTH_FAILED',
         'The sign-in link was not issued by the configured backend.',
@@ -47,6 +50,7 @@ export class AuthManager {
       flowId: response.flowId,
       readKey: response.readKey,
       expiresAt: response.expiresAt,
+      browserUrl: response.browserUrl,
     };
     figma.openExternal(response.browserUrl);
     return this.flow;

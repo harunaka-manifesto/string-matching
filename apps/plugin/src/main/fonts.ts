@@ -26,8 +26,9 @@ export async function loadFontsForNodes(nodes: readonly TextNodeLike[]): Promise
   try {
     for (const font of fonts.values()) await figma.loadFontAsync(font);
   } catch (cause) {
-    throw new AppError('FONT_LOAD_FAILED', `Could not load all fonts before applying changes.`, {
-      cause: cause instanceof Error ? cause.message : String(cause),
+    console.error('[UX Copy Sync] Font loading failed.', {
+      name: cause instanceof Error ? cause.name : typeof cause,
     });
+    throw new AppError('FONT_LOAD_FAILED', 'Could not load all fonts before applying changes.');
   }
 }

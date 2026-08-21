@@ -7,6 +7,8 @@ export type RootType = z.infer<typeof RootTypeSchema>;
 export const RuntimeModeSchema = z.enum(['authenticated', 'public-test']);
 export type RuntimeMode = z.infer<typeof RuntimeModeSchema>;
 
+export const MAX_PLUGIN_TARGETS = 200;
+
 export const SheetValueSchema = z.object({
   id: z.string(),
   value: z.string(),
@@ -16,7 +18,9 @@ export const SheetValueSchema = z.object({
 export type SheetValue = z.infer<typeof SheetValueSchema>;
 
 export const SheetSourceSchema = z.object({
-  cellUrl: z.string().url(),
+  // Parsed semantically with parseSheetCellUrl at the source boundary. Keep the
+  // shared response contract runtime-neutral for the Figma main sandbox.
+  cellUrl: z.string().min(1),
   spreadsheetId: z.string(),
   spreadsheetTitle: z.string().optional(),
   sheetId: z.number().int(),
@@ -99,7 +103,8 @@ export type User = z.infer<typeof UserSchema>;
 export const AuthStartResponseSchema = z.object({
   flowId: z.string(),
   readKey: z.string(),
-  browserUrl: z.string().url(),
+  // AuthManager performs the runtime-neutral same-origin check after parsing.
+  browserUrl: z.string().min(1),
   expiresAt: z.string(),
 });
 export type AuthStartResponse = z.infer<typeof AuthStartResponseSchema>;

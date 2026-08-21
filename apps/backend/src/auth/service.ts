@@ -34,27 +34,66 @@ export class AuthService {
   async start(): Promise<AuthStartResponse> {
     const flowId = randomSecret(24);
     const readKey = randomSecret(32);
+    const launchKey = randomSecret(32);
     const state = randomSecret(32);
     const verifier = randomSecret(48);
     const expiresAt = Date.now() + 5 * 60_000;
-    await this.flows.create({
-      flowId,
-      pollSecretHash: hash(readKey),
-      stateHash: hash(state),
-      codeVerifier: verifier,
-      createdAt: Date.now(),
-      expiresAt,
-      status: 'pending',
-    });
-    let browserUrl: string;
+    let authorizationUrl: string;
     try {
-      browserUrl = this.oauth.authorizationUrl({ state, codeChallenge: codeChallenge(verifier) });
+      authorizationUrl = this.oauth.authorizationUrl({
+        state,
+        codeChallenge: codeChallenge(verifier),
+      });
     } catch (cause) {
       throw cause instanceof AppError
         ? cause
         : new AppError('AUTH_FAILED', 'Google OAuth is not configured.');
     }
-    return { flowId, readKey, browserUrl, expiresAt: new Date(expiresAt).toISOString() };
+    const browserUrl = new URL('/oauth/start', this.config.backendBaseUrl);
+    browserUrl.searchParams.set('flowId', flowId);
+    browserUrl.searchParams.set('launchKey', launchKey);
+    await this.flows.create({
+      flowId,
+      pollSecretHash: hash(readKey),
+      launchSecretHash: hash(launchKey),
+      stateHash: hash(state),
+      codeVerifier: verifier,
+      oauthAuthorizationUrl: authorizationUrl,
+      createdAt: Date.now(),
+      expiresAt,
+      purgeAt: expiresAt,
+      status: 'pending',
+    });
+    return {
+      flowId,
+      readKey,
+      browserUrl: browserUrl.toString(),
+      expiresAt: new Date(expiresAt).toISOString(),
+    };
+  }
+
+  async launch(flowId: string, launchKey: string): Promise<string> {
+    const flow = await this.flows.byId(flowId);
+    if (
+      !flow ||
+      flow.expiresAt <= Date.now() ||
+      !flow.launchSecretHash ||
+      !matchesHash(launchKey, flow.launchSecretHash) ||
+      flow.status !== 'pending' ||
+      !flow.oauthAuthorizationUrl
+    )
+      throw new AppError('AUTH_FAILED', 'This sign-in link is invalid or has expired.');
+    return flow.oauthAuthorizationUrl;
+  }
+
+  async cancel(state: string): Promise<boolean> {
+    const flow = await this.flows.byStateHash(hash(state));
+    if (!flow || flow.expiresAt <= Date.now() || flow.status !== 'pending') return false;
+    flow.status = 'failed';
+    flow.errorCode = 'AUTH_CANCELLED';
+    flow.errorMessage = 'Google sign-in was cancelled. Start again in Figma.';
+    await this.flows.update(flow);
+    return true;
   }
 
   async callback(code: string, state: string): Promise<void> {

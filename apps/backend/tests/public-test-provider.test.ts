@@ -1,4 +1,5 @@
 import { describe, expect, it, vi, afterEach } from 'vitest';
+import { SheetCopyResponseSchema } from '@ux-copy-sync/contracts';
 import { PublicSheetProvider } from '../src/sheets/public-test-provider';
 
 afterEach(() => vi.unstubAllGlobals());
@@ -15,9 +16,13 @@ describe('public Sheet test provider', () => {
         },
       }) +
       ');';
+    let requestUrl = '';
     vi.stubGlobal(
       'fetch',
-      vi.fn(async () => new Response(body, { status: 200 })),
+      vi.fn(async (input: string) => {
+        requestUrl = input;
+        return new Response(body, { status: 200 });
+      }),
     );
     const result = await new PublicSheetProvider(500).copy(
       'https://docs.google.com/spreadsheets/d/1abcDEFghiJKLmnopQRS/edit#gid=123&range=D18',
@@ -27,6 +32,9 @@ describe('public Sheet test provider', () => {
       ['A', 'D18'],
       ['B', 'D20'],
     ]);
+    expect(SheetCopyResponseSchema.safeParse(result).success).toBe(true);
     expect(result.source.fingerprint).toHaveLength(64);
+    expect(requestUrl).toContain('range=D18%3AD517');
+    expect(requestUrl).toContain('headers=0');
   });
 });

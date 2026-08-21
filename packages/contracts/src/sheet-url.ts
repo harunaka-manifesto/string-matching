@@ -10,11 +10,27 @@ export type ParsedSheetCell = {
   startCell: string;
 };
 
-function valuesFromUrl(raw: URL, key: string): string[] {
-  const values = [...raw.searchParams.getAll(key)];
-  const fragment = raw.hash.replace(/^#/, '');
-  if (fragment) values.push(...new URLSearchParams(fragment).getAll(key));
-  return values;
+function decode(value: string): string {
+  try {
+    return decodeURIComponent(value.replace(/\+/g, ' '));
+  } catch {
+    throw new AppError('SHEET_URL_INVALID', 'The Sheet link contains invalid URL encoding.');
+  }
+}
+
+function valuesFromPart(part: string, key: string): string[] {
+  return part
+    .split('&')
+    .filter(Boolean)
+    .flatMap((item) => {
+      const separator = item.indexOf('=');
+      const name = decode(separator < 0 ? item : item.slice(0, separator));
+      return name === key ? [decode(separator < 0 ? '' : item.slice(separator + 1))] : [];
+    });
+}
+
+function valuesFromUrl(raw: { query: string; fragment: string }, key: string): string[] {
+  return [...valuesFromPart(raw.query, key), ...valuesFromPart(raw.fragment, key)];
 }
 
 function uniqueOne(values: string[], label: string): string {
@@ -43,29 +59,40 @@ export function columnIndexToLabel(index: number): string {
 }
 
 export function parseSheetCellUrl(input: string): ParsedSheetCell {
-  let url: URL;
-  try {
-    url = new URL(input);
-  } catch {
+  const match = input.match(
+    /^([A-Za-z][A-Za-z\d+.-]*):\/\/([^/?#]+)(\/[^?#]*)?(?:\?([^#]*))?(?:#(.*))?$/,
+  );
+  if (!match) {
     throw new AppError('SHEET_URL_INVALID', 'Paste a complete Google Sheets link to one cell.');
   }
-  if (url.hostname !== 'docs.google.com' || url.protocol !== 'https:') {
+  const protocol = match[1]!.toLowerCase();
+  const authority = match[2]!.toLowerCase();
+  if (
+    protocol !== 'https' ||
+    (authority !== 'docs.google.com' && authority !== 'docs.google.com:443')
+  ) {
     throw new AppError('SHEET_URL_INVALID', 'Use an HTTPS docs.google.com Google Sheets link.');
   }
-  const match = url.pathname.match(/^\/spreadsheets\/d\/([A-Za-z0-9_-]{10,200})(?:\/|$)/);
-  if (!match)
+  const pathMatch = (match[3] ?? '').match(/^\/spreadsheets\/d\/([A-Za-z0-9_-]{10,200})(?:\/|$)/);
+  if (!pathMatch)
     throw new AppError('SHEET_URL_INVALID', 'This URL is missing a valid spreadsheet ID.');
-  const gidText = uniqueOne(valuesFromUrl(url, 'gid'), 'gid');
+  const gidText = uniqueOne(
+    valuesFromUrl({ query: match[4] ?? '', fragment: match[5] ?? '' }, 'gid'),
+    'gid',
+  );
   if (!/^\d+$/.test(gidText))
     throw new AppError('SHEET_URL_INVALID', 'The Sheet gid must be numeric.');
-  const range = uniqueOne(valuesFromUrl(url, 'range'), 'range');
+  const range = uniqueOne(
+    valuesFromUrl({ query: match[4] ?? '', fragment: match[5] ?? '' }, 'range'),
+    'range',
+  );
   const cell = range.match(/^\$?([A-Za-z]{1,4})\$?([1-9]\d*)$/);
   if (!cell)
     throw new AppError('SHEET_URL_INVALID', 'Paste a link to one cell, such as range=D18.');
   const columnLabel = cell[1]!.toUpperCase();
   const startRow = Number(cell[2]);
   return {
-    spreadsheetId: match[1]!,
+    spreadsheetId: pathMatch[1]!,
     gid: Number(gidText),
     gidText,
     columnLabel,

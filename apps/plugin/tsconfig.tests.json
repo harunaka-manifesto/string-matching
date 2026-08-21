@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM"],
+    "types": ["@figma/plugin-typings", "vite/client", "vitest/globals", "node"],
+    "composite": true,
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "dist-ts/tests"
+  },
+  "include": ["tests/**/*.ts", "tests/**/*.tsx"],
+  "references": [
+    { "path": "tsconfig.main.json" },
+    { "path": "tsconfig.ui.json" },
+    { "path": "../../packages/contracts/tsconfig.json" },
+    { "path": "../../packages/domain/tsconfig.json" }
+  ]
+}

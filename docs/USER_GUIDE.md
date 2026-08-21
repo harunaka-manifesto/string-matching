@@ -59,7 +59,8 @@ The plugin checks both sides immediately before writing:
 - If the Sheet's ordered non-empty source changed, it marks the source stale.
 - If the link was edited after Fetch, the review is marked dirty.
 
-In each case, choose Fetch copy again, review the new pairing, and then Apply.
+For a stale review, choose **Refresh review**. If you edited the Sheet link,
+choose **Fetch new source**, review the new pairing, and then Apply.
 The plugin never silently retargets a later Figma selection.
 
 ## Troubleshooting

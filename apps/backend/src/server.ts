@@ -118,6 +118,29 @@ export async function buildServer(options: BuildServerOptions = {}): Promise<Fas
   });
   await app.register(rateLimit, { global: false, max: 30, timeWindow: '1 minute' });
   app.addHook('onRequest', async (request, reply) => {
+    const origin = request.headers.origin;
+    if (origin) {
+      const allowed = config.corsAllowedOrigins.includes(origin);
+      if (!allowed && request.method === 'OPTIONS') {
+        reply.code(403).send();
+        return;
+      }
+      if (allowed) {
+        reply
+          .header('Access-Control-Allow-Origin', origin)
+          .header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+          .header(
+            'Access-Control-Allow-Headers',
+            'Authorization,Content-Type,X-Plugin-Version,X-Request-Id',
+          )
+          .header('Access-Control-Max-Age', '600')
+          .header('Vary', 'Origin');
+      }
+    }
+    if (request.method === 'OPTIONS') {
+      reply.code(204).send();
+      return;
+    }
     const meta = request as RequestMeta;
     meta.uxRequestId = crypto.randomUUID();
     meta.uxStartedAt = Date.now();
@@ -175,16 +198,24 @@ export async function buildServer(options: BuildServerOptions = {}): Promise<Fas
         .header('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'")
         .header('Referrer-Policy', 'no-referrer')
         .type('text/html');
-    if (query.error)
+    if (query.error) {
+      if (query.state) await dependencies.auth.cancel(query.state);
       return browserReply().send(
         '<!doctype html><title>UX Copy Sync</title><p>Google sign-in was cancelled. Return to Figma and try again.</p>',
       );
+    }
     if (!query.code || !query.state)
       throw new AppError('AUTH_FAILED', 'Google sign-in callback was incomplete.');
     await dependencies.auth.callback(query.code, query.state);
     return browserReply().send(
       '<!doctype html><title>UX Copy Sync</title><p>Google is connected. Return to Figma to continue.</p>',
     );
+  });
+  app.get('/oauth/start', async (request, reply) => {
+    const query = request.query as { flowId?: string; launchKey?: string };
+    if (!query.flowId || !query.launchKey)
+      throw new AppError('AUTH_FAILED', 'This sign-in link is incomplete.');
+    return reply.redirect(await dependencies.auth.launch(query.flowId, query.launchKey));
   });
   app.get('/v1/session', async (request, reply) => {
     const session = await requireSession(request, dependencies.auth);

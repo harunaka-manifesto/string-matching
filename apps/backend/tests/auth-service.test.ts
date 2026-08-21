@@ -23,6 +23,63 @@ const oauth = {
 };
 
 describe('auth flow', () => {
+  it('returns a backend-origin launch URL and validates browser launch secrets', async () => {
+    const config = loadConfig({
+      NODE_ENV: 'test',
+      ALLOWED_GOOGLE_WORKSPACE_DOMAIN: 'company.test',
+      BACKEND_BASE_URL: 'https://backend.test',
+      SESSION_TOKEN_PEPPER: 'test-pepper',
+    });
+    const flows = new MemoryAuthFlowStore();
+    const auth = new AuthService(
+      config,
+      flows,
+      new SessionService(new MemorySessionStore(), 'test-pepper', 7, 30),
+      new MemoryCredentialStore(),
+      oauth,
+    );
+    const started = await auth.start();
+    const launch = new URL(started.browserUrl);
+    expect(launch.origin).toBe('https://backend.test');
+    expect(launch.pathname).toBe('/oauth/start');
+    await expect(
+      auth.launch(launch.searchParams.get('flowId')!, 'wrong-key'),
+    ).rejects.toMatchObject({
+      code: 'AUTH_FAILED',
+    });
+    expect(
+      await auth.launch(launch.searchParams.get('flowId')!, launch.searchParams.get('launchKey')!),
+    ).toBe('https://backend.test/oauth/start');
+  });
+
+  it('marks a Google cancellation as failed so polling returns immediately', async () => {
+    const config = loadConfig({
+      NODE_ENV: 'test',
+      ALLOWED_GOOGLE_WORKSPACE_DOMAIN: 'company.test',
+      BACKEND_BASE_URL: 'https://backend.test',
+      SESSION_TOKEN_PEPPER: 'test-pepper',
+    });
+    const flows = new MemoryAuthFlowStore();
+    const sessions = new SessionService(new MemorySessionStore(), 'test-pepper', 7, 30);
+    const auth = new AuthService(config, flows, sessions, new MemoryCredentialStore(), oauth);
+    const readKey = 'poll-secret';
+    await flows.create({
+      flowId: 'cancel-flow',
+      pollSecretHash: createHash('sha256').update(readKey).digest('hex'),
+      stateHash: createHash('sha256').update('state').digest('hex'),
+      codeVerifier: 'verifier',
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 60_000,
+      purgeAt: Date.now() + 60_000,
+      status: 'pending',
+    });
+    expect(await auth.cancel('state')).toBe(true);
+    await expect(auth.poll('cancel-flow', readKey)).resolves.toMatchObject({
+      status: 'failed',
+      error: { code: 'AUTH_CANCELLED' },
+    });
+  });
+
   it('poll completion is one-time consumable', async () => {
     const config = loadConfig({
       NODE_ENV: 'test',
@@ -41,6 +98,7 @@ describe('auth flow', () => {
       codeVerifier: 'verifier',
       createdAt: Date.now(),
       expiresAt: Date.now() + 60_000,
+      purgeAt: Date.now() + 60_000,
       status: 'complete',
       completionToken: 'session-token',
       userEmail: 'writer@company.test',

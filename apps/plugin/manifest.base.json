@@ -6,8 +6,8 @@
   "ui": "ui.html",
   "editorType": ["figma"],
   "networkAccess": {
-    "allowedDomains": ["https://ux-copy-sync.example.com"],
-    "reasoning": "Connects to the configured UX Copy Sync backend. The controller, not the UI, reads private Sheets."
+    "allowedDomains": ["none"],
+    "reasoning": "Connects to the UX Copy Sync backend. The controller, not the UI, reads private Sheets."
   },
   "documentAccess": "dynamic-page"
 }

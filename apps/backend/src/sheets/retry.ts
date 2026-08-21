@@ -14,6 +14,20 @@ function statusOf(error: RetryableError): number | undefined {
   );
 }
 
+export function googleRetryError(status: number | undefined): AppError | undefined {
+  if (status === 429)
+    return new AppError(
+      'SHEET_RATE_LIMITED',
+      'Google Sheets is temporarily rate limited. Try again shortly.',
+    );
+  if (status !== undefined && status >= 500 && status <= 599)
+    return new AppError(
+      'SHEET_READ_FAILED',
+      'Google Sheets is temporarily unavailable. Try again.',
+    );
+  return undefined;
+}
+
 export function isRetryableGoogleError(error: unknown): boolean {
   const status = statusOf((error ?? {}) as RetryableError);
   return status === 429 || (status !== undefined && status >= 500 && status <= 599);
@@ -52,11 +66,8 @@ export async function withGoogleRetry<T>(
       await sleep(Math.min(delay, remaining));
     }
   }
-  if (isRetryableGoogleError(lastError))
-    throw new AppError(
-      'SHEET_RATE_LIMITED',
-      'Google Sheets is temporarily rate limited. Try again shortly.',
-    );
+  const retryError = googleRetryError(statusOf((lastError ?? {}) as RetryableError));
+  if (retryError) throw retryError;
   if (lastError === undefined)
     throw new AppError(
       'SHEET_READ_FAILED',

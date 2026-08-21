@@ -1,7 +1,12 @@
 import { AppError, type PreviewSnapshot, type TargetSnapshot } from '@ux-copy-sync/contracts';
+import { containingPageId } from './selection';
 
 export function createPreviewToken(): string {
-  const cryptoObject = globalThis.crypto as (Crypto & { randomUUID?: () => string }) | undefined;
+  const cryptoObject = (
+    globalThis as unknown as {
+      crypto?: { randomUUID?: () => string; getRandomValues?: (array: Uint8Array) => Uint8Array };
+    }
+  ).crypto;
   if (cryptoObject?.randomUUID) return cryptoObject.randomUUID();
   if (cryptoObject?.getRandomValues) {
     const bytes = cryptoObject.getRandomValues(new Uint8Array(24));
@@ -52,6 +57,11 @@ export async function validateFigmaPreview(
     throw new AppError(
       'PREVIEW_STALE',
       'The selected design no longer exists. Refresh the preview before applying.',
+    );
+  if (containingPageId(root) !== preview.pageId)
+    throw new AppError(
+      'PREVIEW_STALE',
+      'The selected design moved to another page. Refresh the preview before applying.',
     );
   const current = discover(root as SceneNode);
   if (!sameTargetSnapshot(preview.targets, current))

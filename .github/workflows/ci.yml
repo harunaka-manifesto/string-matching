@@ -14,9 +14,33 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:ui
       - run: pnpm build
+      - run: pnpm sandbox:check
+      - run: docker build -t ux-copy-sync:ci .
+      - name: Smoke test backend container
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d --rm --name ux-copy-sync-ci -p 18787:8787 -e PORT=8787 -e HOST=0.0.0.0 ux-copy-sync:ci
+          trap 'docker stop ux-copy-sync-ci >/dev/null 2>&1 || true' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:18787/healthz >/dev/null; then break; fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:18787/healthz
+          curl --fail --silent http://127.0.0.1:18787/readyz
+      - run: terraform fmt -check -recursive
+      - name: Validate Terraform
+        shell: bash
+        run: |
+          set -euo pipefail
+          for directory in infra/terraform/modules/backend infra/terraform/envs/dev infra/terraform/envs/staging infra/terraform/envs/prod; do
+            terraform -chdir="$directory" init -backend=false -input=false
+            terraform -chdir="$directory" validate
+          done

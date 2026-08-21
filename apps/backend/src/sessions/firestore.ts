@@ -15,6 +15,19 @@ function data<T>(snapshot: { data?: () => Record<string, unknown> | undefined })
   return value ? (value as T) : undefined;
 }
 
+function epoch(value: unknown, fallback: number): number {
+  if (typeof value === 'number') return value;
+  if (value instanceof Date) return value.getTime();
+  if (
+    value &&
+    typeof value === 'object' &&
+    'toMillis' in value &&
+    typeof (value as { toMillis?: unknown }).toMillis === 'function'
+  )
+    return (value as { toMillis: () => number }).toMillis();
+  return fallback;
+}
+
 export class FirestoreAuthFlowStore implements AuthFlowStore {
   constructor(
     private readonly db: Firestore,
@@ -73,6 +86,7 @@ export class FirestoreAuthFlowStore implements AuthFlowStore {
       stored.completionTokenCiphertext = await this.cipher.encrypt(flow.completionToken);
       delete stored.completionToken;
     }
+    stored.purgeAt = new Date(flow.purgeAt);
     return stored;
   }
   private async fromStored(value: AuthFlow | undefined): Promise<AuthFlow | undefined> {
@@ -86,7 +100,12 @@ export class FirestoreAuthFlowStore implements AuthFlowStore {
       (item.completionTokenCiphertext
         ? await this.cipher.decrypt(item.completionTokenCiphertext)
         : undefined);
-    return { ...item, codeVerifier, completionToken };
+    return {
+      ...item,
+      codeVerifier,
+      completionToken,
+      purgeAt: epoch(item.purgeAt, item.expiresAt),
+    };
   }
 }
 
@@ -96,11 +115,13 @@ export class FirestoreSessionStore implements SessionStore {
     return this.db.collection('sessions').doc(hash);
   }
   async save(session: SessionRecord) {
-    await this.ref(session.tokenHash).set(session);
+    await this.ref(session.tokenHash).set({ ...session, purgeAt: new Date(session.purgeAt) });
   }
   async byTokenHash(tokenHash: string) {
     const snapshot = await this.ref(tokenHash).get();
-    return snapshot.exists ? data<SessionRecord>(snapshot) : undefined;
+    if (!snapshot.exists) return undefined;
+    const value = data<SessionRecord>(snapshot)!;
+    return { ...value, purgeAt: epoch(value.purgeAt, value.absoluteExpiresAt) };
   }
   async revoke(tokenHash: string) {
     await this.ref(tokenHash).set({ revokedAt: Date.now() }, { merge: true });

@@ -79,6 +79,19 @@ export function PairingList({
                 disabled={disabled}
                 onToggle={() => onToggle(target.layerId)}
                 onLocate={() => onLocate(target.layerId)}
+                canMoveUp={Boolean(
+                  byTarget.get(target.layerId) &&
+                  replacements.findIndex(
+                    (replacement) => replacement.id === byTarget.get(target.layerId)!.id,
+                  ) > 0,
+                )}
+                canMoveDown={Boolean(
+                  byTarget.get(target.layerId) &&
+                  replacements.findIndex(
+                    (replacement) => replacement.id === byTarget.get(target.layerId)!.id,
+                  ) <
+                    replacements.length - 1,
+                )}
                 onMove={(id, delta) => {
                   const current = replacements.findIndex((replacement) => replacement.id === id);
                   if (current >= 0) onMove(id, current + delta);
@@ -97,6 +110,11 @@ export function PairingList({
                   key={replacement.id}
                   replacement={replacement}
                   disabled={disabled}
+                  canMoveUp={replacements.findIndex((item) => item.id === replacement.id) > 0}
+                  canMoveDown={
+                    replacements.findIndex((item) => item.id === replacement.id) <
+                    replacements.length - 1
+                  }
                   onMove={(delta) => {
                     const current = replacements.findIndex((item) => item.id === replacement.id);
                     if (current >= 0) onMove(replacement.id, current + delta);

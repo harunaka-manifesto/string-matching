@@ -24,6 +24,16 @@ export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
     type: z.literal('fetch-preview'),
     payload: z.object({ requestId, cellUrl: z.string(), mode: RuntimeModeSchema }),
   }),
+  z.object({ type: z.literal('cancel-fetch'), payload: z.object({ requestId }) }),
+  z.object({
+    type: z.literal('refresh-preview'),
+    payload: z.object({
+      requestId,
+      previewToken: z.string(),
+      cellUrl: z.string(),
+      mode: RuntimeModeSchema,
+    }),
+  }),
   z.object({ type: z.literal('discard-preview'), payload: z.object({ previewToken: z.string() }) }),
   z.object({
     type: z.literal('apply-reviewed-pairs'),
@@ -64,6 +74,7 @@ export const PluginToUiMessageSchema = z.discriminatedUnion('type', [
       .nullable(),
     valid: z.boolean(),
     count: z.number(),
+    message: z.string().optional(),
   }),
   z.object({
     type: z.literal('preview-ready'),

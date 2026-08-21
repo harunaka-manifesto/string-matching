@@ -3,6 +3,7 @@ type AuthGateProps = {
   enabledPublicTestMode: boolean;
   error?: string;
   onConnect: () => void;
+  onReopen: () => void;
   onPublicTest: () => void;
   onCancel: () => void;
 };
@@ -12,6 +13,7 @@ export function AuthGate({
   enabledPublicTestMode,
   error,
   onConnect,
+  onReopen,
   onPublicTest,
   onCancel,
 }: AuthGateProps) {
@@ -51,6 +53,10 @@ export function AuthGate({
             <div className="notice" role="status">
               Finish signing in in your browser, then return to Figma.
               <br />
+              <button className="text-button" onClick={onReopen}>
+                Open sign-in again
+              </button>
+              {' · '}
               <button className="text-button" onClick={onCancel}>
                 Cancel
               </button>

@@ -3,6 +3,7 @@ import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 export type AuthFlow = {
   flowId: string;
   pollSecretHash: string;
+  launchSecretHash?: string;
   stateHash: string;
   codeVerifier: string;
   createdAt: number;
@@ -12,6 +13,8 @@ export type AuthFlow = {
   userEmail?: string;
   completionToken?: string;
   completionTokenCiphertext?: string;
+  oauthAuthorizationUrl?: string;
+  purgeAt: number;
   codeVerifierCiphertext?: string;
   errorCode?: string;
   errorMessage?: string;
@@ -25,6 +28,7 @@ export type SessionRecord = {
   lastUsedAt: number;
   idleExpiresAt: number;
   absoluteExpiresAt: number;
+  purgeAt: number;
   revokedAt?: number;
 };
 

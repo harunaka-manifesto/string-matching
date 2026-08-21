@@ -16,16 +16,25 @@ import {
 } from './sources';
 import {
   currentSelectionSummary,
+  containingPageId,
   discoverTextNodes,
+  isDescendantOf,
+  previewRelevantNodeIds,
   selectedRoot,
   selectionSummary,
+  targetCountIsSupported,
   targetSnapshots,
+  type FigmaNodeLike,
 } from './selection';
 import { createPreview, validateFigmaPreview } from './snapshots';
 
 figma.showUI(__html__, { width: 520, height: 720, themeColors: true });
 
-type StoredPreview = ReturnType<typeof createPreview> & { values: SheetValue[]; mode: RuntimeMode };
+type StoredPreview = ReturnType<typeof createPreview> & {
+  values: SheetValue[];
+  mode: RuntimeMode;
+  relevantNodeIds: Set<string>;
+};
 
 const sessionClient = new BackendClient(pluginConfig.backendBaseUrl, async () =>
   figma.clientStorage.getAsync(APP_SESSION_KEY),
@@ -39,9 +48,13 @@ const previews = new Map<string, StoredPreview>();
 let activeToken: string | undefined;
 let pendingTokens = new Set<string>();
 let fetchSequence = 0;
+let activeFetchRequestId: string | undefined;
 let ignoreNextSelectionChange = false;
 let watchedPage: PageNode | undefined;
-let nodeChangeHandler: (() => void) | undefined;
+let nodeChangeHandler: ((event: NodeChangeEvent) => void) | undefined;
+let validationQueued = false;
+let validationRunning = false;
+let validationRequestedAgain = false;
 
 function post(message: PluginToUiMessage): void {
   figma.ui.postMessage(message);
@@ -49,20 +62,28 @@ function post(message: PluginToUiMessage): void {
 
 function errorPayload(cause: unknown) {
   if (cause instanceof AppError) return cause.toPayload();
+  console.error('[UX Copy Sync] Unhandled plugin error.', {
+    name: cause instanceof Error ? cause.name : typeof cause,
+  });
   return new AppError(
     'INTERNAL_ERROR',
-    cause instanceof Error ? cause.message : 'Unexpected plugin error.',
+    'The plugin could not complete this operation. Try again.',
   ).toPayload();
 }
 
 function postSelectionState(): void {
   const selection = figma.currentPage.selection;
   const summary = currentSelectionSummary();
+  const valid = summary !== null && targetCountIsSupported(summary.visibleTextCount);
   post({
     type: 'selection-state',
     selection: summary,
-    valid: summary !== null,
+    valid,
     count: selection.length,
+    message:
+      summary && !targetCountIsSupported(summary.visibleTextCount)
+        ? `This selection contains ${summary.visibleTextCount} visible copy layers. Select a smaller screen or component to continue.`
+        : undefined,
   });
 }
 
@@ -76,16 +97,29 @@ function activePreview(): StoredPreview | undefined {
   return activeToken ? previews.get(activeToken) : undefined;
 }
 
-async function fetchPreview(payload: {
-  requestId: string;
-  cellUrl: string;
-  mode: RuntimeMode;
-}): Promise<void> {
+async function fetchPreview(
+  payload: {
+    requestId: string;
+    cellUrl: string;
+    mode: RuntimeMode;
+  },
+  rootOverride?: FigmaNodeLike,
+): Promise<void> {
   const sequence = ++fetchSequence;
-  const root = selectedRoot();
+  const root = rootOverride ?? selectedRoot();
+  if (containingPageId(root) !== figma.currentPage.id)
+    throw new AppError(
+      'PREVIEW_STALE',
+      'The selected design is not on the current page. Refresh the preview.',
+    );
   const targets = discoverTextNodes(root);
   if (!targets.length)
     throw new AppError('NO_ELIGIBLE_TEXT', 'No visible text copy was found in this selection.');
+  if (!targetCountIsSupported(targets.length))
+    throw new AppError(
+      'TARGET_LIMIT_EXCEEDED',
+      `This selection contains ${targets.length} visible copy layers. Select a smaller screen or component to continue.`,
+    );
   const preview = createPreview({
     pageId: figma.currentPage.id,
     rootId: root.id,
@@ -94,13 +128,19 @@ async function fetchPreview(payload: {
     targets: targetSnapshots(targets),
     mode: payload.mode,
   }) as StoredPreview;
+  preview.relevantNodeIds = previewRelevantNodeIds(root, targets);
   pendingTokens.add(preview.token);
   try {
     const response = await providerFor(payload.mode).fetchCopy({
       cellUrl: payload.cellUrl,
       requestedCount: targets.length,
     });
-    if (sequence !== fetchSequence || !pendingTokens.has(preview.token)) return;
+    if (
+      sequence !== fetchSequence ||
+      activeFetchRequestId !== payload.requestId ||
+      !pendingTokens.has(preview.token)
+    )
+      return;
     preview.source = response.source;
     preview.values = response.values;
     preview.mode = payload.mode;
@@ -109,9 +149,10 @@ async function fetchPreview(payload: {
         'SHEET_READ_FAILED',
         'No non-empty Sheet copy was found below the linked cell.',
       );
-    if (activeToken) previews.delete(activeToken);
+    const previousToken = activeToken;
     previews.set(preview.token, preview);
     activeToken = preview.token;
+    if (previousToken && previousToken !== preview.token) previews.delete(previousToken);
     post({
       type: 'preview-ready',
       requestId: payload.requestId,
@@ -125,6 +166,27 @@ async function fetchPreview(payload: {
   } finally {
     pendingTokens.delete(preview.token);
   }
+}
+
+async function refreshPreview(payload: {
+  requestId: string;
+  previewToken: string;
+  cellUrl: string;
+  mode: RuntimeMode;
+}): Promise<void> {
+  const existing = previews.get(payload.previewToken);
+  if (!existing || activeToken !== payload.previewToken)
+    throw new AppError(
+      'PREVIEW_NOT_FOUND',
+      'This review is no longer active. Build a new preview.',
+    );
+  const root = await figma.getNodeByIdAsync(existing.rootId);
+  if (!root || root.type !== existing.rootType || containingPageId(root) !== existing.pageId)
+    throw new AppError(
+      'PREVIEW_STALE',
+      'The selected design no longer exists on its original page. Build a new preview.',
+    );
+  await fetchPreview(payload, root as FigmaNodeLike);
 }
 
 async function markPreviewStaleIfNeeded(): Promise<void> {
@@ -148,11 +210,59 @@ async function markPreviewStaleIfNeeded(): Promise<void> {
   }
 }
 
+function nodeChangeAffectsPreview(event: NodeChangeEvent, preview: StoredPreview): boolean {
+  const relevantProperties = new Set([
+    'characters',
+    'visible',
+    'opacity',
+    'x',
+    'y',
+    'width',
+    'height',
+    'relativeTransform',
+    'parent',
+    'clipsContent',
+    'fills',
+    'strokes',
+    'type',
+  ]);
+  return event.nodeChanges.some((change) => {
+    if (preview.relevantNodeIds.has(change.id)) return true;
+    if ('removed' in change.node) return false;
+    if (isDescendantOf(change.node, preview.rootId)) {
+      return (
+        change.type !== 'PROPERTY_CHANGE' ||
+        change.properties.some((property) => relevantProperties.has(property))
+      );
+    }
+    return isDescendantOf(figma.getNodeById(preview.rootId), change.id);
+  });
+}
+
+function requestPreviewValidation(): void {
+  if (validationRunning) {
+    validationRequestedAgain = true;
+    return;
+  }
+  if (validationQueued) return;
+  validationQueued = true;
+  void Promise.resolve().then(async () => {
+    validationQueued = false;
+    validationRunning = true;
+    do {
+      validationRequestedAgain = false;
+      await markPreviewStaleIfNeeded();
+    } while (validationRequestedAgain);
+    validationRunning = false;
+  });
+}
+
 function watchPage(page: PageNode): void {
   if (watchedPage && nodeChangeHandler) watchedPage.off('nodechange', nodeChangeHandler);
   watchedPage = page;
-  nodeChangeHandler = () => {
-    void Promise.resolve().then(markPreviewStaleIfNeeded);
+  nodeChangeHandler = (event) => {
+    const preview = activePreview();
+    if (preview && nodeChangeAffectsPreview(event, preview)) requestPreviewValidation();
   };
   page.on('nodechange', nodeChangeHandler);
 }
@@ -165,6 +275,7 @@ function discardPreview(token: string): void {
 
 function discardAllPreviews(): void {
   fetchSequence += 1;
+  activeFetchRequestId = undefined;
   pendingTokens.clear();
   previews.clear();
   activeToken = undefined;
@@ -274,7 +385,18 @@ async function handleMessage(raw: unknown): Promise<void> {
         postSelectionState();
         break;
       case 'fetch-preview':
+        activeFetchRequestId = message.payload.requestId;
         await fetchPreview(message.payload);
+        break;
+      case 'cancel-fetch':
+        if (activeFetchRequestId === message.payload.requestId) {
+          activeFetchRequestId = undefined;
+          fetchSequence += 1;
+        }
+        break;
+      case 'refresh-preview':
+        activeFetchRequestId = message.payload.requestId;
+        await refreshPreview(message.payload);
         break;
       case 'discard-preview':
         discardPreview(message.payload.previewToken);
@@ -339,11 +461,16 @@ async function handleMessage(raw: unknown): Promise<void> {
   } catch (cause) {
     const payload = errorPayload(cause);
     if (
+      (message.type === 'fetch-preview' || message.type === 'refresh-preview') &&
+      activeFetchRequestId !== message.payload.requestId
+    )
+      return;
+    if (
       cause instanceof AppError &&
       (cause.code === 'AUTH_REQUIRED' || cause.code === 'AUTH_RECONNECT_REQUIRED')
     )
       await handleAuthLoss();
-    if (message.type === 'fetch-preview')
+    if (message.type === 'fetch-preview' || message.type === 'refresh-preview')
       post({ type: 'error', requestId: message.payload.requestId, error: payload });
     else if (message.type === 'apply-reviewed-pairs')
       post({
@@ -368,7 +495,7 @@ figma.on('selectionchange', () => {
 figma.on('currentpagechange', () => {
   watchPage(figma.currentPage);
   postSelectionState();
-  void markPreviewStaleIfNeeded();
+  requestPreviewValidation();
 });
 watchPage(figma.currentPage);
 postSelectionState();

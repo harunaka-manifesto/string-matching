@@ -30,4 +30,14 @@ describe('Google retry policy', () => {
     ).rejects.toBeTruthy();
     expect(attempts).toBe(1);
   });
+  it('maps exhausted Google 5xx responses to a read failure', async () => {
+    await expect(
+      withGoogleRetry(
+        async () => {
+          throw { response: { status: 503 } };
+        },
+        { sleep: async () => undefined },
+      ),
+    ).rejects.toMatchObject({ code: 'SHEET_READ_FAILED' });
+  });
 });

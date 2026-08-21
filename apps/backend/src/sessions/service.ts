@@ -22,6 +22,7 @@ export class SessionService {
       lastUsedAt: now,
       idleExpiresAt: now + this.idleDays * 86_400_000,
       absoluteExpiresAt: now + this.absoluteDays * 86_400_000,
+      purgeAt: now + this.absoluteDays * 86_400_000,
     };
     await this.store.save(record);
     return { token, record };

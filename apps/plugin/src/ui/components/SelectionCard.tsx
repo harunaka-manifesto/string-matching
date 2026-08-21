@@ -7,7 +7,15 @@ export type SelectionCardValue = {
   visibleTextCount: number;
 } | null;
 
-export function SelectionCard({ selection }: { selection: SelectionCardValue }) {
+export function SelectionCard({
+  selection,
+  valid = true,
+  message,
+}: {
+  selection: SelectionCardValue;
+  valid?: boolean;
+  message?: string;
+}) {
   return (
     <section className="section">
       <div className="section-title">
@@ -23,6 +31,9 @@ export function SelectionCard({ selection }: { selection: SelectionCardValue }) 
             <div className="metadata">
               {selection.containerType as RootType} · visible text only
             </div>
+            {!valid && (
+              <div className="error">{message ?? 'Select a smaller design to continue.'}</div>
+            )}
           </>
         ) : (
           <span className="muted">
