@@ -63,6 +63,16 @@ const values = [
 
 export function mockBridge(): UiBridge {
   let listener: ((message: PluginToUiMessage) => void) | undefined;
+  let mockPreviewLayerId: string | null = null;
+  let previewTargetEvents = 0;
+  const setMockPreviewTarget = (layerId: string | null) => {
+    if (mockPreviewLayerId === layerId) return;
+    mockPreviewLayerId = layerId;
+    previewTargetEvents += 1;
+    if (layerId) document.body.dataset.previewLayerId = layerId;
+    else delete document.body.dataset.previewLayerId;
+    document.body.dataset.previewTargetEvents = String(previewTargetEvents);
+  };
   const emit = (message: PluginToUiMessage) => setTimeout(() => listener?.(message), 0);
   const params = new URLSearchParams(window.location.search);
   const count = Math.min(100, Math.max(1, Number(params.get('targets') ?? targets.length)));
@@ -79,6 +89,7 @@ export function mockBridge(): UiBridge {
         }));
   const longCopy = params.get('fixture') === 'long';
   const duplicateCopy = params.get('fixture') === 'duplicates';
+  const syncedCopy = params.get('fixture') === 'synced';
   const activeValues = Array.from({ length: count }, (_, index) => ({
     id: `D${18 + index}`,
     value: duplicateCopy
@@ -89,6 +100,13 @@ export function mockBridge(): UiBridge {
     row: 18 + index,
     cell: `D${18 + index}`,
   })).slice(0, params.get('fixture') === 'partial' ? Math.max(1, count - 2) : count);
+  const reviewTargets = syncedCopy
+    ? activeTargets.map((target, index) =>
+        index === 0
+          ? { ...target, originalCharacters: 'Check your order', originalName: 'Check your order' }
+          : target,
+      )
+    : activeTargets;
   const activeSource = { ...source, requestedCount: count };
   const selection = {
     containerId: 'root',
@@ -151,12 +169,13 @@ export function mockBridge(): UiBridge {
         case 'fetch-preview':
         case 'refresh-preview':
           currentPreview = true;
+          setMockPreviewTarget(null);
           const previewReady = {
             type: 'preview-ready',
             requestId: message.payload.requestId,
             previewToken: 'mock-preview',
             selection,
-            targets: activeTargets,
+            targets: reviewTargets,
             source: activeSource,
             values: activeValues,
             partial: activeValues.length < activeTargets.length,
@@ -178,11 +197,23 @@ export function mockBridge(): UiBridge {
             );
           staleSent = true;
           break;
+        case 'preview-target':
+          if (
+            currentPreview &&
+            message.payload.previewToken === 'mock-preview' &&
+            (message.payload.layerId === null ||
+              reviewTargets.some((target) => target.id === message.payload.layerId))
+          )
+            setMockPreviewTarget(message.payload.layerId);
+          break;
         case 'cancel-fetch':
           break;
         case 'select-node':
-          if (currentPreview)
+          if (currentPreview) {
+            setMockPreviewTarget(null);
+            document.body.dataset.locateLayerId = message.payload.layerId;
             emit({ type: 'selection-state', selection: null, valid: false, count: 1 });
+          }
           break;
         case 'apply-reviewed-pairs':
           if (params.get('fixture') === 'stale-source')
@@ -227,7 +258,14 @@ export function mockBridge(): UiBridge {
           break;
         case 'auth:exit-public-test':
         case 'auth:logout':
+        case 'auth:disconnect':
+          setMockPreviewTarget(null);
+          currentPreview = false;
           emit({ type: 'auth-state', enabledPublicTestMode: true, authenticated: false });
+          break;
+        case 'discard-preview':
+          setMockPreviewTarget(null);
+          currentPreview = false;
           break;
         default:
           break;

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   PluginToUiMessageSchema,
   parseSheetCellUrl,
@@ -51,6 +51,8 @@ export function App({ bridge }: { bridge: UiBridge }) {
   const fetchId = useRef<string | undefined>();
   const phaseRef = useRef(phase);
   const previewTokenRef = useRef(previewToken);
+  const previewTargetRef = useRef<string | null>(null);
+  const previewEnabledRef = useRef(false);
   phaseRef.current = phase;
   previewTokenRef.current = previewToken;
 
@@ -97,6 +99,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
                 : 'required',
           );
           if (!next.authenticated && next.mode !== 'public-test') {
+            clearPreviewTarget();
             if (fetchId.current)
               send({ type: 'cancel-fetch', payload: { requestId: fetchId.current } });
             stopFetchTimeout();
@@ -171,6 +174,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
           break;
         case 'preview-stale':
           if (next.previewToken === previewTokenRef.current) {
+            clearPreviewTarget();
             setPhase('stale');
             setStaleKind(next.kind);
             setError(next.reason);
@@ -230,6 +234,29 @@ export function App({ bridge }: { bridge: UiBridge }) {
     }
   }, [cellUrl]);
   const sourceDirty = Boolean(previewSource && previewSource.cellUrl !== cellUrl);
+  const previewEnabled = phase === 'review' && !sourceDirty && Boolean(previewToken);
+  previewEnabledRef.current = previewEnabled;
+
+  const clearPreviewTarget = useCallback(() => {
+    const token = previewTokenRef.current;
+    if (previewTargetRef.current === null) return;
+    previewTargetRef.current = null;
+    if (token) send({ type: 'preview-target', payload: { previewToken: token, layerId: null } });
+  }, [send]);
+  const handlePreviewTarget = useCallback(
+    (layerId: string | null) => {
+      const token = previewTokenRef.current;
+      if (previewTargetRef.current === layerId) return;
+      previewTargetRef.current = layerId;
+      if (!token || !previewEnabledRef.current) return;
+      send({ type: 'preview-target', payload: { previewToken: token, layerId } });
+    },
+    [send],
+  );
+  useEffect(() => {
+    if (!previewEnabled) clearPreviewTarget();
+  }, [clearPreviewTarget, previewEnabled]);
+  useEffect(() => () => clearPreviewTarget(), [clearPreviewTarget]);
   const stats = pairingStats(targets, replacements);
   const reviewLocked =
     phase === 'fetching' ||
@@ -239,6 +266,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
     sourceDirty;
 
   const handleUrlChange = (value: string) => {
+    clearPreviewTarget();
     if (phase === 'fetching') {
       if (fetchId.current) send({ type: 'cancel-fetch', payload: { requestId: fetchId.current } });
       stopFetchTimeout();
@@ -263,6 +291,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
 
   const handleRefresh = () => {
     if (!previewToken || !localParsed || phase === 'fetching' || phase === 'applying') return;
+    clearPreviewTarget();
     const id = requestId();
     fetchId.current = id;
     startFetchTimeout(id);
@@ -305,6 +334,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
   };
   const handleApply = () => {
     if (!previewToken || stats.changed === 0 || sourceDirty) return;
+    clearPreviewTarget();
     setPhase('applying');
     setError(undefined);
     setAnnouncement('Applying changes…');
@@ -314,6 +344,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
     });
   };
   const handleNewPreview = () => {
+    clearPreviewTarget();
     if (fetchId.current) send({ type: 'cancel-fetch', payload: { requestId: fetchId.current } });
     stopFetchTimeout();
     if (previewToken) send({ type: 'discard-preview', payload: { previewToken } });
@@ -332,8 +363,9 @@ export function App({ bridge }: { bridge: UiBridge }) {
   const handleToggle = (layerId: string) => {
     const target = targets.find((item) => item.layerId === layerId);
     if (!target) return;
+    const rowNumber = targets.findIndex((item) => item.layerId === layerId) + 1;
     setAnnouncement(
-      target.included ? `${target.layerName} skipped.` : `${target.layerName} included again.`,
+      target.included ? `Row ${rowNumber} skipped.` : `Row ${rowNumber} included again.`,
     );
     setTargets((current) =>
       current.map((item) =>
@@ -434,6 +466,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
               : selectionValid
           }
           message={selectionMessage}
+          compact={Boolean(previewSource)}
         />
         <SheetSource
           value={cellUrl}
@@ -442,17 +475,15 @@ export function App({ bridge }: { bridge: UiBridge }) {
           canFetch={canFetch}
           loading={phase === 'fetching'}
           fetchLabel={fetchLabel}
+          hasPreview={Boolean(previewSource)}
           error={urlError}
           onChange={handleUrlChange}
           onFetch={handleFetch}
         />
         {previewSource && (
           <div className="source-provenance">
-            {previewSource.spreadsheetTitle ?? 'Google Sheet'} · {previewSource.sheetTitle} ·
-            starting {previewSource.startCell}
-            <br />
-            Fetched {replacements.length} non-empty string{replacements.length === 1 ? '' : 's'} for{' '}
-            {targets.length} detected layer{targets.length === 1 ? '' : 's'}
+            {previewSource.sheetTitle} · {previewSource.startCell} · {replacements.length} of{' '}
+            {targets.length} mapped
           </div>
         )}
         {sourceDirty && (
@@ -479,6 +510,8 @@ export function App({ bridge }: { bridge: UiBridge }) {
             onToggle={handleToggle}
             onMove={handleMove}
             onLocate={handleLocate}
+            onPreviewTarget={handlePreviewTarget}
+            previewEnabled={previewEnabled}
           />
         )}
         {error && phase !== 'stale' && (

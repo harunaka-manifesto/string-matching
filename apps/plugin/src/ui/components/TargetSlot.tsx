@@ -11,6 +11,11 @@ export function TargetSlot({
   disabled,
   onToggle,
   onLocate,
+  onPreviewEnter,
+  onPreviewLeave,
+  onPreviewFocus,
+  onPreviewBlur,
+  isCanvasPreviewed,
   onMove,
   canMoveUp,
   canMoveDown,
@@ -21,6 +26,11 @@ export function TargetSlot({
   disabled: boolean;
   onToggle: () => void;
   onLocate: () => void;
+  onPreviewEnter: () => void;
+  onPreviewLeave: () => void;
+  onPreviewFocus: () => void;
+  onPreviewBlur: () => void;
+  isCanvasPreviewed: boolean;
   onMove: (id: string, delta: -1 | 1) => void;
   canMoveUp: boolean;
   canMoveDown: boolean;
@@ -31,39 +41,79 @@ export function TargetSlot({
   });
   const toggleRef = useRef<HTMLButtonElement>(null);
   const previousIncluded = useRef(target.included);
+  const rowNumber = String(index + 1).padStart(2, '0');
+
   useEffect(() => {
     if (previousIncluded.current !== target.included) toggleRef.current?.focus();
     previousIncluded.current = target.included;
   }, [target.included]);
+
   const alreadySynced = Boolean(
     replacement &&
     target.originalText === replacement.value &&
     target.originalName === normalizeLayerName(replacement.value),
   );
+
   return (
     <article
-      ref={droppable.setNodeRef}
-      className={`target-slot ${!target.included ? 'is-skipped' : ''} ${target.included && droppable.isOver ? 'is-over' : ''}`}
+      className={`pairing-row ${!target.included ? 'is-skipped' : ''} ${alreadySynced ? 'is-synced' : ''}`}
+      data-testid={`pairing-row-${target.layerId}`}
+      data-row-number={rowNumber}
     >
-      <div className="slot-header">
-        <span className="slot-number">{String(index + 1).padStart(2, '0')}</span>
-        <strong title={target.layerName}>{target.layerName}</strong>
-        <button
-          className="locate-button"
-          onClick={onLocate}
-          disabled={disabled}
-          aria-label={`Locate ${target.layerName}`}
-        >
-          Locate ↗
-        </button>
-      </div>
-      <div className="copy-label">CURRENT</div>
-      <div className="current-copy">{target.originalText || <em>(empty text)</em>}</div>
-      {target.included ? (
-        <>
-          <div className="copy-label">
-            SHEET {alreadySynced && <span className="sync-status">Already synced</span>}
+      <div
+        className={`current-preview-region ${isCanvasPreviewed ? 'is-canvas-previewed' : ''}`}
+        data-testid={`current-preview-region-${target.layerId}`}
+        tabIndex={0}
+        role="group"
+        aria-label={`Preview row ${index + 1} current copy on canvas`}
+        onPointerEnter={onPreviewEnter}
+        onPointerLeave={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) onPreviewLeave();
+        }}
+        onFocus={onPreviewFocus}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) onPreviewBlur();
+        }}
+      >
+        <div className="row-index" aria-label={`Row ${index + 1}`}>
+          {rowNumber}
+        </div>
+        <div className="current-cell">
+          <div className="current-copy" title={target.originalText}>
+            {target.originalText || <em>(empty text)</em>}
           </div>
+          {alreadySynced && <span className="sync-status">synced</span>}
+          <div className="row-actions">
+            <button
+              className="locate-button"
+              onClick={onLocate}
+              disabled={disabled}
+              aria-label={`Locate row ${index + 1} in Figma`}
+            >
+              Locate ↗
+            </button>
+            {target.included && (
+              <button
+                ref={toggleRef}
+                className="row-action-button"
+                onClick={onToggle}
+                disabled={disabled}
+                aria-label={`Skip row ${index + 1}`}
+              >
+                Skip
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+      {target.included ? (
+        <div
+          ref={droppable.setNodeRef}
+          className={`sheet-destination ${droppable.isOver ? 'is-over' : ''}`}
+          data-testid={`sheet-destination-${target.layerId}`}
+          data-droppable="true"
+          aria-label={`Sheet destination for row ${index + 1}`}
+        >
           {replacement ? (
             <CopyCard
               replacement={replacement}
@@ -75,33 +125,29 @@ export function TargetSlot({
           ) : (
             <div className="unassigned-placeholder">
               No Sheet copy assigned
-              <br />
-              <span>This layer will remain unchanged.</span>
+              <span>This destination will remain unchanged.</span>
             </div>
           )}
-          <button
-            ref={toggleRef}
-            className="skip-button"
-            onClick={onToggle}
-            disabled={disabled}
-            aria-label={`Skip ${target.layerName}`}
-          >
-            Skip this layer
-          </button>
-        </>
+        </div>
       ) : (
-        <>
-          <div className="skipped-copy">Skipped · Figma copy will stay unchanged</div>
+        <div
+          className="sheet-destination skipped-destination"
+          data-testid={`sheet-destination-${target.layerId}`}
+          data-droppable="false"
+          aria-disabled="true"
+        >
+          <strong>Skipped</strong>
+          <span>Will remain unchanged</span>
           <button
             ref={toggleRef}
-            className="skip-button"
+            className="row-action-button include-button"
             onClick={onToggle}
             disabled={disabled}
-            aria-label={`Include ${target.layerName} again`}
+            aria-label={`Include row ${index + 1} again`}
           >
             Include again
           </button>
-        </>
+        </div>
       )}
     </article>
   );

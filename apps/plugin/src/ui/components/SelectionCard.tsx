@@ -11,10 +11,12 @@ export function SelectionCard({
   selection,
   valid = true,
   message,
+  compact = false,
 }: {
   selection: SelectionCardValue;
   valid?: boolean;
   message?: string;
+  compact?: boolean;
 }) {
   return (
     <section className="section">
@@ -24,13 +26,22 @@ export function SelectionCard({
       <div className="card selection-card">
         {selection ? (
           <>
-            <div className="selection-name">
-              {selection.containerName}
-              <span className="selection-count">{selection.visibleTextCount} copy layers</span>
-            </div>
-            <div className="metadata">
-              {selection.containerType as RootType} · visible text only
-            </div>
+            {compact ? (
+              <div className="selection-compact">
+                <span>{selection.containerName}</span>
+                <span>{selection.visibleTextCount} destinations</span>
+              </div>
+            ) : (
+              <>
+                <div className="selection-name">
+                  {selection.containerName}
+                  <span className="selection-count">{selection.visibleTextCount} copy layers</span>
+                </div>
+                <div className="metadata">
+                  {selection.containerType as RootType} · visible text only
+                </div>
+              </>
+            )}
             {!valid && (
               <div className="error">{message ?? 'Select a smaller design to continue.'}</div>
             )}

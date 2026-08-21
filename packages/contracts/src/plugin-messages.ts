@@ -43,6 +43,10 @@ export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
     type: z.literal('select-node'),
     payload: z.object({ previewToken: z.string(), layerId: z.string() }),
   }),
+  z.object({
+    type: z.literal('preview-target'),
+    payload: z.object({ previewToken: z.string(), layerId: z.string().nullable() }),
+  }),
 ]);
 export type UiToPluginMessage = z.infer<typeof UiToPluginMessageSchema>;
 

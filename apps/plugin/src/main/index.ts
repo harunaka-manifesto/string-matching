@@ -27,8 +27,21 @@ import {
   type FigmaNodeLike,
 } from './selection';
 import { createPreview, validateFigmaPreview } from './snapshots';
+import { TargetPreviewManager } from './target-preview';
 
-figma.showUI(__html__, { width: 520, height: 720, themeColors: true });
+const SETUP_WIDTH = 520;
+const REVIEW_WIDTH = 760;
+const UI_HEIGHT = 720;
+
+figma.showUI(__html__, { width: SETUP_WIDTH, height: UI_HEIGHT, themeColors: true });
+
+function resizeSetup(): void {
+  figma.ui.resize(SETUP_WIDTH, UI_HEIGHT);
+}
+
+function resizeReview(): void {
+  figma.ui.resize(REVIEW_WIDTH, UI_HEIGHT);
+}
 
 type StoredPreview = ReturnType<typeof createPreview> & {
   values: SheetValue[];
@@ -56,6 +69,19 @@ let validationQueued = false;
 let validationRunning = false;
 let validationRequestedAgain = false;
 
+function asSceneNode(node: BaseNode | null): SceneNode | null {
+  return node && node.type !== 'DOCUMENT' && node.type !== 'PAGE' ? (node as SceneNode) : null;
+}
+
+const targetPreview = new TargetPreviewManager<SceneNode>({
+  getSelection: () => figma.currentPage.selection,
+  setSelection: (nodes) => {
+    figma.currentPage.selection = [...nodes];
+  },
+  resolveNode: async (id) => asSceneNode(await figma.getNodeByIdAsync(id)),
+  resolveRoot: async (id) => asSceneNode(await figma.getNodeByIdAsync(id)),
+});
+
 function post(message: PluginToUiMessage): void {
   figma.ui.postMessage(message);
 }
@@ -72,6 +98,7 @@ function errorPayload(cause: unknown) {
 }
 
 function postSelectionState(): void {
+  if (targetPreview.hasSession) return;
   const selection = figma.currentPage.selection;
   const summary = currentSelectionSummary();
   const valid = summary !== null && targetCountIsSupported(summary.visibleTextCount);
@@ -97,6 +124,11 @@ function activePreview(): StoredPreview | undefined {
   return activeToken ? previews.get(activeToken) : undefined;
 }
 
+async function clearTransientPreview(restore = true): Promise<void> {
+  const preview = activePreview();
+  await targetPreview.clear({ restore, rootId: preview?.rootId });
+}
+
 async function fetchPreview(
   payload: {
     requestId: string;
@@ -105,6 +137,7 @@ async function fetchPreview(
   },
   rootOverride?: FigmaNodeLike,
 ): Promise<void> {
+  await clearTransientPreview();
   const sequence = ++fetchSequence;
   const root = rootOverride ?? selectedRoot();
   if (containingPageId(root) !== figma.currentPage.id)
@@ -153,6 +186,7 @@ async function fetchPreview(
     previews.set(preview.token, preview);
     activeToken = preview.token;
     if (previousToken && previousToken !== preview.token) previews.delete(previousToken);
+    resizeReview();
     post({
       type: 'preview-ready',
       requestId: payload.requestId,
@@ -200,6 +234,7 @@ async function markPreviewStaleIfNeeded(): Promise<void> {
       figma.currentPage.id,
     );
   } catch (cause) {
+    await clearTransientPreview();
     const payload = errorPayload(cause);
     post({
       type: 'preview-stale',
@@ -267,24 +302,30 @@ function watchPage(page: PageNode): void {
   page.on('nodechange', nodeChangeHandler);
 }
 
-function discardPreview(token: string): void {
+async function discardPreview(token: string): Promise<void> {
   pendingTokens.delete(token);
-  previews.delete(token);
-  if (activeToken === token) activeToken = undefined;
+  if (activeToken === token) {
+    await clearTransientPreview();
+    previews.delete(token);
+    activeToken = undefined;
+    resizeSetup();
+  } else previews.delete(token);
 }
 
-function discardAllPreviews(): void {
+async function discardAllPreviews(): Promise<void> {
   fetchSequence += 1;
   activeFetchRequestId = undefined;
+  await clearTransientPreview();
   pendingTokens.clear();
   previews.clear();
   activeToken = undefined;
+  resizeSetup();
 }
 
 async function handleAuthLoss(): Promise<void> {
   await auth.clearSession();
   auth.exitPublicTest();
-  discardAllPreviews();
+  await discardAllPreviews();
   post({
     type: 'auth-state',
     enabledPublicTestMode: pluginConfig.enablePublicTestMode,
@@ -354,7 +395,7 @@ async function handleMessage(raw: unknown): Promise<void> {
         break;
       case 'auth:exit-public-test':
         auth.exitPublicTest();
-        discardAllPreviews();
+        await discardAllPreviews();
         post({
           type: 'auth-state',
           enabledPublicTestMode: pluginConfig.enablePublicTestMode,
@@ -364,7 +405,7 @@ async function handleMessage(raw: unknown): Promise<void> {
       case 'auth:logout':
         await auth.clearSession();
         auth.exitPublicTest();
-        discardAllPreviews();
+        await discardAllPreviews();
         post({
           type: 'auth-state',
           enabledPublicTestMode: pluginConfig.enablePublicTestMode,
@@ -374,7 +415,7 @@ async function handleMessage(raw: unknown): Promise<void> {
       case 'auth:disconnect':
         await auth.disconnect();
         auth.exitPublicTest();
-        discardAllPreviews();
+        await discardAllPreviews();
         post({
           type: 'auth-state',
           enabledPublicTestMode: pluginConfig.enablePublicTestMode,
@@ -399,9 +440,25 @@ async function handleMessage(raw: unknown): Promise<void> {
         await refreshPreview(message.payload);
         break;
       case 'discard-preview':
-        discardPreview(message.payload.previewToken);
+        await discardPreview(message.payload.previewToken);
         break;
+      case 'preview-target': {
+        if (message.payload.layerId === null) {
+          await clearTransientPreview();
+          break;
+        }
+        const preview = previews.get(message.payload.previewToken);
+        if (!preview || activeToken !== message.payload.previewToken) break;
+        await targetPreview.preview({
+          previewToken: message.payload.previewToken,
+          layerId: message.payload.layerId,
+          targetIds: preview.targets.map((target) => target.id),
+          rootId: preview.rootId,
+        });
+        break;
+      }
       case 'select-node': {
+        targetPreview.cancelWithoutRestore();
         const preview = previews.get(message.payload.previewToken);
         if (!preview || !preview.targets.some((target) => target.id === message.payload.layerId))
           break;
@@ -414,6 +471,7 @@ async function handleMessage(raw: unknown): Promise<void> {
         break;
       }
       case 'apply-reviewed-pairs': {
+        await clearTransientPreview();
         const preview = previews.get(message.payload.previewToken);
         if (!preview || activeToken !== message.payload.previewToken)
           throw new AppError(
@@ -489,10 +547,18 @@ figma.ui.onmessage = (message) => {
   void handleMessage(message);
 };
 figma.on('selectionchange', () => {
+  const selectionIds = figma.currentPage.selection.map((node) => node.id);
+  if (targetPreview.consumeSelectionChange(selectionIds)) return;
+  if (targetPreview.hasSession) {
+    targetPreview.cancelForExternalSelection();
+    postSelectionState();
+    return;
+  }
   if (ignoreNextSelectionChange) ignoreNextSelectionChange = false;
   postSelectionState();
 });
 figma.on('currentpagechange', () => {
+  targetPreview.cancelWithoutRestore();
   watchPage(figma.currentPage);
   postSelectionState();
   requestPreviewValidation();

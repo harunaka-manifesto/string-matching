@@ -40,6 +40,28 @@ describe('plugin message contracts', () => {
     expect(
       UiToPluginMessageSchema.safeParse({ type: 'apply', value: 'delete everything' }).success,
     ).toBe(false));
+  it('accepts preview target messages with a layer or an explicit clear', () => {
+    expect(
+      UiToPluginMessageSchema.safeParse({
+        type: 'preview-target',
+        payload: { previewToken: 'preview', layerId: 'text-1' },
+      }).success,
+    ).toBe(true);
+    expect(
+      UiToPluginMessageSchema.safeParse({
+        type: 'preview-target',
+        payload: { previewToken: 'preview', layerId: null },
+      }).success,
+    ).toBe(true);
+  });
+  it('rejects malformed preview target messages', () => {
+    expect(
+      UiToPluginMessageSchema.safeParse({
+        type: 'preview-target',
+        payload: { previewToken: 'preview', layerId: 2 },
+      }).success,
+    ).toBe(false);
+  });
   it('accepts only safe UI projections for auth state', () =>
     expect(
       PluginToUiMessageSchema.safeParse({
