@@ -1,0 +1,28 @@
+{
+  "name": "@ux-copy-sync/backend",
+  "version": "2.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node build.mjs",
+    "start": "node dist/server.cjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/rate-limit": "^10.2.1",
+    "@google-cloud/firestore": "^7.11.0",
+    "@google-cloud/kms": "^4.5.0",
+    "@google-cloud/secret-manager": "^5.6.0",
+    "@ux-copy-sync/contracts": "workspace:*",
+    "@ux-copy-sync/domain": "workspace:*",
+    "fastify": "^5.2.1",
+    "google-auth-library": "^9.15.1",
+    "googleapis": "^144.0.0",
+    "jose": "^6.0.7",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.2"
+  }
+}

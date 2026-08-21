@@ -1,0 +1,12 @@
+{
+  "name": "@ux-copy-sync/domain",
+  "version": "2.2.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ux-copy-sync/contracts": "workspace:*"
+  }
+}

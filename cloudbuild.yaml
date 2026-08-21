@@ -1,0 +1,8 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '-t', '${_IMAGE}', '.']
+  - name: gcr.io/cloud-builders/docker
+    args: ['push', '${_IMAGE}']
+substitutions:
+  _IMAGE: gcr.io/example/ux-copy-sync:latest
+images: ['${_IMAGE}']

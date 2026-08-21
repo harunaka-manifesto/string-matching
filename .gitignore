@@ -1,0 +1,17 @@
+node_modules/
+dist/
+dist-ts/
+coverage/
+.vite/
+.turbo/
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+apps/plugin/dist/
+apps/backend/dist/
+graphify-out/
+.terraform/
+*.tfstate*
+.terraform.lock.hcl

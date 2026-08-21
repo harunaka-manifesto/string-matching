@@ -6,8 +6,8 @@
   "ui": "ui.html",
   "editorType": ["figma"],
   "networkAccess": {
-    "allowedDomains": ["https://docs.google.com"],
-    "reasoning": "Reads public Google Sheets data through the Google Visualization callback endpoint."
+    "allowedDomains": ["https://ux-copy-sync.example.com"],
+    "reasoning": "Connects to the configured UX Copy Sync backend. The controller, not the UI, reads private Sheets."
   },
   "documentAccess": "dynamic-page"
 }

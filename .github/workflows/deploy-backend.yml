@@ -1,0 +1,28 @@
+name: Deploy backend
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.19.0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_DEPLOY_SERVICE_ACCOUNT }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - run: gcloud builds submit --config cloudbuild.yaml --substitutions=_IMAGE=${{ vars.BACKEND_IMAGE }}
+      - run: gcloud run deploy "${{ vars.BACKEND_SERVICE }}" --image "${{ vars.BACKEND_IMAGE }}" --region "${{ vars.GCP_REGION }}" --project "${{ vars.GCP_PROJECT }}" --quiet
