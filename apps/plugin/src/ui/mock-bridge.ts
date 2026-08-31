@@ -90,23 +90,37 @@ export function mockBridge(): UiBridge {
   const longCopy = params.get('fixture') === 'long';
   const duplicateCopy = params.get('fixture') === 'duplicates';
   const syncedCopy = params.get('fixture') === 'synced';
+  const allSyncedCopy = params.get('fixture') === 'all-synced';
+  const multilineCopy = params.get('fixture') === 'multiline';
   const activeValues = Array.from({ length: count }, (_, index) => ({
     id: `D${18 + index}`,
     value: duplicateCopy
       ? 'Repeated approved copy'
       : longCopy
         ? `Long approved copy ${index + 1}. ${'This copy remains fully reviewable. '.repeat(12)}`
-        : values[index % values.length]!.value,
+        : multilineCopy
+          ? `Line one ${index + 1}\nLine two\nLine three`
+          : values[index % values.length]!.value,
     row: 18 + index,
     cell: `D${18 + index}`,
   })).slice(0, params.get('fixture') === 'partial' ? Math.max(1, count - 2) : count);
-  const reviewTargets = syncedCopy
-    ? activeTargets.map((target, index) =>
-        index === 0
-          ? { ...target, originalCharacters: 'Check your order', originalName: 'Check your order' }
-          : target,
-      )
-    : activeTargets;
+  const reviewTargets = allSyncedCopy
+    ? activeTargets.map((target, index) => ({
+        ...target,
+        originalCharacters: activeValues[index]?.value ?? target.originalCharacters,
+        originalName: activeValues[index]?.value ?? target.originalName,
+      }))
+    : syncedCopy
+      ? activeTargets.map((target, index) =>
+          index === 0
+            ? {
+                ...target,
+                originalCharacters: 'Check your order',
+                originalName: 'Check your order',
+              }
+            : target,
+        )
+      : activeTargets;
   const activeSource = { ...source, requestedCount: count };
   const selection = {
     containerId: 'root',
@@ -170,6 +184,35 @@ export function mockBridge(): UiBridge {
         case 'refresh-preview':
           currentPreview = true;
           setMockPreviewTarget(null);
+          const fixture = params.get('fixture');
+          if (
+            fixture === 'empty' ||
+            fixture === 'fetch-error' ||
+            fixture === 'permission' ||
+            fixture === 'no-text'
+          ) {
+            emit({
+              type: 'error',
+              requestId: message.payload.requestId,
+              error: {
+                code:
+                  fixture === 'permission'
+                    ? 'SHEET_ACCESS_DENIED'
+                    : fixture === 'no-text'
+                      ? 'NO_ELIGIBLE_TEXT'
+                      : 'SHEET_READ_FAILED',
+                message:
+                  fixture === 'empty'
+                    ? 'No non-empty Sheet copy was found below the linked cell.'
+                    : fixture === 'permission'
+                      ? 'The Sheet is not shared with this account.'
+                      : fixture === 'no-text'
+                        ? 'No visible text copy was found in this selection.'
+                        : 'The Sheet request failed. Try again.',
+              },
+            });
+            break;
+          }
           const previewReady = {
             type: 'preview-ready',
             requestId: message.payload.requestId,
@@ -234,6 +277,16 @@ export function mockBridge(): UiBridge {
               error: {
                 code: 'LOCKED_LAYER',
                 message: 'Unlock the target before applying changes.',
+              },
+            });
+          else if (params.get('fixture') === 'apply-failure')
+            emit({
+              type: 'apply-reviewed-pairs-result',
+              previewToken: 'mock-preview',
+              ok: false,
+              error: {
+                code: 'APPLY_FAILED',
+                message: 'Figma could not update the selected text layers. Try again.',
               },
             });
           else

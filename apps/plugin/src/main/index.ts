@@ -29,7 +29,7 @@ import {
 import { createPreview, validateFigmaPreview } from './snapshots';
 import { TargetPreviewManager } from './target-preview';
 
-const SETUP_WIDTH = 520;
+const SETUP_WIDTH = 460;
 const REVIEW_WIDTH = 760;
 const UI_HEIGHT = 720;
 

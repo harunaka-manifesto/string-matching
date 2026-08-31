@@ -3,6 +3,7 @@ export function ActionFooter({
   changed,
   appliedCount,
   disabled,
+  blockedReason,
   onApply,
   onNewPreview,
 }: {
@@ -10,34 +11,49 @@ export function ActionFooter({
   changed: number;
   appliedCount: number;
   disabled: boolean;
+  blockedReason?: string;
   onApply: () => void;
   onNewPreview: () => void;
 }) {
   if (phase === 'applied')
     return (
       <footer className="footer">
-        <span className="footer-status success">
-          Updated {appliedCount} layer{appliedCount === 1 ? '' : 's'}.
+        <span className="footer-status success" role="status">
+          {appliedCount} text layer{appliedCount === 1 ? '' : 's'} updated.
         </span>
         <button className="secondary" onClick={onNewPreview}>
-          Build new preview
+          Review another frame
         </button>
       </footer>
     );
+
+  const status =
+    phase === 'fetching'
+      ? 'Refreshing review…'
+      : phase === 'applying'
+        ? `Applying ${changed} change${changed === 1 ? '' : 's'}…`
+        : changed
+          ? `${changed} change${changed === 1 ? '' : 's'} ready`
+          : 'Everything is synced.';
+
   return (
     <footer className="footer">
-      <span className="footer-status">
-        {phase === 'fetching'
-          ? 'Fetching Sheet copy…'
-          : phase === 'applying'
-            ? 'Applying changes…'
-            : changed
-              ? `${changed} layer${changed === 1 ? '' : 's'} will change`
-              : 'Everything in this review is already synced.'}
-      </span>
-      <button className="primary" onClick={onApply} disabled={disabled || phase !== 'review'}>
-        {phase === 'applying' ? 'Applying…' : `Apply ${changed ? `${changed} changes` : 'changes'}`}
-      </button>
+      <div className="footer-status">
+        <span>{status}</span>
+        {blockedReason && <span className="footer-reason">{blockedReason}</span>}
+      </div>
+      {changed > 0 && (
+        <button
+          className="primary"
+          onClick={onApply}
+          disabled={disabled || phase !== 'review'}
+          aria-busy={phase === 'applying'}
+        >
+          {phase === 'applying'
+            ? 'Applying…'
+            : `Apply ${changed} change${changed === 1 ? '' : 's'}`}
+        </button>
+      )}
     </footer>
   );
 }

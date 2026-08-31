@@ -7,7 +7,6 @@ export function SheetSource({
   canFetch,
   loading,
   fetchLabel,
-  hasPreview = false,
   error,
   onChange,
   onFetch,
@@ -18,7 +17,6 @@ export function SheetSource({
   canFetch: boolean;
   loading?: boolean;
   fetchLabel?: string;
-  hasPreview?: boolean;
   error?: string;
   onChange: (value: string) => void;
   onFetch: () => void;
@@ -49,13 +47,11 @@ export function SheetSource({
         </button>
       </div>
       <div className="source-hint">
-        {hasPreview
-          ? null
-          : parsed
-            ? canFetch
-              ? `${parsed.startCell} will become the first copy candidate.`
-              : 'Select one Frame, Component, or Instance first.'
-            : 'Paste a link to one Google Sheets starting cell.'}
+        {parsed
+          ? canFetch
+            ? `${parsed.startCell} will become the first copy candidate.`
+            : 'Select one Frame, Component, or Instance first.'
+          : 'Paste a link to one Google Sheets starting cell.'}
       </div>
       {loading && (
         <div className="source-hint" role="status">

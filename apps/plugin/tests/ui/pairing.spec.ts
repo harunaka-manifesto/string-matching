@@ -7,7 +7,7 @@ async function fetchReview(page: Page) {
   await page.getByLabel('Google Sheets starting cell link').fill(sheetUrl);
   await page.getByRole('button', { name: 'Fetch copy' }).click();
   await expect(page.getByRole('heading', { name: 'UX Copy Sync' })).toBeVisible();
-  await expect(page.getByText('CURRENT IN FIGMA', { exact: true })).toBeVisible();
+  await expect(page.getByText('Current / Figma', { exact: true })).toBeVisible();
 }
 
 async function expectPreviewLayer(page: Page, layerId: string | null) {
@@ -19,25 +19,28 @@ test('reviews fixed destination rows and applies the changed cards', async ({ pa
   await fetchReview(page);
   await expect(page.getByText('Review your order', { exact: true })).toBeVisible();
   await expect(page.getByText('Order title', { exact: true })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Skip row 1' }).click();
-  await expect(page.getByText('Skipped', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Keep current for row 1' }).click();
+  await expect(page.getByText('Keep current', { exact: true }).last()).toBeVisible();
   await expect(page.getByRole('button', { name: 'Include row 1 again' })).toBeVisible();
   await page.getByRole('button', { name: 'Apply 5 changes' }).click();
-  await expect(page.locator('.footer-status.success')).toHaveText('Updated 5 layers.');
+  await expect(page.locator('.footer-status.success')).toHaveText('5 text layers updated.');
+  await page.getByRole('button', { name: 'Review another frame' }).click();
+  await expect(page.getByLabel('Google Sheets starting cell link')).toBeVisible();
+  await expect(page.locator('.review-context')).toHaveCount(0);
 });
 
 test('renders one comparison header and keeps layer names out of review', async ({ page }) => {
   await page.goto('/');
   await fetchReview(page);
-  await expect(page.getByText('CURRENT IN FIGMA', { exact: true })).toHaveCount(1);
-  await expect(page.getByText('FROM SHEET', { exact: true })).toHaveCount(1);
+  await expect(page.getByText('Current / Figma', { exact: true })).toHaveCount(1);
+  await expect(page.getByText('New / Sheet', { exact: true })).toHaveCount(1);
   await expect(page.getByText('CURRENT', { exact: true })).toHaveCount(0);
-  await expect(page.getByText('SHEET', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('SHEET', { exact: true })).toHaveCount(1);
   await expect(page.getByText('Order title', { exact: true })).toHaveCount(0);
   await expect(page.getByText('Review your order', { exact: true })).toBeVisible();
   await expect(page.getByText('Check your order', { exact: true })).toBeVisible();
   await expect(page.getByText('D18', { exact: true })).toBeVisible();
-  await expect(page.getByText('Checkout · D18 · 6 of 6 mapped', { exact: true })).toBeVisible();
+  await expect(page.getByText('Checkout · D18', { exact: true })).toBeVisible();
   await expect(page.getByText('D18 will become the first copy candidate.')).toHaveCount(0);
 });
 
@@ -90,7 +93,7 @@ test('previews the current copy on hover and keyboard focus, then clears on exit
   await expectPreviewLayer(page, 'text-2');
   await expect(page.locator('body')).toHaveAttribute('data-preview-target-events', '1');
   await expect(page.getByTestId('pairing-preview-hint')).toContainText(
-    'Hover current copy to highlight it on canvas.',
+    'Hover or focus current copy to highlight it on canvas.',
   );
 
   await page.getByTestId('pairing-preview-hint').hover();
@@ -141,27 +144,35 @@ test('previews the active drag destination and clears when the drag ends or is c
     { steps: 15 },
   );
   await expectPreviewLayer(page, 'text-2');
+  await page.keyboard.press('Escape');
+  await expectPreviewLayer(page, null);
+  await page.mouse.up();
+
+  await source.scrollIntoViewIfNeeded();
+  const secondSourceBox = await source.boundingBox();
+  const secondDestinationTwoBox = await destinationTwo.boundingBox();
+  const secondDestinationFiveBox = await destinationFive.boundingBox();
+  if (!secondSourceBox || !secondDestinationTwoBox || !secondDestinationFiveBox)
+    throw new Error('Could not remeasure the drag preview targets.');
+  const secondSourceX = secondSourceBox.x + secondSourceBox.width / 2;
+  const secondSourceY = secondSourceBox.y + secondSourceBox.height / 2;
+  await page.mouse.move(secondSourceX, secondSourceY);
+  await page.mouse.down();
+  await page.mouse.move(secondSourceX + 20, secondSourceY + 20, { steps: 5 });
   await page.mouse.move(
-    destinationFiveBox.x + destinationFiveBox.width / 2,
-    destinationFiveBox.y + destinationFiveBox.height / 2,
+    secondDestinationTwoBox.x + secondDestinationTwoBox.width / 2,
+    secondDestinationTwoBox.y + secondDestinationTwoBox.height / 2,
+    { steps: 15 },
+  );
+  await expectPreviewLayer(page, 'text-2');
+  await page.mouse.move(
+    secondDestinationFiveBox.x + secondDestinationFiveBox.width / 2,
+    secondDestinationFiveBox.y + secondDestinationFiveBox.height / 2,
     { steps: 15 },
   );
   await expectPreviewLayer(page, 'text-5');
   await page.mouse.up();
   await expectPreviewLayer(page, null);
-
-  await page.mouse.move(sourceX, sourceY);
-  await page.mouse.down();
-  await page.mouse.move(sourceX + 20, sourceY + 20, { steps: 5 });
-  await page.mouse.move(
-    destinationTwoBox.x + destinationTwoBox.width / 2,
-    destinationTwoBox.y + destinationTwoBox.height / 2,
-    { steps: 15 },
-  );
-  await expectPreviewLayer(page, 'text-2');
-  await page.keyboard.press('Escape');
-  await expectPreviewLayer(page, null);
-  await page.mouse.up();
 });
 
 test('allows skipped current previews but never previews a skipped destination', async ({
@@ -169,7 +180,7 @@ test('allows skipped current previews but never previews a skipped destination',
 }) => {
   await page.goto('/');
   await fetchReview(page);
-  await page.getByRole('button', { name: 'Skip row 2' }).click();
+  await page.getByRole('button', { name: 'Keep current for row 2' }).click();
 
   await page.getByTestId('current-preview-region-text-2').hover();
   await expectPreviewLayer(page, 'text-2');
@@ -184,6 +195,7 @@ test('clears a canvas preview when the source becomes dirty or the review become
   await fetchReview(page);
   await page.getByTestId('current-preview-region-text-2').hover();
   await expectPreviewLayer(page, 'text-2');
+  await page.getByRole('button', { name: 'Change source' }).click();
   await page
     .getByLabel('Google Sheets starting cell link')
     .fill('https://docs.google.com/spreadsheets/d/1abcDEFghiJKLmnopQRS/edit#gid=123&range=D19');
@@ -201,7 +213,7 @@ test('clears a canvas preview when the source becomes dirty or the review become
 test('skipped rows remain fixed and skipped destinations are not droppable', async ({ page }) => {
   await page.goto('/');
   await fetchReview(page);
-  await page.getByRole('button', { name: 'Skip row 2' }).click();
+  await page.getByRole('button', { name: 'Keep current for row 2' }).click();
   await expect(page.getByTestId('sheet-destination-text-2')).toHaveAttribute(
     'data-droppable',
     'false',
@@ -232,14 +244,25 @@ test('keeps empty active destinations droppable for short Sheet sources', async 
 test('moves an unassigned candidate back into an active destination', async ({ page }) => {
   await page.goto('/');
   await fetchReview(page);
-  await page.getByRole('button', { name: 'Skip row 1' }).click();
-  await expect(page.getByText('UNASSIGNED COPY', { exact: false })).toContainText('1');
+  await page.getByRole('button', { name: 'Keep current for row 1' }).click();
+  await expect(page.getByText('UNASSIGNED SHEET VALUES', { exact: false })).toContainText('1');
   const source = page.getByTestId('copy-card-D23').locator('.drag-handle');
   await source.scrollIntoViewIfNeeded();
   await source.dragTo(page.getByTestId('sheet-destination-text-2'), { steps: 20 });
   await expect(page.getByTestId('pairing-row-text-2')).toContainText('D23');
-  await expect(page.getByText('UNASSIGNED COPY', { exact: false })).toContainText('1');
+  await expect(page.getByText('UNASSIGNED SHEET VALUES', { exact: false })).toContainText('1');
   await expect(page.getByTestId('copy-card-D22')).toBeVisible();
+});
+
+test('excludes and restores an unassigned Sheet value', async ({ page }) => {
+  await page.goto('/');
+  await fetchReview(page);
+  await page.getByRole('button', { name: 'Keep current for row 1' }).click();
+  await page.getByRole('button', { name: 'Exclude D23 from active Sheet values' }).click();
+  await expect(page.getByText('UNASSIGNED SHEET VALUES', { exact: false })).toHaveCount(0);
+  await page.getByText('Excluded Sheet values', { exact: false }).click();
+  await page.getByRole('button', { name: 'Restore D23 to active Sheet values' }).click();
+  await expect(page.getByText('UNASSIGNED SHEET VALUES', { exact: false })).toContainText('1');
 });
 
 test('keeps keyboard movement available while hiding arrow clutter by default', async ({
@@ -275,8 +298,118 @@ test('marks synced rows without changing the table identity', async ({ page }) =
   await page.goto('/?fixture=synced');
   await fetchReview(page);
   await expect(page.getByTestId('pairing-row-text-1')).toHaveClass(/is-synced/);
-  await expect(page.getByText('synced', { exact: true })).toBeVisible();
+  await expect(page.getByText('Synced', { exact: true })).toBeVisible();
   await expect(page.getByText('0 changes', { exact: true })).toHaveCount(0);
+});
+
+test('shows a successful no-change review without a disabled Apply button', async ({ page }) => {
+  await page.goto('/?fixture=all-synced');
+  await fetchReview(page);
+  await expect(page.getByText('Everything is synced.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^Apply/ })).toHaveCount(0);
+  await expect(page.getByText('6 Synced', { exact: true })).toBeVisible();
+});
+
+test('excludes assigned Sheet values and restores their queue order', async ({ page }) => {
+  await page.goto('/');
+  await fetchReview(page);
+  await page.getByRole('button', { name: 'Exclude D18 from active Sheet values' }).click();
+  await expect(page.getByText('Excluded Sheet values', { exact: false })).toBeFocused();
+  await page.getByRole('button', { name: 'Exclude D19 from active Sheet values' }).click();
+  await expect(page.getByTestId('pairing-row-text-1')).toContainText('D20');
+  await expect(page.getByText('2 Excluded', { exact: true })).toBeVisible();
+
+  await page.getByText('Excluded Sheet values', { exact: false }).click();
+  await page.getByRole('button', { name: 'Restore D18 to active Sheet values' }).click();
+  await expect(page.getByTestId('copy-card-D18').locator('.drag-handle')).toBeFocused();
+  await page.getByRole('button', { name: 'Restore D19 to active Sheet values' }).click();
+  await expect(page.getByTestId('pairing-row-text-1')).toContainText('D18');
+  await expect(page.getByTestId('pairing-row-text-2')).toContainText('D19');
+  await expect(page.getByText('Excluded Sheet values', { exact: false })).toHaveCount(0);
+});
+
+test('applies only active changed pairs after keep-current and exclusion decisions', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await fetchReview(page);
+  await page.getByRole('button', { name: 'Keep current for row 1' }).click();
+  await page.getByRole('button', { name: 'Exclude D18 from active Sheet values' }).click();
+  await page.getByRole('button', { name: 'Apply 5 changes' }).click();
+  await expect(page.getByText('5 text layers updated.', { exact: true })).toBeVisible();
+});
+
+test('keeps review content visible while refreshing', async ({ page }) => {
+  await page.goto('/?fixture=slow');
+  await fetchReview(page);
+  await page.getByRole('button', { name: 'Change source' }).click();
+  await expect(page.getByLabel('Google Sheets starting cell link')).toBeFocused();
+  await page.getByRole('button', { name: 'Refresh review' }).click();
+  await expect(page.locator('.refreshing')).toBeVisible();
+  await expect(page.getByText('Review your order', { exact: true })).toBeVisible();
+  await expect(page.locator('.refreshing')).not.toBeVisible();
+});
+
+test('offers contextual recovery for Sheet and apply failures', async ({ page }) => {
+  await page.goto('/?fixture=permission');
+  await page.getByLabel('Google Sheets starting cell link').fill(sheetUrl);
+  await page.getByRole('button', { name: 'Fetch copy' }).click();
+  await expect(page.getByText(/Sheet could not be accessed/)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Retry' })).toBeVisible();
+
+  await page.goto('/?fixture=empty');
+  await page.getByLabel('Google Sheets starting cell link').fill(sheetUrl);
+  await page.getByRole('button', { name: 'Fetch copy' }).click();
+  await expect(page.getByRole('alert')).toContainText('No non-empty Sheet copy was found');
+
+  await page.goto('/?fixture=apply-failure');
+  await fetchReview(page);
+  await page.getByRole('button', { name: 'Apply 6 changes' }).click();
+  await expect(page.getByRole('alert')).toContainText('Figma could not update');
+  await expect(page.getByRole('alert')).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Retry apply' })).toBeVisible();
+  await expect(page.getByText('Review your order', { exact: true })).toBeVisible();
+});
+
+test('distinguishes empty selection copy and stale Sheet recovery', async ({ page }) => {
+  await page.goto('/?fixture=no-text');
+  await page.getByLabel('Google Sheets starting cell link').fill(sheetUrl);
+  await page.getByRole('button', { name: 'Fetch copy' }).click();
+  await expect(page.getByRole('alert')).toContainText(
+    'No visible text copy was found in this selection.',
+  );
+
+  await page.goto('/?fixture=stale-source');
+  await fetchReview(page);
+  await expect(page.locator('.notice')).toContainText('Sheet copy changed after this review');
+  await expect(page.locator('.notice')).not.toContainText('design changed after this review');
+});
+
+test('coalesces rapid canvas-preview requests and exposes readable table semantics', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await fetchReview(page);
+  await expect(
+    page.getByRole('cell', {
+      name: /Current copy, row 1: Review your order\. Focus highlights it on canvas\./,
+    }),
+  ).toBeVisible();
+  await page.evaluate(() => {
+    const first = document.querySelector('[data-testid="current-preview-region-text-1"]');
+    const second = document.querySelector('[data-testid="current-preview-region-text-2"]');
+    first?.dispatchEvent(new PointerEvent('pointerover', { bubbles: true }));
+    first?.dispatchEvent(new PointerEvent('pointerout', { bubbles: true, relatedTarget: second }));
+    second?.dispatchEvent(new PointerEvent('pointerover', { bubbles: true, relatedTarget: first }));
+  });
+  await expectPreviewLayer(page, 'text-2');
+  await expect(page.locator('body')).toHaveAttribute('data-preview-target-events', '1');
+});
+
+test('keeps multiline copy readable', async ({ page }) => {
+  await page.goto('/?fixture=multiline');
+  await fetchReview(page);
+  await expect(page.getByTestId('copy-card-D18')).toContainText('Line one 1\nLine two\nLine three');
 });
 
 test('keeps a 100-target review usable', async ({ page }) => {
@@ -284,7 +417,7 @@ test('keeps a 100-target review usable', async ({ page }) => {
   await fetchReview(page);
   await expect(page.getByText('Current copy 100', { exact: true })).toBeVisible();
   await expect(page.getByText('Copy layer 100', { exact: true })).toHaveCount(0);
-  await expect(page.getByText('Checkout · D18 · 100 of 100 mapped', { exact: true })).toBeVisible();
+  await expect(page.getByText('Checkout · D18', { exact: true })).toBeVisible();
   await expect(page.getByTestId('pairing-row-text-100')).toBeVisible();
 });
 
@@ -292,7 +425,8 @@ test('supports dark mode and reduced motion without blank step markers', async (
   await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' });
   await page.goto('/');
   await fetchReview(page);
-  await expect(page.locator('.step').first()).toHaveCSS('background-color', 'rgb(13, 153, 255)');
+  await expect(page.getByText('Current / Figma', { exact: true })).toBeVisible();
+  await expect(page.locator('.review-context')).toBeVisible();
 });
 
 test('public test entry is available in the development harness', async ({ page }) => {
@@ -337,6 +471,7 @@ test('refreshes a stale review against the pinned design', async ({ page }) => {
 test('marks a changed source and offers Fetch new source', async ({ page }) => {
   await page.goto('/');
   await fetchReview(page);
+  await page.getByRole('button', { name: 'Change source' }).click();
   await page
     .getByLabel('Google Sheets starting cell link')
     .fill('https://docs.google.com/spreadsheets/d/1abcDEFghiJKLmnopQRS/edit#gid=123&range=D19');

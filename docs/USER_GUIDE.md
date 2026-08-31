@@ -16,17 +16,19 @@ one selected Figma design. You review every assignment before anything changes.
 1. Select the design. The plugin shows the number of visible text layers it
    found.
 2. Paste the link to the first approved Sheet cell and choose **Fetch copy**.
-3. Review the pairing. Figma layers stay in their visual order; Sheet-copy
-   cards are the items you can move.
-4. Drag a Sheet card, use its Move up/Move down buttons, or use the keyboard
-   controls. Choose **Skip this layer** when a visible layer should not receive
-   Sheet copy. Choose **Include again** to restore it.
-5. Choose **Apply changes** after the review is correct.
+3. Review the **Current / Figma** and **New / Sheet** columns. Figma layers stay
+   in their visual order; Sheet values can be moved between destinations.
+4. Drag a Sheet value, use its Move up/Move down buttons, or use the keyboard
+   controls. Choose **Keep current** when a visible layer should not receive
+   Sheet copy. Choose **Include again** to restore it. Exclude a value when it
+   should leave the active queue; restore it from the collapsed Excluded section.
+5. Choose **Apply N changes** after the review is correct. If no active pair
+   changes, the footer says **Everything is synced.**
 
 Blank cells are skipped, so they do not consume a Figma layer. If the Sheet has
 fewer non-empty values than the design has visible text, the remaining layers
-stay unchanged. Extra values created by skipped layers appear under
-**Unassigned Sheet copy** and are not written.
+stay unchanged. Extra values created by kept rows appear under **Unassigned
+Sheet values** and are not written.
 
 ## How matching works
 
@@ -60,7 +62,8 @@ The plugin checks both sides immediately before writing:
 - If the link was edited after Fetch, the review is marked dirty.
 
 For a stale review, choose **Refresh review**. If you edited the Sheet link,
-choose **Fetch new source**, review the new pairing, and then Apply.
+choose **Change source**, then **Fetch new source**, review the new pairing, and
+then Apply.
 The plugin never silently retargets a later Figma selection.
 
 ## Troubleshooting
