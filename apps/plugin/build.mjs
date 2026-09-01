@@ -63,4 +63,5 @@ await writeFile(
 );
 await validateBuiltManifest(resolve(dist, 'manifest.json'), { mode, backendOrigin });
 console.log(`Plugin built in ${dist} (${mode})`);
+console.log(`Public Sheet test mode: ${mode === 'development' ? 'enabled' : 'disabled'}`);
 console.log(`Plugin ready. Import: ${resolve(dist, 'manifest.json')}`);

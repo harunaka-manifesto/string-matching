@@ -9,7 +9,8 @@
   "scripts": {
     "build": "pnpm build:plugin:prod && pnpm --filter @ux-copy-sync/backend build",
     "build:plugin": "pnpm --filter @ux-copy-sync/plugin build",
-    "build:plugin:dev": "PLUGIN_BUILD_MODE=development BACKEND_BASE_URL=http://localhost:8787 ENABLE_PUBLIC_SHEET_TEST_MODE=true pnpm --filter @ux-copy-sync/plugin build",
+    "build:plugin:dev": "pnpm build:plugin:test",
+    "build:plugin:test": "PLUGIN_BUILD_MODE=development BACKEND_BASE_URL=http://localhost:8787 ENABLE_PUBLIC_SHEET_TEST_MODE=true pnpm --filter @ux-copy-sync/plugin build",
     "build:plugin:prod": "PLUGIN_BUILD_MODE=production pnpm --filter @ux-copy-sync/plugin build",
     "dev:ui": "pnpm --filter @ux-copy-sync/plugin dev:ui",
     "lint": "eslint . --max-warnings=0",
