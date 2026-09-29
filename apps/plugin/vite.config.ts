@@ -14,9 +14,4 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: { input: resolve(pluginRoot, 'src/ui/index.html') },
   },
-  define: {
-    'import.meta.env.VITE_BACKEND_BASE_URL': JSON.stringify(
-      process.env.BACKEND_BASE_URL ?? 'http://localhost:8787',
-    ),
-  },
 });

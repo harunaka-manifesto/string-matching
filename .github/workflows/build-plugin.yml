@@ -15,9 +15,6 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build:plugin:prod
-        env:
-          BACKEND_BASE_URL: ${{ vars.BACKEND_BASE_URL }}
-          PLUGIN_VERSION: ${{ github.ref_name }}
+      - run: pnpm build
       - uses: actions/upload-artifact@v4
-        with: { name: ux-copy-sync-plugin, path: apps/plugin/dist }
+        with: { name: string-binder-plugin, path: apps/plugin/dist }

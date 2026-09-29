@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "plugin-ui",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@string-binder/plugin", "exec", "vite", "--config", "vite.config.ts", "--host", "127.0.0.1", "--port", "5173", "--strictPort"],
+      "port": 5173
+    }
+  ]
+}

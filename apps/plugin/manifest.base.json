@@ -1,13 +1,13 @@
 {
-  "name": "UX Copy Sync",
-  "id": "ux-copy-sync",
+  "name": "String Binder",
+  "id": "string-binder",
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",
   "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "permissions": ["teamlibrary"],
   "networkAccess": {
-    "allowedDomains": ["none"],
-    "reasoning": "Connects to the UX Copy Sync backend. The controller, not the UI, reads private Sheets."
-  },
-  "documentAccess": "dynamic-page"
+    "allowedDomains": ["none"]
+  }
 }

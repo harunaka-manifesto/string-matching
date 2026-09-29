@@ -1,8 +1,9 @@
 node_modules
 apps/plugin/dist
-apps/backend/dist
+apps/plugin/src/generated
+figma-copy-migration
 graphify-out
 pnpm-lock.yaml
 coverage
-playwright-report
 test-results
+.claude

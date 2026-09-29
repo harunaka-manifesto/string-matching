@@ -1,29 +1,24 @@
 {
-  "name": "ux-copy-sync",
+  "name": "string-binder",
   "private": true,
-  "version": "2.2.0",
+  "version": "3.0.0",
   "packageManager": "pnpm@11.19.0",
   "engines": {
     "node": "22.x"
   },
   "scripts": {
-    "build": "pnpm build:plugin:prod && pnpm --filter @ux-copy-sync/backend build",
-    "build:plugin": "pnpm --filter @ux-copy-sync/plugin build",
-    "build:plugin:dev": "pnpm build:plugin:test",
-    "build:plugin:test": "PLUGIN_BUILD_MODE=development BACKEND_BASE_URL=http://localhost:8787 ENABLE_PUBLIC_SHEET_TEST_MODE=true pnpm --filter @ux-copy-sync/plugin build",
-    "build:plugin:prod": "PLUGIN_BUILD_MODE=production pnpm --filter @ux-copy-sync/plugin build",
-    "dev:ui": "pnpm --filter @ux-copy-sync/plugin dev:ui",
+    "build": "pnpm build:order-index && pnpm --filter @string-binder/plugin build",
+    "build:order-index": "node scripts/build-order-index.mjs",
+    "dev:ui": "pnpm --filter @string-binder/plugin dev:ui",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ui": "playwright test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "sandbox:check": "node scripts/check-plugin-sandbox.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.5",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

@@ -2,7 +2,7 @@ import {
   PluginToUiMessageSchema,
   type PluginToUiMessage,
   type UiToPluginMessage,
-} from '@ux-copy-sync/contracts';
+} from '@string-binder/contracts';
 
 export type UiBridge = {
   send: (message: UiToPluginMessage) => void;

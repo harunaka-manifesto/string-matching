@@ -25,6 +25,7 @@ async function filesUnder(path) {
 const paths = [
   ...(await filesUnder('apps/plugin/src/main')),
   ...(await filesUnder('packages/contracts/src')),
+  ...(await filesUnder('packages/domain/src')),
   'apps/plugin/dist/code.js',
 ];
 for (const path of paths) {
@@ -42,12 +43,10 @@ for (const path of paths) {
 
 const manifest = JSON.parse(await readFile('apps/plugin/dist/manifest.json', 'utf8'));
 if (manifest.api !== '1.0.0')
-  throw new Error('Production plugin manifest must target Figma API version 1.0.0.');
-const devDomains = manifest.networkAccess?.devAllowedDomains ?? [];
-if (devDomains.length > 0 || JSON.stringify(manifest).match(/localhost|127\.0\.0\.1/u))
-  throw new Error('Production plugin manifest contains a development network flag or domain.');
-const bundle = await readFile('apps/plugin/dist/code.js', 'utf8');
-if (bundle.includes('http://localhost') || bundle.includes('127.0.0.1'))
-  throw new Error('Production controller bundle contains a local backend URL.');
+  throw new Error('Plugin manifest must target Figma API version 1.0.0.');
+if (!manifest.permissions?.includes('teamlibrary'))
+  throw new Error('Plugin manifest must request the teamlibrary permission.');
+if (JSON.stringify(manifest.networkAccess?.allowedDomains) !== '["none"]')
+  throw new Error('Plugin must not request network access.');
 
 console.log('Plugin controller sandbox contract passed.');

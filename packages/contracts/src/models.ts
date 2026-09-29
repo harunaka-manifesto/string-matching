@@ -1,141 +1,77 @@
 import { z } from 'zod';
-import { ErrorPayloadSchema } from './errors';
 
-export const RootTypeSchema = z.enum(['FRAME', 'COMPONENT', 'INSTANCE']);
-export type RootType = z.infer<typeof RootTypeSchema>;
+/** Persisted per-layer writer decision, stored in shared pluginData `copy/state`. */
+export const StoredLayerStateSchema = z.enum(['skip', 'needs-new', 'include']);
+export type StoredLayerState = z.infer<typeof StoredLayerStateSchema>;
 
-export const RuntimeModeSchema = z.enum(['authenticated', 'public-test']);
-export type RuntimeMode = z.infer<typeof RuntimeModeSchema>;
+export const PLUGIN_DATA_NAMESPACE = 'copy';
+export const PLUGIN_DATA_STATE_KEY = 'state';
 
-export const MAX_PLUGIN_TARGETS = 200;
+/** One variable as listed by `figma.teamLibrary` (cheap, no values). */
+export const LibraryListingItemSchema = z.object({
+  key: z.string(),
+  name: z.string(),
+  collection: z.string(),
+  /** Position inside the library collection listing. */
+  order: z.number().int(),
+});
+export type LibraryListingItem = z.infer<typeof LibraryListingItemSchema>;
 
-export const SheetValueSchema = z.object({
+/** Values read after importing a variable. */
+export const VariableValuesSchema = z.object({
+  key: z.string(),
+  en: z.string(),
   id: z.string(),
-  value: z.string(),
-  row: z.number().int().positive(),
-  cell: z.string(),
+  description: z.string(),
 });
-export type SheetValue = z.infer<typeof SheetValueSchema>;
+export type VariableValues = z.infer<typeof VariableValuesSchema>;
 
-export const SheetSourceSchema = z.object({
-  // Parsed semantically with parseSheetCellUrl at the source boundary. Keep the
-  // shared response contract runtime-neutral for the Figma main sandbox.
-  cellUrl: z.string().min(1),
-  spreadsheetId: z.string(),
-  spreadsheetTitle: z.string().optional(),
-  sheetId: z.number().int(),
-  sheetTitle: z.string(),
-  startCell: z.string(),
-  scannedThroughCell: z.string(),
-  requestedCount: z.number().int().nonnegative(),
-  fingerprint: z.string().length(64),
-});
-export type SheetSource = z.infer<typeof SheetSourceSchema>;
-
-export const SheetCopyResponseSchema = z.object({
-  source: SheetSourceSchema,
-  values: z.array(SheetValueSchema),
-  meta: z.object({
-    requestedCount: z.number().int().nonnegative(),
-    returnedCount: z.number().int().nonnegative(),
-    scannedRowCount: z.number().int().nonnegative(),
-    scanLimitReached: z.boolean(),
-  }),
-});
-export type SheetCopyResponse = z.infer<typeof SheetCopyResponseSchema>;
-
-export const SheetCopyRequestSchema = z.object({
-  cellUrl: z.string().min(1),
-  requestedCount: z.number().int().min(0).max(1000),
-});
-export type SheetCopyRequest = z.infer<typeof SheetCopyRequestSchema>;
-
-export const SheetVerifyRequestSchema = SheetCopyRequestSchema.extend({
-  expectedFingerprint: z.string().length(64),
-});
-export type SheetVerifyRequest = z.infer<typeof SheetVerifyRequestSchema>;
-
-export const SheetVerifyResponseSchema = z.object({
-  unchanged: z.boolean(),
-  currentFingerprint: z.string().length(64),
-});
-export type SheetVerifyResponse = z.infer<typeof SheetVerifyResponseSchema>;
-
-export const TargetSnapshotSchema = z.object({
+export const LayerInfoSchema = z.object({
   id: z.string(),
   name: z.string(),
-  originalCharacters: z.string(),
-  originalName: z.string(),
-  originalAutoRename: z.boolean(),
-  x: z.number(),
-  y: z.number(),
-  width: z.number(),
-  height: z.number(),
-  visible: z.boolean(),
+  characters: z.string(),
+  /** True when the layer sits inside a component instance. */
+  inInstance: z.boolean(),
+  boundKey: z.string().nullable(),
+  boundName: z.string().nullable(),
+  stored: StoredLayerStateSchema.nullable(),
+  /** Why the layer looks like non-copy, when it does. */
+  autoSkipReason: z.string().nullable(),
 });
-export type TargetSnapshot = z.infer<typeof TargetSnapshotSchema>;
+export type LayerInfo = z.infer<typeof LayerInfoSchema>;
 
-export const ReviewedPairSchema = z.object({
-  layerId: z.string(),
-  replacementId: z.string(),
-  value: z.string(),
+export const SelectionInfoSchema = z.object({
+  frameId: z.string(),
+  frameName: z.string(),
+  /** Frame, ancestor, and section names, used to rank search results. */
+  contextNames: z.array(z.string()),
+  layers: z.array(LayerInfoSchema),
 });
-export type ReviewedPair = z.infer<typeof ReviewedPairSchema>;
+export type SelectionInfo = z.infer<typeof SelectionInfoSchema>;
 
-export const PreviewSnapshotSchema = z.object({
-  token: z.string(),
-  pageId: z.string(),
-  rootId: z.string(),
-  rootType: RootTypeSchema,
-  rootName: z.string(),
-  targets: z.array(TargetSnapshotSchema),
-  createdAt: z.number(),
-  applied: z.boolean(),
-  applying: z.boolean().optional(),
-  mode: RuntimeModeSchema,
-  source: SheetSourceSchema.optional(),
-});
-export type PreviewSnapshot = z.infer<typeof PreviewSnapshotSchema>;
-
-export const UserSchema = z.object({ email: z.string().email() });
-export type User = z.infer<typeof UserSchema>;
-
-export const AuthStartResponseSchema = z.object({
-  flowId: z.string(),
-  readKey: z.string(),
-  // AuthManager performs the runtime-neutral same-origin check after parsing.
-  browserUrl: z.string().min(1),
-  expiresAt: z.string(),
-});
-export type AuthStartResponse = z.infer<typeof AuthStartResponseSchema>;
-
-export const AuthPollResponseSchema = z.discriminatedUnion('status', [
-  z.object({ status: z.literal('pending') }),
-  z.object({ status: z.literal('complete'), sessionToken: z.string(), user: UserSchema }),
-  z.object({ status: z.literal('failed'), error: ErrorPayloadSchema }),
+export const LayerDecisionSchema = z.discriminatedUnion('action', [
+  z.object({ layerId: z.string(), action: z.literal('bind'), key: z.string() }),
+  z.object({ layerId: z.string(), action: z.literal('unbind') }),
+  z.object({ layerId: z.string(), action: z.literal('skip') }),
+  z.object({ layerId: z.string(), action: z.literal('flag') }),
+  z.object({ layerId: z.string(), action: z.literal('include') }),
 ]);
-export type AuthPollResponse = z.infer<typeof AuthPollResponseSchema>;
+export type LayerDecision = z.infer<typeof LayerDecisionSchema>;
 
-export const SessionResponseSchema = z.object({ authenticated: z.literal(true), user: UserSchema });
-export type SessionResponse = z.infer<typeof SessionResponseSchema>;
-
-export const AuthErrorResponseSchema = z.object({
-  authenticated: z.literal(false),
-  error: ErrorPayloadSchema.optional(),
+export const LayerRefSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  frameName: z.string(),
 });
+export type LayerRef = z.infer<typeof LayerRefSchema>;
 
-export function buildFingerprintInput(input: {
-  spreadsheetId: string;
-  sheetId: number;
-  startCell: string;
-  requestedCount: number;
-  values: Array<Pick<SheetValue, 'cell' | 'value'>>;
-}): string {
-  return JSON.stringify([
-    input.spreadsheetId,
-    input.sheetId,
-    input.startCell,
-    input.requestedCount,
-    input.values.map((value) => [value.cell, value.value]),
-  ]);
-}
+export const ApplySummarySchema = z.object({
+  boundInFrame: z.number().int(),
+  boundAcrossPage: z.number().int(),
+  framesTouched: z.number().int(),
+  skipsCopied: z.number().int(),
+  conflicts: z.array(LayerRefSchema),
+  failures: z.array(LayerRefSchema.extend({ reason: z.string() })),
+  propagated: z.array(LayerRefSchema),
+});
+export type ApplySummary = z.infer<typeof ApplySummarySchema>;

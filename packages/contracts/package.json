@@ -1,6 +1,6 @@
 {
-  "name": "@ux-copy-sync/contracts",
-  "version": "2.2.0",
+  "name": "@string-binder/contracts",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "exports": {

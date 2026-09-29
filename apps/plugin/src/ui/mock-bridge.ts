@@ -1,334 +1,110 @@
-import type { PluginToUiMessage, TargetSnapshot, UiToPluginMessage } from '@ux-copy-sync/contracts';
+import type {
+  LayerInfo,
+  LibraryListingItem,
+  PluginToUiMessage,
+  SelectionInfo,
+} from '@string-binder/contracts';
+import { nonCopyReason } from '@string-binder/domain';
+import { ORDER_INDEX_GZIP_BASE64 } from '../generated/order-index';
 import type { UiBridge } from './bridge';
+import { base64ToBytes, gunzipText } from './codec';
 
-const targets: TargetSnapshot[] = Array.from({ length: 6 }, (_, index) => ({
-  id: `text-${index + 1}`,
-  name: [
-    'Order title',
-    'Helper text',
-    'Email label',
-    'Email hint',
-    'Primary button',
-    'Footer note',
-  ][index]!,
-  originalCharacters: [
-    'Review your order',
-    "We won't charge you yet",
-    'Email',
-    'you@example.com',
-    'Pay',
-    'Need help?',
-  ][index]!,
-  originalName: [
-    'Order title',
-    'Helper text',
-    'Email label',
-    'Email hint',
-    'Primary button',
-    'Footer note',
-  ][index]!,
-  originalAutoRename: false,
-  x: 16,
-  y: index * 60,
-  width: 300,
-  height: 40,
-  visible: true,
-}));
-
-const source = {
-  cellUrl: 'https://docs.google.com/spreadsheets/d/1abcDEFghiJKLmnopQRS/edit#gid=123&range=D18',
-  spreadsheetId: '1abcDEFghiJKLmnopQRS',
-  spreadsheetTitle: 'Product Copy',
-  sheetId: 123,
-  sheetTitle: 'Checkout',
-  startCell: 'D18',
-  scannedThroughCell: 'D25',
-  requestedCount: targets.length,
-  fingerprint: '0'.repeat(64),
-};
-
-const values = [
-  'Check your order',
-  'We will only charge after confirmation',
-  'Email address',
-  'Use your work email',
-  'Continue to payment',
-  'Payment complete',
-].map((value, index) => ({
-  id: `D${18 + index}`,
-  value,
-  row: 18 + index,
-  cell: `D${18 + index}`,
-}));
-
+/** Dev-only stand-in for the Figma controller (`pnpm dev:ui`). */
 export function mockBridge(): UiBridge {
-  let listener: ((message: PluginToUiMessage) => void) | undefined;
-  let mockPreviewLayerId: string | null = null;
-  let previewTargetEvents = 0;
-  const setMockPreviewTarget = (layerId: string | null) => {
-    if (mockPreviewLayerId === layerId) return;
-    mockPreviewLayerId = layerId;
-    previewTargetEvents += 1;
-    if (layerId) document.body.dataset.previewLayerId = layerId;
-    else delete document.body.dataset.previewLayerId;
-    document.body.dataset.previewTargetEvents = String(previewTargetEvents);
+  const listeners = new Set<(message: PluginToUiMessage) => void>();
+  const emit = (message: PluginToUiMessage) =>
+    setTimeout(() => listeners.forEach((listener) => listener(message)), 30);
+
+  const layers: LayerInfo[] = [
+    ['Title', 'Lorem ipsum dolor'],
+    ['Subtitle', 'Lorem ipsum dolor sit amet consectetur'],
+    ['Amount', 'Rp10.000'],
+    ['Label', 'Lorem ipsum'],
+    ['Body', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'],
+    ['Date', '12 Agu 2026'],
+    ['Caption', 'Lorem ipsum dolor sit'],
+    ['Button label', 'Lorem'],
+  ].map(([name, characters], i) => ({
+    id: `1:${i + 1}`,
+    name: name!,
+    characters: characters!,
+    inInstance: name === 'Button label',
+    boundKey: null,
+    boundName: null,
+    stored: null,
+    autoSkipReason: nonCopyReason({ characters: characters!, layerName: name!, ancestorNames: [] }),
+  }));
+  const selection: SelectionInfo = {
+    frameId: '1:0',
+    frameName: 'Investment – Landing page',
+    contextNames: ['Investment – Landing page', 'Investment', 'Flows'],
+    layers,
   };
-  const emit = (message: PluginToUiMessage) => setTimeout(() => listener?.(message), 0);
-  const params = new URLSearchParams(window.location.search);
-  const count = Math.min(100, Math.max(1, Number(params.get('targets') ?? targets.length)));
-  const activeTargets =
-    count === targets.length
-      ? targets
-      : Array.from({ length: count }, (_, index) => ({
-          ...targets[index % targets.length]!,
-          id: `text-${index + 1}`,
-          name: `Copy layer ${index + 1}`,
-          originalCharacters: `Current copy ${index + 1}`,
-          originalName: `Copy layer ${index + 1}`,
-          y: index * 48,
-        }));
-  const longCopy = params.get('fixture') === 'long';
-  const duplicateCopy = params.get('fixture') === 'duplicates';
-  const syncedCopy = params.get('fixture') === 'synced';
-  const allSyncedCopy = params.get('fixture') === 'all-synced';
-  const multilineCopy = params.get('fixture') === 'multiline';
-  const activeValues = Array.from({ length: count }, (_, index) => ({
-    id: `D${18 + index}`,
-    value: duplicateCopy
-      ? 'Repeated approved copy'
-      : longCopy
-        ? `Long approved copy ${index + 1}. ${'This copy remains fully reviewable. '.repeat(12)}`
-        : multilineCopy
-          ? `Line one ${index + 1}\nLine two\nLine three`
-          : values[index % values.length]!.value,
-    row: 18 + index,
-    cell: `D${18 + index}`,
-  })).slice(0, params.get('fixture') === 'partial' ? Math.max(1, count - 2) : count);
-  const reviewTargets = allSyncedCopy
-    ? activeTargets.map((target, index) => ({
-        ...target,
-        originalCharacters: activeValues[index]?.value ?? target.originalCharacters,
-        originalName: activeValues[index]?.value ?? target.originalName,
-      }))
-    : syncedCopy
-      ? activeTargets.map((target, index) =>
-          index === 0
-            ? {
-                ...target,
-                originalCharacters: 'Check your order',
-                originalName: 'Check your order',
-              }
-            : target,
-        )
-      : activeTargets;
-  const activeSource = { ...source, requestedCount: count };
-  const selection = {
-    containerId: 'root',
-    containerName: 'Checkout / Payment',
-    containerType: 'FRAME',
-    visibleTextCount: activeTargets.length,
-  };
-  const invalidSelection = params.get('selection') === 'invalid';
-  const staleFixture = params.get('fixture') === 'stale-figma';
-  const staleSourceFixture = params.get('fixture') === 'stale-source';
-  const entryFixture = params.get('fixture') === 'entry';
-  let staleSent = false;
-  let currentPreview = false;
+
+  let listing: LibraryListingItem[] = [];
+  const humanize = (name: string) =>
+    name
+      .slice(name.lastIndexOf('/') + 1)
+      .replace(/^gopay_[a-z]+_/u, '')
+      .replace(/_/gu, ' ');
+
   return {
-    send: (message: UiToPluginMessage) => {
-      switch (message.type) {
-        case 'auth:check':
-          if (entryFixture)
-            emit({ type: 'auth-state', enabledPublicTestMode: true, authenticated: false });
-          else {
-            emit({
-              type: 'auth-state',
-              enabledPublicTestMode: true,
-              authenticated: true,
-              user: { email: 'writer@example.com' },
-              mode: 'authenticated',
-            });
-            emit({
-              type: 'selection-state',
-              selection: invalidSelection ? null : selection,
-              valid: !invalidSelection,
-              count: invalidSelection ? 0 : 1,
-              message: invalidSelection
-                ? 'Select one Frame, Component, or Instance first.'
-                : undefined,
-            });
-          }
-          break;
-        case 'auth:start':
-          emit({
-            type: 'auth-started',
-            flowId: 'mock-flow',
-            expiresAt: new Date(Date.now() + 300_000).toISOString(),
-          });
-          break;
-        case 'auth:poll-tick':
-          emit({ type: 'auth-poll', status: 'pending' });
-          break;
-        case 'get-selection-state':
-          emit({
-            type: 'selection-state',
-            selection: invalidSelection ? null : selection,
-            valid: !invalidSelection,
-            count: invalidSelection ? 0 : 1,
-            message: invalidSelection
-              ? 'Select one Frame, Component, or Instance first.'
-              : undefined,
-          });
-          break;
-        case 'fetch-preview':
-        case 'refresh-preview':
-          currentPreview = true;
-          setMockPreviewTarget(null);
-          const fixture = params.get('fixture');
-          if (
-            fixture === 'empty' ||
-            fixture === 'fetch-error' ||
-            fixture === 'permission' ||
-            fixture === 'no-text'
-          ) {
-            emit({
-              type: 'error',
-              requestId: message.payload.requestId,
-              error: {
-                code:
-                  fixture === 'permission'
-                    ? 'SHEET_ACCESS_DENIED'
-                    : fixture === 'no-text'
-                      ? 'NO_ELIGIBLE_TEXT'
-                      : 'SHEET_READ_FAILED',
-                message:
-                  fixture === 'empty'
-                    ? 'No non-empty Sheet copy was found below the linked cell.'
-                    : fixture === 'permission'
-                      ? 'The Sheet is not shared with this account.'
-                      : fixture === 'no-text'
-                        ? 'No visible text copy was found in this selection.'
-                        : 'The Sheet request failed. Try again.',
-              },
-            });
-            break;
-          }
-          const previewReady = {
-            type: 'preview-ready',
-            requestId: message.payload.requestId,
-            previewToken: 'mock-preview',
-            selection,
-            targets: reviewTargets,
-            source: activeSource,
-            values: activeValues,
-            partial: activeValues.length < activeTargets.length,
-          } as const;
-          if (params.get('fixture') === 'slow') setTimeout(() => listener?.(previewReady), 150);
-          else emit(previewReady);
-          if ((staleFixture || staleSourceFixture) && !staleSent)
-            setTimeout(
-              () =>
-                listener?.({
-                  type: 'preview-stale',
-                  previewToken: 'mock-preview',
-                  kind: staleSourceFixture ? 'source' : 'figma',
-                  reason: staleSourceFixture
-                    ? 'The Sheet copy changed after this review.'
-                    : 'The design changed after this review.',
-                }),
-              25,
-            );
-          staleSent = true;
-          break;
-        case 'preview-target':
-          if (
-            currentPreview &&
-            message.payload.previewToken === 'mock-preview' &&
-            (message.payload.layerId === null ||
-              reviewTargets.some((target) => target.id === message.payload.layerId))
-          )
-            setMockPreviewTarget(message.payload.layerId);
-          break;
-        case 'cancel-fetch':
-          break;
-        case 'select-node':
-          if (currentPreview) {
-            setMockPreviewTarget(null);
-            document.body.dataset.locateLayerId = message.payload.layerId;
-            emit({ type: 'selection-state', selection: null, valid: false, count: 1 });
-          }
-          break;
-        case 'apply-reviewed-pairs':
-          if (params.get('fixture') === 'stale-source')
-            emit({
-              type: 'apply-reviewed-pairs-result',
-              previewToken: 'mock-preview',
-              ok: false,
-              error: {
-                code: 'SOURCE_STALE',
-                message: 'The Sheet copy changed after this review.',
-              },
-            });
-          else if (params.get('fixture') === 'locked')
-            emit({
-              type: 'apply-reviewed-pairs-result',
-              previewToken: 'mock-preview',
-              ok: false,
-              error: {
-                code: 'LOCKED_LAYER',
-                message: 'Unlock the target before applying changes.',
-              },
-            });
-          else if (params.get('fixture') === 'apply-failure')
-            emit({
-              type: 'apply-reviewed-pairs-result',
-              previewToken: 'mock-preview',
-              ok: false,
-              error: {
-                code: 'APPLY_FAILED',
-                message: 'Figma could not update the selected text layers. Try again.',
-              },
-            });
-          else
-            emit({
-              type: 'apply-reviewed-pairs-result',
-              previewToken: 'mock-preview',
-              ok: true,
-              result: {
-                appliedCount: message.payload.pairs.length,
-                layerIds: message.payload.pairs.map((pair) => pair.layerId),
-              },
-            });
-          break;
-        case 'auth:enter-public-test':
-          emit({
-            type: 'auth-state',
-            enabledPublicTestMode: true,
-            authenticated: false,
-            mode: 'public-test',
-          });
-          emit({ type: 'selection-state', selection, valid: true, count: 1 });
-          break;
-        case 'auth:exit-public-test':
-        case 'auth:logout':
-        case 'auth:disconnect':
-          setMockPreviewTarget(null);
-          currentPreview = false;
-          emit({ type: 'auth-state', enabledPublicTestMode: true, authenticated: false });
-          break;
-        case 'discard-preview':
-          setMockPreviewTarget(null);
-          currentPreview = false;
-          break;
-        default:
-          break;
-      }
+    subscribe(listener) {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
     },
-    subscribe: (next) => {
-      listener = next;
-      return () => {
-        listener = undefined;
-      };
+    async send(message) {
+      switch (message.type) {
+        case 'ui:ready':
+          emit({ type: 'index:cached', bytes: null });
+          emit({ type: 'selection', selection });
+          return;
+        case 'index:sync': {
+          const tabs = JSON.parse(await gunzipText(base64ToBytes(ORDER_INDEX_GZIP_BASE64))) as {
+            tabs: Record<string, string[]>;
+          };
+          const names = [...new Set(tabs.tabs.INVESTMENT?.slice(0, 400) ?? [])];
+          listing = [...names].sort().map((name, order) => ({
+            key: `key-${order}`,
+            name,
+            collection: '# Legacy 5: Investment',
+            order,
+          }));
+          emit({ type: 'index:listing', listing, toImport: listing.length });
+          const values = listing.map((item) => ({
+            key: item.key,
+            en: humanize(item.name),
+            id: `ID: ${humanize(item.name)}`,
+            description: '',
+          }));
+          emit({ type: 'index:values', values, done: values.length, total: values.length });
+          emit({ type: 'index:synced', failed: 0 });
+          return;
+        }
+        case 'apply':
+          emit({
+            type: 'apply:done',
+            summary: {
+              boundInFrame: message.decisions.filter((item) => item.action === 'bind').length,
+              boundAcrossPage: 12,
+              framesTouched: 3,
+              skipsCopied: 4,
+              conflicts: [
+                { id: '9:1', name: 'Title', frameName: 'Investment – Landing page Copy' },
+              ],
+              failures: [],
+              propagated: [
+                { id: '9:2', name: 'Subtitle', frameName: 'Investment – Landing page Copy' },
+              ],
+            },
+          });
+          return;
+        case 'flags:select':
+          emit({ type: 'flags:selected', count: 0 });
+          return;
+        default:
+          return;
+      }
     },
   };
 }

@@ -1,96 +1,94 @@
-# UX Copy Sync
+# String Binder
 
-UX Copy Sync is a Figma plugin for bringing approved UX copy from a private
-Google Sheet into one selected Frame, Component, or Instance. It keeps the
-Figma destination order fixed, lets writers reorder Sheet-copy cards, and
-requires a review before any text or layer name changes are written.
+String Binder is a Figma plugin that binds text layers to the string variables in
+the **GoPay Strings** library. A writer selects one frame, assigns a string to
+each visible text layer, and applies. Matching layers in duplicated screens on
+the same page get the same strings automatically.
 
-For the writer-facing workflow, read [docs/USER_GUIDE.md](docs/USER_GUIDE.md).
+## How writers use it
+
+1. Enable the GoPay Strings library in the design file (Assets › Libraries).
+2. Select one frame, component or instance. The plugin lists its visible text
+   layers in reading order: top to bottom, then left to right.
+3. Choose the string for the first layer. Search works like the variables
+   panel: every word must appear in the name, EN value or ID value.
+   - The layers below follow the **legacy sheet order**, so a correctly anchored
+     screen usually needs only a few fixes.
+   - Use ↑/↓ on a row to shift the order from that row down, or pick another
+     string, which restarts the order from that row.
+4. Uncheck layers that are not copy. Amounts, dates, times, phone numbers and
+   status-bar or keyboard text start unchecked. Flag (⚑) layers that need a
+   string that doesn't exist yet.
+5. Click **Apply**. The plugin:
+   - binds the strings;
+   - remembers skips and flags on each layer (shared plugin data `copy/state`);
+   - applies the same bindings and skips to matching layers on the current
+     page.
+
+   Layers already bound to a different string keep their binding and are listed
+   as conflicts. One undo reverts the whole apply.
+
+"Select flagged" selects every layer on the page flagged as needing a new
+string.
+
+## How it works
+
+- **No backend.** The first run imports every string variable in the enabled
+  libraries to read its values. It shows progress while it does this, then
+  stores a gzipped copy of the values in `figma.clientStorage`, per user. Later
+  runs import only variables added since. **Refresh** reloads everything.
+- **Legacy order.** The Figma collections are sorted alphabetically, and the
+  `_text_N` suffixes don't follow the sheets. `scripts/build-order-index.mjs`
+  rebuilds the sheet order from each `tab` and `rec` in
+  `figma-copy-migration/registry/copy-registry.jsonl` into
+  `apps/plugin/src/generated/order-index.ts`. Strings that the sheets never
+  had follow library order.
+- **Matching duplicates.** `packages/domain/src/layer-similarity.ts` scores
+  candidate layers on:
+  - layer path and component slot
+  - position in the frame
+  - text style
+  - layer name
+  - text
+  - frame name
+
+  A candidate matches at a score of 0.75 or more, and each duplicate frame gets
+  at most one match per source layer.
 
 ## Repository map
 
 ```text
-apps/plugin/      React UI, Figma controller, build and development manifest
-apps/backend/     Fastify OAuth/session/Sheets service
-packages/contracts/ shared Zod models, errors, parser, and message contracts
-packages/domain/  pure visibility, reading-order, pairing, scan, and naming rules
-infra/terraform/  dev, staging, and production Cloud Run infrastructure
-docs/             user guide and architecture/operations/testing references
+apps/plugin/          Figma plugin: controller (src/main) and React UI (src/ui)
+packages/contracts/   Zod message schemas shared by controller and UI
+packages/domain/      Pure logic: visibility, reading order, prefill, search, matching, non-copy rules
+scripts/              Order-index generator, sandbox contract check, copy migration
+figma-copy-migration/ Migration data and the copy registry
+docs/                 Copy identity architecture and plugin copy rules
 ```
 
-## Prerequisites
-
-- Node.js 22 LTS
-- pnpm 11
-- Figma desktop or browser for manual plugin QA
-- Google Cloud access for private-Sheet/OAuth deployment
-
-Install and validate from the repository root:
+## Develop
 
 ```bash
-pnpm install --frozen-lockfile
-pnpm lint
-pnpm typecheck
+pnpm install
 pnpm test
+pnpm typecheck
+pnpm lint
 pnpm build
 ```
 
-## Local development
+`pnpm build` regenerates the order index and writes the plugin to
+`apps/plugin/dist`. In Figma desktop, go to Plugins › Development › Import
+plugin from manifest and choose `apps/plugin/dist/manifest.json`.
 
-Run the backend with a local environment file:
+`pnpm dev:ui` serves the UI in a browser with a mock bridge that uses real
+legacy order data, at `/src/ui/index.html`.
 
-```bash
-cp apps/backend/.env.example apps/backend/.env
-pnpm --filter @ux-copy-sync/backend build
-pnpm --filter @ux-copy-sync/backend start
-```
+## To verify in Figma
 
-The development UI harness uses the real React UI against a mock Figma bridge:
+These can only be checked in a real file that uses the library:
 
-```bash
-pnpm dev:ui
-```
-
-It exposes authenticated, six-target fixture data so UI iteration does not
-require opening Figma. The mock bridge is compile-time development code and is
-not included in the production plugin bundle.
-
-Public Sheet test mode is deliberately opt-in for local/staging QA:
-
-```bash
-pnpm --filter @ux-copy-sync/backend build
-ENABLE_PUBLIC_SHEET_TEST_MODE=true pnpm --filter @ux-copy-sync/backend start
-pnpm build:plugin:test
-```
-
-The test build is the development plugin bundle with the “Test with a public
-Sheet” bypass enabled. It writes to `apps/plugin/dist`; running the production
-build afterward replaces that folder with a bundle where the bypass is
-intentionally disabled.
-
-The development build uses `http://localhost:8787` and Figma's
-`devAllowedDomains` network contract. Test mode accepts only public Viewer
-Sheets and is never enabled by the production Terraform environment or
-production manifest.
-
-## Build and import
-
-```bash
-BACKEND_BASE_URL=https://your-backend.example.com pnpm build:plugin:prod
-```
-
-Import `apps/plugin/dist/manifest.json` in Figma development mode. This is the
-only runnable manifest; `apps/plugin/manifest.base.json` is a build template and
-must not be imported directly. The build emits a self-contained `ui.html`, a
-bundled controller, and validates that the manifest's `main`/`ui` paths exist.
-
-## Deployment
-
-The backend container uses the pinned Node 22 image in `Dockerfile`. Terraform
-provisions Cloud Run, Firestore, KMS, Secret Manager access, runtime IAM, and a
-basic 5xx alert. See [infra/terraform/README.md](infra/terraform/README.md) and
-[docs/architecture/OPERATIONS.md](docs/architecture/OPERATIONS.md) for the
-manual Google Auth Platform steps and environment setup.
-
-The GitHub Actions workflows validate pull requests, build the plugin artifact,
-and provide a keyless deployment path using Workload Identity Federation.
+- How long the first import of about 16k library variables takes, and whether
+  importing leaves anything visible in the file.
+- Whether `getVariablesInLibraryCollectionAsync` returns variables in panel
+  order. Only strings that aren't in the legacy sheets depend on this.
+- Binding `characters` on text inside instances.
