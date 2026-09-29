@@ -1,0 +1,212 @@
+{
+  "transfer": {
+    "gopay_transfer_adhocorderhistoryoh_alt1_text": {
+      "$description": "cp_01M3NX240ME6GA85YAKBKFVYRV\nTransfer › Adhoc Order History Oh › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX240ME6GA85YAKBKFVYRV",
+          "platformKey": "gopay_transfer_adhocorderhistoryoh_alt1_text",
+          "semanticPath": "adhoc-order-history-oh/shared/alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Wallet owner"
+    },
+    "gopay_transfer_adhocorderhistoryoh_alt2_text": {
+      "$description": "cp_01M3NX240MEX4RE7TEQ4H92BYC\nTransfer › Adhoc Order History Oh › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX240MEX4RE7TEQ4H92BYC",
+          "platformKey": "gopay_transfer_adhocorderhistoryoh_alt2_text",
+          "semanticPath": "adhoc-order-history-oh/shared/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Owned by"
+    },
+    "gopay_transfer_enveloperamadanwithvoicenote_alt2_text": {
+      "$description": "cp_01M3NX2345FDMTXVSWY21X7RC2\nTransfer › Envelope Ramadan With Voice Note › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2345FDMTXVSWY21X7RC2",
+          "platformKey": "gopay_transfer_enveloperamadanwithvoicenote_alt2_text",
+          "semanticPath": "envelope-ramadan-with-voice-note/shared/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Let your Hadiah THR be as sweet as Iftar with voice note\nVoiced by Sule & Davina Karamoy for your loved ones"
+    },
+    "gopay_transfer_gopayacademy_entrypoint_alt1empowering_text": {
+      "$description": "cp_01M3NX2405EQABY12KK6BJ5EGT\nTransfer › Gopay Academy › Entry Point › Alt 1 Empowering › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2405EQABY12KK6BJ5EGT",
+          "platformKey": "gopay_transfer_gopayacademy_entrypoint_alt1empowering_text",
+          "semanticPath": "gopay-academy/entry-point/alt-1-empowering/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Make money easier to understand"
+    },
+    "gopay_transfer_gopayacademy_entrypoint_alt2playful_text": {
+      "$description": "cp_01M3NX2405EGX8ZQ3WYSMXSJHH\nTransfer › Gopay Academy › Entry Point › Alt 2 Playful › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2405EGX8ZQ3WYSMXSJHH",
+          "platformKey": "gopay_transfer_gopayacademy_entrypoint_alt2playful_text",
+          "semanticPath": "gopay-academy/entry-point/alt-2-playful/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Money can be fun to learn!"
+    },
+    "gopay_transfer_gopayacademy_entrypoint_alt3academic_text": {
+      "$description": "cp_01M3NX2406EANB8W08EQ5Q2E6W\nTransfer › Gopay Academy › Entry Point › Alt 3 Academic › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2406EANB8W08EQ5Q2E6W",
+          "platformKey": "gopay_transfer_gopayacademy_entrypoint_alt3academic_text",
+          "semanticPath": "gopay-academy/entry-point/alt-3-academic/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Know your money better"
+    },
+    "gopay_transfer_otherssection_alt1broadandclearworkswell_text": {
+      "$description": "cp_01M3NX240JFB4S3Q1G613J4MNG\nTransfer › Others Section › Alt 1 Broad And Clear Works Well › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX240JFB4S3Q1G613J4MNG",
+          "platformKey": "gopay_transfer_otherssection_alt1broadandclearworkswell_text",
+          "semanticPath": "others-section/shared/alt-1-broad-and-clear-works-well/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Additional services"
+    },
+    "gopay_transfer_otherssection_alt2makesthefinancial_text": {
+      "$description": "cp_01M3NX240KEDYT8EXEPG814E4K\nTransfer › Others Section › Alt 2 Makes The Financial › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX240KEDYT8EXEPG814E4K",
+          "platformKey": "gopay_transfer_otherssection_alt2makesthefinancial_text",
+          "semanticPath": "others-section/shared/alt-2-makes-the-financial/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "More to explore"
+    },
+    "gopay_transfer_otherssection_alt3flexibleifthesection_text": {
+      "$description": "cp_01M3NX240KEWT83EY6C3QQC19Y\nTransfer › Others Section › Alt 3 Flexible If The Section › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX240KEWT83EY6C3QQC19Y",
+          "platformKey": "gopay_transfer_otherssection_alt3flexibleifthesection_text",
+          "semanticPath": "others-section/shared/alt-3-flexible-if-the-section/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "More financial services"
+    },
+    "gopay_transfer_walletcard_entrypointtext_alt2_text": {
+      "$description": "cp_01M3NX23NZFGMA8HAWBVZEGENX\nTransfer › Wallet Card › Entry Point Text › Alt 2 › Text\nNote: Lebih 1jt, mau coba budgetin?",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NZFGMA8HAWBVZEGENX",
+          "platformKey": "gopay_transfer_walletcard_entrypointtext_alt2_text",
+          "semanticPath": "wallet-card/entry-point-text/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Spending more? Let's solve this!"
+    },
+    "gopay_transfer_walletcard_entrypointtext_alt2_text_2": {
+      "$description": "cp_01M3NX23P0FJMRZYYZTGJRR7D3\nTransfer › Wallet Card › Entry Point Text › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23P0FJMRZYYZTGJRR7D3",
+          "platformKey": "gopay_transfer_walletcard_entrypointtext_alt2_text_2",
+          "semanticPath": "wallet-card/entry-point-text/alt-2/text-plan-spending-ahead",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Plan your spending ahead"
+    },
+    "gopay_transfer_walletcard_entrypointtext_alt3_text": {
+      "$description": "cp_01M3NX23P0FXF8QK1NSCW793B8\nTransfer › Wallet Card › Entry Point Text › Alt 3 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23P0FXF8QK1NSCW793B8",
+          "platformKey": "gopay_transfer_walletcard_entrypointtext_alt3_text",
+          "semanticPath": "wallet-card/entry-point-text/alt-3/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Overspend? Let's set a budget!"
+    },
+    "gopay_transfer_walletcard_entrypointtext_alt3_text_2": {
+      "$description": "cp_01M3NX23P1F48V8YPMYAF2F3XV\nTransfer › Wallet Card › Entry Point Text › Alt 3 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23P1F48V8YPMYAF2F3XV",
+          "platformKey": "gopay_transfer_walletcard_entrypointtext_alt3_text_2",
+          "semanticPath": "wallet-card/entry-point-text/alt-3/text-budget-no-more",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "With a budget, no more surprises"
+    },
+    "gopay_transfer_walletcard_entrypointtext_userwithoutbudgetatleasthas_text": {
+      "$description": "cp_01M3NX23P0FC7B12VRSP56TQS1\nTransfer › Wallet Card › Entry Point Text › User Without Budget At Least Has › Text\nNote: 1jt udah kepake, mau coba lebih hemat pakai budget?",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23P0FC7B12VRSP56TQS1",
+          "platformKey": "gopay_transfer_walletcard_entrypointtext_userwithoutbudgetatleasthas_text",
+          "semanticPath": "wallet-card/entry-point-text/user-without-budget-at-least-has/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "A way to save more money"
+    },
+    "gopay_transfer_walletcard_entrypointtext_userwithoutbudgetexpense_text": {
+      "$description": "cp_01M3NX23NZF31V9R796HC678ES\nTransfer › Wallet Card › Entry Point Text › User Without Budget Expense › Text\nNote: Lebih 500rb dari biasanya, yuk atur budget!",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NZF31V9R796HC678ES",
+          "platformKey": "gopay_transfer_walletcard_entrypointtext_userwithoutbudgetexpense_text",
+          "semanticPath": "wallet-card/entry-point-text/user-without-budget-expense/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Let’s keep this month on track"
+    },
+    "gopay_transfer_widget_topup_bottomsheetpaymentreview_text": {
+      "$description": "cp_01M3NX23JPFFXB1CAS3AB84TSQ\nTransfer › Widget › Topup › Bottom Sheet Payment Review › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23JPFFXB1CAS3AB84TSQ",
+          "platformKey": "gopay_transfer_widget_topup_bottomsheetpaymentreview_text",
+          "semanticPath": "widget/topup/bottom-sheet-payment-review/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Alt 1: Top up via\nAlt 2: Top up source"
+    }
+  }
+}

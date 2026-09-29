@@ -1,0 +1,212 @@
+{
+  "split-bill": {
+    "gopay_splitbill_choosefromgalery_uploadbillprompt_opt2_text": {
+      "$description": "cp_01M3NX214ZF4BSZDR3N0ANT86K\nSplit Bill › Choosefromgalery › Upload Bill Prompt › Opt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX214ZF4BSZDR3N0ANT86K",
+          "platformKey": "gopay_splitbill_choosefromgalery_uploadbillprompt_opt2_text",
+          "semanticPath": "choosefromgalery/upload-bill-prompt/opt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Choose from gallery"
+    },
+    "gopay_splitbill_lenderside_landingalt1_addbill_cta": {
+      "$description": "cp_01M3NX213BE24A7HMG13XXYHDW\nSplit Bill › Lender Side › Landing Alt 1 › Add Bill › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213BE24A7HMG13XXYHDW",
+          "platformKey": "gopay_splitbill_lenderside_landingalt1_addbill_cta",
+          "semanticPath": "lender-side/landing-alt-1/add-bill/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Add new split bill"
+    },
+    "gopay_splitbill_lenderside_landingalt1_amountofparticipantinfo_helper": {
+      "$description": "cp_01M3NX213BF5XRHYGBGDBZZMKJ\nSplit Bill › Lender Side › Landing Alt 1 › Amount Of Participant Info › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213BF5XRHYGBGDBZZMKJ",
+          "platformKey": "gopay_splitbill_lenderside_landingalt1_amountofparticipantinfo_helper",
+          "semanticPath": "lender-side/landing-alt-1/amount-of-participant-info/helper",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Split with {n} people"
+    },
+    "gopay_splitbill_lenderside_landingalt1_pastsplitbillsection_title": {
+      "$description": "cp_01M3NX213BFDV9ZR7G47VHAS3M\nSplit Bill › Lender Side › Landing Alt 1 › Past Split Bill Section › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213BFDV9ZR7G47VHAS3M",
+          "platformKey": "gopay_splitbill_lenderside_landingalt1_pastsplitbillsection_title",
+          "semanticPath": "lender-side/landing-alt-1/past-split-bill-section/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Past split bills"
+    },
+    "gopay_splitbill_lenderside_landingalt1_settlednote_helper": {
+      "$description": "cp_01M3NX213BE4VBP8NHN7F4EGPG\nSplit Bill › Lender Side › Landing Alt 1 › Settled Note › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213BE4VBP8NHN7F4EGPG",
+          "platformKey": "gopay_splitbill_lenderside_landingalt1_settlednote_helper",
+          "semanticPath": "lender-side/landing-alt-1/settled-note/helper",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Settled up!"
+    },
+    "gopay_splitbill_lenderside_landingalt1_share_cta": {
+      "$description": "cp_01M3NX213BE8V8Q86H53G02NWQ\nSplit Bill › Lender Side › Landing Alt 1 › Share › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213BE8V8Q86H53G02NWQ",
+          "platformKey": "gopay_splitbill_lenderside_landingalt1_share_cta",
+          "semanticPath": "lender-side/landing-alt-1/share/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Share"
+    },
+    "gopay_splitbill_lenderside_landingalt1_viewdetail_cta": {
+      "$description": "cp_01M3NX213CFKYTV14F0CB3PE90\nSplit Bill › Lender Side › Landing Alt 1 › View Detail › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213CFKYTV14F0CB3PE90",
+          "platformKey": "gopay_splitbill_lenderside_landingalt1_viewdetail_cta",
+          "semanticPath": "lender-side/landing-alt-1/view-detail/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "View details"
+    },
+    "gopay_splitbill_lenderside_landingalt2_amountofparticipantinfo_helper": {
+      "$description": "cp_01M3NX213CF2FSCE2TYVZ8HJ8M\nSplit Bill › Lender Side › Landing Alt 2 › Amount Of Participant Info › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213CF2FSCE2TYVZ8HJ8M",
+          "platformKey": "gopay_splitbill_lenderside_landingalt2_amountofparticipantinfo_helper",
+          "semanticPath": "lender-side/landing-alt-2/amount-of-participant-info/helper",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Split with {n} people"
+    },
+    "gopay_splitbill_lenderside_landingalt2_pastsplitbillsection_title": {
+      "$description": "cp_01M3NX213DEX780D70MXTHDMGW\nSplit Bill › Lender Side › Landing Alt 2 › Past Split Bill Section › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213DEX780D70MXTHDMGW",
+          "platformKey": "gopay_splitbill_lenderside_landingalt2_pastsplitbillsection_title",
+          "semanticPath": "lender-side/landing-alt-2/past-split-bill-section/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Past split bills"
+    },
+    "gopay_splitbill_lenderside_landingalt2_remainingowedmoney_text": {
+      "$description": "cp_01M3NX213CECH8BY1XPV7AHJ0J\nSplit Bill › Lender Side › Landing Alt 2 › Remaining Owed Money › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213CECH8BY1XPV7AHJ0J",
+          "platformKey": "gopay_splitbill_lenderside_landingalt2_remainingowedmoney_text",
+          "semanticPath": "lender-side/landing-alt-2/remaining-owed-money/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "People still owe you Rp{amount}"
+    },
+    "gopay_splitbill_lenderside_landingalt2_settlednote_helper": {
+      "$description": "cp_01M3NX213DEMRT7XDNQPJ3PNRH\nSplit Bill › Lender Side › Landing Alt 2 › Settled Note › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213DEMRT7XDNQPJ3PNRH",
+          "platformKey": "gopay_splitbill_lenderside_landingalt2_settlednote_helper",
+          "semanticPath": "lender-side/landing-alt-2/settled-note/helper",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Settled up!"
+    },
+    "gopay_splitbill_lenderside_landingalt2_viewdetail_cta": {
+      "$description": "cp_01M3NX213DEGZRVJ7JF83QDP2T\nSplit Bill › Lender Side › Landing Alt 2 › View Detail › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213DEGZRVJ7JF83QDP2T",
+          "platformKey": "gopay_splitbill_lenderside_landingalt2_viewdetail_cta",
+          "semanticPath": "lender-side/landing-alt-2/view-detail/cta-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "View details"
+    },
+    "gopay_splitbill_lenderside_landingalt2_viewdetail_cta_2": {
+      "$description": "cp_01M3NX213DERCBDCQHVCZNT5ZB\nSplit Bill › Lender Side › Landing Alt 2 › View Detail › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213DERCBDCQHVCZNT5ZB",
+          "platformKey": "gopay_splitbill_lenderside_landingalt2_viewdetail_cta_2",
+          "semanticPath": "lender-side/landing-alt-2/view-detail/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "View details"
+    },
+    "gopay_splitbill_rescanreceipt_choosefromgallery_opt2_cta": {
+      "$description": "cp_01M3NX2156EZHA2YCDFY7VP4K3\nSplit Bill › Rescanreceipt › Choosefromgallery › Opt 2 › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2156EZHA2YCDFY7VP4K3",
+          "platformKey": "gopay_splitbill_rescanreceipt_choosefromgallery_opt2_cta",
+          "semanticPath": "rescanreceipt/choosefromgallery/opt-2/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Choose from gallery"
+    },
+    "gopay_splitbill_rescanreceipt_takenewpict_opt1_cta": {
+      "$description": "cp_01M3NX2156F79RVW2RMEPQ08ND\nSplit Bill › Rescanreceipt › Takenewpict › Opt 1 › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2156F79RVW2RMEPQ08ND",
+          "platformKey": "gopay_splitbill_rescanreceipt_takenewpict_opt1_cta",
+          "semanticPath": "rescanreceipt/takenewpict/opt-1/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Take a new picture"
+    },
+    "gopay_splitbill_takenewpic_uploadbillprompt_opt1_text": {
+      "$description": "cp_01M3NX214ZE9G9M5Z1BXKD8127\nSplit Bill › Takenewpic › Upload Bill Prompt › Opt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX214ZE9G9M5Z1BXKD8127",
+          "platformKey": "gopay_splitbill_takenewpic_uploadbillprompt_opt1_text",
+          "semanticPath": "takenewpic/upload-bill-prompt/opt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Take a new picture"
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "savings": {
+    "gopay_savings_activation_gopaytabunganlanding_text": {
+      "$description": "cp_01M3NX21E1EAMB559EXTC6AFP5\nSavings › Activation › Gopay Tabungan Landing › Text\nNote: USP: - dapet bunga - ga ada saldo ngendep - ga perlu saldo minimal buat buka rek - transfernya gratis - ga ada admin fee - saldonya bisa dipake buat bayar2 - bisa dipake buat simpen uang",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E1EAMB559EXTC6AFP5",
+          "platformKey": "gopay_savings_activation_gopaytabunganlanding_text",
+          "semanticPath": "activation/shared/gopay-tabungan-landing/text-introducing-gopay",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Introducing\nGoPay Tabungan\nOne account for your financial activities. Activate now!"
+    },
+    "gopay_savings_activation_text_14": {
+      "$description": "cp_01M3NX21E8F89VFHD3DT621FDS\nSavings › Activation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E8F89VFHD3DT621FDS",
+          "platformKey": "gopay_savings_activation_text_14",
+          "semanticPath": "activation/shared/main/text-account-there-s-no",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "On this account there's no minimum balance, and you don't need to pay for monthly admin fee."
+    },
+    "gopay_savings_activation_text_17": {
+      "$description": "cp_01M3NX21E8FSKR469FGCNC31HW\nSavings › Activation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E8FSKR469FGCNC31HW",
+          "platformKey": "gopay_savings_activation_text_17",
+          "semanticPath": "activation/shared/main/text-unlimited-balance-3",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Unlimited Balance"
+    },
+    "gopay_savings_activation_text_18": {
+      "$description": "cp_01M3NX21E9E4VSXTC97ENWS3H6\nSavings › Activation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E9E4VSXTC97ENWS3H6",
+          "platformKey": "gopay_savings_activation_text_18",
+          "semanticPath": "activation/shared/main/text-lps-guarantee",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "LPS will guarantee your balance and interest that are already yours."
+    },
+    "gopay_savings_activation_text_19": {
+      "$description": "cp_01M3NX21E9EMYSRHD1PY6H53R8\nSavings › Activation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E9EMYSRHD1PY6H53R8",
+          "platformKey": "gopay_savings_activation_text_19",
+          "semanticPath": "activation/shared/main/text-instant-upgrade-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Instant upgrade"
+    },
+    "gopay_savings_activation_text_2": {
+      "$description": "cp_01M3NX21E2EVPBGQB0QM4W8J13\nSavings › Activation › Text\nNote: \"analytics_properties\": { \"benefit\": \"UnlimitedBalance\" }",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E2EVPBGQB0QM4W8J13",
+          "platformKey": "gopay_savings_activation_text_2",
+          "semanticPath": "activation/shared/main/text-unlimited-balance-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Unlimited Balance"
+    },
+    "gopay_savings_activation_text_20": {
+      "$description": "cp_01M3NX21E9F81SWG4CYAZC0Z3T\nSavings › Activation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E9F81SWG4CYAZC0Z3T",
+          "platformKey": "gopay_savings_activation_text_20",
+          "semanticPath": "activation/shared/main/text-lps-guarantees-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "LPS guarantees balance up to IDR 2 billion"
+    },
+    "gopay_savings_activation_text_21": {
+      "$description": "cp_01M3NX21E9FDTVDSZHECXN1D02\nSavings › Activation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E9FDTVDSZHECXN1D02",
+          "platformKey": "gopay_savings_activation_text_21",
+          "semanticPath": "activation/shared/main/text-very-simple-quick",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Very simple and quick process to activate GoPay Tabungan"
+    },
+    "gopay_savings_activation_text_22": {
+      "$description": "cp_01M3NX21E9FQ888YZ5S5NJ02NN\nSavings › Activation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E9FQ888YZ5S5NJ02NN",
+          "platformKey": "gopay_savings_activation_text_22",
+          "semanticPath": "activation/shared/main/text-lps-guarantees",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "LPS guarantees balance up to IDR 2 billion"
+    },
+    "gopay_savings_activation_text_6": {
+      "$description": "cp_01M3NX21E3F4HBSGDDWFMVY1YM\nSavings › Activation › Text\nNote: \"analytics_properties\": { \"benefit\": \"FreeGoPayTopUpFee\" }",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E3F4HBSGDDWFMVY1YM",
+          "platformKey": "gopay_savings_activation_text_6",
+          "semanticPath": "activation/shared/main/text-free-gopay-top-up-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Free GoPay top up fee"
+    },
+    "gopay_savings_activation_text_7": {
+      "$description": "cp_01M3NX21E3FF88X5YFWV046N01\nSavings › Activation › Text\nNote: \"analytics_properties\": { \"benefit\": \"Quick&EasyActivation\" }",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E3FF88X5YFWV046N01",
+          "platformKey": "gopay_savings_activation_text_7",
+          "semanticPath": "activation/shared/main/text-instant-upgrade",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Instant upgrade"
+    },
+    "gopay_savings_activation_tiles_text": {
+      "$description": "cp_01M3NX21E2E8JVYNPMVHG0GTPA\nSavings › Activation › Tiles › Text\nNote: \"analytics_properties\": { \"benefit\": \"3.75%Interest\" },",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E2E8JVYNPMVHG0GTPA",
+          "platformKey": "gopay_savings_activation_tiles_text",
+          "semanticPath": "activation/shared/tiles/text-earn-interest-3-75",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Earn interest 3.75%*"
+    },
+    "gopay_savings_entrypointonwalletcard_alt3_text": {
+      "$description": "cp_01M3NX21JHEKJTE7DKN94VJ6D6\nSavings › Entry Point On Wallet Card › Alt 3 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21JHEKJTE7DKN94VJ6D6",
+          "platformKey": "gopay_savings_entrypointonwalletcard_alt3_text",
+          "semanticPath": "entry-point-on-wallet-card/shared/alt-3/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Upgrade & earn 2.5%"
+    },
+    "gopay_savings_entrypointonwalletcard_alt4_text": {
+      "$description": "cp_01M3NX21JHFC9A3RAJ2TP2PHVP\nSavings › Entry Point On Wallet Card › Alt 4 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21JHFC9A3RAJ2TP2PHVP",
+          "platformKey": "gopay_savings_entrypointonwalletcard_alt4_text",
+          "semanticPath": "entry-point-on-wallet-card/shared/alt-4/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Maximize your balance by 2.5%"
+    }
+  }
+}

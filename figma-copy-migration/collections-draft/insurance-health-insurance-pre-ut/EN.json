@@ -1,0 +1,173 @@
+{
+  "insurance-health-insurance-pre-ut": {
+    "gopay_insurance_healthinsurancepreut_onboardingeducationalalt1_text": {
+      "$description": "cp_01M3NX204GEYSTGYSHMFKZZZSF\nInsurance › Health Insurance Pre Ut › Onboarding Educational Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GEYSTGYSHMFKZZZSF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_onboardingeducationalalt1_text",
+          "semanticPath": "health-insurance-pre-ut/shared/onboarding-educational-alt-1/text-life-full-journeys",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Life is full of journeys"
+    },
+    "gopay_insurance_healthinsurancepreut_onboardingeducationalalt1_text_2": {
+      "$description": "cp_01M3NX204GF8FVPD633WD7Z3X4\nInsurance › Health Insurance Pre Ut › Onboarding Educational Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GF8FVPD633WD7Z3X4",
+          "platformKey": "gopay_insurance_healthinsurancepreut_onboardingeducationalalt1_text_2",
+          "semanticPath": "health-insurance-pre-ut/shared/onboarding-educational-alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_onboardingeducationalalt2_text": {
+      "$description": "cp_01M3NX204HF79BZXAS6ASTM554\nInsurance › Health Insurance Pre Ut › Onboarding Educational Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HF79BZXAS6ASTM554",
+          "platformKey": "gopay_insurance_healthinsurancepreut_onboardingeducationalalt2_text",
+          "semanticPath": "health-insurance-pre-ut/shared/onboarding-educational-alt2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Your health is your wealth"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_alt1_text": {
+      "$description": "cp_01M3NX2056ECMA8NKNMWXNDXTC\nInsurance › Health Insurance Pre Ut › Pn › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056ECMA8NKNMWXNDXTC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_alt1_text",
+          "semanticPath": "health-insurance-pre-ut/pn/alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Let's complete the payment so you can still claim the benefit of {product_name}. Click here to pay."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_alt2_text": {
+      "$description": "cp_01M3NX2056EAW9KD4YGFTS4B55\nInsurance › Health Insurance Pre Ut › Pn › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056EAW9KD4YGFTS4B55",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_alt2_text",
+          "semanticPath": "health-insurance-pre-ut/pn/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "If your insurance policy payment is due, you won't be able to make any claims. Click here to pay."
+    },
+    "gopay_insurance_healthinsurancepreut_text_11": {
+      "$description": "cp_01M3NX204HE6ERRZ34DTS6EF3F\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HE6ERRZ34DTS6EF3F",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_11",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-health-problems",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Health problems can arise at any time, while medical costs continue to increase."
+    },
+    "gopay_insurance_healthinsurancepreut_text_13": {
+      "$description": "cp_01M3NX204HEEFR94M0ZG6NTE8N\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HEEFR94M0ZG6NTE8N",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_13",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-gopay-insurance-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "With GoPay Insurance, your finances are safeguarded. You only need your insurance card for claiming any medical bills."
+    },
+    "gopay_insurance_healthinsurancepreut_text_14": {
+      "$description": "cp_01M3NX204HEEJ86HZYN9BTQ948\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HEEJ86HZYN9BTQ948",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_14",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-protect-financial",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Protect your financial well being during illness"
+    },
+    "gopay_insurance_healthinsurancepreut_text_2": {
+      "$description": "cp_01M3NX204GEJGS6KNVPAZSRYZG\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GEJGS6KNVPAZSRYZG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_2",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-life-definitely",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Life is definitely filled with many stories. It starts with your small efforts to find happiness, all the way to your hard work to achieve your dreams."
+    },
+    "gopay_insurance_healthinsurancepreut_text_20": {
+      "$description": "cp_01M3NX204HEX1AR9CKJS4AQ5KF\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HEX1AR9CKJS4AQ5KF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_20",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-gopay-insurance",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "With GoPay Insurance, expensive health costs are no longer your problem. With premiums starting from Rp60,000/month, you can keep you and your loved ones protected."
+    },
+    "gopay_insurance_healthinsurancepreut_text_3": {
+      "$description": "cp_01M3NX204GES3S6WAN42TWZMKG\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GES3S6WAN42TWZMKG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_3",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-however-life-also",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "However, life is also filled with surprises. Health issues can pop up anytime, and if you're not equipped with insurance,  these unexpected costs can quickly deplete your savings."
+    },
+    "gopay_insurance_healthinsurancepreut_text_4": {
+      "$description": "cp_01M3NX204GF4R968068WXGA6Q2\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GF4R968068WXGA6Q2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_4",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-prepare-life",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Prepare for life surprises"
+    },
+    "gopay_insurance_healthinsurancepreut_text_5": {
+      "$description": "cp_01M3NX204GFD897CJNPGZX2SV8\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GFD897CJNPGZX2SV8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_5",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-farewell-health",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Farewell to health expense worries"
+    }
+  }
+}

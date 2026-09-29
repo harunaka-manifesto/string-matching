@@ -1,0 +1,4255 @@
+{
+  "insurance-health-insurance-pre-ut": {
+    "gopay_insurance_healthinsurancepreut_alreadyboughtandgotcard_text": {
+      "$description": "cp_01M3NX204NEQ8SGNQYDBZW85ND\nInsurance › Health Insurance Pre Ut › Already Bought And Got Card › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NEQ8SGNQYDBZW85ND",
+          "platformKey": "gopay_insurance_healthinsurancepreut_alreadyboughtandgotcard_text",
+          "semanticPath": "health-insurance-pre-ut/shared/already-bought-and-got-card/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi GoPay"
+    },
+    "gopay_insurance_healthinsurancepreut_cancer_text": {
+      "$description": "cp_01M3NX204QF4VBYZTP4ST5PAJP\nInsurance › Health Insurance Pre Ut › Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QF4VBYZTP4ST5PAJP",
+          "platformKey": "gopay_insurance_healthinsurancepreut_cancer_text",
+          "semanticPath": "health-insurance-pre-ut/cancer/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perlindungan dari kanker s.d. 100jt."
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_alreadypaid_text": {
+      "$description": "cp_01M3NX2057FKTRXM7AS4YNMGXQ\nInsurance › Health Insurance Pre Ut › Edge Case › Already Paid › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057FKTRXM7AS4YNMGXQ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_alreadypaid_text",
+          "semanticPath": "health-insurance-pre-ut/edge-case/already-paid/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tagihanmu udah lunas"
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_cancelled_text": {
+      "$description": "cp_01M3NX2057FY4T473YKR1M1F5K\nInsurance › Health Insurance Pre Ut › Edge Case › Cancelled › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057FY4T473YKR1M1F5K",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_cancelled_text",
+          "semanticPath": "health-insurance-pre-ut/edge-case/cancelled/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi kamu berhasil dibatalkan"
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_inprocess_text": {
+      "$description": "cp_01M3NX2058F62V7S87ZZMVNTZS\nInsurance › Health Insurance Pre Ut › Edge Case › In Process › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2058F62V7S87ZZMVNTZS",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_inprocess_text",
+          "semanticPath": "health-insurance-pre-ut/edge-case/in-process/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pembayaran tagihanmu masih di proses"
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_nobillstopay_text": {
+      "$description": "cp_01M3NX2057FREB91D3733BM5M7\nInsurance › Health Insurance Pre Ut › Edge Case › No Bills To Pay › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057FREB91D3733BM5M7",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_nobillstopay_text",
+          "semanticPath": "health-insurance-pre-ut/edge-case/no-bills-to-pay/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum ada tagihan bulan ini"
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_nodataavailable_text": {
+      "$description": "cp_01M3NX2057ED7SN2KWK5R6ESHK\nInsurance › Health Insurance Pre Ut › Edge Case › No Data Available › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057ED7SN2KWK5R6ESHK",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_nodataavailable_text",
+          "semanticPath": "health-insurance-pre-ut/edge-case/no-data-available/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak ada tagihan yang harus dibayar saat ini"
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_terminated_text": {
+      "$description": "cp_01M3NX2058EMVR8G68PSNHQH66\nInsurance › Health Insurance Pre Ut › Edge Case › Terminated › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2058EMVR8G68PSNHQH66",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_terminated_text",
+          "semanticPath": "health-insurance-pre-ut/edge-case/terminated/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu udah gak aktif"
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_text_10": {
+      "$description": "cp_01M3NX2058FCD9ATCDV1KQGWGE\nInsurance › Health Insurance Pre Ut › Edge Case › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2058FCD9ATCDV1KQGWGE",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_text_10",
+          "semanticPath": "health-insurance-pre-ut/edge-case/main/text-want-pay-insurance",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kalau mau bayar tagihan asuransi, kamu perlu daftar ulang di halaman Asuransi."
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_text_11": {
+      "$description": "cp_01M3NX2058FSWV87HF37SJBJKH\nInsurance › Health Insurance Pre Ut › Edge Case › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2058FSWV87HF37SJBJKH",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_text_11",
+          "semanticPath": "health-insurance-pre-ut/edge-case/main/text-wait-until-payment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Silakan tunggu pembayaran sampai selesai."
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_text_2": {
+      "$description": "cp_01M3NX2057EY9BZPNWA5BZVJTX\nInsurance › Health Insurance Pre Ut › Edge Case › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057EY9BZPNWA5BZVJTX",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_text_2",
+          "semanticPath": "health-insurance-pre-ut/edge-case/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nanti kalau udah ada, bayarnya bisa lewat sini"
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_text_4": {
+      "$description": "cp_01M3NX2057F03BC0D2G04G4TK7\nInsurance › Health Insurance Pre Ut › Edge Case › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057F03BC0D2G04G4TK7",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_text_4",
+          "semanticPath": "health-insurance-pre-ut/edge-case/main/text-so-don-t-need-pay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Jadi kamu gak perlu bayar lagi, ya."
+    },
+    "gopay_insurance_healthinsurancepreut_edgecase_text_6": {
+      "$description": "cp_01M3NX2057FGGRVER7J0EY465J\nInsurance › Health Insurance Pre Ut › Edge Case › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057FGGRVER7J0EY465J",
+          "platformKey": "gopay_insurance_healthinsurancepreut_edgecase_text_6",
+          "semanticPath": "health-insurance-pre-ut/edge-case/main/text-haven-t-applied",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Soalnya kamu belum daftar asuransi. Kalau berminat dengan fitur ini, ajukan dari halaman Asuransi ya."
+    },
+    "gopay_insurance_healthinsurancepreut_entrypointonmoney_text": {
+      "$description": "cp_01M3NX204QFV0RAJTPBF9SHCPQ\nInsurance › Health Insurance Pre Ut › Entry Point On Money › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QFV0RAJTPBF9SHCPQ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_entrypointonmoney_text",
+          "semanticPath": "health-insurance-pre-ut/shared/entry-point-on-money/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek polis kamu di sini"
+    },
+    "gopay_insurance_healthinsurancepreut_entrypointonmoneyprepurchase_text": {
+      "$description": "cp_01M3NX204QF3BSBYB5KM60EZQE\nInsurance › Health Insurance Pre Ut › Entry Point On Money Prepurchase › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QF3BSBYB5KM60EZQE",
+          "platformKey": "gopay_insurance_healthinsurancepreut_entrypointonmoneyprepurchase_text",
+          "semanticPath": "health-insurance-pre-ut/shared/entry-point-on-money-prepurchase/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi terjangkau untuk kesehatanmu"
+    },
+    "gopay_insurance_healthinsurancepreut_firstpurchase_text": {
+      "$description": "cp_01M3NX204PFF0TNTCHF4RWYNPB\nInsurance › Health Insurance Pre Ut › First Purchase › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PFF0TNTCHF4RWYNPB",
+          "platformKey": "gopay_insurance_healthinsurancepreut_firstpurchase_text",
+          "semanticPath": "health-insurance-pre-ut/shared/first-purchase/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Periode asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_guideline_text": {
+      "$description": "cp_01M3NX204MFT1VEVGJXYR7ZYE9\nInsurance › Health Insurance Pre Ut › Guideline › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MFT1VEVGJXYR7ZYE9",
+          "platformKey": "gopay_insurance_healthinsurancepreut_guideline_text",
+          "semanticPath": "health-insurance-pre-ut/shared/guideline/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak bisa daftar asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_ha_text": {
+      "$description": "cp_01M3NX204QF87VW3B6G5B0A45X\nInsurance › Health Insurance Pre Ut › Ha › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QF87VW3B6G5B0A45X",
+          "platformKey": "gopay_insurance_healthinsurancepreut_ha_text",
+          "semanticPath": "health-insurance-pre-ut/ha/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Jaminan uang tunai s.d. 100jt."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_cancelled_text": {
+      "$description": "cp_01M3NX204RFDEAF7N41VHYB011\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Cancelled › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RFDEAF7N41VHYB011",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_cancelled_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/cancelled/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi berhasil dibatalkan. Klik untuk daftar ulang"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_carddetail_text": {
+      "$description": "cp_01M3NX204VFDZ8AYNP02A4XMP8\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Card Detail › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VFDZ8AYNP02A4XMP8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_carddetail_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/card-detail/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "No. polis"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_cardnotready_text": {
+      "$description": "cp_01M3NX204WEGZ9EZ46N0QGAY60\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Card Not Ready › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEGZ9EZ46N0QGAY60",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_cardnotready_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/card-not-ready/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kartu diproses dalam 3 hari kerja. Sebelum kartu aktif, klaim dilakukan dengan penggantian dana."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_cta": {
+      "$description": "cp_01M3NX204SETHA8WB26JW2X6T1\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SETHA8WB26JW2X6T1",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_cta",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek daftar rumah sakit"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_cta_2": {
+      "$description": "cp_01M3NX2056ETZAC07N6QV6D8CS\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056ETZAC07N6QV6D8CS",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_cta_2",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/cta-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bayar"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_description": {
+      "$description": "cp_01M3NX204REGSB7GYC8RY3S6DP\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REGSB7GYC8RY3S6DP",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_description",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Klaim biaya pengobatanmu di mitra rumah sakit atau klinik kami."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_edgecase_text": {
+      "$description": "cp_01M3NX204TEMF8YR8BD6YRG7K3\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Edge Case › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TEMF8YR8BD6YRG7K3",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_edgecase_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/edge-case/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum ada mitra RS/klinik"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_edgecase_text_2": {
+      "$description": "cp_01M3NX2053FQ6VNJG7YBKZ6P17\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Edge Case › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053FQ6VNJG7YBKZ6P17",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_edgecase_text_2",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/edge-case/text-couldn-t-register",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak bisa daftar asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_edukasisnippet_text": {
+      "$description": "cp_01M3NX204SE53AQE0Z353PC4QK\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Edukasi Snippet › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SE53AQE0Z353PC4QK",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_edukasisnippet_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/edukasi-snippet/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pentingnya asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_en60kid60rb_text": {
+      "$description": "cp_01M3NX204ZFBMBPVGM1CRJJRD1\nInsurance › Health Insurance Pre Ut › Ha And Cancer › En 60k Id 60rb › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZFBMBPVGM1CRJJRD1",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_en60kid60rb_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/en-60k-id-60rb/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{amount}rb"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_entrypointonmoney_text": {
+      "$description": "cp_01M3NX204QEAJ86VD22EPTSFJ1\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Entry Point On Money › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QEAJ86VD22EPTSFJ1",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_entrypointonmoney_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/entry-point-on-money/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek polis kamu di sini"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_firstpurchase_text": {
+      "$description": "cp_01M3NX2055EN5ATGE7NN65BBWN\nInsurance › Health Insurance Pre Ut › Ha And Cancer › First Purchase › Text\nNote: Kesehatan Jantung Kanker Health Heart Cancer",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055EN5ATGE7NN65BBWN",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_firstpurchase_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/first-purchase/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tipe asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_guideline_text": {
+      "$description": "cp_01M3NX2053E6YBX3F0DWEJG75M\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Guideline › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053E6YBX3F0DWEJG75M",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_guideline_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/guideline/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak bisa daftar asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_herocopy_text": {
+      "$description": "cp_01M3NX204REYCVCN4WHZDY8H79\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Hero Copy › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REYCVCN4WHZDY8H79",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_herocopy_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/hero-copy/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_herocopyalternative_text": {
+      "$description": "cp_01M3NX204RF208QKN482WWWK4S\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Hero Copy Alternative › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RF208QKN482WWWK4S",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_herocopyalternative_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/hero-copy-alternative/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dapetin asuransi kesehatan mulai dari 60rb!"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_lapseterminated_text": {
+      "$description": "cp_01M3NX204REGGR3EKBDA0ZRSSQ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Lapse Terminated › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REGGR3EKBDA0ZRSSQ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_lapseterminated_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/lapse-terminated/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu udah gak aktif. Aktifin ulang di sini"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_m2_text": {
+      "$description": "cp_01M3NX204WEKWBT83W7ZPAFWE0\nInsurance › Health Insurance Pre Ut › Ha And Cancer › M2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEKWBT83W7ZPAFWE0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_m2_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/m2/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Manfaat rawat jalan gak tersedia dalam paket standar"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_monthlypayment_text": {
+      "$description": "cp_01M3NX2055E9WSHPB5VZDJEPQJ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Monthly Payment › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055E9WSHPB5VZDJEPQJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_monthlypayment_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/monthly-payment/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_nikregistered_text": {
+      "$description": "cp_01M3NX2052EJD91WZWRZ9KNKDA\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Nik Registered › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052EJD91WZWRZ9KNKDA",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_nikregistered_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/nik-registered/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu udah pernah daftar"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_packageselection_text": {
+      "$description": "cp_01M3NX204REK4VV185Q0FQPSMH\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Package Selection › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REK4VV185Q0FQPSMH",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_packageselection_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/package-selection/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Eksplor paket perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_pending_text": {
+      "$description": "cp_01M3NX204WE1GSG7GXXC3EGENS\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Pending › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WE1GSG7GXXC3EGENS",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_pending_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/pending/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Masih menunggu pembayaranmu. Klik untuk lihat nomor VA."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_placeholder_2": {
+      "$description": "cp_01M3NX2051FCX9M9P5X9VE01D1\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051FCX9M9P5X9VE01D1",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_placeholder_2",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/placeholder-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Masukkan NIK kamu di sini"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_policygoingtobeterminated_text": {
+      "$description": "cp_01M3NX204WEPPVAKKW840KXQJV\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Policy Going To Be Terminated › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEPPVAKKW840KXQJV",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_policygoingtobeterminated_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/policy-going-to-be-terminated/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu gak bisa klaim karena masa tenggang. Silakan bayar premi bulanan sebelum 30 Maret 2024 biar asuransimu gak di-nonaktifkan."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_processing_text": {
+      "$description": "cp_01M3NX204WEE2VG5GNV9W48DX3\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Processing › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEE2VG5GNV9W48DX3",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_processing_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/processing/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pembayaranmu lagi diproses. Klik untuk lihat rinciannya."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_review_text": {
+      "$description": "cp_01M3NX2053EVCS8GX52B44CSPT\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Review › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053EVCS8GX52B44CSPT",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_review_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/review/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pastikan data yang kamu masukkan udah benar sebelum klik Kirim."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_startpayingdate_text": {
+      "$description": "cp_01M3NX204WFVMARZPD9P956Y4H\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Start Paying Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WFVMARZPD9P956Y4H",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_startpayingdate_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/start-paying-date/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tagihan asuransimu udah terbit pada 10 April 2024. Silakan bayar sebelum jatuh tempo."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_statusinsurance_text": {
+      "$description": "cp_01M3NX204QETKAM2HZC4WGY8F1\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Status Insurance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QETKAM2HZC4WGY8F1",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_statusinsurance_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/status-insurance/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum terlindungi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text": {
+      "$description": "cp_01M3NX204QF4TB2228H0DCRY95\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QF4TB2228H0DCRY95",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perlindungan dasar"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_10": {
+      "$description": "cp_01M3NX204REEBA5SWEP5711X59\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REEBA5SWEP5711X59",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_10",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-there-no-penalty",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak ada penalti, bisa berhenti kapan pun."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_101": {
+      "$description": "cp_01M3NX204XFDB89HDGZN3NAWM8\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /incident /kejadian",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XFDB89HDGZN3NAWM8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_101",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-ambulance",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya ambulan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_102": {
+      "$description": "cp_01M3NX204XFFX9X7HEWAEAAV6N\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XFFX9X7HEWAEAAV6N",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_102",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-limit-unlimited",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit: Gak terbatas"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_103": {
+      "$description": "cp_01M3NX204XFH9TGPVYH591HZVD\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /day /hari",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XFH9TGPVYH591HZVD",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_103",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-room-accommodation",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya kamar dan menginap maks. 365 Hari"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_104": {
+      "$description": "cp_01M3NX204XFNM8TTQKWKNHYCK4\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /incident /kejadian",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XFNM8TTQKWKNHYCK4",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_104",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-outpatient-care",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya rawat jalan darurat & rawat gigi akibat kecelakaan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_108": {
+      "$description": "cp_01M3NX204XFWAAGRGB5Y16TWVK\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XFWAAGRGB5Y16TWVK",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_108",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-cashless",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Non-tunai & penggantian dana"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_109": {
+      "$description": "cp_01M3NX204XFZJB1MJY6G1S70A9\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XFZJB1MJY6G1S70A9",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_109",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-other-inpatient",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya aneka perawatan di rumah sakit"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_110": {
+      "$description": "cp_01M3NX204YE01VG4RM7TBA8RRF\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YE01VG4RM7TBA8RRF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_110",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-applied-first-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Berlaku untuk 3 bulan pertama"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_112": {
+      "$description": "cp_01M3NX204YE0FBPPA8Y2N1J604\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /visit /kunjungan",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YE0FBPPA8Y2N1J604",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_112",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-physiotherapy-max-50",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya fisioterapi maks. 50 kali per tahun"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_113": {
+      "$description": "cp_01M3NX204YE2Y93Y8JDPGR455X\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YE2Y93Y8JDPGR455X",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_113",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-limit-unlimited-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit: Gak terbatas"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_117": {
+      "$description": "cp_01M3NX204YEBVAVSPYZN7N23HM\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /day /hari",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YEBVAVSPYZN7N23HM",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_117",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-daily-cash-plan-uses",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Santunan tunai harian (jika menggunakan BPJS) maks. 60 hari"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_118": {
+      "$description": "cp_01M3NX204YEDJBRY9N88W2G57S\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /year /tahun",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YEDJBRY9N88W2G57S",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_118",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-prescribed-medicine",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya obat-obatan dengan resep dokter"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_12": {
+      "$description": "cp_01M3NX204REWC9AFSXE07EDX9A\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REWC9AFSXE07EDX9A",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_12",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-premium-prices-start",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Harga premi mulai dari 60rb s.d. 160rb!"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_121": {
+      "$description": "cp_01M3NX204YEHA9AQ0TDF2PCAVP\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /year /tahun",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YEHA9AQ0TDF2PCAVP",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_121",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-death-permanent",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Santunan meninggal dunia dan cacat tetap akibat kecelakaan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_122": {
+      "$description": "cp_01M3NX204YEM6VY5GG4DANF8ET\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YEM6VY5GG4DANF8ET",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_122",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-limit-available-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit: Gak tersedia"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_123": {
+      "$description": "cp_01M3NX204YEMS8T6T2Z447CN1N\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /year /tahun",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YEMS8T6T2Z447CN1N",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_123",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-basic-dental",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya perawatan gigi dasar"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_124": {
+      "$description": "cp_01M3NX204YEV6BPC2NPY3NBMZ2\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YEV6BPC2NPY3NBMZ2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_124",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-limit-4-million-year",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit: 4 juta/tahun"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_125": {
+      "$description": "cp_01M3NX204YEXHRNGVDMAJ519RY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /incident /kejadian",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YEXHRNGVDMAJ519RY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_125",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-outpatient-care-due",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya rawat jalan darurat akibat kondisi gawat darurat"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_126": {
+      "$description": "cp_01M3NX204YF0KVJ88VC6QPFJ7T\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /year /tahun",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YF0KVJ88VC6QPFJ7T",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_126",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-bereavement",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Santunan kedukaan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_127": {
+      "$description": "cp_01M3NX204YF1QSYCZC6C4EEJP0\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /year /tahun",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YF1QSYCZC6C4EEJP0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_127",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-diagnostic-test-lab",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya tes diagnostik dan laboratorium"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_128": {
+      "$description": "cp_01M3NX204YF3TV9QKMGKKCH7JC\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /visit /kunjungan",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YF3TV9QKMGKKCH7JC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_128",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-general-physician",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya konsultasi dokter umum maks. 30 kunjungan per periode polis"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_129": {
+      "$description": "cp_01M3NX204YFJN9YKZWYHR41BH6\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YFJN9YKZWYHR41BH6",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_129",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-select-protection",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pilih paket perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_130": {
+      "$description": "cp_01M3NX204YFJQB2Q642KT7T85F\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YFJQB2Q642KT7T85F",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_130",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-limit-available-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit: Gak tersedia"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_132": {
+      "$description": "cp_01M3NX204YFX09YSKB9MW0N57Z\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /visit /kunjungan",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YFX09YSKB9MW0N57Z",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_132",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-specialist",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya konsultasi dokter spesialis maks. 30 kunjungan per periode polis"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_133": {
+      "$description": "cp_01M3NX204YFXY9PZJ0AC8E365R\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204YFXY9PZJ0AC8E365R",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_133",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-copayment-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Copayment"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_134": {
+      "$description": "cp_01M3NX204ZE1VT45BCRENFYM3J\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZE1VT45BCRENFYM3J",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_134",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-simulation",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Simulasi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_135": {
+      "$description": "cp_01M3NX204ZE3X9H8NNYCW2PGT7\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZE3X9H8NNYCW2PGT7",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_135",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-claims",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Klaim"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_136": {
+      "$description": "cp_01M3NX204ZE589FX5KR4QRZR87\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZE589FX5KR4QRZR87",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_136",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insurance-cover",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi akan menanggung biaya perawatan dari beberapa jenis penyakit setelah kamu melewati masa tunggu."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_137": {
+      "$description": "cp_01M3NX204ZE7GV4J3761NYA0WN\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZE7GV4J3761NYA0WN",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_137",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-9-months-after",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "9 bulan setelah polis keluar"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_139": {
+      "$description": "cp_01M3NX204ZE98T8JE0TC1FMVHH\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZE98T8JE0TC1FMVHH",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_139",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-policy-information",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Informasi polis"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_142": {
+      "$description": "cp_01M3NX204ZES8RV8WMTVHXE5VJ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZES8RV8WMTVHXE5VJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_142",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-1-month-after-policy",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "1 bulan setelah polis keluar"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_145": {
+      "$description": "cp_01M3NX204ZF2AR972CTQZ84HJ9\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZF2AR972CTQZ84HJ9",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_145",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-during-first-9",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Selama 9 bulan pertama, asuransi tidak akan menanggung biaya perawatan dari penyakit yang sudah ada sebelumnya dan penyakit serius. Kalau kamu menerima diagnosa penyakit serius dalam rentang waktu ini, asuransi akan mulai menerima klaim biaya setelah masa tunggu selesai."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_146": {
+      "$description": "cp_01M3NX204ZF2N9YWDJQHW51MGZ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZF2N9YWDJQHW51MGZ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_146",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-waiting-period",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Masa tunggu perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_147": {
+      "$description": "cp_01M3NX204ZF46VTKRE7FXY4J1S\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZF46VTKRE7FXY4J1S",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_147",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-general-practitioner",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya dokter umum: Rp150.000"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_149": {
+      "$description": "cp_01M3NX204ZFD28R3NM73G70EQM\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZFD28R3NM73G70EQM",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_149",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-here-s-simulation",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Berikut adalah simulasi jika kamu mempunyai GoPay Asuransi dengan paket Reguler"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_15": {
+      "$description": "cp_01M3NX204RFZJR1PVS8CEAXAS4\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RFZJR1PVS8CEAXAS4",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_15",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-view-plans",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lihat paket"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_150": {
+      "$description": "cp_01M3NX204ZFEWVRY217722MFPW\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZFEWVRY217722MFPW",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_150",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-apa-itu-copayment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "About Copayment"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_151": {
+      "$description": "cp_01M3NX204ZFGRV0MKV0P4KVM1R\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZFGRV0MKV0P4KVM1R",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_151",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-exception",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengecualian"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_154": {
+      "$description": "cp_01M3NX204ZFVQTY1JCS5Z52SXA\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ZFVQTY1JCS5Z52SXA",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_154",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-during-waiting",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pada masa tunggu ini, asuransi hanya akan menanggung biaya perawatan yang disebabkan oleh kecelakaan. Asuransi akan menanggung biaya penyakit yang tidak disebabkan oleh kecelakaan, setelah masa tunggu selesai."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_155": {
+      "$description": "cp_01M3NX2050E03B537Y0DAFPQ32\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050E03B537Y0DAFPQ32",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_155",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-20-x-rp650-000-rp130",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "20% x Rp650.000 = Rp130.000"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_156": {
+      "$description": "cp_01M3NX2050E5J8AQ0KFE9A371V\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050E5J8AQ0KFE9A371V",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_156",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-treatment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perawatan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_157": {
+      "$description": "cp_01M3NX2050E629H9T9JTQ3ZWVM\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050E629H9T9JTQ3ZWVM",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_157",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-underwritten",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Penyedia asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_158": {
+      "$description": "cp_01M3NX2050E7G9ZZ2MS1NBR7CQ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050E7G9ZZ2MS1NBR7CQ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_158",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insurance-covers",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi menanggung:"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_159": {
+      "$description": "cp_01M3NX2050E8HV3JFF912YB36V\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050E8HV3JFF912YB36V",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_159",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-outpatient-limit",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit rawat jalan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_16": {
+      "$description": "cp_01M3NX204SE92RX8ZFFAZ99BCZ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SE92RX8ZFFAZ99BCZ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_16",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-preventions-always",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Mencegah lebih baik"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_160": {
+      "$description": "cp_01M3NX2050E9CAFX1MK69Z5MHW\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050E9CAFX1MK69Z5MHW",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_160",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-show-hospital-admin",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Siapkan e-card asuransi dan identitas resmi kamu dan berikan ke admin rumah sakit untuk verifikasi."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_161": {
+      "$description": "cp_01M3NX2050E9CRZ1D306117N4V\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050E9CRZ1D306117N4V",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_161",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-total-rp650-000",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total: Rp650.000"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_162": {
+      "$description": "cp_01M3NX2050EEBV092Q3C1Z0M3Z\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050EEBV092Q3C1Z0M3Z",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_162",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-verification",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Verifikasi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_163": {
+      "$description": "cp_01M3NX2050EKZAYQXY0TZFJ7ET\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050EKZAYQXY0TZFJ7ET",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_163",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-benefits-ll-get",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Manfaat yang kamu dapat"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_164": {
+      "$description": "cp_01M3NX2050EPATDQR6KG862984\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050EPATDQR6KG862984",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_164",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-copayment-applied",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sistem copayment berlaku selama 3 bulan pertama. Info selengkapnya"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_165": {
+      "$description": "cp_01M3NX2050EX5VJ5WGKC1ZFJDE\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050EX5VJ5WGKC1ZFJDE",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_165",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-limit-below-applies",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit di bawah ini berlaku selama satu tahun."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_166": {
+      "$description": "cp_01M3NX2050EXFV6M4F36C7QBJH\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050EXFV6M4F36C7QBJH",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_166",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-pay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu membayar:"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_168": {
+      "$description": "cp_01M3NX2050F73R9RKKAT8WQ6NA\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050F73R9RKKAT8WQ6NA",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_168",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-inpatient-limit",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit rawat inap"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_169": {
+      "$description": "cp_01M3NX2050F7TV5MT4CXGZ5WTR\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050F7TV5MT4CXGZ5WTR",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_169",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-80-x-rp650-000-rp520",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "80% x Rp650.000 = Rp520.000"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_17": {
+      "$description": "cp_01M3NX204SEJ58SR2VQNWSMTY3\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SEJ58SR2VQNWSMTY3",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_17",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-pay-monthly",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bayarnya bulanan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_170": {
+      "$description": "cp_01M3NX2050F92VC33SGSE7WK77\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050F92VC33SGSE7WK77",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_170",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-got",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_174": {
+      "$description": "cp_01M3NX2050FFA861729X7EQMF7\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050FFA861729X7EQMF7",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_174",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-oona-insurance",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oona Insurance Indonesia berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK) atas nama PT Asuransi Bina Dana Arta Tbk."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_175": {
+      "$description": "cp_01M3NX2050FPPTMDRVPWHHVCJ5\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050FPPTMDRVPWHHVCJ5",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_175",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-prescription",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya obat sesuai resep: Rp500.000"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_177": {
+      "$description": "cp_01M3NX2050FWBS12YEVTMPGPF6\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050FWBS12YEVTMPGPF6",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_177",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-receive-treatment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lakukan pengobatan atau proses layanan kesehatan yang kamu butuhkan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_179": {
+      "$description": "cp_01M3NX2051E9189WK3KA0ACC45\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051E9189WK3KA0ACC45",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_179",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-must-contain-2-60",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Karakter harus berjumlah 2-60 huruf"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_18": {
+      "$description": "cp_01M3NX204SES19EAJTZSPABG1B\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SES19EAJTZSPABG1B",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_18",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insurance-bills",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kalau pakai asuransi biayanya kami yang tanggung."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_181": {
+      "$description": "cp_01M3NX2051EGWT8ENZARB49SH2\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051EGWT8ENZARB49SH2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_181",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-cashless-claim",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Klaim non tunai"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_182": {
+      "$description": "cp_01M3NX2051EPH8VRMH7PRPXCS2\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051EPH8VRMH7PRPXCS2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_182",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-nik-must-16-numbers",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "NIK harus 16 nomor"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_19": {
+      "$description": "cp_01M3NX204SET0AD2Z92A6BG5PP\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SET0AD2Z92A6BG5PP",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_19",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-learn-more-about",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pelajari asuransi lebih lanjut"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_192": {
+      "$description": "cp_01M3NX2051FQQRNQD3CV6HKXS3\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051FQQRNQD3CV6HKXS3",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_192",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-cover-treatment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya pengobatanmu akan kami jamin sesuai dengan perlindungan yang kamu punya. Jika ada kelebihan biaya, kamu bisa bayar dengan metode pembayaran yang didukung RS."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_195": {
+      "$description": "cp_01M3NX2052E84VW7WCRM039CZD\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052E84VW7WCRM039CZD",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_195",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-apply-must-aged-17",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Buat daftar, kamu perlu berusia 17-55 tahun"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_196": {
+      "$description": "cp_01M3NX2052EABADX8SR3SBDDTJ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052EABADX8SR3SBDDTJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_196",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-must-contain-8-15",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Karakter harus berjumlah 8-15"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_197": {
+      "$description": "cp_01M3NX2052EAQRZ71TJ6Z8AQPP\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052EAQRZ71TJ6Z8AQPP",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_197",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-max-100-characters",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Maks. 100 karakter"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_198": {
+      "$description": "cp_01M3NX2052EAZ87J3148CY7XNV\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052EAZ87J3148CY7XNV",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_198",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-got-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_2": {
+      "$description": "cp_01M3NX204QFNWSHC2Q707FGXKK\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QFNWSHC2Q707FGXKK",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_2",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-essential-protection",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perlindungan esensial"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_20": {
+      "$description": "cp_01M3NX204SET0R35Z62Y4T3CTJ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SET0R35Z62Y4T3CTJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_20",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-medical-bills-costly",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya pengobatan mahal"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_200": {
+      "$description": "cp_01M3NX2052EJDSSJ0YEMDX8RQ0\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052EJDSSJ0YEMDX8RQ0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_200",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-only-get-one-policy",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu cuma bisa punya satu polis dengan satu NIK. Silakan masukkan NIK lain."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_202": {
+      "$description": "cp_01M3NX2052F1WAW7THNB4056PB\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052F1WAW7THNB4056PB",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_202",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-help",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bantuan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_203": {
+      "$description": "cp_01M3NX2052F7R8X3J8XBRAZ2DG\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052F7R8X3J8XBRAZ2DG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_203",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-got-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_206": {
+      "$description": "cp_01M3NX2052FXBB1SZ43S5K53RQ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052FXBB1SZ43S5K53RQ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_206",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-make-sure-type-name",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pastiin kamu ketik nama, email, NIK, dan nomor HP dengan format yang benar. Jangan lupa untuk pilih jenis kelamin dan tanggal lahir kamu."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_208": {
+      "$description": "cp_01M3NX2053E4ZB3WA135DMTW83\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053E4ZB3WA135DMTW83",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_208",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-t-cover-specific",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Soalnya kami belum menanggung penyakit khusus yang ada di pernyataan kesehatan."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_209": {
+      "$description": "cp_01M3NX2053E63RNE4GHKQHGV2Z\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053E63RNE4GHKQHGV2Z",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_209",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-based-gopay-plus",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Berdasarkan data GoPay Plus usiamu gak sesuai dengan syarat ketentuan asuransi kami."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_21": {
+      "$description": "cp_01M3NX204SF32VHQ2S2ZMCD8FV\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SF32VHQ2S2ZMCD8FV",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_21",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-what-gopay-asuransi",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Apa itu GoPay Asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_210": {
+      "$description": "cp_01M3NX2053EGT9NZ64QZN3VCVY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053EGT9NZ64QZN3VCVY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_210",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-account-already",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Soalnya akun kamu ini udah punya polis asuransi yang aktif."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_211": {
+      "$description": "cp_01M3NX2053EMVT62DYMXH2374R\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053EMVT62DYMXH2374R",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_211",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-help-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bantuan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_214": {
+      "$description": "cp_01M3NX2053F6JSHGTG1V0YW178\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053F6JSHGTG1V0YW178",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_214",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-got-5",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_215": {
+      "$description": "cp_01M3NX2053F7ASKJJ48QVXFWPR\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053F7ASKJJ48QVXFWPR",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_215",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insured-party",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tertanggung asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_216": {
+      "$description": "cp_01M3NX2053FA4T6870DGR5FBEB\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053FA4T6870DGR5FBEB",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_216",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-submission-didn-t",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pendaftaranmu gak sesuai dengan ketentuan kami. Klik Bantuan untuk selengkapnya."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_218": {
+      "$description": "cp_01M3NX2053FM0BYYXAGTRBFR2N\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053FM0BYYXAGTRBFR2N",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_218",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-couldn-t-register",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum bisa daftar asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_219": {
+      "$description": "cp_01M3NX2053FNX9TS6XPNGZ8E75\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053FNX9TS6XPNGZ8E75",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_219",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-got-6",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_22": {
+      "$description": "cp_01M3NX204SF3VAYKM3WR8SWAGV\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SF3VAYKM3WR8SWAGV",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_22",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insurance-no-more",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dengan asuransi, gak perlu antri lama untuk dapet pelayanan rumah sakit."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_220": {
+      "$description": "cp_01M3NX2053FSHTS6CB1X9JC6XM\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2053FSHTS6CB1X9JC6XM",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_220",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-got-4",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_221": {
+      "$description": "cp_01M3NX2054E5CAV8GTQZZ57ZX7\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054E5CAV8GTQZZ57ZX7",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_221",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-health-declaration",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pernyataan kesehatan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_222": {
+      "$description": "cp_01M3NX2054E88T0Q4N2CKWR8FK\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054E88T0Q4N2CKWR8FK",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_222",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-specific-diseases",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Penyakit khusus meliputi: Haemorrhoid (Wasir), Fistula, Segala Jenis Kanker/Tumor/Polip/Kista/Benjolan dengan jenis apapun, Radang tonsil (Amandel) yang memerlukan pembedahan, Katarak, Penyakit-penyakit Rongga Sinus, Batu dalam saluran kencing atau sistim empedu, ginjal atau radang kandung empedu, Cardiovascular disease (penyakit jantung), tekanan darah tinggi/rendah, varises, cerebro vascular disorder (stroke), Gastritis, Gangguan pada Usus 12 Jari, TBC, Asthma, Diabetes Melitus (kencing Manis), Gout, Rematik, Hepatitis B, Hepatitis non A, non B, Hepatitis C, Cirrhosis Hepatikum, Hyperthyroidism, Hypothyroidism, Penyakit kulit yang tidak memerlukan antibiotik untuk pengobatan, Epilepsi, Pengerasan sum-sum tulang"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_223": {
+      "$description": "cp_01M3NX2054EJSBHCM4S8N2SJSY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054EJSBHCM4S8N2SJSY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_223",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-includes-undergoing",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hal ini termasuk: menjalani perawatan, pembedahan, investigasi medis atau tes yang diperlukan untuk mendiagnosis, mengobati suatu kondisi penyakit atau kecelakaan (termasuk yang direncanakan atau tertunda)."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_224": {
+      "$description": "cp_01M3NX2054EK8RGF8J0R3A1DJF\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054EK8RGF8J0R3A1DJF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_224",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-i-am-currently",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tidak sedang dirawat di rumah sakit"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_227": {
+      "$description": "cp_01M3NX2054EXMAX8EW1TK4H6EW\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054EXMAX8EW1TK4H6EW",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_227",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-i-one-conditions",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saya memiliki salah satu kondisi di atas"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_228": {
+      "$description": "cp_01M3NX2054EYT85KCHBAAJ5TPP\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054EYT85KCHBAAJ5TPP",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_228",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-i-agree-there",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saya setuju bahwa jika ada pernyataan yang tidak akurat atau tidak memenuhi kewajiban sebagai Pemegang Polis/Tertanggung, Penanggung memiliki hak untuk mengakhiri atau membatalkan polis tanpa pengembalian premi."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_229": {
+      "$description": "cp_01M3NX2054F529N6HR9HJR3YBZ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054F529N6HR9HJR3YBZ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_229",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-i-read-understood",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saya telah membaca, memahami, dan menyetujui semua isi Syarat dan Ketentuan Produk serta Syarat dan Ketentuan GoPay Asuransi."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_23": {
+      "$description": "cp_01M3NX204SFA0R2PVZJBRJY4CP\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFA0R2PVZJBRJY4CP",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_23",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-comprehensive",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Manfaat yang menyeluruh"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_232": {
+      "$description": "cp_01M3NX2054FBVRHN1KK5WB5FFG\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054FBVRHN1KK5WB5FFG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_232",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-i-read-agree-terms",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saya sudah membaca dan setuju dengan Syarat & Ketentuan dan Kebijakan Privasi."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_233": {
+      "$description": "cp_01M3NX2054FEVB4TKG7S90A5Y3\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054FEVB4TKG7S90A5Y3",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_233",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-i-hereby-declare",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dengan ini menyatakan bahwa saya:"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_235": {
+      "$description": "cp_01M3NX2054FGMAD0FKS0WAD3PF\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054FGMAD0FKS0WAD3PF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_235",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-protection-package",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_236": {
+      "$description": "cp_01M3NX2054FKKVMPZWE2J0YMCR\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054FKKVMPZWE2J0YMCR",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_236",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-do-any-specific",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tidak memiliki penyakit khusus"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_238": {
+      "$description": "cp_01M3NX2055E2JVAJKSY1CTCBAE\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055E2JVAJKSY1CTCBAE",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_238",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-policy-holder",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pemegang polis"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_239": {
+      "$description": "cp_01M3NX2055E88SJBB8Q4X0WP14\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055E88SJBB8Q4X0WP14",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_239",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-1-year",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "1 tahun"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_24": {
+      "$description": "cp_01M3NX204SFHDA85BP0M5W6GQ1\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFHDA85BP0M5W6GQ1",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_24",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insurance-gives-free",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada tes kesehatan gratis dari asuransi, sadari risiko penyakit di masa depan."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_240": {
+      "$description": "cp_01M3NX2055E93A855T4KW71G76\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055E93A855T4KW71G76",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_240",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insurance-period",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Periode asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_243": {
+      "$description": "cp_01M3NX2055ERXR65K52E25DYEY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055ERXR65K52E25DYEY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_243",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-payment-frequency",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Frekuensi pembayaran"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_247": {
+      "$description": "cp_01M3NX2055EYTTK8V6KQCGFMZA\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055EYTTK8V6KQCGFMZA",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_247",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-policy-holder-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pemegang polis"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_248": {
+      "$description": "cp_01M3NX2055F6QTE4A6YK7SSBYF\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: Standar Reguler Premium",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055F6QTE4A6YK7SSBYF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_248",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insurance-plan",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_25": {
+      "$description": "cp_01M3NX204SFKJAH81WZVZ04H6M\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFKJAH81WZVZ04H6M",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_25",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-pay-insurance-every",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bayar asuransi tiap bulan biar sekalian pas gajian. Tanpa penalti!"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_250": {
+      "$description": "cp_01M3NX2055FK8889GZV3W0DBJT\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055FK8889GZV3W0DBJT",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_250",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-total-insured",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Jumlah tertanggung"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_251": {
+      "$description": "cp_01M3NX2055FN1S7DCQJZFTQNTN\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055FN1S7DCQJZFTQNTN",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_251",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-total-insured-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Jumlah tertanggung"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_253": {
+      "$description": "cp_01M3NX2055FY5AJQXN6PT01N1W\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055FY5AJQXN6PT01N1W",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_253",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-service-fee",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya jasa"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_26": {
+      "$description": "cp_01M3NX204SFNDVH1DX1J6A3CE6\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFNDVH1DX1J6A3CE6",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_26",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-affordable-premium",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Harga ramah kantong"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_27": {
+      "$description": "cp_01M3NX204SFPXRT9HXJ5SVDDFH\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFPXRT9HXJ5SVDDFH",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_27",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-sickness-come",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sakit datang tiba-tiba"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_28": {
+      "$description": "cp_01M3NX204SFTS97RK4Z9PYS2SQ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFTS97RK4Z9PYS2SQ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_28",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-provide-unlimited",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kami menyediakan limit rawat inap yang tak terbatas."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_29": {
+      "$description": "cp_01M3NX204SFXZAXJ1FVDHFB6BS\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFXZAXJ1FVDHFB6BS",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_29",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-starting-60k-month",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Mulai dari 60rb/bulan bisa dapet asuransi kesehatan!"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_3": {
+      "$description": "cp_01M3NX204RE05VDCP4A4ZYD3F2\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RE05VDCP4A4ZYD3F2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_3",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-protect-today-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lindungi diri untuk masa depan yang berseri"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_30": {
+      "$description": "cp_01M3NX204TE3SVPV0AJXGKMP3J\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TE3SVPV0AJXGKMP3J",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_30",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-how-apply-gopay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bagaimana cara membeli GoPay Asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_31": {
+      "$description": "cp_01M3NX204TEAFSYXK89C446D80\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TEAFSYXK89C446D80",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_31",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-purchase-through",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu dapat membelinya melalui aplikasi GoPay. Cukup buka aplikasi tersebut, cari fitur asuransi, dan pilih GoPay Asuransi. Selanjutnya, Kamu tinggal pilih paket yang sesuai dengan pilihan kamu, kemudia isi formulir pendaftaran dan proses pembayaran kamu. Setelah pembayaran berhasil, Polis kamu akan segera terbit."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_32": {
+      "$description": "cp_01M3NX204TEAM8PZ9C0FBRJP4A\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TEAM8PZ9C0FBRJP4A",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_32",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-list-clinic-hospital",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Daftar mitra rumah sakit & klinik"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_33": {
+      "$description": "cp_01M3NX204TEAYSXD183P0KQAE0\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TEAYSXD183P0KQAE0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_33",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-gopay-asuransi",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Asuransi adalah produk asuransi yang ditawarkan oleh Aplikasi GoPay. Saat ini GoPay Asuransi menyediakan asuransi kesehatan yang dirancang untuk memberikan perlindungan finansial terhadap risiko kesehatan seperti biaya rawat inap, biaya medis, dan lainnya."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_34": {
+      "$description": "cp_01M3NX204TEFY9FGNZVHHNDA7K\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TEFY9FGNZVHHNDA7K",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_34",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-there-s-technical",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada gangguan teknis"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_35": {
+      "$description": "cp_01M3NX204TEH3RPWMYN01FRCGF\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TEH3RPWMYN01FRCGF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_35",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-don-t-worry-re",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tenang, lagi kami cariin solusinya. Silakan coba lagi nanti, ya."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_36": {
+      "$description": "cp_01M3NX204TER4VWDJS52JG8NY8\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TER4VWDJS52JG8NY8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_36",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-why-do-i-apply-gopay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kenapa harus daftar GoPay Asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_37": {
+      "$description": "cp_01M3NX204TEVV86PGQBJ0ZW7XX\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TEVV86PGQBJ0ZW7XX",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_37",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-claims-process-use-e",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Proses klaim menggunakan Kartu Elektronik yang dapat diakses di aplikasi Gopay setelah Polis kamu aktif. Untuk melakukan klaim Cukup tunjukan Kartu ini ke Rumah Sakit atau Klinik yang bekerja sama."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_38": {
+      "$description": "cp_01M3NX204TF1QBHRQDBAFHD4ZY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TF1QBHRQDBAFHD4ZY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_38",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-applying-gopay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Daftar GoPay Asuransi memberikan Kamu keamanan finansial dalam menghadapi risiko kesehatan yang tidak terduga. Dengan premi yang terjangkau, Kamu dapat memperoleh manfaat perlindungan yang luas dan merasa lebih tenang secara finansial."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_39": {
+      "$description": "cp_01M3NX204TF2JTPEDQEWSND5ZW\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TF2JTPEDQEWSND5ZW",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_39",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-currently-gopay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saat ini, GoPay Asuransi hanya tersedia untuk pembelian oleh pemegang akun GoPay. Ini berarti bahwa setiap polis asuransi yang dibeli hanya akan mencakup perlindungan bagi satu individu"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_4": {
+      "$description": "cp_01M3NX204RE0RTFP8WKTXC9Y81\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RE0RTFP8WKTXC9Y81",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_4",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-protect-today",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lindungi diri untuk masa depan lebih berseri"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_40": {
+      "$description": "cp_01M3NX204TF2ZSHNFDQ4WRW5DH\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TF2ZSHNFDQ4WRW5DH",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_40",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-view-insurance-plans",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lihat paket asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_41": {
+      "$description": "cp_01M3NX204TF3TSMW6KJBM9JBFG\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TF3TSMW6KJBM9JBFG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_41",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-currently-premium",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saat ini harga premi GoPay Asuransi adalah Rp60.000 untuk pake Standar, Rp100.000 untuk paket Reguler dan Rp 160.000 untuk paket Premium"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_42": {
+      "$description": "cp_01M3NX204TF7QRM95344ZKWMFS\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TF7QRM95344ZKWMFS",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_42",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-select-city",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pilih kota"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_43": {
+      "$description": "cp_01M3NX204TF8Q8BAP9HFZ2TZRF\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TF8Q8BAP9HFZ2TZRF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_43",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-all-hospital-clinic",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Semua RS & klinik"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_44": {
+      "$description": "cp_01M3NX204TFB68H37TW3ZTE7MR\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TFB68H37TW3ZTE7MR",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_44",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-select-other-city",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Silakan coba kota atau provinsi lain."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_45": {
+      "$description": "cp_01M3NX204TFGS8AZ2D6D4ZVYYD\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TFGS8AZ2D6D4ZVYYD",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_45",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-select-province",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pilih provinsi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_46": {
+      "$description": "cp_01M3NX204TFN7VCZCCQSP8HBCN\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TFN7VCZCCQSP8HBCN",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_46",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-search-result",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hasil pencarian"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_47": {
+      "$description": "cp_01M3NX204TFSA88TEZCX529NC8\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TFSA88TEZCX529NC8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_47",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-how-much-gopay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Berapa harga GoPay Asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_48": {
+      "$description": "cp_01M3NX204TFTABJYR927W4TFCZ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TFTABJYR927W4TFCZ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_48",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-how-claim-using",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bagaimana cara klaim GoPay Asuransi?"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_49": {
+      "$description": "cp_01M3NX204TFTGRR8DZ5KM57ZSZ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TFTGRR8DZ5KM57ZSZ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_49",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-i-apply-insurance",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Apakah saya bisa mendaftarkan asuransi untuk orang lain?"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_50": {
+      "$description": "cp_01M3NX204TFXM9HREYDFN2TV9W\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204TFXM9HREYDFN2TV9W",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_50",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-find-clinic-hospital",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cari rumah sakit atau klinik yang ingin kamu tuju di sini."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_51": {
+      "$description": "cp_01M3NX204VE1V8HX4D044GS0MC\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VE1V8HX4D044GS0MC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_51",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-protected",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum terlindungi"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_52": {
+      "$description": "cp_01M3NX204VE4WAG6BEC7N52Z24\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VE4WAG6BEC7N52Z24",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_52",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-make-sure-enter",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pastiin kamu masukkin kata kunci yang tepat, ya"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_53": {
+      "$description": "cp_01M3NX204VE7BVGFDTF1GPZMQ7\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VE7BVGFDTF1GPZMQ7",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_53",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-active-date",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tanggal aktif"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_57": {
+      "$description": "cp_01M3NX204VEQJB9MC53X9Y1G86\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VEQJB9MC53X9Y1G86",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_57",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-seem-offline",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yah, internetmu kurang stabil"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_60": {
+      "$description": "cp_01M3NX204VFAYV2SAAH5Y1QTH2\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VFAYV2SAAH5Y1QTH2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_60",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-go-settings-make",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek Pengaturan buat mastiin kamu udah tersambung ke internet atau coba refresh, ya."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_61": {
+      "$description": "cp_01M3NX204VFDNBD5W69EVK58T6\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VFDNBD5W69EVK58T6",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_61",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-download-e-card",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Download e-card"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_62": {
+      "$description": "cp_01M3NX204VFM6TQHA3HPHC45BE\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VFM6TQHA3HPHC45BE",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_62",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-basic-protection",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perlindungan dasar"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_65": {
+      "$description": "cp_01M3NX204VFS3TZF953PNW8YBG\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VFS3TZF953PNW8YBG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_65",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-card-no",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "No. kartu"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_69": {
+      "$description": "cp_01M3NX204VFZ6856HVHW5ST62F\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VFZ6856HVHW5ST62F",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_69",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-essential-protection-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perlindungan esensial"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_7": {
+      "$description": "cp_01M3NX204RE4VS4R7Q5Q8P00RQ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RE4VS4R7Q5Q8P00RQ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_7",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-cool",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_70": {
+      "$description": "cp_01M3NX204VFZD8STCMSG9KGK4H\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VFZD8STCMSG9KGK4H",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_70",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-plan",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_71": {
+      "$description": "cp_01M3NX204WE1CRZ346DR5Q8VAT\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WE1CRZ346DR5Q8VAT",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_71",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-insurance-covers-80",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi tanggung 80%"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_72": {
+      "$description": "cp_01M3NX204WE3SVT9YE618SANCR\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WE3SVT9YE618SANCR",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_72",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-hospitals-clinics",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "RS & Klinik"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_73": {
+      "$description": "cp_01M3NX204WE6YRC96Z4TV2CTH2\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WE6YRC96Z4TV2CTH2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_73",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-copayment-period-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Periode copayment udah selesai. Asuransi akan tanggung 100% klaim yang kamu ajukan."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_74": {
+      "$description": "cp_01M3NX204WEAB8JQKH3P230QBZ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEAB8JQKH3P230QBZ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_74",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-copayment-period",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Periode copayment udah selesai. Asuransi akan menanggung penuh klaim yang kamu ajukan sesuai benefit yang kamu punya."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_75": {
+      "$description": "cp_01M3NX204WEHE851BKHGZQVECS\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEHE851BKHGZQVECS",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_75",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-upgrade-now",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Upgrade sekarang"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_77": {
+      "$description": "cp_01M3NX204WEJ4VAAZJ9BQNR1EC\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEJ4VAAZJ9BQNR1EC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_77",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-upgrade-protection",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Upgrade perlindunganmu buat dapetin manfaat rawat jalan."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_78": {
+      "$description": "cp_01M3NX204WEM5TFV3YTZFXQ1PY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEM5TFV3YTZFXQ1PY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_78",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-incurance-covers-100",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi tanggung 100%"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_79": {
+      "$description": "cp_01M3NX204WEPC92Z5FM8GCYX1X\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEPC92Z5FM8GCYX1X",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_79",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-current-insurance",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket perlindunganmu saat ini belum punya manfaat rawat jalan."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_8": {
+      "$description": "cp_01M3NX204RE93AKFVZG15FGBPC\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RE93AKFVZG15FGBPC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_8",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-see-package-details",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lihat rincian paket"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_80": {
+      "$description": "cp_01M3NX204WETRBEJ8G6CM0PYMD\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WETRBEJ8G6CM0PYMD",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_80",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-100-coverage",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "100% ditanggung"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_81": {
+      "$description": "cp_01M3NX204WEW3TXHENANDJN3WC\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WEW3TXHENANDJN3WC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_81",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-after-3-month",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Setelah 3 bulan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_82": {
+      "$description": "cp_01M3NX204WF8JB8C5Y72GWQZER\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WF8JB8C5Y72GWQZER",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_82",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-download-failed-try",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gagal download. Coba lagi nanti, ya."
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_83": {
+      "$description": "cp_01M3NX204WFBXB7GMXNZXSVZ02\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WFBXB7GMXNZXSVZ02",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_83",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-first-3-month",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "3 bulan pertama"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_84": {
+      "$description": "cp_01M3NX204WFDHVY76RB8ZWGXBT\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WFDHVY76RB8ZWGXBT",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_84",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-outpatient-coverage",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Manfaat rawat jalan gak tersedia"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_85": {
+      "$description": "cp_01M3NX204WFGZRBB29CTN8B9T0\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WFGZRBB29CTN8B9T0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_85",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-copayment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Copayment"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_86": {
+      "$description": "cp_01M3NX204WFZPBMSP6865BFC7F\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WFZPBMSP6865BFC7F",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_86",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-limit-available",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit: Gak tersedia"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_87": {
+      "$description": "cp_01M3NX204XE1185B2GBXDTDXAY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XE1185B2GBXDTDXAY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_87",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-view-list-partners",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek daftar mitra kami"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_9": {
+      "$description": "cp_01M3NX204REBFVJ6QV3H4NJ2EH\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REBFVJ6QV3H4NJ2EH",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_9",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-flexible-insurance",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi fleksibel cuma buat kamu"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_90": {
+      "$description": "cp_01M3NX204XEDDT3GM5YBFVRRDY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /visit /kunjungan",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XEDDT3GM5YBFVRRDY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_90",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-specialist-visit",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya kunjungan dokter spesialis rujukan"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_91": {
+      "$description": "cp_01M3NX204XEF9BS313ZC0CD6XS\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /visit /kunjungan",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XEF9BS313ZC0CD6XS",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_91",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-physician-visit",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya kunjungan dokter yang merawat"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_92": {
+      "$description": "cp_01M3NX204XEJ7V7AKXQ16RBM8K\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XEJ7V7AKXQ16RBM8K",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_92",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-pre-post-inpatient",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya (30 Hari) sebelum dan (30 Hari) setelah perawatan di rumah sakit"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_93": {
+      "$description": "cp_01M3NX204XETE97S7FEKBXCWVJ\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XETE97S7FEKBXCWVJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_93",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-surgical-including",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pembedahan (termasuk dokter, ruangan dan obat2an)"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_94": {
+      "$description": "cp_01M3NX204XEV9AY2SKEMTP54T8\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XEV9AY2SKEMTP54T8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_94",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-copayment-cashless",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Copayment, non tunai & penggantian dana"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_95": {
+      "$description": "cp_01M3NX204XEYT8T9JPB1ZWKG7A\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XEYT8T9JPB1ZWKG7A",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_95",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-check-yearly-limit",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lihat limit tahunanmu"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_96": {
+      "$description": "cp_01M3NX204XF048XGT84PA6M228\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /day /hari",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XF048XGT84PA6M228",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_96",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-icu-room-max-60-days",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya kamar unit perawatan intensif (ICU) maks. 60 Hari"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_text_98": {
+      "$description": "cp_01M3NX204XF1QAV9EFCKQMQSQE\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Text\nNote: /day /hari",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XF1QAV9EFCKQMQSQE",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_text_98",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/text-hospital-nursing",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perawat pribadi di rumah sakit per hari"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_title": {
+      "$description": "cp_01M3NX204REH090WHJVZWGJ6JW\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REH090WHJVZWGJ6JW",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_title",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada 1400+ mitra rumah sakit"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_toast": {
+      "$description": "cp_01M3NX204VE91AFVCZTN3QX9V3\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Toast",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VE91AFVCZTN3QX9V3",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_toast",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/main/toast",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Berhasil di-download"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_usphomepage_text": {
+      "$description": "cp_01M3NX204SFNP8DY96CV3KGCQY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Usp Homepage › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFNP8DY96CV3KGCQY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_usphomepage_text",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/usp-homepage/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Keuntungan pakai Asuransi GoPay"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_validation_error": {
+      "$description": "cp_01M3NX2051FDQRR4EWX5VHAGP5\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Validation › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051FDQRR4EWX5VHAGP5",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_validation_error",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/validation/error-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak bisa pakai huruf alfabet"
+    },
+    "gopay_insurance_healthinsurancepreut_haandcancer_validationfailed_error": {
+      "$description": "cp_01M3NX2052EHMRT0BRH6DKF0NY\nInsurance › Health Insurance Pre Ut › Ha And Cancer › Validation Failed › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052EHMRT0BRH6DKF0NY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haandcancer_validationfailed_error",
+          "semanticPath": "health-insurance-pre-ut/ha-and-cancer/validation-failed/error",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak bisa daftar asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_haventboughtyet_text": {
+      "$description": "cp_01M3NX204HFVQ9NDGC61PM6RWM\nInsurance › Health Insurance Pre Ut › Havent Bought Yet › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HFVQ9NDGC61PM6RWM",
+          "platformKey": "gopay_insurance_healthinsurancepreut_haventboughtyet_text",
+          "semanticPath": "health-insurance-pre-ut/shared/havent-bought-yet/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi GoPay"
+    },
+    "gopay_insurance_healthinsurancepreut_nikregistered_text": {
+      "$description": "cp_01M3NX204MEMYA6P2BMYT4VMM0\nInsurance › Health Insurance Pre Ut › Nik Registered › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MEMYA6P2BMYT4VMM0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_nikregistered_text",
+          "semanticPath": "health-insurance-pre-ut/shared/nik-registered/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu udah pernah daftar"
+    },
+    "gopay_insurance_healthinsurancepreut_placeholder": {
+      "$description": "cp_01M3NX204KEK0SB2QCTCMZKGPV\nInsurance › Health Insurance Pre Ut › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KEK0SB2QCTCMZKGPV",
+          "platformKey": "gopay_insurance_healthinsurancepreut_placeholder",
+          "semanticPath": "health-insurance-pre-ut/shared/main/placeholder",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ketik nama kamu di sini"
+    },
+    "gopay_insurance_healthinsurancepreut_placeholder_2": {
+      "$description": "cp_01M3NX204KF2NR8JSZD8PEQ9Z0\nInsurance › Health Insurance Pre Ut › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KF2NR8JSZD8PEQ9Z0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_placeholder_2",
+          "semanticPath": "health-insurance-pre-ut/shared/main/placeholder-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Masukkan NIK kamu di sini"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_d1insurancelapse_text": {
+      "$description": "cp_01M3NX2057ETF9CQNTP84T2SKT\nInsurance › Health Insurance Pre Ut › Pn › D 1 Insurance Lapse › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057ETF9CQNTP84T2SKT",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_d1insurancelapse_text",
+          "semanticPath": "health-insurance-pre-ut/pn/d-1-insurance-lapse/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu akan dinonaktifkan besok"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_d2insurancelapse_text": {
+      "$description": "cp_01M3NX2057F8985MKAB6G9M5GM\nInsurance › Health Insurance Pre Ut › Pn › D 2 Insurance Lapse › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057F8985MKAB6G9M5GM",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_d2insurancelapse_text",
+          "semanticPath": "health-insurance-pre-ut/pn/d-2-insurance-lapse/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu akan dinonaktifkan"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_d3insurancelapse_text": {
+      "$description": "cp_01M3NX2056EXZSQYV28KSJ9YXY\nInsurance › Health Insurance Pre Ut › Pn › D 3 Insurance Lapse › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056EXZSQYV28KSJ9YXY",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_d3insurancelapse_text",
+          "semanticPath": "health-insurance-pre-ut/pn/d-3-insurance-lapse/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu akan dinonaktifkan"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_duein2days_text": {
+      "$description": "cp_01M3NX2056E8598S1MXPCEKV0E\nInsurance › Health Insurance Pre Ut › Pn › Due In 2 Days › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056E8598S1MXPCEKV0E",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_duein2days_text",
+          "semanticPath": "health-insurance-pre-ut/pn/due-in-2-days/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tagihan asuransimu udah keluar!"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_duetoday_text": {
+      "$description": "cp_01M3NX2056E63SDRDCJSC7B369\nInsurance › Health Insurance Pre Ut › Pn › Due Today › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056E63SDRDCJSC7B369",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_duetoday_text",
+          "semanticPath": "health-insurance-pre-ut/pn/due-today/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu jatuh tempo hari ini!"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_duetomorrow_text": {
+      "$description": "cp_01M3NX2056FSZVB7KJP6JS7DME\nInsurance › Health Insurance Pre Ut › Pn › Due Tomorrow › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056FSZVB7KJP6JS7DME",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_duetomorrow_text",
+          "semanticPath": "health-insurance-pre-ut/pn/due-tomorrow/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu jatuh tempo besok"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_ecardactive_text": {
+      "$description": "cp_01M3NX2056EBRBGN8ANZGC9NY6\nInsurance › Health Insurance Pre Ut › Pn › Ecard Active › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056EBRBGN8ANZGC9NY6",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_ecardactive_text",
+          "semanticPath": "health-insurance-pre-ut/pn/ecard-active/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Polis dan e-card kamu udah terbit"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_insurancealreadylapse_text": {
+      "$description": "cp_01M3NX2057FWB9W5VWG8T1GTX8\nInsurance › Health Insurance Pre Ut › Pn › Insurance Already Lapse › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057FWB9W5VWG8T1GTX8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_insurancealreadylapse_text",
+          "semanticPath": "health-insurance-pre-ut/pn/insurance-already-lapse/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu dinonaktifkan"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_insurancecancelledduringthe_text": {
+      "$description": "cp_01M3NX2057E058DPZBZDY18TFN\nInsurance › Health Insurance Pre Ut › Pn › Insurance Cancelled During The › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057E058DPZBZDY18TFN",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_insurancecancelledduringthe_text",
+          "semanticPath": "health-insurance-pre-ut/pn/insurance-cancelled-during-the/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi berhasil dibatalkan"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_policyprocess_text": {
+      "$description": "cp_01M3NX2056EDZ8GSA0JGT6AB45\nInsurance › Health Insurance Pre Ut › Pn › Policy Process › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056EDZ8GSA0JGT6AB45",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_policyprocess_text",
+          "semanticPath": "health-insurance-pre-ut/pn/policy-process/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pendaftaran asuransi berhasil!"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text": {
+      "$description": "cp_01M3NX2056E98TEY4HQ31P12CE\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056E98TEY4HQ31P12CE",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Polis dan e-card asuransimu akan terbit dalam waktu 3 hari kerja. Ditunggu, yaa."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_10": {
+      "$description": "cp_01M3NX2057F1Q9KPZ6N3BG5SKQ\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057F1Q9KPZ6N3BG5SKQ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_10",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-va-payment-product",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pembayaran VA untuk {product_name} udah gak berlaku. Klik di sini untuk daftar asuransi lagi."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_11": {
+      "$description": "cp_01M3NX2057FE88CYVAGFV3BNY7\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057FE88CYVAGFV3BNY7",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_11",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-pay-product-name",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Silakan bayar premi {product_name} kamu hari ini biar gak perlu daftar ulang dari awal."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_12": {
+      "$description": "cp_01M3NX2057FT59BN7TQFQSK54D\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057FT59BN7TQFQSK54D",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_12",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-unfortunately-haven",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Soalnya kami gak terima pembayaran premi kamu. Kalau ingin daftar {product_name} lagi, klik di sini yaa."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_2": {
+      "$description": "cp_01M3NX2056ENTVN2PW8W1YAASC\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056ENTVN2PW8W1YAASC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_2",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-let-s-pay-product",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bayar sekarang biar {product_name} kamu gak masuk masa tenggang. Klik di sini buat bayar."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_3": {
+      "$description": "cp_01M3NX2056EX8RC5755P9558CP\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056EX8RC5755P9558CP",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_3",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-product-name-enters",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kalau {product_name} kamu masuk masa tenggang kamu gak bisa klaim apa pun. Klik di sini buat bayar."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_4": {
+      "$description": "cp_01M3NX2056F2NR3JWHPSFPMEYX\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056F2NR3JWHPSFPMEYX",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_4",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-product-name-grace",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{product_name} kamu memasuki masa tenggang jadi kamu gak bisa klaim apa pun pakai asuransi. Silakan bayar sebelum asuransi dinonaktifkan."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_5": {
+      "$description": "cp_01M3NX2056FABB6H024E6N4E0X\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056FABB6H024E6N4E0X",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_5",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-click-here-see",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Klik di sini untuk cek rinciannya. Semoga sehat selalu!"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_6": {
+      "$description": "cp_01M3NX2056FB6RV57BVRB7DC24\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056FB6RV57BVRB7DC24",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_6",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-during-time-won-t",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dalam masa tenggang kamu gak bisa klaim apa pun pakai {product_name}. Silakan bayar premi kamu sebelum asuransi dinonaktifkan."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_7": {
+      "$description": "cp_01M3NX2056FJ4T94E34WB50673\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056FJ4T94E34WB50673",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_7",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-product-name-due-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bayar dulu, yuk. Soalnya, {product_name} kamu 2 hari lagi jatuh tempo, lho 💸. Klik di sini buat bayar."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_text_9": {
+      "$description": "cp_01M3NX2057EKMTQPPYYP8SSBY0\nInsurance › Health Insurance Pre Ut › Pn › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057EKMTQPPYYP8SSBY0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_text_9",
+          "semanticPath": "health-insurance-pre-ut/pn/main/text-already-refund",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kami udah mengembalikan dana untuk {product_name} kamu. Klik di sini untuk informasi selengkapnya."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_vapaymentexpired_text": {
+      "$description": "cp_01M3NX2057FX38DHNX9CFC2DYX\nInsurance › Health Insurance Pre Ut › Pn › Va Payment Expired › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2057FX38DHNX9CFC2DYX",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_vapaymentexpired_text",
+          "semanticPath": "health-insurance-pre-ut/pn/va-payment-expired/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kami belum terima pembayaranmu"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_whenthegraceperiodactived_text": {
+      "$description": "cp_01M3NX2056E7K80BQY84AB3HBA\nInsurance › Health Insurance Pre Ut › Pn › When The Grace Period Active D › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056E7K80BQY84AB3HBA",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_whenthegraceperiodactived_text",
+          "semanticPath": "health-insurance-pre-ut/pn/when-the-grace-period-active-d/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu memasuki masa tenggang"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_whenthegraceperiodactived_text_2": {
+      "$description": "cp_01M3NX2056F7XS7ESBK28K7X13\nInsurance › Health Insurance Pre Ut › Pn › When The Grace Period Active D › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056F7XS7ESBK28K7X13",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_whenthegraceperiodactived_text_2",
+          "semanticPath": "health-insurance-pre-ut/pn/when-the-grace-period-active-d/text-pay-insurance",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Segera bayarkan premi asuransi kamu"
+    },
+    "gopay_insurance_healthinsurancepreut_review_text": {
+      "$description": "cp_01M3NX204ME0095NEZTPED5H5K\nInsurance › Health Insurance Pre Ut › Review › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ME0095NEZTPED5H5K",
+          "platformKey": "gopay_insurance_healthinsurancepreut_review_text",
+          "semanticPath": "health-insurance-pre-ut/shared/review/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pastikan data yang kamu masukkan udah benar sebelum klik Lanjut."
+    },
+    "gopay_insurance_healthinsurancepreut_text_100": {
+      "$description": "cp_01M3NX204PE37T6CA5R0YPDDZ8\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PE37T6CA5R0YPDDZ8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_100",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-download-police",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Download rincian polis"
+    },
+    "gopay_insurance_healthinsurancepreut_text_102": {
+      "$description": "cp_01M3NX204PEB0V9GKDF9C3GX10\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PEB0V9GKDF9C3GX10",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_102",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-payment-frequency",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Frekuensi pembayaran"
+    },
+    "gopay_insurance_healthinsurancepreut_text_103": {
+      "$description": "cp_01M3NX204PEDCBPKXQNETRGG7Y\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PEDCBPKXQNETRGG7Y",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_103",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-ultimate-package",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket premium"
+    },
+    "gopay_insurance_healthinsurancepreut_text_104": {
+      "$description": "cp_01M3NX204PEJN90C6GK7SE34J9\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PEJN90C6GK7SE34J9",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_104",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-insurance-coverages-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Manfaat asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_105": {
+      "$description": "cp_01M3NX204PEKCR5E5TR8ZX9EKV\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PEKCR5E5TR8ZX9EKV",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_105",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-registration-number",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nomor registrasi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_106": {
+      "$description": "cp_01M3NX204PETG80DQ00X0TPC4K\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PETG80DQ00X0TPC4K",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_106",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-essential-package",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket esensial"
+    },
+    "gopay_insurance_healthinsurancepreut_text_107": {
+      "$description": "cp_01M3NX204PETJVMC32G9V9KKWK\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PETJVMC32G9V9KKWK",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_107",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-insurance-package",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_108": {
+      "$description": "cp_01M3NX204PEXH8XKPZR553VTWF\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PEXH8XKPZR553VTWF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_108",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-see-claim-history",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lihat riwayat klaim"
+    },
+    "gopay_insurance_healthinsurancepreut_text_109": {
+      "$description": "cp_01M3NX204PEXSA6HCG5TQBG9VR\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PEXSA6HCG5TQBG9VR",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_109",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-police-number",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nomor polis"
+    },
+    "gopay_insurance_healthinsurancepreut_text_110": {
+      "$description": "cp_01M3NX204PEYEBHBHS8AG53R7S\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PEYEBHBHS8AG53R7S",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_110",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-inpatient-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rawat inap"
+    },
+    "gopay_insurance_healthinsurancepreut_text_113": {
+      "$description": "cp_01M3NX204PFABBZ1ERPRWN240Z\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PFABBZ1ERPRWN240Z",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_113",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-change-package",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ganti paket"
+    },
+    "gopay_insurance_healthinsurancepreut_text_114": {
+      "$description": "cp_01M3NX204PFF1VHWQ868VZ20WA\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PFF1VHWQ868VZ20WA",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_114",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-outpatient-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rawat jalan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_115": {
+      "$description": "cp_01M3NX204PFHJ9ST8GEVNFKX1X\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PFHJ9ST8GEVNFKX1X",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_115",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-policy-holder",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pemegang polis"
+    },
+    "gopay_insurance_healthinsurancepreut_text_117": {
+      "$description": "cp_01M3NX204PFWQBWCSEVYD6QA4V\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PFWQBWCSEVYD6QA4V",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_117",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-validity-period",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Masa berlaku"
+    },
+    "gopay_insurance_healthinsurancepreut_text_118": {
+      "$description": "cp_01M3NX204PFXMA74J2EY57G9DJ\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PFXMA74J2EY57G9DJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_118",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-regular-package",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket reguler"
+    },
+    "gopay_insurance_healthinsurancepreut_text_119": {
+      "$description": "cp_01M3NX204PFXYV89CHP61TKNFA\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204PFXYV89CHP61TKNFA",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_119",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-1-year",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "1 tahun"
+    },
+    "gopay_insurance_healthinsurancepreut_text_122": {
+      "$description": "cp_01M3NX204QF01R2A0R7Q3CW6JZ\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QF01R2A0R7Q3CW6JZ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_122",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-no-insurance-bill",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum ada tagihan asuransi bulan ini"
+    },
+    "gopay_insurance_healthinsurancepreut_text_123": {
+      "$description": "cp_01M3NX204QF6DRF5HY9CQAPEAN\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QF6DRF5HY9CQAPEAN",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_123",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-id",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_125": {
+      "$description": "cp_01M3NX204QFB2VN9AFS5Y62D6N\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QFB2VN9AFS5Y62D6N",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_125",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-click-here-want-pay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kalau mau bayar sekarang, klik di sini yaa."
+    },
+    "gopay_insurance_healthinsurancepreut_text_126": {
+      "$description": "cp_01M3NX204QFCJSY4E1EK48HFW3\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QFCJSY4E1EK48HFW3",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_126",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-hey-reminder-pay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hai, ini pengingat untuk bayar tagihan asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_127": {
+      "$description": "cp_01M3NX204QFDJAJMBPD8GGDPC2\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QFDJAJMBPD8GGDPC2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_127",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-total-insured",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Jumlah tertanggung"
+    },
+    "gopay_insurance_healthinsurancepreut_text_128": {
+      "$description": "cp_01M3NX204QFMFBMQS0DF3G6GBC\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QFMFBMQS0DF3G6GBC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_128",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-once-any-pay-here",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nanti kalau udah ada, bayarnya bisa lewat sini"
+    },
+    "gopay_insurance_healthinsurancepreut_text_129": {
+      "$description": "cp_01M3NX204QFPW8G94A54BXD2GG\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QFPW8G94A54BXD2GG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_129",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-got-4",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_text_19": {
+      "$description": "cp_01M3NX204HER9SDNG080KFAAFX\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HER9SDNG080KFAAFX",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_19",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-select-protection",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pilih paket perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_21": {
+      "$description": "cp_01M3NX204HEZX8YM5X9KNAHN59\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HEZX8YM5X9KNAHN59",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_21",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-protected",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum terlindungi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_24": {
+      "$description": "cp_01M3NX204HFEHT15X8Z7J5P23Z\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HFEHT15X8Z7J5P23Z",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_24",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-essential",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Esensial"
+    },
+    "gopay_insurance_healthinsurancepreut_text_25": {
+      "$description": "cp_01M3NX204HFG38K32GYJTCJ792\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HFG38K32GYJTCJ792",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_25",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-ultimate",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Premium"
+    },
+    "gopay_insurance_healthinsurancepreut_text_28": {
+      "$description": "cp_01M3NX204HFQ8V8K0A8X4EFXAC\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HFQ8V8K0A8X4EFXAC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_28",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-regular",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Reguler"
+    },
+    "gopay_insurance_healthinsurancepreut_text_29": {
+      "$description": "cp_01M3NX204HFYG9RAN226ZH6Q3S\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HFYG9RAN226ZH6Q3S",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_29",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-protection-status",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Status perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_34": {
+      "$description": "cp_01M3NX204JF5K8TYQ389VMXG5E\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JF5K8TYQ389VMXG5E",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_34",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-number-beneficieries",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Jumlah tanggungan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_37": {
+      "$description": "cp_01M3NX204JF779JTR8AWAS5SC3\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JF779JTR8AWAS5SC3",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_37",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-comprehensive",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Komprehensif"
+    },
+    "gopay_insurance_healthinsurancepreut_text_38": {
+      "$description": "cp_01M3NX204JFG899KHA3FM7379F\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JFG899KHA3FM7379F",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_38",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-inpatient",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rawat inap"
+    },
+    "gopay_insurance_healthinsurancepreut_text_39": {
+      "$description": "cp_01M3NX204JFJM8B84VANPKR7FW\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JFJM8B84VANPKR7FW",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_39",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-why-insurance",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kenapa asuransi penting"
+    },
+    "gopay_insurance_healthinsurancepreut_text_40": {
+      "$description": "cp_01M3NX204JFK987XSA9D6MQG17\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JFK987XSA9D6MQG17",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_40",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-cancel-anytime",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bisa batalin kapan aja"
+    },
+    "gopay_insurance_healthinsurancepreut_text_41": {
+      "$description": "cp_01M3NX204JFMQBEXNP0TKAP8CX\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JFMQBEXNP0TKAP8CX",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_41",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-essential-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Esensial"
+    },
+    "gopay_insurance_healthinsurancepreut_text_45": {
+      "$description": "cp_01M3NX204JFSJRJXJ3F3X6QNME\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JFSJRJXJ3F3X6QNME",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_45",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-standard",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Standar"
+    },
+    "gopay_insurance_healthinsurancepreut_text_49": {
+      "$description": "cp_01M3NX204KE0V9Y9R4B28Z2WC6\nInsurance › Health Insurance Pre Ut › Text\nNote: ekses: biaya tambahan",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KE0V9Y9R4B28Z2WC6",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_49",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-cashless",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Non-tunai"
+    },
+    "gopay_insurance_healthinsurancepreut_text_52": {
+      "$description": "cp_01M3NX204KE77B9N1ZNRBJVVNR\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KE77B9N1ZNRBJVVNR",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_52",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-show-coverage",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tunjukkan manfaat untuk"
+    },
+    "gopay_insurance_healthinsurancepreut_text_55": {
+      "$description": "cp_01M3NX204KEDDB08XG7FQQT11X\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KEDDB08XG7FQQT11X",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_55",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-kids",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Anak"
+    },
+    "gopay_insurance_healthinsurancepreut_text_57": {
+      "$description": "cp_01M3NX204KF208HSYQ9AK07EY6\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KF208HSYQ9AK07EY6",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_57",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-adult",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dewasa"
+    },
+    "gopay_insurance_healthinsurancepreut_text_59": {
+      "$description": "cp_01M3NX204KF389DQF8AK4QWC38\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KF389DQF8AK4QWC38",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_59",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-cosmetic-surgeries",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Operasi untuk kecantikan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_6": {
+      "$description": "cp_01M3NX204GFDKBSXMKFN4XDACH\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GFDKBSXMKFN4XDACH",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_6",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Solusi lengkap buat masalah kesehatanmu"
+    },
+    "gopay_insurance_healthinsurancepreut_text_60": {
+      "$description": "cp_01M3NX204KF6PA3TZJNE4C2WA4\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KF6PA3TZJNE4C2WA4",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_60",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-reimbursement",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Penggantian biaya"
+    },
+    "gopay_insurance_healthinsurancepreut_text_61": {
+      "$description": "cp_01M3NX204KFBB9ZJ1S2ZG89KTJ\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KFBB9ZJ1S2ZG89KTJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_61",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-outpatient",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rawat jalan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_62": {
+      "$description": "cp_01M3NX204KFRW8KV2F5S757V0J\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KFRW8KV2F5S757V0J",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_62",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-pre-existing",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Penyakit yang sudah ada"
+    },
+    "gopay_insurance_healthinsurancepreut_text_63": {
+      "$description": "cp_01M3NX204KFTZTV3P1722QXM9D\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KFTZTV3P1722QXM9D",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_63",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-covered",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum terlindungi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_64": {
+      "$description": "cp_01M3NX204ME5ETCK6E18TWJ89P\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ME5ETCK6E18TWJ89P",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_64",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-only-get-one-policy",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu cuma bisa punya satu polis dengan satu NIK. Silakan masukkan NIK lain."
+    },
+    "gopay_insurance_healthinsurancepreut_text_65": {
+      "$description": "cp_01M3NX204ME9XAH9CJBMTX5W11\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204ME9XAH9CJBMTX5W11",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_65",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-help",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bantuan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_66": {
+      "$description": "cp_01M3NX204MEAC9HFZ76SBZPMBG\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MEAC9HFZ76SBZPMBG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_66",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-insured-party",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tertanggung asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_67": {
+      "$description": "cp_01M3NX204MEP0BTFXZQQG6F8G5\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MEP0BTFXZQQG6F8G5",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_67",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-submission-didn-t",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pendaftaranmu tidak sesuai dengan ketentuan kami. Klik Bantuan untuk selengkapnya."
+    },
+    "gopay_insurance_healthinsurancepreut_text_68": {
+      "$description": "cp_01M3NX204MEPW8RYQ3PGRDFRKS\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MEPW8RYQ3PGRDFRKS",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_68",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-got",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_text_69": {
+      "$description": "cp_01M3NX204MEQC8D0ABMDWR5KZ5\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MEQC8D0ABMDWR5KZ5",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_69",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-got-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_text_70": {
+      "$description": "cp_01M3NX204MERGVQMTNXJGR2BHX\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MERGVQMTNXJGR2BHX",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_70",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-help-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bantuan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_71": {
+      "$description": "cp_01M3NX204MF18SGZND7XH2FVDZ\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MF18SGZND7XH2FVDZ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_71",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-got-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_insurance_healthinsurancepreut_text_72": {
+      "$description": "cp_01M3NX204MF1TAECYK83365NF0\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MF1TAECYK83365NF0",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_72",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-enter-right-format-e",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Masukkan format yang benar, contoh: email@format.com"
+    },
+    "gopay_insurance_healthinsurancepreut_text_74": {
+      "$description": "cp_01M3NX204MFCHS5465SQWB2W1G\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MFCHS5465SQWB2W1G",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_74",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-make-sure-type-name",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pastiin kamu ketik namamu tanpa tanda baca/emoji dan masukkan format email yang benar."
+    },
+    "gopay_insurance_healthinsurancepreut_text_80": {
+      "$description": "cp_01M3NX204NE46SS51YR6VE3HZV\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NE46SS51YR6VE3HZV",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_80",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-i-read-agree-terms",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saya sudah membaca dan setuju dengan Syarat & Ketentuan dan Kebijakan Privasi."
+    },
+    "gopay_insurance_healthinsurancepreut_text_81": {
+      "$description": "cp_01M3NX204NE55ACE1958QTMZQJ\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NE55ACE1958QTMZQJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_81",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-comprehensive-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perlindungan komprehensif"
+    },
+    "gopay_insurance_healthinsurancepreut_text_82": {
+      "$description": "cp_01M3NX204NE7FTCXP1R3AJG7JX\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NE7FTCXP1R3AJG7JX",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_82",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-essential-protection",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perlindungan esensial"
+    },
+    "gopay_insurance_healthinsurancepreut_text_83": {
+      "$description": "cp_01M3NX204NEG9R99VSQ8D1G1EN\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NEG9R99VSQ8D1G1EN",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_83",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-protection-status-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Status perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_84": {
+      "$description": "cp_01M3NX204NEKBBQQK55KBBXPB7\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NEKBBQQK55KBBXPB7",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_84",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-insurance-card-still",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kartu asuransimu masih diproses"
+    },
+    "gopay_insurance_healthinsurancepreut_text_85": {
+      "$description": "cp_01M3NX204NEP793NVGR6RSK712\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NEP793NVGR6RSK712",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_85",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-standard-protection",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perlindungan standar"
+    },
+    "gopay_insurance_healthinsurancepreut_text_87": {
+      "$description": "cp_01M3NX204NESPB47D4XNJSW7KF\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NESPB47D4XNJSW7KF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_87",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-ll-reimburse-medical",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kami akan ganti biaya pengobatanmu kalau kamu menerima pengobatan sebelum kartunya datang."
+    },
+    "gopay_insurance_healthinsurancepreut_text_88": {
+      "$description": "cp_01M3NX204NEWCTAEKJGN0GTA6W\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NEWCTAEKJGN0GTA6W",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_88",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-insurance-active",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransimu akan aktif dalam {count} hari"
+    },
+    "gopay_insurance_healthinsurancepreut_text_89": {
+      "$description": "cp_01M3NX204NEZ7B3VCW03HACDK2\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NEZ7B3VCW03HACDK2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_89",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-list-hospital",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Daftar mitra rumah sakit"
+    },
+    "gopay_insurance_healthinsurancepreut_text_90": {
+      "$description": "cp_01M3NX204NF2G8K1ZMVAJG72N1\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NF2G8K1ZMVAJG72N1",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_90",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-standard-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Standar"
+    },
+    "gopay_insurance_healthinsurancepreut_text_93": {
+      "$description": "cp_01M3NX204NFAVRVTZKT652PTNV\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NFAVRVTZKT652PTNV",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_93",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-gopay-insurance-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Asuransi GoPay"
+    },
+    "gopay_insurance_healthinsurancepreut_text_94": {
+      "$description": "cp_01M3NX204NFBKBM93Y0RRPB55B\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NFBKBM93Y0RRPB55B",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_94",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-basic",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Mendasar"
+    },
+    "gopay_insurance_healthinsurancepreut_text_97": {
+      "$description": "cp_01M3NX204NFSVBY8TQ91RA1DBW\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NFSVBY8TQ91RA1DBW",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_97",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-protection-package",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paket perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_text_98": {
+      "$description": "cp_01M3NX204NFWN9EDND18XM4G7K\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NFWN9EDND18XM4G7K",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_98",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-insurance-coverages",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Manfaat asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_text_99": {
+      "$description": "cp_01M3NX204NFYMS52ZRQVASQM5A\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NFYMS52ZRQVASQM5A",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_99",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-protection-status-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Status perlindungan"
+    },
+    "gopay_insurance_healthinsurancepreut_validation_error_2": {
+      "$description": "cp_01M3NX204KESZBTM1S2GN3QN8Z\nInsurance › Health Insurance Pre Ut › Validation › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KESZBTM1S2GN3QN8Z",
+          "platformKey": "gopay_insurance_healthinsurancepreut_validation_error_2",
+          "semanticPath": "health-insurance-pre-ut/shared/validation/error-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak bisa pakai huruf alfabet"
+    },
+    "gopay_insurance_healthinsurancepreut_validationfailed_error": {
+      "$description": "cp_01M3NX204MFV08MR14FNKAZYJJ\nInsurance › Health Insurance Pre Ut › Validation Failed › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MFV08MR14FNKAZYJJ",
+          "platformKey": "gopay_insurance_healthinsurancepreut_validationfailed_error",
+          "semanticPath": "health-insurance-pre-ut/shared/validation-failed/error",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak bisa daftar asuransi"
+    }
+  }
+}

@@ -1,0 +1,190 @@
+{
+ "blocking_entities": 703,
+ "class_counts": {
+  "CONTEXT_STUB": 259,
+  "COPY": 20627,
+  "EXPLORATION": 318,
+  "INSTRUCTION_OR_REUSE_HINT": 3,
+  "INVALID": 2,
+  "LINK_LABEL": 12,
+  "OBSOLETE": 187,
+  "SECTION_HEADER": 825
+ },
+ "clean": {
+  "line_endings_normalized": 4,
+  "nbsp_to_space": 10,
+  "outer_whitespace_trimmed": 1810,
+  "zero_width_removed": 44
+ },
+ "coll_sizes": {
+  "account-safety": [
+   430,
+   0
+  ],
+  "finance": [
+   313,
+   4
+  ],
+  "group": [
+   689,
+   0
+  ],
+  "home": [
+   1340,
+   22
+  ],
+  "insurance": [
+   2724,
+   41
+  ],
+  "insurance-health-insurance-pre-ut": [
+   327,
+   13
+  ],
+  "investment": [
+   1308,
+   66
+  ],
+  "lending": [
+   668,
+   3
+  ],
+  "payment": [
+   1725,
+   98
+  ],
+  "promo": [
+   1385,
+   9
+  ],
+  "savings": [
+   1423,
+   14
+  ],
+  "shared": [
+   379,
+   0
+  ],
+  "split-bill": [
+   571,
+   16
+  ],
+  "transfer": [
+   2640,
+   16
+  ],
+  "transport": [
+   471,
+   0
+  ]
+ },
+ "confirmed_shared_entities": 382,
+ "confirmed_shared_rows": 431,
+ "contextual_dup_strings": 2541,
+ "entities": 20602,
+ "held": 703,
+ "items": 21218,
+ "key_conflicts": 53,
+ "ledger_lines_before": 82499,
+ "minted": 0,
+ "removed_whole_value_placeholder": 296,
+ "review_entities": 15421,
+ "reviews": {
+  "AMBIGUOUS_SHARED_CANDIDATE": 571,
+  "INVALID_ROW": 2,
+  "LANGUAGE_SWAP": 10,
+  "LEGACY_KEY_CONFLICT": 57,
+  "MALFORMED_PLACEHOLDER": 93,
+  "MISSING_EN": 128,
+  "MISSING_ID": 143,
+  "PLACEHOLDER_MISMATCH": 99,
+  "PLURAL_VARIANT": 66,
+  "POSSIBLE_DUPLICATE": 2778,
+  "SECTION_ONLY_CONTEXT": 4571,
+  "SIDE_BY_SIDE_PAIR": 107,
+  "UNCERTAIN_MULTILINE_SPLIT": 27,
+  "UNRESOLVED_POSITIONAL_PLACEHOLDER": 310,
+  "UNRESOLVED_ROLE": 14177,
+  "UNTRANSLATED_LONG_EN_EQ_ID": 12
+ },
+ "shared_candidate_groups": 58,
+ "shared_merge": {
+  "id_values_unified": 646,
+  "merged": 2728,
+  "promoted": 361
+ },
+ "srcfiles": {
+  "CONSUMER": "GoPay Strings Tracker - \ud83d\udcf1 GOPAY APP - CONSUMER EXPERIENCE.csv",
+  "INSURANCE": "GoPay Strings Tracker - GOPAY APP - INSURANCE.csv",
+  "INVESTMENT": "GoPay Strings Tracker - GOPAY - INVESTMENT.csv",
+  "LENDING": "GoPay Strings Tracker - GOPAY APP - 3rd Party Lending Platform.csv",
+  "MONEY": "GoPay Strings Tracker - \ud83d\udcf1 GOPAY APP - MONEY MANAGEMENT.csv",
+  "PAYMENT": "GoPay Strings Tracker - GOPAY APP - PAYMENT EXPERIENCE.csv",
+  "TABUNGAN": "GoPay Strings Tracker - \ud83d\udcb0 GoPay Tabungan.csv",
+  "USER-SPEND": "GoPay Strings Tracker - GOPAY APP - USER SPEND.csv"
+ },
+ "status": {
+  "active": 17074,
+  "archived": 3212,
+  "draft": 316
+ },
+ "tabstats": {
+  "CONSUMER": {
+   "empty": 2263,
+   "link": 0,
+   "records": 5585,
+   "section": 108,
+   "stub_ctx": 0
+  },
+  "INSURANCE": {
+   "empty": 2554,
+   "link": 0,
+   "records": 6862,
+   "section": 90,
+   "stub_ctx": 0
+  },
+  "INVESTMENT": {
+   "empty": 1689,
+   "link": 2,
+   "records": 4085,
+   "section": 114,
+   "stub_ctx": 0
+  },
+  "LENDING": {
+   "empty": 239,
+   "link": 1,
+   "records": 730,
+   "section": 7,
+   "stub_ctx": 0
+  },
+  "MONEY": {
+   "empty": 2286,
+   "link": 5,
+   "records": 7110,
+   "section": 244,
+   "stub_ctx": 0
+  },
+  "PAYMENT": {
+   "empty": 1163,
+   "link": 6,
+   "records": 3616,
+   "section": 102,
+   "stub_ctx": 0
+  },
+  "TABUNGAN": {
+   "empty": 388,
+   "link": 0,
+   "records": 1227,
+   "section": 40,
+   "stub_ctx": 0
+  },
+  "USER-SPEND": {
+   "empty": 1390,
+   "link": 1,
+   "records": 4898,
+   "section": 120,
+   "stub_ctx": 0
+  }
+ },
+ "total_records": 34113
+}

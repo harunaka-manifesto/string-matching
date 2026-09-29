@@ -1,0 +1,43 @@
+{
+  "lending": {
+    "gopay_lending_maintenancenoticeonhome_opt2static_text": {
+      "$description": "cp_01M3NX204GFJWRPTBWNCHD7CYR\nLending › Maintenance Notice On Home › Opt 2 Static › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GFJWRPTBWNCHD7CYR",
+          "platformKey": "gopay_lending_maintenancenoticeonhome_opt2static_text",
+          "semanticPath": "maintenance-notice-on-home/opt-2-static/main/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sistem sedang dalam pemeliharaan\nPencairan sementara belum bisa dilakukan. Silakan coba lagi nanti."
+    },
+    "gopay_lending_registrationform_radiobuttonoption1_text": {
+      "$description": "cp_01M3NX204AF92SSCJVG82XCNT2\nLending › Registration Form › Radio Button Option 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204AF92SSCJVG82XCNT2",
+          "platformKey": "gopay_lending_registrationform_radiobuttonoption1_text",
+          "semanticPath": "registration-form/radio-button-option-1/main/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ya, sama"
+    },
+    "gopay_lending_registrationform_radiobuttonoption2_text": {
+      "$description": "cp_01M3NX204AE4SSNQWQ00AT4RJS\nLending › Registration Form › Radio Button Option 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204AE4SSNQWQ00AT4RJS",
+          "platformKey": "gopay_lending_registrationform_radiobuttonoption2_text",
+          "semanticPath": "registration-form/radio-button-option-2/main/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak, udah beda"
+    }
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "promo": {
+    "gopay_promo_aplusdailycheckinreward_alt1withrewarddetail_description": {
+      "$description": "cp_01M3NX21ATE8BTFYPK3YPY8N37\nPromo › A Plus Daily Check In Reward › Alt 1 With Reward Detail › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21ATE8BTFYPK3YPY8N37",
+          "platformKey": "gopay_promo_aplusdailycheckinreward_alt1withrewarddetail_description",
+          "semanticPath": "a-plus-daily-check-in-reward/alt-1-with-reward-detail/main/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Daily check in"
+    },
+    "gopay_promo_aplusdailycheckinreward_alt1withrewarddetail_description_2": {
+      "$description": "cp_01M3NX21AVEP18H973XY5D97BW\nPromo › A Plus Daily Check In Reward › Alt 1 With Reward Detail › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21AVEP18H973XY5D97BW",
+          "platformKey": "gopay_promo_aplusdailycheckinreward_alt1withrewarddetail_description_2",
+          "semanticPath": "a-plus-daily-check-in-reward/alt-1-with-reward-detail/main/description-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Daily check in"
+    },
+    "gopay_promo_aplusdailycheckinreward_alt1withrewarddetail_title": {
+      "$description": "cp_01M3NX21ATECN8990HF2TDS2F6\nPromo › A Plus Daily Check In Reward › Alt 1 With Reward Detail › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21ATECN8990HF2TDS2F6",
+          "platformKey": "gopay_promo_aplusdailycheckinreward_alt1withrewarddetail_title",
+          "semanticPath": "a-plus-daily-check-in-reward/alt-1-with-reward-detail/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "A+ Rewards"
+    },
+    "gopay_promo_aplusdailycheckinreward_alt1withrewarddetail_title_2": {
+      "$description": "cp_01M3NX21ATFY4T1Z1PD9D8P2Q0\nPromo › A Plus Daily Check In Reward › Alt 1 With Reward Detail › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21ATFY4T1Z1PD9D8P2Q0",
+          "platformKey": "gopay_promo_aplusdailycheckinreward_alt1withrewarddetail_title_2",
+          "semanticPath": "a-plus-daily-check-in-reward/alt-1-with-reward-detail/main/title-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "A+ Rewards"
+    },
+    "gopay_promo_aplusdailycheckinreward_alt2withoutrewarddetail_text_text": {
+      "$description": "cp_01M3NX21AVFG196E1XJ8KXYSR5\nPromo › A Plus Daily Check In Reward › Alt 2 Without Reward Detail › Text › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21AVFG196E1XJ8KXYSR5",
+          "platformKey": "gopay_promo_aplusdailycheckinreward_alt2withoutrewarddetail_text_text",
+          "semanticPath": "a-plus-daily-check-in-reward/alt-2-without-reward-detail/text/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "A+ Rewards"
+    },
+    "gopay_promo_aplusdailycheckinreward_alt2withoutrewarddetail_text_text_2": {
+      "$description": "cp_01M3NX21AVFQJAZNFPW3AWSTEP\nPromo › A Plus Daily Check In Reward › Alt 2 Without Reward Detail › Text › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21AVFQJAZNFPW3AWSTEP",
+          "platformKey": "gopay_promo_aplusdailycheckinreward_alt2withoutrewarddetail_text_text_2",
+          "semanticPath": "a-plus-daily-check-in-reward/alt-2-without-reward-detail/text/text-rewards",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "A+ Rewards"
+    },
+    "gopay_promo_detail_validonvar1_text": {
+      "$description": "cp_01M3NX20V8EE3R00T3GGNY9TGZ\nPromo › Promo › Detail › Valid On Var 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V8EE3R00T3GGNY9TGZ",
+          "platformKey": "gopay_promo_detail_validonvar1_text",
+          "semanticPath": "promo/detail/valid-on-var-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Valid on {day}"
+    },
+    "gopay_promo_detail_validonvar2_text": {
+      "$description": "cp_01M3NX20V8FQWB3A6B7XC29T0W\nPromo › Promo › Detail › Valid On Var 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V8FQWB3A6B7XC29T0W",
+          "platformKey": "gopay_promo_detail_validonvar2_text",
+          "semanticPath": "promo/detail/valid-on-var-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Valid on {day} & {day}"
+    },
+    "gopay_promo_detail_validonvar3_text": {
+      "$description": "cp_01M3NX20V8ERM96NB04NJEE8DA\nPromo › Promo › Detail › Valid On Var 3 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V8ERM96NB04NJEE8DA",
+          "platformKey": "gopay_promo_detail_validonvar3_text",
+          "semanticPath": "promo/detail/valid-on-var-3/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Valid on {day}, {day}, & {day}"
+    }
+  }
+}

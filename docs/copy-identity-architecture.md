@@ -5,21 +5,27 @@
 > Row references use the form `FILE:rec` (the CSV record number, where the header is record 1; multi-line cells make record ≠ physical line).
 > File short names: INVESTMENT, LENDING (3rd Party Lending Platform), INSURANCE, PAYMENT (Payment Experience), USER-SPEND, CONSUMER (Consumer Experience), MONEY (Money Management).
 
+> **Rev 3 (2026-09-29):** the legacy copy is now in Figma as 5 `# Legacy …` collections (16,393 variables). New strings go into per-product collections (e.g. `Transfer`, `Split Bill`) with flat `<platformKey>` names. **For plugin work, [plugin-copy-rules.md](plugin-copy-rules.md) is authoritative and wins on any conflict with this doc.**
+>
+> **Revision.** Rev 2 (2026-09-29): Figma variable name changed from a 4-level semantic path to `<domain>/<platformKey>` after review — deep group nesting was hard to maintain. Context moved to description.
+
 ---
 
 ## 1. Executive recommendation
 
-Every copy entity has four layers, and each layer has one job:
+Every copy entity has five layers, and each layer has one job:
 
 | Layer | What it is | Mutable? | Who creates it |
 |---|---|---|---|
 | **Copy ID** | `cp_` + UUIDv7 in Crockford Base32, e.g. `cp_01K9X7…` (26 chars) | **Never** | Plugin or migration, automatically |
-| **Semantic name** | Figma variable name `<feature>/<screen>/<context>/<leaf>` inside a **domain collection** | Yes (rename/move) | Plugin infers it; writer confirms |
+| **Figma name** | Figma variable name `<domain>/<platformKey>`, e.g. `transfer/gopay_transfer_ewallet_frequenttransfer_empty_title`. One group level only. | Only the domain prefix (domain move). The key part is **frozen** at creation. | Plugin infers it; writer confirms |
+| **Description** | Readable context, 3 fixed lines: `cp_<ID>`, `<Domain> › <Feature> › <Screen> › <Context> › <Role>`, optional `Note: …` | Yes (plugin regenerates lines 1–2; humans edit line 3 only) | Plugin |
 | **Localized values** | One Figma mode per locale (`en`, `id`, later `vi`…) | Yes | Writers |
 | **Metadata** | role, state, status, platformKey, legacyKey, forkedFrom, shared flag, notes | Partly | Plugin plus a small amount of writer input |
 
 - The ID is generated on the client with no coordination, so concurrent writers are safe by construction.
-- Semantic names are human-friendly and allowed to drift. Conflicts get deterministic qualifiers (`-primary`, then `-2`, `-3`).
+- The Figma name is the dev key (`platformKey`) with a domain group prefix. It is flat snake_case, already familiar to developers, and keeps the Figma Groups sidebar one level deep. Because the key is frozen, its semantics may go stale; the **description** is the source of truth for context (search and discovery happen in the plugin over description and values).
+- Conflicts get deterministic qualifiers (`_cta_primary`) and then ordinals (`_2`, `_3`). The key is unique globally, so the Figma name is unique too.
 - A **Copy Registry**, which is an append-only ledger (DB table or JSONL in git), stores every ID ever issued, including tombstones, the Figma variable mapping, and the frozen dev key. Figma is the editing surface. The registry guarantees permanence.
 - Reuse happens only in two cases: (a) the variable was explicitly marked **shared**, or (b) the layer is inside a component instance whose main component is already bound. Everything else creates a new entity. Matching text only produces a *suggestion*.
 - Migration assigns IDs **once** and persists them in the ledger. Reruns look up the ledger and never regenerate IDs.
@@ -138,8 +144,10 @@ File (org/business unit)  →  Section (col A: feature or sub-flow)  →  Screen
 ```
 CopyEntity
 ├─ id:            cp_<ULID-encoded UUIDv7>    immutable, globally unique, never reused
-├─ name:          <feature>/<screen>/<context>/<leaf>   mutable, unique within collection
-├─ collection:    <domain>                            mutable (feature moves)
+├─ name:          <domain>/<platformKey>              Figma name; only the domain prefix is mutable; globally unique
+├─ description:   3 lines (see below)                 lines 1–2 plugin-generated, line 3 human
+├─ collection:    partition (size only)               mutable (e.g. "GoPay Copy 1"); not semantic
+├─ domain:        <domain>                            mutable (feature moves); = group prefix
 ├─ library:       <product>                           mutable only by product merge/split
 ├─ values:        { en: "...", id: "...", vi?: ... }  one Figma mode per locale; locale never in id/name
 └─ meta:
@@ -147,8 +155,8 @@ CopyEntity
    state          closed-ish vocab (default, empty, error-*, …)
    shared         bool — eligible for AUTO reuse
    status         draft | active | deprecated | archived
-   platformKey    frozen dev key (snake_case), set once
-   legacyKeys[]   imported sheet keys (0..n)
+   platformKey    dev key AND Figma name suffix (flat snake_case), frozen at creation, globally unique
+   legacyKeys[]   imported sheet keys (0..n) and aliases from admin rekeys
    legacySource[] {tab, rec, fingerprint}
    forkedFrom     cp_… | null
    placeholders[] canonical names, e.g. ["amount","date"]
@@ -159,9 +167,16 @@ CopyEntity
 Responsibilities:
 
 - **ID**: joins across systems (registry, bundles, analytics, Figma pluginData). It is the only thing code or data can rely on permanently.
-- **Semantic name**: discovery in Figma, grouping, review. It never serves as a join key.
+- **Name (`<domain>/<platformKey>`)**: the Figma name is the dev key with one domain group prefix. It is a browsing handle and a dev key, never the join key. Context and discovery come from the description and plugin search, not from the name.
+- **Description**: the human-readable context. Fixed 3-line format:
+  ```
+  cp_<ID>
+  <Domain> › <Feature> › <Screen> › <Context> › <Role>      (human labels, Title Case)
+  Note: …                                                     (optional, human-editable)
+  ```
+  The plugin regenerates lines 1–2 from the registry whenever context changes. Humans may edit line 3 only. The validator checks line 1 == `sharedPluginData` id (V03, V28).
 - **Values**: text per locale. Locale is always a mode and never part of the name. The corpus already has a 3rd language (VN), which confirms this.
-- **platformKey**: a readable key for engineers that matches today's `gopay_*` practice. It is frozen at creation and not renamed on moves, so shipping code never breaks. The bundle maps `platformKey → id → values`.
+- **platformKey**: a readable key for engineers that matches today's `gopay_*` practice, and now also the Figma name suffix. It is frozen at creation and not renamed on screen renames or feature moves, so shipping code never breaks. The bundle maps `platformKey → id → values`. A rare admin "rekey" (e.g. fixing a typo) mints a new key and keeps the old one in `legacyKeys` as an alias; the cp_ ID is unchanged. This is why the cp_ ID still exists.
 - **Where the ID lives in Figma**: `variable.setSharedPluginData("copy","id", cp_…)` is authoritative. It is also mirrored as the first line of the variable description (`cp_…`) so humans can see it. A validator checks that the two agree.
 - **Figma's own variable ID/key is not the copy ID.** It changes when a variable is recreated in another collection or file.
 
@@ -200,7 +215,7 @@ Responsibilities:
 
 ### Placement
 - **Library file** = product surface (`GoPay App Copy`; later e.g. `GoPay Merchant Copy`).
-- **Collection** = domain, drawn from a controlled registry list that is not tied to org units. The initial list is derived from the corpus key prefixes:
+- **Domain group** = the single Figma group level, `<domain>/`, drawn from a controlled registry list that is not tied to org units. The initial list is derived from the corpus key prefixes:
   - `shared`
   - `home`
   - `payment` (mpm, cpm, qr, paymentwidget, accountlinking, crossborder)
@@ -215,55 +230,82 @@ Responsibilities:
   - `account-safety` (sanction, 2fa, pin)
   - `transport` (krl, parking)
   - `group`
-- Cap each collection at **4,000 variables**. When a domain exceeds this, split it by feature into `<domain>-<feature>` collections.
+- **Collection** = partition for size only (e.g. `GoPay Copy 1`, or one per large domain). Cap each collection at **4,000 variables**. Groups provide the browsing; collections exist only for size limits. When a collection splits, the domain group stays the same.
 
-### Variable name grammar (inside the collection)
+### Variable name grammar
 ```
-name     = feature "/" screen "/" context "/" leaf
-feature  = seg                       ; registry-controlled per domain, e.g. ewallet, health, gold, general
-screen   = seg | "shared"            ; top-level frame concept; "shared" = reused across screens of the feature
-context  = seg                       ; block[-state]; "main" when neither applies
-leaf     = role ["-" qualifier] ["-" ordinal]
-seg      = word *("-" word) ; word = 1*(a-z / 0-9)
-role     = title | subtitle | description | cta | link | label | value | placeholder | helper
-         | error | toast | tooltip | banner | badge | tab | option | disclaimer | caption
-         | push-title | push-body | sms | email-subject | email-body | a11y
-qualifier= primary | secondary | tertiary | seg      ; semantic distinction, preferred over ordinal
-ordinal  = 2..n                                     ; only on collision (see §9)
+figmaName   = domainGroup "/" platformKey       ; exactly one "/" ; group = kebab domain from the domain registry
+domainGroup = 1*(a-z / 0-9) *("-" 1*(a-z / 0-9))   ; e.g. transfer, promo, shared, split-bill
+
+platformKey = "gopay_" domain "_" [feature "_"] [screen "_"] [context "_"] role ["_" qualifier] ["_" ordinal]
+token       = 1*(a-z / 0-9)        ; words inside one segment are concatenated without separator (legacy style: unifiedtransfer, emptystate)
+domain      = domainGroup with hyphens removed   ; split-bill -> splitbill
+feature / screen / context = token    ; inferred as in §8, omitted when default/filler (general, shared, main)
+role        = title | subtitle | description | cta | link | label | value | placeholder | helper
+            | error | toast | tooltip | banner | badge | tab | option | disclaimer | caption
+            | pushtitle | pushbody | sms | emailsubject | emailbody | a11y | text
+qualifier   = primary | secondary | tertiary | token   ; joined with underscore: cta_primary, cta_secondary
+ordinal     = 2..n                                      ; only on collision (see §9B): _2, _3
+
+regex       ^gopay_[a-z0-9]+(_[a-z0-9]+){1,9}$          ; max 100 chars (legacy max 117 allow-listed)
 ```
 
 Examples:
-- `ewallet/transfer-home/empty/title`
-- `loan-dashboard/activated/limit-card-error-load/cta`
-- `registration/form/back-sheet/cta-primary`
+- `transfer/gopay_transfer_ewallet_frequenttransfer_empty_title`
+- `lending/gopay_lending_thirdparty_loandashboard_limitcarderror_cta`
+- `lending/gopay_lending_registration_form_backsheet_cta_primary`
+- `shared/gopay_shared_error_servererror_dialog_cta_2`
 
-The fixed depth of 4 gives a consistent Figma group tree (feature › screen › context › leaf) and a predictable parse.
+Rules:
+- **Frozen at creation.** The key is now both the Figma name and the dev key. Screen renames and feature moves do **not** rename the key; they update only the description and, for domain moves, the group prefix `<domain>/`. Key semantics may go stale over time; the description is the source of truth for context.
+- **Key correction** (e.g. typo `emptystat`) is a rare admin "rekey": a new key is generated, the old key is kept in `legacyKeys` as an alias in bundles, and the cp_ ID is unchanged.
+- **Legacy keys** are kept as-is when unique and conflict-free. Their deviations (uppercase, `go_pay_`, `vui_`, `opay_`, length up to 117) are allow-listed.
+- **Default/filler segments are omitted** from the key (`general`, `shared`, `main`). Role `text` remains the default when unresolved and flags review.
+- **Domain token** in the key is the domain with hyphens removed (`split-bill` → `splitbill`).
+- **Uniqueness** is global (see §9B), so the Figma name is unique too.
+
+Rationale:
+- One group level keeps the Figma Groups sidebar shallow. Deep nesting such as `adjustedprice / alert / information / text` was hard to maintain (user feedback after review).
+- The key style is already familiar to developers: 3,449 legacy keys use `gopay_<feature>_<screen>_…_<role>` with concatenated words.
+- Flat names make the name equal to the dev key, so there is one string to copy, search and reference.
+- Readable structure (feature › screen › context) lives in the description and is regenerated by the plugin, so it can stay correct even though the key is frozen.
+
+### Description format
+```
+line 1: cp_<ID>
+line 2: <Domain> › <Feature> › <Screen> › <Context> › <Role>     ; human labels, Title Case
+line 3: Note: …                                                     ; optional, human-editable
+```
+Example:
+```
+cp_01K9X7…
+Transfer › E-wallet › Frequent transfer › Empty › Title
+Note: shown when the user has no recent recipients
+```
+The plugin regenerates lines 1–2 (from the registry) on every context change. Humans may edit line 3 only. Omitted defaults (`general`, `shared`, `main`) are shown as human labels or dropped in line 2 as appropriate.
 
 ### Normalization (applied to every segment, in this order)
 1. Unicode NFKD, then strip diacritics, then ASCII only. Emoji are removed.
 2. Symbol replacements: `&` becomes `and`, `+` becomes `plus`, `%` becomes `percent`, `#` becomes `no`. Every other character outside `[a-z0-9]` becomes a hyphen. That includes `/ ( ) ' : . , _ *` and whitespace. Apostrophes are removed rather than hyphenated (`don't` → `dont`).
-3. Lowercase. **No camelCase splitting**: `GoPayLater` → `gopaylater`, `QRIS` → `qris`, `OTP` → `otp`, `IDR` → `idr`. Acronyms stay recognizable because they are kept whole. Brand spellings with hyphens (`gopay-later`) come only from the feature registry alias table.
+3. Lowercase. **No camelCase splitting**: `GoPayLater` → `gopaylater`, `QRIS` → `qris`, `OTP` → `otp`, `IDR` → `idr`. Acronyms stay recognizable because they are kept whole.
 4. Collapse repeated hyphens and trim leading/trailing hyphens.
-5. Numbers stay as digits, joined with hyphens:
+5. Numbers stay as digits:
    - `Step 1` → `step-1`
    - `3DS` → `3ds`
    - `D+1` → `d-plus-1`
    - `D-7` → `d-7`
 6. Drop noise words from the screen and context segments only: `screen`, `page`, `(new)`, `v2`/`revamp`, dates/years, `figma`, `link`.
-7. Segment length ≤ 32 characters (truncate at a word boundary). Full name ≤ 120 characters. The existing key max is 117.
-8. An empty segment is replaced, never omitted:
-   - feature → `general`
-   - screen → `shared`
-   - context → `main`
-   - role → `text` (flagged for review)
+7. **Concatenate words within each segment**: remove the remaining hyphens/spaces, so the normalized segment becomes one token (`frequent-transfer` → `frequenttransfer`, `d-plus-1` → `dplus1`). Segments are then joined with `_`. Brand spellings come from the feature registry alias table (e.g. `unifiedtransfer`).
+8. Segment token ≤ 32 characters (truncate at a word boundary before concatenation). Full key ≤ 100 characters (legacy max 117 allow-listed).
+9. An empty or default segment is omitted (feature `general`, screen `shared`, context `main`). Role stays: an unresolved role becomes `text` (flagged for review).
 
-This keeps the fixed depth. Figma forbids `.`, `{`, `}` in variable names, and the allowed charset `[a-z0-9-/]` already avoids them.
+Figma forbids `.`, `{`, `}` in variable names; the allowed charset `[a-z0-9_-/]` already avoids them.
 
 ### platformKey (dev key)
-- Generated once at creation: `gopay_` + name with `/` and `-` replaced by `_`.
-- Example: `gopay_transfer_ewallet_transfer_home_empty_title`.
-- If the key is already taken in the registry (including tombstones), append `_2`, `_3`, and so on.
-- Never changes afterwards.
+- Generated once at creation from the normalized segments: `gopay_` + domain token + present segments + role (+ qualifier) (+ ordinal), joined with `_`.
+- Example: `gopay_transfer_ewallet_frequenttransfer_empty_title`. Figma name: `transfer/gopay_transfer_ewallet_frequenttransfer_empty_title`.
+- If the key is already taken anywhere (all collections plus tombstones), a qualifier is tried first, then `_2`, `_3`, and so on (smallest free ordinal; first-created keeps the bare key).
+- Never changes afterwards, except through a logged admin rekey (old key kept as a `legacyKeys` alias).
 - Legacy rows keep their existing key as `platformKey` when it is unique and conflict-free.
 
 ---
@@ -274,10 +316,12 @@ This keeps the fixed depth. Figma forbids `.`, `{`, `}` in variable names, and t
 **Advisory inputs** (normalized, then shown for confirmation): page, section and frame names.
 **Never trusted:** raw text content (except as a reuse signal) and default layer names (`Text`, `Frame 123`).
 
+Segments are inferred exactly as below; the result is normalized, words are concatenated, and default/filler segments are omitted from the key (they stay readable in the description).
+
 | Field | Primary source | Fallback | Confirm? |
 |---|---|---|---|
 | library / product | File config (pluginData on document) | Figma project → config map | Never (admin set) |
-| collection / domain | File config default domain | Page-level override in config | Rare |
+| domain (group prefix) | File config default domain | Page-level override in config | Rare |
 | feature | Section name mapped via feature registry aliases | Page name → registry alias; else `general` | Sometimes (one-click pick from registry list) |
 | screen | Nearest top-level frame name (normalized) | Parent frame; `shared` if inside a component outside frames | Rare |
 | context (block) | Nearest named ancestor instance/component (e.g. `Bottom sheet`, `Limit card`) | Named auto-layout group; else `main` | Rare |
@@ -290,12 +334,14 @@ This keeps the fixed depth. Figma forbids `.`, `{`, `}` in variable names, and t
 
 ```
 Create copy variable
-  insurance / health / plan-selector / main / title       [edit]
-  Similar existing: "Choose your plan" (insurance/health/…/title)  [Use instead]
+  transfer / gopay_transfer_ewallet_frequenttransfer_empty_title   [edit]
+  Transfer › E-wallet › Frequent transfer › Empty › Title
+  Similar existing: "Choose your plan" (transfer/gopay_transfer_…_title)  [Use instead]
   [Create]
 ```
 - If the role is unresolved, one radio row is shown: `○ Title ○ Body ○ Button ○ Label ○ Helper ○ Error ○ Other`.
 - If the feature is unresolved, one dropdown is shown, filtered from the registry.
+- The plugin generates the key from the inferred segments (same inference table, normalized and concatenated per §7) and writes the 3-line description. The writer may edit the key only at creation; afterwards it is frozen.
 - **Bulk mode:** "Create for all unbound text in selection" infers everything and shows a single review table. Only rows with unresolved roles are highlighted.
 
 ---
@@ -310,11 +356,12 @@ Defence in depth:
 
 **Offline:** create locally with `status=draft` and register on the next connect. Figma remains usable without the registry.
 
-**B. Semantic-name uniqueness: required within a collection** (Figma also rejects duplicate names in a collection). Resolution is deterministic:
-1. Try to disambiguate with a semantic qualifier first: button hierarchy (`cta-primary`/`cta-secondary`), the variant property value, or the block name, which moves `main` to the named block.
-2. If the name is still taken, append the smallest free ordinal starting at `-2`. The first-created variable keeps the bare name.
-3. **Race:** two writers may create the same name at the same moment. After create, the plugin re-reads the collection. If a duplicate name exists, the variable whose `cp_` ID sorts later lexically (created later) takes the next ordinal. Both clients compute the same winner, so no coordination is needed.
-4. Ordinals mean "another instance of the same role in the same context". They carry no ranking. The validator warns when there are ≥3 ordinals, which suggests a missing block or qualifier.
+**B. platformKey uniqueness: required globally** (across all collections and tombstones). It is enforced by a unique constraint in the registry; since the Figma name is `<domain>/<platformKey>`, the Figma name is unique as well. Resolution is deterministic:
+1. Try to disambiguate with a semantic qualifier first: button hierarchy (`cta_primary`/`cta_secondary`), the variant property value, or a named block segment in place of an omitted `main`.
+2. If the key is still taken, append the smallest free ordinal starting at `_2` (`_2`, `_3`). The first-created variable keeps the bare key.
+3. **Race:** two writers may generate the same key at the same moment. After create, the plugin re-reads the collection and the registry. If a duplicate key exists, the variable whose `cp_` ID sorts later lexically (created later) takes the next ordinal `_n`. Both clients compute the same winner, so no coordination is needed.
+4. Ordinals mean "another instance of the same role in the same context". They carry no ranking. The validator warns when there are ≥3 ordinals (V12), which suggests a missing block or qualifier.
+5. Once issued, a key is reserved forever (tombstone). It is never reissued, and it never changes except through a logged admin rekey.
 
 ---
 
@@ -337,17 +384,18 @@ Signals, in order of weight: existing binding on the main component > `shared` f
 
 ## 11. Lifecycle rules [REC]
 
-| Case | ID | Semantic name | Other |
+| Case | ID | Figma name / key | Other |
 |---|---|---|---|
 | A. Wording changes, same intent | **Same** | Same | Values updated. If the *intent* changes (a different action or message), create a new entity instead. |
-| B. Screen renamed (Review Transfer → Transfer Summary) | Same | Bulk-renamed on request (plugin detects frame-name ≠ `screen` segment and offers "Rename 14 variables") | platformKey unchanged |
-| C. Feature moves domain (Payments/Transfer → Money Movement/Transfer) | Same | Collection and feature segment change. The plugin creates the variable in the target collection with the same `cp_` ID, rebinds layers, deletes the old variable, and the registry updates the `figma` mapping. | platformKey unchanged |
+| B. Screen renamed (Review Transfer → Transfer Summary) | Same | **Key unchanged, no bulk rename.** Description line 2 is updated (the plugin detects frame-name ≠ description screen and offers "Update 14 descriptions"). | Key semantics may go stale; description is the source of truth |
+| C. Feature moves domain (Payments/Transfer → Money Movement/Transfer) | Same | Group prefix `<domain>/` and possibly the collection change; the key is unchanged. The plugin creates the variable in the target group/collection with the same `cp_` ID, rebinds layers, deletes the old variable, updates the description, and the registry updates the `figma` mapping. | platformKey unchanged |
 | D. Figma page renamed | Same | **No automatic change.** The page is advisory only. | — |
 | E. Frame duplicated | Same | Same | Bindings kept (Figma default). The duplicate shares entities. |
-| F. Duplicate becomes a new screen (Scheduled Transfer Review) | Forked entities get **new IDs** | New names under the new screen | The plugin detects frame name ≠ bound variables' `screen` for ≥50% of the frame's bindings and shows "Fork copy for this screen?". Fork creates new entities with copied values and `forkedFrom`. Bindings to `shared` variables are never forked. |
-| G. Variable deleted | Tombstoned forever | The name becomes reusable after deletion | The ID is never reused. The platformKey stays reserved. |
+| F. Duplicate becomes a new screen (Scheduled Transfer Review) | Forked entities get **new IDs** | New `cp_` ID and a **new key generated for the new screen** | The plugin detects frame name ≠ bound variables' `screen` for ≥50% of the frame's bindings and shows "Fork copy for this screen?". Fork creates new entities with copied values and `forkedFrom`. Bindings to `shared` variables are never forked. |
+| G. Variable deleted | Tombstoned forever | The key is **reserved forever (tombstone) and not reusable** | The ID is never reused. |
 | H. Deprecated | Kept | Kept | Set `status=deprecated`. The plugin warns on new bindings and the bundle marks it deprecated. After 0 bindings and 0 shipped references for 90 days, it moves to `archived`: removed from Figma, kept in the registry. |
-| Restore | Same ID | Original or new name | Recreated from the registry snapshot (values + meta) |
+| Restore | Same ID | Original key | Recreated from the registry snapshot (values + meta) |
+| Rekey (admin, rare) | Same | A new key is generated (e.g. fixing typo `emptystat`); Figma name becomes `<domain>/<new key>`. The old key is kept in `legacyKeys` as an alias in bundles. | Logged; the only allowed key change after creation |
 
 ---
 
@@ -413,48 +461,48 @@ Everything else is automatic.
 
 `cp_⟨new⟩` means a freshly generated UUIDv7 at migration. `cp_⟨=#n⟩` means the same ID as example n (merged/reused). No real IDs are invented here.
 
-| # | Source | Context (sec › screen › ctx › key) | EN / ID | Proposed name (collection: name) | ID | Reason |
+| # | Source | Context (sec › screen › ctx › key) | EN / ID | Figma name | ID | Reason |
 |---|---|---|---|---|---|---|
-| 1 | MONEY:827 | Transfer to e-wallet › Empty state for frequent transfer › Title › `gopay_unifiedtransfer_ewallet_emptystate_title` | There's no one here / Masih sepi, nih | transfer: `ewallet/frequent-transfer/empty/title` | ⟨new⟩ | Clean empty state; key tokens confirm feature/state/role |
-| 2 | MONEY:828 | same › Desc › `…_emptystate_description` | Those you've often transferred will show up here. / Nanti yang… | transfer: `ewallet/frequent-transfer/empty/description` | ⟨new⟩ | Sibling of #1 |
-| 3 | MONEY:4320 | Transfer – Account Linking › Assigning Contact Page › Placeholder text › `gopay_unifiedtransfer_ewallet_search_placeholder` | Enter name or phone number / Ketik nama atau nomor HP | transfer: `ewallet/assign-contact/search/placeholder` | ⟨new⟩ | Screen typo "Assiging" is normalized away; the legacy key is kept as platformKey |
-| 4 | MONEY:921 | SEARCH › – › "error - failed to show API acc…" › `…_search_allaccounts_error_cantshowsomeaccounts_description` | Couldn't show some accounts / Beberapa akun gagal muncul | transfer: `general/search/all-accounts-error-partial-load/description` | ⟨new⟩ | Missing screen → feature `general`; state comes from key |
-| 5 | MONEY:9 | 1. EXPENSE MANAGEMENT › Coming soon on GoPay Home › Toast | We got your response ✅ / Responmu udah dicatet ✅ | finance: `expense/coming-soon-home/main/toast` | ⟨new⟩ | Numbered/caps section normalized; emoji is kept in the value, never in the name |
-| 6 | MONEY:6 | same screen › (none) | "Forgot where all your money went?\nYea that happens…" | finance: `expense/coming-soon-home/main/title` + `…/main/description` | 2× ⟨new⟩ | Multi-line cell split into title and body; **review** |
-| 7 | PAYMENT:986 | BCA Blu › Server error › Title › `gopay_generic_error_dialoguecard_servererror_title` | There's a technical error / Ada gangguan teknis | shared: `error/server-error/dialog/title` | ⟨new⟩ | Generic key used in 4 files: seeds the `shared` collection |
+| 1 | MONEY:827 | Transfer to e-wallet › Empty state for frequent transfer › Title › `gopay_unifiedtransfer_ewallet_emptystate_title` | There's no one here / Masih sepi, nih | `transfer/gopay_unifiedtransfer_ewallet_emptystate_title` | ⟨new⟩ | Clean empty state; the legacy key is unique and conflict-free, so it is kept as the key (Figma name `transfer/<legacy key>`). Description: Transfer › E-wallet › Frequent transfer › Empty › Title |
+| 2 | MONEY:828 | same › Desc › `…_emptystate_description` | Those you've often transferred will show up here. / Nanti yang… | `transfer/gopay_unifiedtransfer_ewallet_emptystate_description` | ⟨new⟩ | Sibling of #1; legacy key kept |
+| 3 | MONEY:4320 | Transfer – Account Linking › Assigning Contact Page › Placeholder text › `gopay_unifiedtransfer_ewallet_search_placeholder` | Enter name or phone number / Ketik nama atau nomor HP | `transfer/gopay_unifiedtransfer_ewallet_search_placeholder` | ⟨new⟩ | Screen typo "Assiging" is normalized away in the description; the legacy key is unique and kept as the key |
+| 4 | MONEY:921 | SEARCH › – › "error - failed to show API acc…" › `…_search_allaccounts_error_cantshowsomeaccounts_description` | Couldn't show some accounts / Beberapa akun gagal muncul | `transfer/gopay_unifiedtransfer_search_allaccounts_error_cantshowsomeaccounts_description` | ⟨new⟩ | Missing screen; the legacy key is unique and kept. Screen/state context lives in the description |
+| 5 | MONEY:9 | 1. EXPENSE MANAGEMENT › Coming soon on GoPay Home › Toast | We got your response ✅ / Responmu udah dicatet ✅ | `finance/gopay_finance_expense_comingsoonhome_toast` | ⟨new⟩ | Numbered/caps section normalized; emoji is kept in the value, never in the name |
+| 6 | MONEY:6 | same screen › (none) | "Forgot where all your money went?\nYea that happens…" | `finance/gopay_finance_expense_comingsoonhome_title` + `finance/gopay_finance_expense_comingsoonhome_description` | 2× ⟨new⟩ | Multi-line cell split into title and body; **review** |
+| 7 | PAYMENT:986 | BCA Blu › Server error › Title › `gopay_generic_error_dialoguecard_servererror_title` | There's a technical error / Ada gangguan teknis | `shared/gopay_generic_error_dialoguecard_servererror_title` | ⟨new⟩ | Generic key used in 4 files: seeds the `shared` group. Legacy key kept (unique across files, same pair) |
 | 8 | PAYMENT:1553 | Error states › Installment error › Title › same key | There's a technical error / Ada gangguan teknis | → binds #7 | ⟨=#7⟩ | Same key + same pair: high-confidence same entity |
-| 9 | LENDING:360 | (Figma) › – › – › `gopay_lending_thirdparty_kycchecking_error_generaltechnical_popup_title` | There's a technical error / Ada masalah teknis, nih | lending: `third-party/kyc-checking/error-technical-popup/title` | ⟨new⟩ | Same EN as #7 but different key and ID tone: **clearly different**; suggest shared |
-| 10 | USER-SPEND:104 | Empty State › No promo at all › "CTA (dialogue card only)" › `…_servererror_cta` | Got it / Oke, ngerti | shared: `error/server-error/dialog/cta` | ⟨new⟩ | Key conflict: this key also maps to "Retry" elsewhere |
-| 11 | (key conflict partner) `gopay_generic_error_dialoguecard_servererror_cta` = "Retry" | — | Retry / … | shared: `error/server-error/dialog/cta-2` | ⟨new⟩ | One of the 53 conflicting keys: split. The older/most-used variant inherits the legacy key; this one gets a new platformKey. **Review** |
+| 9 | LENDING:360 | (Figma) › – › – › `gopay_lending_thirdparty_kycchecking_error_generaltechnical_popup_title` | There's a technical error / Ada masalah teknis, nih | `lending/gopay_lending_thirdparty_kycchecking_error_generaltechnical_popup_title` | ⟨new⟩ | Same EN as #7 but different key and ID tone: **clearly different**; suggest shared |
+| 10 | USER-SPEND:104 | Empty State › No promo at all › "CTA (dialogue card only)" › `…_servererror_cta` | Got it / Oke, ngerti | `shared/gopay_generic_error_dialoguecard_servererror_cta` | ⟨new⟩ | Key conflict: this key also maps to "Retry" elsewhere. #10 keeps the legacy key (group `shared`) |
+| 11 | (key conflict partner) `gopay_generic_error_dialoguecard_servererror_cta` = "Retry" | — | Retry / … | `shared/gopay_shared_error_servererror_dialog_cta_2` | ⟨new⟩ | One of the 53 conflicting keys: split. The older/most-used variant (#10) inherits the legacy key; this one gets a new key with ordinal `_2`. **Review** |
 | 12 | USER-SPEND:283 | Error Messages › BE failure › CTA › `…_servererror_cta` | Got it / **Oke** | → #10 with ID-mode conflict flagged | ⟨=#10⟩ | Same key, ID differs ("Oke" vs "Oke, ngerti"). This is a translation drift: one entity, reviewer picks the value |
-| 13 | MONEY:90 | 1. EXPENSE MANAGEMENT › graph when clicked on a week › – | Got it / Oke, ngerti | finance: `expense/weekly-graph/main/cta` | ⟨new⟩ | No key, different feature: create new. It is listed as a shared-promotion candidate (V22: "Got it" is used 321×), but it is only rebound to `shared` if a reviewer promotes it |
-| 14 | INVESTMENT:390 | Crypto › dialogue card crypto options › cta | Cancel / Gak jadi | investment: `crypto/options/dialog/cta-secondary` | ⟨new⟩ | "Cancel" appears 66× with 5 ID variants; never auto-merged |
-| 15 | INVESTMENT:2333,2338,2346,2351 | Gold on Gojek app › – › – | Cancel / Gak jadi (×4) | investment: `gold-gojek/shared/main/cta` (+ ordinals if kept) | **possible** cluster | Short text, no screen: 4 dialogs or 1? **Review**. The default keeps them separate as `-2…-4` |
-| 16 | INVESTMENT:931–957 | Tax Related Question › Error – empty | This field cannot be empty ×6 | investment: `mutual-fund/tax-questions/field-empty/error` | 1 ⟨new⟩ if reviewer confirms, else 6 | Per-field repeats: **possible**. The recommended outcome is 1 entity reused across fields |
-| 17 | INVESTMENT:5 / :6 | Investment Landing › money page › Alt 1 / Alt 2 | Make your money work… / A simple way to start… | investment: `general/money-page/main/title` (draft ×2) | ⟨new⟩ ×2, status=draft | Explorations are not production; a winner is chosen later and the loser archived |
-| 18 | INVESTMENT:46 | Investment Landing › homepage › `gopay_investment_home_transactionhistory_emptystate_title` | Transaction history / Riwayat transaksi | investment: `general/home/transaction-history-empty/title` | ⟨new⟩ | EN "Transaction history" is also used in ≥5 files: separate entity |
-| 19 | INVESTMENT:47 | … `…_emptystat_desc` (typo) | Once you make an investment… | investment: `general/home/transaction-history-empty/description` | ⟨new⟩ | The typo'd legacy key is kept as platformKey for app compatibility; the name is clean |
-| 20 | INVESTMENT:382 | Crypto › review payment page | "Please pay within <n> minute\n---\n…<n> minutes" / "Silakan bayar dalam %s menit" | investment: `crypto/review-payment/main/helper` | ⟨new⟩ | Plural variants → ICU plural `{count}`; `<n>`/`%s` mismatch → **review** |
-| 21 | LENDING:236 | Figma › – › Activated › Revolving | You have used {used_value} limit / Kamu sudah mencairkan {max_limit_value} | lending: `third-party/loan-dashboard/limit-card-revolving/value` | ⟨new⟩ | Placeholder mismatch: **blocking** validation error |
-| 22 | LENDING:77, :82 … (×20) | Figma › – › Success/Activated/… | Pinjaman by Kredit Pintar | lending: `third-party/loan-dashboard/limit-card/title` | 1 ⟨new⟩ | Repeated card header across 20 state mocks: high-confidence single entity (component text) |
-| 23 | LENDING:257 | Figma › KYC Rejected | EN "Ulangi" / ID "Reverify" | lending: `third-party/loan-dashboard/kyc-rejected/cta` | ⟨new⟩ | EN/ID swapped: **review**. Language detection flags it |
-| 24 | LENDING:450 | Registration Form › Answer | %s dependents / %s dependents | lending: `registration/personal-info/dependents/option-3` | ⟨new⟩ | EN==ID untranslated plus `%s`: review; option ordinals follow list order |
-| 25 | LENDING:421, :436 | Registration Form › Error state | Please choose one first before continue ×4 | lending: `registration/personal-info/select-required/error` | 1 ⟨new⟩ | Same context and pair across 4 fields: **possible** → 1 entity recommended |
-| 26 | LENDING:637 | Registration Form › "For when user tried to change the country code" › Toast › `…_error_phonenumber_countrycode` | Country code can't be changed / Kode negara gak bisa diganti | lending: `registration/form/phone-number-country-code/toast` | ⟨new⟩ | Context is an instruction and becomes `notes`; role taken from the Component column |
-| 27 | LENDING:643 | Registration Form › Primary button › `…_bottomsheet_back_primarycta` | No, stay here / Gak, lanjut isi | lending: `registration/form/back-sheet/cta-primary` | ⟨new⟩ | Qualifier from button hierarchy, not an ordinal |
-| 28 | LENDING ~709 (Push Notification) | Drop-off before application completed › "D+1 until D+3 At 12pm" | 📝 Few steps away… \n Let's pick up… | lending: `third-party/push/application-drop-off/push-title` + `push-body` | 2× ⟨new⟩ | Schedule goes to metadata, never into the name; the cell is split |
-| 29 | CONSUMER:168 | sanction › P2P_VELOCITY_BREACH › "Block P2P temporary – P2P velo…" | Can't transfer to this receiver\nFor your safety… | account-safety: `sanction/p2p-velocity-breach/block-p2p-temporary/title` + `description` | 2× ⟨new⟩ | Backend enum screen is normalized; multi-line split |
-| 30 | CONSUMER:94 | GoPay App – Regional Launch › Greeting screen › `gopay_regionallaunch_splashscreen_title` | Say hello to the new GoPay app! / Ini dia… | home: `regional-launch/greeting/main/title` | ⟨new⟩ | Key says `splashscreen` but the sheet says `Greeting screen`: the plugin/frame is authoritative, the key is kept as legacy |
-| 31 | CONSUMER:4 | GOPAY HOME BANNER › Title › "Feedback, review, survey" | HELP US IMPROVE / KAMI BUTUH MASUKANMU | home: `general/home-banner/feedback-survey/badge` | ⟨new⟩ | "Title" in the screen column is a column drift; it is really a banner label. Casing is a value concern |
-| 32 | PAYMENT:5 | ~~PRD Research~~ → MPM › camera access › Title | Allow us access to your camera? / Akses ke kamera belum aktif | payment: `mpm/camera-access/permission/title` | ⟨new⟩ | The link-label pseudo-section is skipped; the real section is "MPM" |
-| 33 | PAYMENT:1420 | Alternative I › Total saving (Rp) › `go_pay_widget_promo_total_saving_rp` | Total saving: Rp%s / Total hemat: Rp%s | payment: `payment-widget/promo/total-saving-idr/label` | ⟨new⟩ | Non-standard prefix kept as legacy platformKey; `%s` → `{amount}` |
-| 34 | USER-SPEND:8 | Promo Home › Head card › Saved GoPay | Rp<total_gopay_saved) | promo: `home/head-card/saved/value` | ⟨new⟩ | Malformed placeholder `<…)`: **blocking** validation |
-| 35 | USER-SPEND:26 | Promo Home › Vouchers & Packs (home) › available qty › `gopay_promotion_home_availablevoucher_count` | <n> available / <n> tersedia | promo: `home/vouchers-and-packs/available-voucher/value` | ⟨new⟩ | `&` → `and`; `<n>` → `{count}` |
-| 36 | USER-SPEND:2579 | Lender side › Request & split bill card on home › Title › `gopay_home_requestandsplitbill_title` | Request & split bill / Tagih & patungan | split-bill: `general/home-entry-card/main/title` | ⟨new⟩ | The key says `home` but the section is split-bill: the domain comes from the file config of the Figma file hosting the design |
-| 37 | INSURANCE:1405/1406 | autodebit insurance › Push Notification › "Remind users before deduction" | Your due date is coming 😊 / Hey {first name}… | insurance: `autodebit/push/pre-deduction-reminder/push-title` / `push-body` | 2× ⟨new⟩ | Placeholder `{first name}` → `{first_name}`; title/body are separate rows here, so no split is needed |
-| 38 | INSURANCE:1620 | family plan › – › `gopay_insurance_familyplan_registrationpage_mainCTA_save` | Save / Simpan | insurance: `family-plan/registration/main/cta-primary` | ⟨new⟩ | Uppercase legacy key kept as legacy only; a new platformKey is not needed because the legacy key is unique |
-| 39 | INSURANCE:6 & :239 (×6) | Health insurance pre UT › various | GoPay Asuransi / GoPay Asuransi | insurance: `health/onboarding/hero/title` … | separate ⟨new⟩ | EN==ID brand term; the 6 uses sit in different screens and explorations, so they are **clearly different** entities (explorations → draft) |
-| 40 | USER-SPEND:1608 | Secure Parking › Scanned ticket › CTA › `gopay_secureparking_confirmticket_cta` | Confirm to proceed / Konfirmasi untuk lanjut | transport: `secure-parking/scanned-ticket/main/cta` | ⟨new⟩ | "Confirm" family (22 rows) is similar but not identical: suggestion only |
+| 13 | MONEY:90 | 1. EXPENSE MANAGEMENT › graph when clicked on a week › – | Got it / Oke, ngerti | `finance/gopay_finance_expense_weeklygraph_cta` | ⟨new⟩ | No key, different feature: create new. It is listed as a shared-promotion candidate (V22: "Got it" is used 321×), but it is only rebound to `shared` if a reviewer promotes it |
+| 14 | INVESTMENT:390 | Crypto › dialogue card crypto options › cta | Cancel / Gak jadi | `investment/gopay_investment_crypto_options_dialog_cta_secondary` | ⟨new⟩ | "Cancel" appears 66× with 5 ID variants; never auto-merged |
+| 15 | INVESTMENT:2333,2338,2346,2351 | Gold on Gojek app › – › – | Cancel / Gak jadi (×4) | `investment/gopay_investment_goldgojek_cta` (+ `_2`…`_4` if kept) | **possible** cluster | Short text, no screen: 4 dialogs or 1? **Review**. The default keeps them separate as `_2…_4` |
+| 16 | INVESTMENT:931–957 | Tax Related Question › Error – empty | This field cannot be empty ×6 | `investment/gopay_investment_mutualfund_taxquestions_fieldempty_error` | 1 ⟨new⟩ if reviewer confirms, else 6 | Per-field repeats: **possible**. The recommended outcome is 1 entity reused across fields |
+| 17 | INVESTMENT:5 / :6 | Investment Landing › money page › Alt 1 / Alt 2 | Make your money work… / A simple way to start… | `investment/gopay_investment_moneypage_title` (draft ×2; second gets `_2`) | ⟨new⟩ ×2, status=draft | Explorations are not production; a winner is chosen later and the loser archived |
+| 18 | INVESTMENT:46 | Investment Landing › homepage › `gopay_investment_home_transactionhistory_emptystate_title` | Transaction history / Riwayat transaksi | `investment/gopay_investment_home_transactionhistory_emptystate_title` | ⟨new⟩ | Legacy key kept. EN "Transaction history" is also used in ≥5 files: separate entity |
+| 19 | INVESTMENT:47 | … `…_emptystat_desc` (typo) | Once you make an investment… | `investment/gopay_investment_home_transactionhistory_emptystat_desc` | ⟨new⟩ | The typo'd legacy key is kept as the key for app compatibility (unique and conflict-free); the description carries the clean context |
+| 20 | INVESTMENT:382 | Crypto › review payment page | "Please pay within <n> minute\n---\n…<n> minutes" / "Silakan bayar dalam %s menit" | `investment/gopay_investment_crypto_reviewpayment_helper` | ⟨new⟩ | Plural variants → ICU plural `{count}`; `<n>`/`%s` mismatch → **review** |
+| 21 | LENDING:236 | Figma › – › Activated › Revolving | You have used {used_value} limit / Kamu sudah mencairkan {max_limit_value} | `lending/gopay_lending_thirdparty_loandashboard_limitcardrevolving_value` | ⟨new⟩ | Placeholder mismatch: **blocking** validation error |
+| 22 | LENDING:77, :82 … (×20) | Figma › – › Success/Activated/… | Pinjaman by Kredit Pintar | `lending/gopay_lending_thirdparty_loandashboard_limitcard_title` | 1 ⟨new⟩ | Repeated card header across 20 state mocks: high-confidence single entity (component text) |
+| 23 | LENDING:257 | Figma › KYC Rejected | EN "Ulangi" / ID "Reverify" | `lending/gopay_lending_thirdparty_loandashboard_kycrejected_cta` | ⟨new⟩ | EN/ID swapped: **review**. Language detection flags it |
+| 24 | LENDING:450 | Registration Form › Answer | %s dependents / %s dependents | `lending/gopay_lending_registration_personalinfo_dependents_option_3` | ⟨new⟩ | EN==ID untranslated plus `%s`: review; option ordinals follow list order |
+| 25 | LENDING:421, :436 | Registration Form › Error state | Please choose one first before continue ×4 | `lending/gopay_lending_registration_personalinfo_selectrequired_error` | 1 ⟨new⟩ | Same context and pair across 4 fields: **possible** → 1 entity recommended |
+| 26 | LENDING:637 | Registration Form › "For when user tried to change the country code" › Toast › `…_error_phonenumber_countrycode` | Country code can't be changed / Kode negara gak bisa diganti | `lending/gopay_lending_thirdparty_registration_form_page_error_phonenumber_countrycode` | ⟨new⟩ | Context is an instruction and becomes `notes`; role taken from the Component column. Legacy key kept |
+| 27 | LENDING:643 | Registration Form › Primary button › `…_bottomsheet_back_primarycta` | No, stay here / Gak, lanjut isi | `lending/gopay_lending_thirdparty_registration_form_page_bottomsheet_back_primarycta` | ⟨new⟩ | Legacy key kept; qualifier semantics come from the button hierarchy (`primarycta` in the legacy key), not an ordinal |
+| 28 | LENDING ~709 (Push Notification) | Drop-off before application completed › "D+1 until D+3 At 12pm" | 📝 Few steps away… \n Let's pick up… | `lending/gopay_lending_thirdparty_push_applicationdropoff_pushtitle` + `…_pushbody` | 2× ⟨new⟩ | Schedule goes to metadata, never into the name; the cell is split |
+| 29 | CONSUMER:168 | sanction › P2P_VELOCITY_BREACH › "Block P2P temporary – P2P velo…" | Can't transfer to this receiver\nFor your safety… | `account-safety/gopay_accountsafety_sanction_p2pvelocitybreach_blockp2ptemporary_title` + `…_description` | 2× ⟨new⟩ | Backend enum screen is normalized; multi-line split |
+| 30 | CONSUMER:94 | GoPay App – Regional Launch › Greeting screen › `gopay_regionallaunch_splashscreen_title` | Say hello to the new GoPay app! / Ini dia… | `home/gopay_regionallaunch_splashscreen_title` | ⟨new⟩ | Key says `splashscreen` but the sheet says `Greeting screen`: the key is frozen legacy, the description (Greeting screen) is the source of truth |
+| 31 | CONSUMER:4 | GOPAY HOME BANNER › Title › "Feedback, review, survey" | HELP US IMPROVE / KAMI BUTUH MASUKANMU | `home/gopay_home_homebanner_feedbacksurvey_badge` | ⟨new⟩ | "Title" in the screen column is a column drift; it is really a banner label. Casing is a value concern |
+| 32 | PAYMENT:5 | ~~PRD Research~~ → MPM › camera access › Title | Allow us access to your camera? / Akses ke kamera belum aktif | `payment/gopay_payment_mpm_cameraaccess_permission_title` | ⟨new⟩ | The link-label pseudo-section is skipped; the real section is "MPM" |
+| 33 | PAYMENT:1420 | Alternative I › Total saving (Rp) › `go_pay_widget_promo_total_saving_rp` | Total saving: Rp%s / Total hemat: Rp%s | `payment/go_pay_widget_promo_total_saving_rp` | ⟨new⟩ | Non-standard prefix (`go_pay_`) allow-listed and kept as the key; `%s` → `{amount}` |
+| 34 | USER-SPEND:8 | Promo Home › Head card › Saved GoPay | Rp<total_gopay_saved) | `promo/gopay_promo_home_headcard_saved_value` | ⟨new⟩ | Malformed placeholder `<…)`: **blocking** validation |
+| 35 | USER-SPEND:26 | Promo Home › Vouchers & Packs (home) › available qty › `gopay_promotion_home_availablevoucher_count` | <n> available / <n> tersedia | `promo/gopay_promotion_home_availablevoucher_count` | ⟨new⟩ | Legacy key kept; description reads "Vouchers and Packs" (`&` → `and`); `<n>` → `{count}` |
+| 36 | USER-SPEND:2579 | Lender side › Request & split bill card on home › Title › `gopay_home_requestandsplitbill_title` | Request & split bill / Tagih & patungan | `split-bill/gopay_home_requestandsplitbill_title` | ⟨new⟩ | Key says `home` but the section is split-bill: the group (`split-bill/`) comes from the file config of the Figma file hosting the design; the legacy key is kept |
+| 37 | INSURANCE:1405/1406 | autodebit insurance › Push Notification › "Remind users before deduction" | Your due date is coming 😊 / Hey {first name}… | `insurance/gopay_insurance_autodebit_push_predeductionreminder_pushtitle` / `…_pushbody` | 2× ⟨new⟩ | Placeholder `{first name}` → `{first_name}`; title/body are separate rows here, so no split is needed |
+| 38 | INSURANCE:1620 | family plan › – › `gopay_insurance_familyplan_registrationpage_mainCTA_save` | Save / Simpan | `insurance/gopay_insurance_familyplan_registrationpage_mainCTA_save` | ⟨new⟩ | Uppercase legacy key kept (allow-listed); it is unique, so no new key is needed |
+| 39 | INSURANCE:6 & :239 (×6) | Health insurance pre UT › various | GoPay Asuransi / GoPay Asuransi | `insurance/gopay_insurance_health_onboarding_hero_title` … | separate ⟨new⟩ | EN==ID brand term; the 6 uses sit in different screens and explorations, so they are **clearly different** entities (explorations → draft) |
+| 40 | USER-SPEND:1608 | Secure Parking › Scanned ticket › CTA › `gopay_secureparking_confirmticket_cta` | Confirm to proceed / Konfirmasi untuk lanjut | `transport/gopay_secureparking_confirmticket_cta` | ⟨new⟩ | Legacy key kept. "Confirm" family (22 rows) is similar but not identical: suggestion only |
 
 ---
 
@@ -470,12 +518,12 @@ Each rule has an ID, a scope and a severity. **E** = blocks publish/export. **W*
 | V04 | No two Figma variables carry the same `cp_` ID (duplicate-variable detection) | E |
 | V05 | **Accidental regeneration:** for every registry entry with a `figma.variableKey` that still exists, the ID on that variable is unchanged since the last snapshot | E |
 | V06 | **Deleted-ID reuse:** no active entity's `id` or `platformKey` equals a tombstoned one | E |
-| V07 | Name matches `^[a-z0-9]+(-[a-z0-9]+)*(/[a-z0-9]+(-[a-z0-9]+)*){3}$` (exactly 4 segments) | E |
-| V08 | Each segment ≤32 chars; full name ≤120 | E |
-| V09 | The name is unique within its collection | E |
-| V10 | `feature` ∈ registry features for the collection's domain; `collection` ∈ domain registry | E |
-| V11 | The leaf's role token ∈ role vocabulary; ordinal ≥2 is present only if the bare name exists | E |
-| V12 | ≥3 ordinals under one context | W |
+| V07 | Figma name matches `^[a-z0-9]+(-[a-z0-9]+)*/<platformKey>$` (exactly one `/`) and the part after `/` == the entity's `platformKey` | E |
+| V08 | `platformKey` ≤100 chars, matches `^gopay_[a-z0-9]+(_[a-z0-9]+){1,9}$` (legacy keys up to 117 chars and legacy deviations — uppercase, `go_pay_`, `vui_`, `opay_` — are allow-listed) | E |
+| V09 | `platformKey` is globally unique across all collections and tombstones (registry unique constraint); consequently the Figma name is unique. The key never changes after creation except through a logged admin rekey (old key kept in `legacyKeys`) | E |
+| V10 | The group prefix (before `/`) ∈ domain registry, and equals the entity's domain; for non-legacy keys the domain token of the key == group with hyphens removed | E |
+| V11 | For non-legacy keys, the last role token (ignoring `_primary/_secondary/_tertiary` qualifier and `_n` ordinal) ∈ role vocabulary; an ordinal `_n` is present only if the bare key exists | E |
+| V12 | ≥3 ordinals on the same key stem | W |
 | V13 | `en` is non-empty for `status ∈ {active, deprecated}` | E |
 | V14 | Every required locale (config list, currently `en`, `id`) is non-empty for `active` | E (W for draft) |
 | V15 | Placeholder set (canonical `{snake}`) is identical across all locales | E |
@@ -486,11 +534,12 @@ Each rule has an ID, a scope and a severity. **E** = blocks publish/export. **W*
 | V20 | `en == id` for strings >30 chars without placeholders (likely untranslated) | W |
 | V21 | **Duplicate-entity candidates:** same collection+feature+screen+context+role and identical normalized values → report | W |
 | V22 | Same normalized EN in ≥5 non-shared entities → "shared promotion candidate" report | W |
-| V23 | `platformKey` matches `^[a-z][a-z0-9_]*$` (legacy exceptions allow-listed), is unique, and never changes after creation | E |
+| V23 | *(merged into V07/V09: key frozen after creation; only a logged rekey may change it)* | — |
 | V24 | `status=archived` entities have 0 Figma bindings; `deprecated` entities do not gain new bindings (binding count must not grow) | W |
 | V25 | `forkedFrom`, when set, references an existing or tombstoned ID ≠ self | E |
 | V26 | Migration idempotency: running migration twice on the same input yields byte-identical `(legacyFingerprint → id)` maps | E (CI test) |
 | V27 | Values contain no multi-message packing (`\n---\n`) | W |
+| V28 | Description line 1 == the entity's `cp_` id; line 2 is present and matches the registry context (`<Domain> › <Feature> › <Screen> › <Context> › <Role>`); line 3, if present, starts with `Note:` | E |
 
 ---
 
@@ -505,14 +554,23 @@ IDENTITY
 - Figma variable IDs/keys are mappings, never identity.
 
 NAMING
-- Library = product. Collection = domain from the domain registry (≤4,000 vars; split to
-  <domain>-<feature> when exceeded).
-- Variable name = <feature>/<screen>/<context>/<leaf>, exactly 4 kebab-case ASCII segments.
-  leaf = role[-qualifier][-ordinal]. Empty segment defaults: general / shared / main / text.
+- Library = product. Domain group = the single Figma group level `<domain>/` from the domain
+  registry. Collection = size partition only (≤4,000 vars each, e.g. "GoPay Copy 1"); the
+  domain group is unchanged when a collection splits.
+- Figma variable name = "<domain>/<platformKey>" (exactly one "/"). platformKey is flat
+  snake_case: "gopay_" domain ["_" feature] ["_" screen] ["_" context] "_" role
+  ["_" qualifier] ["_" ordinal]; words inside a segment are concatenated; domain token = domain
+  without hyphens; default/filler segments (general, shared, main) are omitted; role "text"
+  is the flagged default. Regex ^gopay_[a-z0-9]+(_[a-z0-9]+){1,9}$, ≤100 chars (legacy ≤117
+  and legacy deviations allow-listed).
 - Normalize: NFKD→ASCII, & → and, + → plus, % → percent, other symbols → "-", lowercase,
-  no camelCase split, collapse/trim "-", segment ≤32, name ≤120.
-- platformKey = "gopay_" + snake(name) at creation, suffix _n on conflict, frozen forever;
-  legacy keys are kept as platformKey when unique and conflict-free.
+  no camelCase split, then concatenate words per segment; segment ≤32.
+- Readable context lives in the variable description (3 lines): "cp_<ID>" /
+  "<Domain> › <Feature> › <Screen> › <Context> › <Role>" / optional "Note: …". The plugin
+  regenerates lines 1–2; humans edit line 3 only.
+- The key is FROZEN at creation. Screen renames and feature moves update only the description
+  (and the group prefix for domain moves). Legacy keys are kept when unique and conflict-free.
+  Key correction = rare admin rekey (new key, old key kept in legacyKeys alias, cp_ ID unchanged).
 - Locale is only ever a Figma mode. It never appears in id, name or platformKey.
 
 INFERENCE PRIORITY
@@ -527,8 +585,10 @@ INFERENCE PRIORITY
 COLLISIONS
 - ID: none by construction. A PK violation means a duplicated variable: the newer one gets
   a new ID + forkedFrom.
-- Name: semantic qualifier first, then the smallest free ordinal from -2. On a race,
-  the later cp_ (lexical) takes the ordinal.
+- Key: platformKey is globally unique (all collections + tombstones, registry unique
+  constraint), so the Figma name is unique too. Semantic qualifier first (cta_primary),
+  then the smallest free ordinal from _2 (first-created keeps the bare key). On a race,
+  re-read collection + registry; the later cp_ (lexical) takes the next ordinal _n.
 
 DUPLICATES / REUSE
 - AUTO reuse only for inherited component bindings, existing bindings, or explicit picks
@@ -538,11 +598,12 @@ DUPLICATES / REUSE
 - Otherwise CREATE NEW. Shared promotion is a manual reviewer action.
 
 LIFECYCLE
-- Wording/screen/feature/page changes keep the ID. Names may be bulk-renamed; the
-  platformKey never changes.
-- Fork (duplicated frame becoming a new screen) creates new IDs with forkedFrom; shared
-  bindings are never forked.
-- Delete = tombstone. Deprecate → archive after 90 days with 0 bindings/refs. Restore
+- Wording/screen/feature/page changes keep the ID and the key. Screen rename / feature move
+  update only the description (and the domain group prefix for domain moves); no bulk key
+  renames.
+- Fork (duplicated frame becoming a new screen) creates new IDs and new keys with forkedFrom;
+  shared bindings are never forked.
+- Delete = tombstone; the key is reserved forever and never reissued. Deprecate → archive after 90 days with 0 bindings/refs. Restore
   reuses the original ID.
 
 MIGRATION
@@ -561,6 +622,7 @@ NEVER
 - Never auto-merge on text match.
 - Never trust page names or default layer names as authoritative.
 - Never put locale, schedule or explorations into names.
+- Never rename a key except through a logged admin rekey.
 - Never let a writer type an ID.
 ```
 
@@ -568,14 +630,14 @@ NEVER
 
 ## Scalability check [REC] (supports §7/§9)
 
-| Scale | Collections (≤4k) | Name collisions | Dev consumption | Notes |
+| Scale | Collections (≤4k) | Key collisions | Dev consumption | Notes |
 |---|---|---|---|---|
 | 10k | ~5–14 domains, 1 library | Rare; ordinals only in dense generic areas | 1 bundle per locale per domain | Today's corpus is ~13k unique pairs |
 | 50k | ~15–25 collections; split big domains (insurance, transfer) | Ordinal warnings (V12) surface missing blocks | Per-domain lazy bundles | Registry is trivial (<100 MB) |
 | 100k | ~30 collections; ≥2 library files per product | Same | Codegen typed constants per domain | Figma library size/perf is the limiter, not identity |
-| 500k | ~125+ collections across per-domain library files; multiple products | Same rules | Bundles per product × domain × locale; IDs are fixed-width 29 chars | UUIDv7 unchanged; registry indexed on id, platformKey, (collection, name) |
+| 500k | ~125+ collections across per-domain library files; multiple products | Same rules | Bundles per product × domain × locale; IDs are fixed-width 29 chars | UUIDv7 unchanged; registry indexed on id and unique on platformKey |
 
-The identity model does not change at any scale. Only the partitioning of collections and library files grows. New languages only add modes. Figma mode and variable caps depend on plan tier, so verify current limits before rollout.
+Names are flat within one domain group, so the Figma sidebar stays one level deep at every scale; browsing and search happen through the plugin over description and values, not through deep groups. Domain groups are unchanged when a collection splits. The identity model does not change at any scale. Only the partitioning of collections and library files grows. New languages only add modes. Figma mode and variable caps depend on plan tier, so verify current limits before rollout.
 
 ## Verification of this analysis
 - All statistics come from Python `csv` parsing of all 7 files (per-tab column maps, whitespace-normalized comparisons). Re-derive them with the same rules during migration tool development and assert the §2 numbers as fixtures.

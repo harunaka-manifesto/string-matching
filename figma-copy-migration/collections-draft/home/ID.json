@@ -1,0 +1,290 @@
+{
+  "home": {
+    "gopay_home_genie_title_alt1_text": {
+      "$description": "cp_01M3NX21CFFR7B904SZQ2Y4TTY\nHome › Genie › Title › Alt1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21CFFR7B904SZQ2Y4TTY",
+          "platformKey": "gopay_home_genie_title_alt1_text",
+          "semanticPath": "genie/title/alt1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "100x gratis transfer"
+    },
+    "gopay_home_genie_title_alt2_text": {
+      "$description": "cp_01M3NX21CFERP962PFEZGZFS9G\nHome › Genie › Title › Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21CFERP962PFEZGZFS9G",
+          "platformKey": "gopay_home_genie_title_alt2_text",
+          "semanticPath": "genie/title/alt2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "100x gratis top up"
+    },
+    "gopay_home_genie_title_alt3_text": {
+      "$description": "cp_01M3NX21CGFZ0VRP5H2ZB8BA7J\nHome › Genie › Title › Alt3 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21CGFZ0VRP5H2ZB8BA7J",
+          "platformKey": "gopay_home_genie_title_alt3_text",
+          "semanticPath": "genie/title/alt3/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "100x GoFood delivery"
+    },
+    "gopay_home_genie_title_alt4_text": {
+      "$description": "cp_01M3NX21CGEF2V12T84DCQQ4BB\nHome › Genie › Title › Alt4 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21CGEF2V12T84DCQQ4BB",
+          "platformKey": "gopay_home_genie_title_alt4_text",
+          "semanticPath": "genie/title/alt4/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "100x GoRide voucher"
+    },
+    "gopay_home_genie_title_alt5_text": {
+      "$description": "cp_01M3NX21CHE3TVJK4AS0PCKXTJ\nHome › Genie › Title › Alt5 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21CHE3TVJK4AS0PCKXTJ",
+          "platformKey": "gopay_home_genie_title_alt5_text",
+          "semanticPath": "genie/title/alt5/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "100x cashback game"
+    },
+    "gopay_home_geniel01dsactivation_alt1_text": {
+      "$description": "cp_01M3NX21VMEQ09BEYBB8ZRQWVX\nHome › Genie L0 1ds Activation › Alt1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VMEQ09BEYBB8ZRQWVX",
+          "platformKey": "gopay_home_geniel01dsactivation_alt1_text",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rekomendasi buatmu"
+    },
+    "gopay_home_geniel01dsactivation_alt1_text_2": {
+      "$description": "cp_01M3NX21VNFMVAFMPEQ0SN4GNV\nHome › Genie L0 1ds Activation › Alt1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VNFMVAFMPEQ0SN4GNV",
+          "platformKey": "gopay_home_geniel01dsactivation_alt1_text_2",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt1/text-recommended",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rekomendasi buatmu"
+    },
+    "gopay_home_geniel01dsactivation_alt1_text_3": {
+      "$description": "cp_01M3NX21VPEZDAEBRT19YJZNN0\nHome › Genie L0 1ds Activation › Alt1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VPEZDAEBRT19YJZNN0",
+          "platformKey": "gopay_home_geniel01dsactivation_alt1_text_3",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt1/text-recommended-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rekomendasi buatmu"
+    },
+    "gopay_home_geniel01dsactivation_alt1_text_4": {
+      "$description": "cp_01M3NX21VQEPPV0SWMR05VBXJG\nHome › Genie L0 1ds Activation › Alt1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VQEPPV0SWMR05VBXJG",
+          "platformKey": "gopay_home_geniel01dsactivation_alt1_text_4",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt1/text-recommended-3",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rekomendasi buatmu"
+    },
+    "gopay_home_geniel01dsactivation_alt1_text_5": {
+      "$description": "cp_01M3NX21VQFJM8QVK10TRB7YRE\nHome › Genie L0 1ds Activation › Alt1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VQFJM8QVK10TRB7YRE",
+          "platformKey": "gopay_home_geniel01dsactivation_alt1_text_5",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt1/text-recommended-4",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rekomendasi buatmu"
+    },
+    "gopay_home_geniel01dsactivation_alt1_text_6": {
+      "$description": "cp_01M3NX21VREQSBPSS1HT3N0XSR\nHome › Genie L0 1ds Activation › Alt1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VREQSBPSS1HT3N0XSR",
+          "platformKey": "gopay_home_geniel01dsactivation_alt1_text_6",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt1/text-recommended-5",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rekomendasi buatmu"
+    },
+    "gopay_home_geniel01dsactivation_alt1_text_7": {
+      "$description": "cp_01M3NX21VSEAFT4JMQ7JN8EZYP\nHome › Genie L0 1ds Activation › Alt1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VSEAFT4JMQ7JN8EZYP",
+          "platformKey": "gopay_home_geniel01dsactivation_alt1_text_7",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt1/text-recommended-6",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rekomendasi buatmu"
+    },
+    "gopay_home_geniel01dsactivation_alt2_text": {
+      "$description": "cp_01M3NX21VMEGTSB5FYFA592J2W\nHome › Genie L0 1ds Activation › Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VMEGTSB5FYFA592J2W",
+          "platformKey": "gopay_home_geniel01dsactivation_alt2_text",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Spesial untukmu"
+    },
+    "gopay_home_geniel01dsactivation_alt2_text_2": {
+      "$description": "cp_01M3NX21VNEFB9M24CA8TG7VJ1\nHome › Genie L0 1ds Activation › Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VNEFB9M24CA8TG7VJ1",
+          "platformKey": "gopay_home_geniel01dsactivation_alt2_text_2",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt2/text-special",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Spesial untukmu"
+    },
+    "gopay_home_geniel01dsactivation_alt2_text_3": {
+      "$description": "cp_01M3NX21VPE4CRJBRFA75A4QEW\nHome › Genie L0 1ds Activation › Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VPE4CRJBRFA75A4QEW",
+          "platformKey": "gopay_home_geniel01dsactivation_alt2_text_3",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt2/text-special-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Spesial untukmu"
+    },
+    "gopay_home_geniel01dsactivation_alt2_text_4": {
+      "$description": "cp_01M3NX21VQFWK9TNG9TMDC76H4\nHome › Genie L0 1ds Activation › Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VQFWK9TNG9TMDC76H4",
+          "platformKey": "gopay_home_geniel01dsactivation_alt2_text_4",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt2/text-special-3",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Spesial untukmu"
+    },
+    "gopay_home_geniel01dsactivation_alt2_text_5": {
+      "$description": "cp_01M3NX21VRE2186F1WH51Q70FE\nHome › Genie L0 1ds Activation › Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VRE2186F1WH51Q70FE",
+          "platformKey": "gopay_home_geniel01dsactivation_alt2_text_5",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt2/text-special-4",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Spesial untukmu"
+    },
+    "gopay_home_geniel01dsactivation_alt2_text_6": {
+      "$description": "cp_01M3NX21VSEKRS12SH6T7C4NFZ\nHome › Genie L0 1ds Activation › Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VSEKRS12SH6T7C4NFZ",
+          "platformKey": "gopay_home_geniel01dsactivation_alt2_text_6",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt2/text-special-5",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Spesial untukmu"
+    },
+    "gopay_home_geniel01dsactivation_alt2_text_7": {
+      "$description": "cp_01M3NX21VSEQEAX345ESE47QQY\nHome › Genie L0 1ds Activation › Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21VSEQEAX345ESE47QQY",
+          "platformKey": "gopay_home_geniel01dsactivation_alt2_text_7",
+          "semanticPath": "genie-l0-1ds-activation/shared/alt2/text-special-6",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Spesial untukmu"
+    },
+    "gopay_home_gopayappregionallaunch_waitlist_gopayregionallaunchwaitlist_banner": {
+      "$description": "cp_01M3NX21M4FTRB34XBM4MKPZBY\nHome › Gopay App Regional Launch › Waitlist › Gopay Regionallaunch Waitlist › Banner",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21M4FTRB34XBM4MKPZBY",
+          "platformKey": "gopay_home_gopayappregionallaunch_waitlist_gopayregionallaunchwaitlist_banner",
+          "semanticPath": "gopay-app-regional-launch/waitlist/gopay-regionallaunch-waitlist/banner",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Transaksi aman & nyaman\nGoPay dilengkapi pusat bantuan 24 jam dan keamanan berlapis untuk lindungi saldo & datamu."
+    },
+    "gopay_home_referralquickfixp0_opt1_text": {
+      "$description": "cp_01M3NX21PQEQ5R8FVWQKCG4HHD\nHome › Referral Quick Fix P0 › Opt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21PQEQ5R8FVWQKCG4HHD",
+          "platformKey": "gopay_home_referralquickfixp0_opt1_text",
+          "semanticPath": "referral-quick-fix-p0/shared/opt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada hadiah GoPay Saldo s.d. 150.000 buat kamu. Buruan dapetin sebelum kehabisan!"
+    },
+    "gopay_home_referralquickfixp0_opt2givebigandtakebigger_text": {
+      "$description": "cp_01M3NX21PREKS9KTNC4X7N3R44\nHome › Referral Quick Fix P0 › Opt 2 Give Big And Take Bigger › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21PREKS9KTNC4X7N3R44",
+          "platformKey": "gopay_home_referralquickfixp0_opt2givebigandtakebigger_text",
+          "semanticPath": "referral-quick-fix-p0/shared/opt-2-give-big-and-take-bigger/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dapetin hadiah 150rb cuma dengan kasih temen 10rb. Ayo dapetin sekarang!"
+    }
+  }
+}

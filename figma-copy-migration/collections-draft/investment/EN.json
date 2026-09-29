@@ -1,0 +1,862 @@
+{
+  "investment": {
+    "gopay_investment_adhocentrypointgold_entrypointbutton_alt1generic_text": {
+      "$description": "cp_01M3NX203VEFZBGCJZ7BNYTBJ4\nInvestment › Adhoc Entry Point Gold › Entry Point Button › Alt 1 Generic › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203VEFZBGCJZ7BNYTBJ4",
+          "platformKey": "gopay_investment_adhocentrypointgold_entrypointbutton_alt1generic_text",
+          "semanticPath": "adhoc-entry-point-gold/entry-point-button/alt-1-generic/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Gold - 3% cashback"
+    },
+    "gopay_investment_adhocentrypointgold_entrypointbutton_alt2cashback_text": {
+      "$description": "cp_01M3NX203VE27AATKD93A7JPAC\nInvestment › Adhoc Entry Point Gold › Entry Point Button › Alt 2 Cashback › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203VE27AATKD93A7JPAC",
+          "platformKey": "gopay_investment_adhocentrypointgold_entrypointbutton_alt2cashback_text",
+          "semanticPath": "adhoc-entry-point-gold/entry-point-button/alt-2-cashback/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Invest in gold"
+    },
+    "gopay_investment_adhocentrypointgold_greenslimbanner_alt1generic_text": {
+      "$description": "cp_01M3NX203VFGSSGY9B3GVJZV0F\nInvestment › Adhoc Entry Point Gold › Green Slim Banner › Alt 1 Generic › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203VFGSSGY9B3GVJZV0F",
+          "platformKey": "gopay_investment_adhocentrypointgold_greenslimbanner_alt1generic_text",
+          "semanticPath": "adhoc-entry-point-gold/green-slim-banner/alt-1-generic/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Build your investment habit with gold"
+    },
+    "gopay_investment_adhocentrypointgold_greenslimbanner_alt2cashback_text": {
+      "$description": "cp_01M3NX203VEMZ8FWSV5HX3Z811\nInvestment › Adhoc Entry Point Gold › Green Slim Banner › Alt 2 Cashback › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203VEMZ8FWSV5HX3Z811",
+          "platformKey": "gopay_investment_adhocentrypointgold_greenslimbanner_alt2cashback_text",
+          "semanticPath": "adhoc-entry-point-gold/green-slim-banner/alt-2-cashback/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Invest in gold and get 3% cashback"
+    },
+    "gopay_investment_adhocgopayinvestasinotice_text_4": {
+      "$description": "cp_01M3NX203TFE789R9FT8WRG3XP\nInvestment › Adhoc Gopay Investasi Notice › Text\nNote: Still have a GoInvestasi balance? Masih punya saldo GoInvestasi?",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203TFE789R9FT8WRG3XP",
+          "platformKey": "gopay_investment_adhocgopayinvestasinotice_text_4",
+          "semanticPath": "adhoc-gopay-investasi-notice/shared/main/text-still-goinvestasi",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Still have a GoInvestasi balance?"
+    },
+    "gopay_investment_adhocgopayinvestasinotice_text_6": {
+      "$description": "cp_01M3NX203VF3F9J9B08FHJNX66\nInvestment › Adhoc Gopay Investasi Notice › Text\nNote: Access it through GoPay Investasi here Akses saldomu lagi melalui GoPay Investasi di sini",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203VF3F9J9B08FHJNX66",
+          "platformKey": "gopay_investment_adhocgopayinvestasinotice_text_6",
+          "semanticPath": "adhoc-gopay-investasi-notice/shared/main/text-access-through-gopay",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Access it through GoPay Investasi here"
+    },
+    "gopay_investment_buy_alt1userfriendly_ifusertransactwithmfthat_text": {
+      "$description": "cp_01M3NX202AEDN8VVB2DVQ82EGN\nInvestment › Buy › Alt 1 User Friendly › If User Transact With Mf That › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202AEDN8VVB2DVQ82EGN",
+          "platformKey": "gopay_investment_buy_alt1userfriendly_ifusertransactwithmfthat_text",
+          "semanticPath": "buy/alt-1-user-friendly/if-user-transact-with-mf-that/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "I understand this product is riskier than my risk profile, and I choose to continue with the transaction and accept the risks."
+    },
+    "gopay_investment_buy_alt2legal_ifusertransactwithmfthat_text": {
+      "$description": "cp_01M3NX202AF9FT3X0JNS5G2KQJ\nInvestment › Buy › Alt 2 Legal › If User Transact With Mf That › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202AF9FT3X0JNS5G2KQJ",
+          "platformKey": "gopay_investment_buy_alt2legal_ifusertransactwithmfthat_text",
+          "semanticPath": "buy/alt-2-legal/if-user-transact-with-mf-that/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "I acknowledge that this product carries a higher level of risk than my risk profile. I agree to proceed with the transaction and bear all associated risks."
+    },
+    "gopay_investment_crypto_homepage_text_13": {
+      "$description": "cp_01M3NX2029F83SQWYYWJB3GGHT\nInvestment › Crypto › Homepage › Text\nNote: Special for you Eksklusif buat kamu",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029F83SQWYYWJB3GGHT",
+          "platformKey": "gopay_investment_crypto_homepage_text_13",
+          "semanticPath": "crypto/homepage/main/text-special",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Special for you"
+    },
+    "gopay_investment_gold_onboarding_text_3": {
+      "$description": "cp_01M3NX202DEGBBHZYHMGH0NF3N\nInvestment › Gold › Onboarding › Text\nNote: Installment option available with low DP Ada opsi cicil emas dengan DP rendah",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202DEGBBHZYHMGH0NF3N",
+          "platformKey": "gopay_investment_gold_onboarding_text_3",
+          "semanticPath": "gold/onboarding/main/text-installment-option",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Installment option available with low DP"
+    },
+    "gopay_investment_goldongojekapp_card_alt1_text": {
+      "$description": "cp_01M3NX202WFWT9M8YNXPB0G85Z\nInvestment › Gold On Gojek App › Card › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202WFWT9M8YNXPB0G85Z",
+          "platformKey": "gopay_investment_goldongojekapp_card_alt1_text",
+          "semanticPath": "gold-on-gojek-app/card/alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Gold"
+    },
+    "gopay_investment_goldongojekapp_card_alt2_text": {
+      "$description": "cp_01M3NX202WEFMR18G6YW7C476A\nInvestment › Gold On Gojek App › Card › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202WEFMR18G6YW7C476A",
+          "platformKey": "gopay_investment_goldongojekapp_card_alt2_text",
+          "semanticPath": "gold-on-gojek-app/card/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Gold"
+    },
+    "gopay_investment_goldongojekapp_greenslimbanner_alt1_text": {
+      "$description": "cp_01M3NX202WEZ7951FMKFCPVRXS\nInvestment › Gold On Gojek App › Green Slim Banner › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202WEZ7951FMKFCPVRXS",
+          "platformKey": "gopay_investment_goldongojekapp_greenslimbanner_alt1_text",
+          "semanticPath": "gold-on-gojek-app/green-slim-banner/alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Buy gold - cashback 3%"
+    },
+    "gopay_investment_goldongojekapp_greenslimbanner_alt2_text": {
+      "$description": "cp_01M3NX202WEJPT8FNG4XBFWD6D\nInvestment › Gold On Gojek App › Green Slim Banner › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202WEJPT8FNG4XBFWD6D",
+          "platformKey": "gopay_investment_goldongojekapp_greenslimbanner_alt2_text",
+          "semanticPath": "gold-on-gojek-app/green-slim-banner/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Invest in gold now"
+    },
+    "gopay_investment_investmententrypoints_expensemanagement_alt1casual_text": {
+      "$description": "cp_01M3NX2028F4JBGQMHPXQKB6V7\nInvestment › Investment Entry Points › Expense Management › Alt 1 Casual › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028F4JBGQMHPXQKB6V7",
+          "platformKey": "gopay_investment_investmententrypoints_expensemanagement_alt1casual_text",
+          "semanticPath": "investment-entry-points/expense-management/alt-1-casual/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "You've tracked your spending. Now, let your money grow with investments."
+    },
+    "gopay_investment_investmententrypoints_expensemanagement_alt2contextualtoexpense_text": {
+      "$description": "cp_01M3NX2028F4E9AD73PVW9GFXH\nInvestment › Investment Entry Points › Expense Management › Alt 2 Contextual To Expense › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028F4E9AD73PVW9GFXH",
+          "platformKey": "gopay_investment_investmententrypoints_expensemanagement_alt2contextualtoexpense_text",
+          "semanticPath": "investment-entry-points/expense-management/alt-2-contextual-to-expense/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "First, track expenses, next grow your money. Let's build a healthy financial habit with GoPay!"
+    },
+    "gopay_investment_investmententrypoints_expensemanagement_alt3straightforward_text": {
+      "$description": "cp_01M3NX2028EENSJ24MMW4GJ5DA\nInvestment › Investment Entry Points › Expense Management › Alt 3 Straight Forward › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028EENSJ24MMW4GJ5DA",
+          "platformKey": "gopay_investment_investmententrypoints_expensemanagement_alt3straightforward_text",
+          "semanticPath": "investment-entry-points/expense-management/alt-3-straight-forward/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Explore investment options that fit your financial goals."
+    },
+    "gopay_investment_investmentlandinghomepage_money_alt1_text": {
+      "$description": "cp_01M3NX2027E30865FVNAB1EXSS\nInvestment › Investment Landing Homepage › Money › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2027E30865FVNAB1EXSS",
+          "platformKey": "gopay_investment_investmentlandinghomepage_money_alt1_text",
+          "semanticPath": "investment-landing-homepage/money/alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Make your money work toward your goals"
+    },
+    "gopay_investment_investmentlandinghomepage_money_alt2_text": {
+      "$description": "cp_01M3NX2027F83AC0NXG6VW4XZ9\nInvestment › Investment Landing Homepage › Money › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2027F83AC0NXG6VW4XZ9",
+          "platformKey": "gopay_investment_investmentlandinghomepage_money_alt2_text",
+          "semanticPath": "investment-landing-homepage/money/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "A simple way to start growing your money"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_10": {
+      "$description": "cp_01M3NX203REFW8JMYZ323770WE\nInvestment › Investment Leaderboard › How To Join › Text\nNote: GoPay Saldo 10mio GoPay Saldo 10jt 3 g of Physical Gold Emas fisik 3 g",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203REFW8JMYZ323770WE",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_10",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-gopay-saldo-10mio-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Saldo 10mio"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_13": {
+      "$description": "cp_01M3NX203RENWAJDQ2RPRTA103\nInvestment › Investment Leaderboard › How To Join › Text\nNote: Samsung S25 Samsung S25 iPhone 17 iPhone 17",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RENWAJDQ2RPRTA103",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_13",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-samsung-s25",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Samsung S25"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_15": {
+      "$description": "cp_01M3NX203RETMR3JEE5C8DJ7ZH\nInvestment › Investment Leaderboard › How To Join › Text\nNote: 3rd place prize Hadiah peringkat 3 3rd place prize Hadiah peringkat 3",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RETMR3JEE5C8DJ7ZH",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_15",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-3rd-place-prize-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "3rd place prize"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_16": {
+      "$description": "cp_01M3NX203REVYACFR2QFSK1Q19\nInvestment › Investment Leaderboard › How To Join › Text\nNote: 1st place prize Hadiah peringkat 1 1st place prize Hadiah peringkat 1",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203REVYACFR2QFSK1Q19",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_16",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-1st-place-prize-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "1st place prize"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_18": {
+      "$description": "cp_01M3NX203RF3X9R2E67YC5ZV4C\nInvestment › Investment Leaderboard › How To Join › Text\nNote: GoPay Saldo 5mio GoPay Saldo 5jt GoPay Saldo 5mio GoPay Saldo 5jt",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RF3X9R2E67YC5ZV4C",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_18",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-gopay-saldo-5mio-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Saldo 5mio"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_19": {
+      "$description": "cp_01M3NX203RF4HRBQFHN6K95YVX\nInvestment › Investment Leaderboard › How To Join › Text\nNote: 2nd place prize Hadiah peringkat 2 2nd place prize Hadiah peringkat 2",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RF4HRBQFHN6K95YVX",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_19",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-2nd-place-prize-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "2nd place prize"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_22": {
+      "$description": "cp_01M3NX203RFFGBJ7F5ACY1YKA9\nInvestment › Investment Leaderboard › How To Join › Text\nNote: 4-5th place prize Hadiah peringkat 4-5 4-5th place prize Hadiah peringkat 4-5",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RFFGBJ7F5ACY1YKA9",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_22",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-4-5th-place-prize-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "4-5th place prize"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_23": {
+      "$description": "cp_01M3NX203RFG58GWVJM91DBHAA\nInvestment › Investment Leaderboard › How To Join › Text\nNote: 6-10th place prize Hadiah peringkat 6-10 6-10th place prize Hadiah peringkat 6-10",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RFG58GWVJM91DBHAA",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_23",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-6-10th-place-prize-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "6-10th place prize"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_24": {
+      "$description": "cp_01M3NX203RFKT9EGAP9EKC9ZC5\nInvestment › Investment Leaderboard › How To Join › Text\nNote: Be one of the winners and claim your prize! Jadilah salah satu pemenang dan raih hadiahnya! Be one of the winners and claim your prize! Jadilah salah satu pemenang dan raih hadiahnya!",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RFKT9EGAP9EKC9ZC5",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_24",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-one-winners-claim-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Be one of the winners and claim your prize!"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_29": {
+      "$description": "cp_01M3NX203SEHZ85RXNEJKHN1WJ\nInvestment › Investment Leaderboard › How To Join › Text\nNote: 51-100th place prize Hadiah peringkat 51-100 51-100th place prize Hadiah peringkat 51-100",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203SEHZ85RXNEJKHN1WJ",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_29",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-51-100th-place-prize-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "51-100th place prize"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_31": {
+      "$description": "cp_01M3NX203SEYW8JX0H6M13DBF8\nInvestment › Investment Leaderboard › How To Join › Text\nNote: GoPay Saldo 500k GoPay Saldo 500rb GoPay Saldo 500k GoPay Saldo 500rb",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203SEYW8JX0H6M13DBF8",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_31",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-gopay-saldo-500k-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Saldo 500k"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_35": {
+      "$description": "cp_01M3NX203SFEZATT0E2HQA0KX1\nInvestment › Investment Leaderboard › How To Join › Text\nNote: GoPay Saldo 3mio GoPay Saldo 3jt GoPay Saldo 3mio GoPay Saldo 3jt",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203SFEZATT0E2HQA0KX1",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_35",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-gopay-saldo-3mio-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Saldo 3mio"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_36": {
+      "$description": "cp_01M3NX203SFGE90G3PFK32NEKZ\nInvestment › Investment Leaderboard › How To Join › Text\nNote: 31-50th place prize Hadiah peringkat 31-50 31-50th place prize Hadiah peringkat 31-50",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203SFGE90G3PFK32NEKZ",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_36",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-31-50th-place-prize-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "31-50th place prize"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_37": {
+      "$description": "cp_01M3NX203SFJVS7RV87BGB7FCC\nInvestment › Investment Leaderboard › How To Join › Text\nNote: GoPay Saldo 1mio GoPay Saldo 1jt GoPay Saldo 1mio GoPay Saldo 1jt",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203SFJVS7RV87BGB7FCC",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_37",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-gopay-saldo-1mio-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Saldo 1mio"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_38": {
+      "$description": "cp_01M3NX203SFK0VYHHAJA06FZDH\nInvestment › Investment Leaderboard › How To Join › Text\nNote: 11-30th place prize Hadiah peringkat 11-30 11-30th place prize Hadiah peringkat 11-30",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203SFK0VYHHAJA06FZDH",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_38",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-11-30th-place-prize-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "11-30th place prize"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_39": {
+      "$description": "cp_01M3NX203SFSNRHV28SMXEWF2F\nInvestment › Investment Leaderboard › How To Join › Text\nNote: GoPay Saldo 50k GoPay Saldo 50rb GoPay Saldo 50k GoPay Saldo 50rb",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203SFSNRHV28SMXEWF2F",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_39",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-gopay-saldo-50k-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Saldo 50k"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_7": {
+      "$description": "cp_01M3NX203RE39RS48JJW2RXEMM\nInvestment › Investment Leaderboard › How To Join › Text\nNote: Prizes Hadiah Prizes Hadiah",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RE39RS48JJW2RXEMM",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_7",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-prizes-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Prizes"
+    },
+    "gopay_investment_investmentleaderboard_howtojoin_text_8": {
+      "$description": "cp_01M3NX203RE4CBC8Y8YHMHADW4\nInvestment › Investment Leaderboard › How To Join › Text\nNote: iPhone 17 iPhone 17 iPhone 17 Pro iPhone 17 Pro",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RE4CBC8Y8YHMHADW4",
+          "platformKey": "gopay_investment_investmentleaderboard_howtojoin_text_8",
+          "semanticPath": "investment-leaderboard/how-to-join/main/text-iphone-17",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "iPhone 17"
+    },
+    "gopay_investment_mutualfund_reviewpage_buypagecta_text": {
+      "$description": "cp_01M3NX202AE9FVV04P3X6RF1MV\nInvestment › Mutualfund › Reviewpage › Buy Pagecta › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202AE9FVV04P3X6RF1MV",
+          "platformKey": "gopay_investment_mutualfund_reviewpage_buypagecta_text",
+          "semanticPath": "mutualfund/reviewpage/buy-pagecta/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Pay now"
+    },
+    "gopay_investment_mutualfundlanding_homepagemoneymarketfund_text_8": {
+      "$description": "cp_01M3NX202AFFTVT4EW3YFV0PCE\nInvestment › Mutual Fund Landing › Homepage Money Market Fund › Text\nNote: Special for you Eksklusif buat kamu",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202AFFTVT4EW3YFV0PCE",
+          "platformKey": "gopay_investment_mutualfundlanding_homepagemoneymarketfund_text_8",
+          "semanticPath": "mutual-fund-landing/homepage-money-market-fund/main/text-special",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Special for you"
+    },
+    "gopay_investment_processingorder_alt1_text": {
+      "$description": "cp_01M3NX202SE47A314VYP9FVBR2\nInvestment › Processing Order › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202SE47A314VYP9FVBR2",
+          "platformKey": "gopay_investment_processingorder_alt1_text",
+          "semanticPath": "processing-order/shared/alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Processing your gold installment"
+    },
+    "gopay_investment_processingorder_alt1_text_2": {
+      "$description": "cp_01M3NX202SFXMBMDRZY4CPMS1Z\nInvestment › Processing Order › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202SFXMBMDRZY4CPMS1Z",
+          "platformKey": "gopay_investment_processingorder_alt1_text_2",
+          "semanticPath": "processing-order/shared/alt-1/text-down-payment-been",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "The down payment has been paid. We’re currently processing your gold installment."
+    },
+    "gopay_investment_processingorder_alt2_text": {
+      "$description": "cp_01M3NX202SEN1BZ8RHK5NJXEEN\nInvestment › Processing Order › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202SEN1BZ8RHK5NJXEEN",
+          "platformKey": "gopay_investment_processingorder_alt2_text",
+          "semanticPath": "processing-order/shared/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Down payment complete, processing installment"
+    },
+    "gopay_investment_processingorder_alt2_text_2": {
+      "$description": "cp_01M3NX202SFN1BZXYP9AD78W7W\nInvestment › Processing Order › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202SFN1BZXYP9AD78W7W",
+          "platformKey": "gopay_investment_processingorder_alt2_text_2",
+          "semanticPath": "processing-order/shared/alt-2/text-down-payment-paid-re",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Down payment paid! We’re now processing your gold purchase."
+    },
+    "gopay_investment_pushnotification_creditapplied_text": {
+      "$description": "cp_01M3NX203HE28RZ1G1Z92Q4WHE\nInvestment › Push Notification › Credit Applied › Text\nNote: 32 28",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203HE28RZ1G1Z92Q4WHE",
+          "platformKey": "gopay_investment_pushnotification_creditapplied_text",
+          "semanticPath": "push-notification/shared/credit-applied/text-32",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "32"
+    },
+    "gopay_investment_pushnotification_creditapproved_text_2": {
+      "$description": "cp_01M3NX203HEMYT3K5NZBWJ9KCZ\nInvestment › Push Notification › Credit Approved › Text\nNote: 34 26",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203HEMYT3K5NZBWJ9KCZ",
+          "platformKey": "gopay_investment_pushnotification_creditapproved_text_2",
+          "semanticPath": "push-notification/shared/credit-approved/text-34",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "34"
+    },
+    "gopay_investment_pushnotification_creditapprovedbutloan_text": {
+      "$description": "cp_01M3NX203JF5RVTA93W018KJMH\nInvestment › Push Notification › Credit Approved But Loan › Text\nNote: 26 26",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JF5RVTA93W018KJMH",
+          "platformKey": "gopay_investment_pushnotification_creditapprovedbutloan_text",
+          "semanticPath": "push-notification/shared/credit-approved-but-loan/text-26",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "26"
+    },
+    "gopay_investment_pushnotification_creditrejected_text": {
+      "$description": "cp_01M3NX203HEBHVAQ1R5846N0JP\nInvestment › Push Notification › Credit Rejected › Text\nNote: 35 35",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203HEBHVAQ1R5846N0JP",
+          "platformKey": "gopay_investment_pushnotification_creditrejected_text",
+          "semanticPath": "push-notification/shared/credit-rejected/text-35",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "35"
+    },
+    "gopay_investment_pushnotification_goldbuyback_text_2": {
+      "$description": "cp_01M3NX203KFS1BB4RBZXD6SS05\nInvestment › Push Notification › Gold Buyback › Text\nNote: 25 28",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203KFS1BB4RBZXD6SS05",
+          "platformKey": "gopay_investment_pushnotification_goldbuyback_text_2",
+          "semanticPath": "push-notification/shared/gold-buyback/text-25",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "25"
+    },
+    "gopay_investment_pushnotification_lbasignsuccess_text_2": {
+      "$description": "cp_01M3NX203JFHN93EH3ZKE96B2Q\nInvestment › Push Notification › Lba Sign Success › Text\nNote: 31 38",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JFHN93EH3ZKE96B2Q",
+          "platformKey": "gopay_investment_pushnotification_lbasignsuccess_text_2",
+          "semanticPath": "push-notification/shared/lba-sign-success/text-31",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "31"
+    },
+    "gopay_investment_pushnotification_loanapplicationtimeoutdueto_text_2": {
+      "$description": "cp_01M3NX203JFGYTNH93EP3F4D3N\nInvestment › Push Notification › Loan Application Timeout Due To › Text\nNote: 34 29",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JFGYTNH93EP3F4D3N",
+          "platformKey": "gopay_investment_pushnotification_loanapplicationtimeoutdueto_text_2",
+          "semanticPath": "push-notification/shared/loan-application-timeout-due-to/text-34",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "34"
+    },
+    "gopay_investment_pushnotification_loanapplied_text": {
+      "$description": "cp_01M3NX203JEPDR0R82A662GXGN\nInvestment › Push Notification › Loan Applied › Text\nNote: 35 32",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JEPDR0R82A662GXGN",
+          "platformKey": "gopay_investment_pushnotification_loanapplied_text",
+          "semanticPath": "push-notification/shared/loan-applied/text-35",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "35"
+    },
+    "gopay_investment_pushnotification_loanapproved_text": {
+      "$description": "cp_01M3NX203JFM5R4NCZAKYTATD6\nInvestment › Push Notification › Loan Approved › Text\nNote: 41 25",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JFM5R4NCZAKYTATD6",
+          "platformKey": "gopay_investment_pushnotification_loanapproved_text",
+          "semanticPath": "push-notification/shared/loan-approved/text-41",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "41"
+    },
+    "gopay_investment_pushnotification_loanoverdue_text_2": {
+      "$description": "cp_01M3NX203KEZ78YSBKTMVEJDSQ\nInvestment › Push Notification › Loan Overdue › Text\nNote: 32 37",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203KEZ78YSBKTMVEJDSQ",
+          "platformKey": "gopay_investment_pushnotification_loanoverdue_text_2",
+          "semanticPath": "push-notification/shared/loan-overdue/text-32",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "32"
+    },
+    "gopay_investment_pushnotification_loanrejected_text": {
+      "$description": "cp_01M3NX203JEC19A7Y5HAJD74DP\nInvestment › Push Notification › Loan Rejected › Text\nNote: 32 27",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JEC19A7Y5HAJD74DP",
+          "platformKey": "gopay_investment_pushnotification_loanrejected_text",
+          "semanticPath": "push-notification/shared/loan-rejected/text-32",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "32"
+    },
+    "gopay_investment_pushnotification_text_10": {
+      "$description": "cp_01M3NX203JENNRMPV8W8KTSYSR\nInvestment › Push Notification › Text\nNote: 51 63",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JENNRMPV8W8KTSYSR",
+          "platformKey": "gopay_investment_pushnotification_text_10",
+          "semanticPath": "push-notification/shared/main/text-51-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "51"
+    },
+    "gopay_investment_pushnotification_text_12": {
+      "$description": "cp_01M3NX203JFDYV3EEK0R1DR1QS\nInvestment › Push Notification › Text\nNote: 102 98",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JFDYV3EEK0R1DR1QS",
+          "platformKey": "gopay_investment_pushnotification_text_12",
+          "semanticPath": "push-notification/shared/main/text-102",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "102"
+    },
+    "gopay_investment_pushnotification_text_15": {
+      "$description": "cp_01M3NX203JFMHBJ57WWXJ4X1SG\nInvestment › Push Notification › Text\nNote: 51 58",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JFMHBJ57WWXJ4X1SG",
+          "platformKey": "gopay_investment_pushnotification_text_15",
+          "semanticPath": "push-notification/shared/main/text-51-3",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "51"
+    },
+    "gopay_investment_pushnotification_text_16": {
+      "$description": "cp_01M3NX203JFRXBGTQH9FT5ND2W\nInvestment › Push Notification › Text\nNote: 87 117",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JFRXBGTQH9FT5ND2W",
+          "platformKey": "gopay_investment_pushnotification_text_16",
+          "semanticPath": "push-notification/shared/main/text-87",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "87"
+    },
+    "gopay_investment_pushnotification_text_19": {
+      "$description": "cp_01M3NX203KEK6RB4XPSKGKCQGV\nInvestment › Push Notification › Text\nNote: 99 121",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203KEK6RB4XPSKGKCQGV",
+          "platformKey": "gopay_investment_pushnotification_text_19",
+          "semanticPath": "push-notification/shared/main/text-99",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "99"
+    },
+    "gopay_investment_pushnotification_text_2": {
+      "$description": "cp_01M3NX203HEM4BSF817PJYQB74\nInvestment › Push Notification › Text\nNote: Characters - EN Characters - ID",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203HEM4BSF817PJYQB74",
+          "platformKey": "gopay_investment_pushnotification_text_2",
+          "semanticPath": "push-notification/shared/main/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Characters - EN"
+    },
+    "gopay_investment_pushnotification_text_20": {
+      "$description": "cp_01M3NX203KESP8ZT6ZS876NVVJ\nInvestment › Push Notification › Text\nNote: 108 109",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203KESP8ZT6ZS876NVVJ",
+          "platformKey": "gopay_investment_pushnotification_text_20",
+          "semanticPath": "push-notification/shared/main/text-108",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "108"
+    },
+    "gopay_investment_pushnotification_text_3": {
+      "$description": "cp_01M3NX203HF5XAGVRSRNZR72ZE\nInvestment › Push Notification › Text\nNote: 40 47",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203HF5XAGVRSRNZR72ZE",
+          "platformKey": "gopay_investment_pushnotification_text_3",
+          "semanticPath": "push-notification/shared/main/text-40",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "40"
+    },
+    "gopay_investment_pushnotification_text_5": {
+      "$description": "cp_01M3NX203HFNFAXWCYG7ZSBSQ8\nInvestment › Push Notification › Text\nNote: 61 66",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203HFNFAXWCYG7ZSBSQ8",
+          "platformKey": "gopay_investment_pushnotification_text_5",
+          "semanticPath": "push-notification/shared/main/text-61",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "61"
+    },
+    "gopay_investment_pushnotification_text_7": {
+      "$description": "cp_01M3NX203JE3HTT2VRCE83RRY1\nInvestment › Push Notification › Text\nNote: 38 45",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JE3HTT2VRCE83RRY1",
+          "platformKey": "gopay_investment_pushnotification_text_7",
+          "semanticPath": "push-notification/shared/main/text-38",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "38"
+    },
+    "gopay_investment_pushnotification_text_8": {
+      "$description": "cp_01M3NX203JE97SC9PWV6WN71VA\nInvestment › Push Notification › Text\nNote: 41 56",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JE97SC9PWV6WN71VA",
+          "platformKey": "gopay_investment_pushnotification_text_8",
+          "semanticPath": "push-notification/shared/main/text-41",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "41"
+    },
+    "gopay_investment_pushnotification_text_9": {
+      "$description": "cp_01M3NX203JEA2T7CN51N9X60AX\nInvestment › Push Notification › Text\nNote: 51 58",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203JEA2T7CN51N9X60AX",
+          "platformKey": "gopay_investment_pushnotification_text_9",
+          "semanticPath": "push-notification/shared/main/text-51",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "51"
+    }
+  }
+}

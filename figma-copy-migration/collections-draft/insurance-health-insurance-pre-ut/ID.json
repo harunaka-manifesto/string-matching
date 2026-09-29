@@ -1,0 +1,173 @@
+{
+  "insurance-health-insurance-pre-ut": {
+    "gopay_insurance_healthinsurancepreut_onboardingeducationalalt1_text": {
+      "$description": "cp_01M3NX204GEYSTGYSHMFKZZZSF\nInsurance › Health Insurance Pre Ut › Onboarding Educational Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GEYSTGYSHMFKZZZSF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_onboardingeducationalalt1_text",
+          "semanticPath": "health-insurance-pre-ut/shared/onboarding-educational-alt-1/text-life-full-journeys",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Perjalanan selama hidup"
+    },
+    "gopay_insurance_healthinsurancepreut_onboardingeducationalalt1_text_2": {
+      "$description": "cp_01M3NX204GF8FVPD633WD7Z3X4\nInsurance › Health Insurance Pre Ut › Onboarding Educational Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GF8FVPD633WD7Z3X4",
+          "platformKey": "gopay_insurance_healthinsurancepreut_onboardingeducationalalt1_text_2",
+          "semanticPath": "health-insurance-pre-ut/shared/onboarding-educational-alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Asuransi"
+    },
+    "gopay_insurance_healthinsurancepreut_onboardingeducationalalt2_text": {
+      "$description": "cp_01M3NX204HF79BZXAS6ASTM554\nInsurance › Health Insurance Pre Ut › Onboarding Educational Alt2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HF79BZXAS6ASTM554",
+          "platformKey": "gopay_insurance_healthinsurancepreut_onboardingeducationalalt2_text",
+          "semanticPath": "health-insurance-pre-ut/shared/onboarding-educational-alt2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sehat itu mahal"
+    },
+    "gopay_insurance_healthinsurancepreut_pn_alt1_text": {
+      "$description": "cp_01M3NX2056ECMA8NKNMWXNDXTC\nInsurance › Health Insurance Pre Ut › Pn › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056ECMA8NKNMWXNDXTC",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_alt1_text",
+          "semanticPath": "health-insurance-pre-ut/pn/alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Kalau {product_name} kamu masuk masa tenggang kamu gak bisa klaim apa pun. Klik di sini buat bayar."
+    },
+    "gopay_insurance_healthinsurancepreut_pn_alt2_text": {
+      "$description": "cp_01M3NX2056EAW9KD4YGFTS4B55\nInsurance › Health Insurance Pre Ut › Pn › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2056EAW9KD4YGFTS4B55",
+          "platformKey": "gopay_insurance_healthinsurancepreut_pn_alt2_text",
+          "semanticPath": "health-insurance-pre-ut/pn/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Kalau pembayran polis asuransimu lewat dari jatuh tempo, kamu gak akan bisa klaim benefit asuransinya. Klik di sini buat bayar."
+    },
+    "gopay_insurance_healthinsurancepreut_text_11": {
+      "$description": "cp_01M3NX204HE6ERRZ34DTS6EF3F\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HE6ERRZ34DTS6EF3F",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_11",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-health-problems",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Masalah kesehatan bisa muncul kapan aja, sementara biaya pengobatan terus meningkat."
+    },
+    "gopay_insurance_healthinsurancepreut_text_13": {
+      "$description": "cp_01M3NX204HEEFR94M0ZG6NTE8N\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HEEFR94M0ZG6NTE8N",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_13",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-gopay-insurance-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dengan Asuransi GoPay, keuanganmu terlindungi. Cukup kasih lihat kartu asuransi, biaya pengobatanmu kami yang tanggung."
+    },
+    "gopay_insurance_healthinsurancepreut_text_14": {
+      "$description": "cp_01M3NX204HEEJ86HZYN9BTQ948\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HEEJ86HZYN9BTQ948",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_14",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-protect-financial",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Lindungi kesejahteraan finansialmu"
+    },
+    "gopay_insurance_healthinsurancepreut_text_2": {
+      "$description": "cp_01M3NX204GEJGS6KNVPAZSRYZG\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GEJGS6KNVPAZSRYZG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_2",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-life-definitely",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Hidup pasti dipenuhi dengan banyak cerita. Dimulai dari usaha kecilmu untuk berbahagia, hingga kerja kerasmu buat capai impian."
+    },
+    "gopay_insurance_healthinsurancepreut_text_20": {
+      "$description": "cp_01M3NX204HEX1AR9CKJS4AQ5KF\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204HEX1AR9CKJS4AQ5KF",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_20",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-gopay-insurance",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dengan Asuransi GoPay, pengobatan yang mahal bukan lagi jadi masalahmu karena dengan premi mulai dari Rp60.000/bulan, kamu terlindungi dari risiko penyakit tak diinginkan."
+    },
+    "gopay_insurance_healthinsurancepreut_text_3": {
+      "$description": "cp_01M3NX204GES3S6WAN42TWZMKG\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GES3S6WAN42TWZMKG",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_3",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-however-life-also",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Namun, hidup selalu dipenuhi dengan kejutan. Masalah kesehatan bisa muncul kapan aja, dan kalau gak dibekali dengan asuransi, pengeluaran bisa membengkak, dan tabungan makin menipis."
+    },
+    "gopay_insurance_healthinsurancepreut_text_4": {
+      "$description": "cp_01M3NX204GF4R968068WXGA6Q2\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GF4R968068WXGA6Q2",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_4",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-prepare-life",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Bersiap hadapi kejutan hidup"
+    },
+    "gopay_insurance_healthinsurancepreut_text_5": {
+      "$description": "cp_01M3NX204GFD897CJNPGZX2SV8\nInsurance › Health Insurance Pre Ut › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204GFD897CJNPGZX2SV8",
+          "platformKey": "gopay_insurance_healthinsurancepreut_text_5",
+          "semanticPath": "health-insurance-pre-ut/shared/main/text-farewell-health",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Biaya pengobatan bukan lagi masalahmu"
+    }
+  }
+}

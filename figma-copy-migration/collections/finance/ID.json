@@ -1,0 +1,4073 @@
+{
+  "finance": {
+    "gopay_finance__expensereportpage_weeklysummary_labeltitle_coins_income": {
+      "$description": "cp_01M3NX23ZVE5ST1CE4J1C1QV9T\nFinance › Expensereportpage › Weeklysummary Labeltitle Coins › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZVE5ST1CE4J1C1QV9T",
+          "platformKey": "gopay_finance__expensereportpage_weeklysummary_labeltitle_coins_income",
+          "semanticPath": "general/expensereportpage/weeklysummary-labeltitle-coins/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Coins didapatkan"
+    },
+    "gopay_finance__expensereportpage_weeklysummary_labeltitle_coins_spent": {
+      "$description": "cp_01M3NX23ZVEY4BD487BG4XBK9Y\nFinance › Expensereportpage › Weeklysummary Labeltitle Coins › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZVEY4BD487BG4XBK9Y",
+          "platformKey": "gopay_finance__expensereportpage_weeklysummary_labeltitle_coins_spent",
+          "semanticPath": "general/expensereportpage/weeklysummary-labeltitle-coins/text-coins-spent",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Coins dipakai"
+    },
+    "gopay_finance__expensereportpage_weeklysummary_legends_currentmonth": {
+      "$description": "cp_01M3NX23ZTEJ982ZEPMK54ZYK7\nFinance › Expensereportpage › Weeklysummary Legends › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZTEJ982ZEPMK54ZYK7",
+          "platformKey": "gopay_finance__expensereportpage_weeklysummary_legends_currentmonth",
+          "semanticPath": "general/expensereportpage/weeklysummary-legends/text-month",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bulan ini"
+    },
+    "gopay_finance__expensereportpage_weeklysummary_legends_previousmonth": {
+      "$description": "cp_01M3NX23ZTFT7VRRX1K87M3BPS\nFinance › Expensereportpage › Weeklysummary Legends › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZTFT7VRRX1K87M3BPS",
+          "platformKey": "gopay_finance__expensereportpage_weeklysummary_legends_previousmonth",
+          "semanticPath": "general/expensereportpage/weeklysummary-legends/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bulan lalu"
+    },
+    "gopay_finance_addexpense_addexpensenointernet_text": {
+      "$description": "cp_01M3NX22F6E4B9Z256VJ0QQSVT\nFinance › Add Expense › Add Expense No Internet › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F6E4B9Z256VJ0QQSVT",
+          "platformKey": "gopay_finance_addexpense_addexpensenointernet_text",
+          "semanticPath": "add-expense/add-expense-no-internet/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yah, internetmu kurang stabil"
+    },
+    "gopay_finance_addexpense_addexpensenointernet_text_2": {
+      "$description": "cp_01M3NX22F6EZETXHA1HTXDATV0\nFinance › Add Expense › Add Expense No Internet › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F6EZETXHA1HTXDATV0",
+          "platformKey": "gopay_finance_addexpense_addexpensenointernet_text_2",
+          "semanticPath": "add-expense/add-expense-no-internet/main/text-go-settings",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ke Pengaturan"
+    },
+    "gopay_finance_addexpense_addexpensenointernet_text_3": {
+      "$description": "cp_01M3NX22F6F1HAHYHNZB78MD2F\nFinance › Add Expense › Add Expense No Internet › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F6F1HAHYHNZB78MD2F",
+          "platformKey": "gopay_finance_addexpense_addexpensenointernet_text_3",
+          "semanticPath": "add-expense/add-expense-no-internet/main/text-check-internet",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek koneksi internet kamu via Pengaturan atau coba refresh, ya."
+    },
+    "gopay_finance_addexpense_addexpensenointernet_text_4": {
+      "$description": "cp_01M3NX22F7ER6AKS24AQHCVVNP\nFinance › Add Expense › Add Expense No Internet › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F7ER6AKS24AQHCVVNP",
+          "platformKey": "gopay_finance_addexpense_addexpensenointernet_text_4",
+          "semanticPath": "add-expense/add-expense-no-internet/main/text-refresh",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Refresh"
+    },
+    "gopay_finance_addexpense_amountreachthelimitgopay_value": {
+      "$description": "cp_01M3NX22EMEXMTH2STT6NFM3JZ\nFinance › Add Expense › Amount Reach The Limit Gopay › Value",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EMEXMTH2STT6NFM3JZ",
+          "platformKey": "gopay_finance_addexpense_amountreachthelimitgopay_value",
+          "semanticPath": "add-expense/shared/amount-reach-the-limit-gopay/value",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Mentok limit, nih. Kurangin lagi, ya"
+    },
+    "gopay_finance_addexpense_changecategorydialoguecard_gopayfinanceexpensereport_text_2": {
+      "$description": "cp_01M3NX22FDF2Y9JE4H2TYAHHBK\nFinance › Add Expense › Change Category Dialogue Card › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FDF2Y9JE4H2TYAHHBK",
+          "platformKey": "gopay_finance_addexpense_changecategorydialoguecard_gopayfinanceexpensereport_text_2",
+          "semanticPath": "add-expense/change-category-dialogue-card/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ganti kategori pengeluaran ini?"
+    },
+    "gopay_finance_addexpense_changecategorydialoguecard_gopayfinanceexpensereport_text_3": {
+      "$description": "cp_01M3NX22FEF2NB1443ZGQV8DKZ\nFinance › Add Expense › Change Category Dialogue Card › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FEF2NB1443ZGQV8DKZ",
+          "platformKey": "gopay_finance_addexpense_changecategorydialoguecard_gopayfinanceexpensereport_text_3",
+          "semanticPath": "add-expense/change-category-dialogue-card/gopay-finance-expensereport/text-yes-change",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Iya, ganti"
+    },
+    "gopay_finance_addexpense_changecategorytoast_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22FEEB3V9KP497J5FVCS\nFinance › Add Expense › Change Category Toast › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FEEB3V9KP497J5FVCS",
+          "platformKey": "gopay_finance_addexpense_changecategorytoast_gopayfinanceexpensereport_text",
+          "semanticPath": "add-expense/change-category-toast/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Berhasil ganti kategori"
+    },
+    "gopay_finance_addexpense_changecategorytoast_gopayfinanceexpensereport_text_2": {
+      "$description": "cp_01M3NX22FFEVE852CCMSWCSEXG\nFinance › Add Expense › Change Category Toast › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FFEVE852CCMSWCSEXG",
+          "platformKey": "gopay_finance_addexpense_changecategorytoast_gopayfinanceexpensereport_text_2",
+          "semanticPath": "add-expense/change-category-toast/gopay-finance-expensereport/text-gopaylater-cicil",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pembayaran GoPayLater Cicil gak ditandain jadi pengeluaran biar gak tercatat 2 kali."
+    },
+    "gopay_finance_addexpense_changecategorytoast_plandcicilrepaymentgopay_text": {
+      "$description": "cp_01M3NX22FFFY5TMQK6DJ2K7Z1E\nFinance › Add Expense › Change Category Toast › Pl And Cicil Repayment Gopay › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FFFY5TMQK6DJ2K7Z1E",
+          "platformKey": "gopay_finance_addexpense_changecategorytoast_plandcicilrepaymentgopay_text",
+          "semanticPath": "add-expense/change-category-toast/pl-and-cicil-repayment-gopay/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pembayaran GoPayLater gak ditandain jadi pengeluaran biar gak tercatat 2 kali."
+    },
+    "gopay_finance_addexpense_changecategorytoast_selftransfergopayfinance_text": {
+      "$description": "cp_01M3NX22FFFNV9DP8R1WRWC0CW\nFinance › Add Expense › Change Category Toast › Self Transfer Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FFFNV9DP8R1WRWC0CW",
+          "platformKey": "gopay_finance_addexpense_changecategorytoast_selftransfergopayfinance_text",
+          "semanticPath": "add-expense/change-category-toast/self-transfer-gopay-finance/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transaksi ini gak ditandain sebagai pengeluaran karena uangnya ditransfer ke rek. kamu."
+    },
+    "gopay_finance_addexpense_changecategorytoast_selfwithdrawalgopayfinance_text": {
+      "$description": "cp_01M3NX22FFF61T1NR893NR7WGX\nFinance › Add Expense › Change Category Toast › Self Withdrawal Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FFF61T1NR893NR7WGX",
+          "platformKey": "gopay_finance_addexpense_changecategorytoast_selfwithdrawalgopayfinance_text",
+          "semanticPath": "add-expense/change-category-toast/self-withdrawal-gopay-finance/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transaksi ini gak ditandain sebagai pengeluaran karena ini penarikan saldo jadi uang tunai."
+    },
+    "gopay_finance_addexpense_exitconfirmation_text": {
+      "$description": "cp_01M3NX22F4FQTSVZKP9Z3GJ473\nFinance › Add Expense › Exit Confirmation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F4FQTSVZKP9Z3GJ473",
+          "platformKey": "gopay_finance_addexpense_exitconfirmation_text",
+          "semanticPath": "add-expense/exit-confirmation/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak jadi catat pengeluaran?"
+    },
+    "gopay_finance_addexpense_exitconfirmation_text_2": {
+      "$description": "cp_01M3NX22F4FVP9DP01MNWCSCZT\nFinance › Add Expense › Exit Confirmation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F4FVP9DP01MNWCSCZT",
+          "platformKey": "gopay_finance_addexpense_exitconfirmation_text_2",
+          "semanticPath": "add-expense/exit-confirmation/main/text-do-start-next-time",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nanti silakan ulang dari awal kalau kamu mau catat lagi."
+    },
+    "gopay_finance_addexpense_exitconfirmation_text_3": {
+      "$description": "cp_01M3NX22F5E449CQDX2T56TH8J\nFinance › Add Expense › Exit Confirmation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F5E449CQDX2T56TH8J",
+          "platformKey": "gopay_finance_addexpense_exitconfirmation_text_3",
+          "semanticPath": "add-expense/exit-confirmation/main/text-continue-adding",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lanjut catat"
+    },
+    "gopay_finance_addexpense_exitconfirmation_text_4": {
+      "$description": "cp_01M3NX22F5EK0R4Y5GPKG2VNG9\nFinance › Add Expense › Exit Confirmation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F5EK0R4Y5GPKG2VNG9",
+          "platformKey": "gopay_finance_addexpense_exitconfirmation_text_4",
+          "semanticPath": "add-expense/exit-confirmation/main/text-yes-quit",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Iya, gak jadi"
+    },
+    "gopay_finance_addexpense_exitconfirmation_text_5": {
+      "$description": "cp_01M3NX22F5FQ2T2T7BWRYPED02\nFinance › Add Expense › Exit Confirmation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F5FQ2T2T7BWRYPED02",
+          "platformKey": "gopay_finance_addexpense_exitconfirmation_text_5",
+          "semanticPath": "add-expense/exit-confirmation/main/text-uploading-image",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lagi upload foto"
+    },
+    "gopay_finance_addexpense_exitconfirmation_text_6": {
+      "$description": "cp_01M3NX22F5FYGR9P995QT83EVC\nFinance › Add Expense › Exit Confirmation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F5FYGR9P995QT83EVC",
+          "platformKey": "gopay_finance_addexpense_exitconfirmation_text_6",
+          "semanticPath": "add-expense/exit-confirmation/main/text-wait-until-s-done",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Mohon tunggu sampai selesai, yaa."
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_banner": {
+      "$description": "cp_01M3NX22FAEGNRSBFG1JR985ZT\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Banner",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FAEGNRSBFG1JR985ZT",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_banner",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/banner",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ini non-pengeluaran kamu"
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_banner_2": {
+      "$description": "cp_01M3NX22FAFMET0PDE47FA21GV\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Banner",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FAFMET0PDE47FA21GV",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_banner_2",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/banner-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transaksi ini gak muncul di laporan & analisa. Pelajari selengkapnya."
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_banner_3": {
+      "$description": "cp_01M3NX22FBEDFSEN139715KTNY\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Banner",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FBEDFSEN139715KTNY",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_banner_3",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/banner-4",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tarik tunai & transfer ke rek. sendiri termasuk non-pengeluaran karena kami gak bisa lacak uangnya dipakai buat apa. Pembarayaran GoPayLater juga gak muncul di laporan biar gak kecatat 2x."
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_banner_4": {
+      "$description": "cp_01M3NX22FBFDJAR8YGEC91G3W1\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Banner",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FBFDJAR8YGEC91G3W1",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_banner_4",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/banner-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kenapa non-pengeluaran gak muncul di laporanmu"
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_cta": {
+      "$description": "cp_01M3NX22FAED0RJ0G5F0JBBK07\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FAED0RJ0G5F0JBBK07",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_cta",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Catat pengeluaran"
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22F7EYKA8M9T4BVNPYWE\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F7EYKA8M9T4BVNPYWE",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/text-expenses",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran"
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_2": {
+      "$description": "cp_01M3NX22F7EZ88CXTE9W3P98G8\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F7EZ88CXTE9W3P98G8",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_2",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Riwayat pengeluaran"
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_3": {
+      "$description": "cp_01M3NX22F8ENSV9DFCVC10V35A\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F8ENSV9DFCVC10V35A",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_3",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/text-no-expenses-yet",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum ada pengeluaran, nih"
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_4": {
+      "$description": "cp_01M3NX22F8F6ZS6ZQZ1J5513RS\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F8F6ZS6ZQZ1J5513RS",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_4",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/text-non-expenses",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Non-pengeluaran"
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_5": {
+      "$description": "cp_01M3NX22F9F3K82HW5RGQHQDCJ\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F9F3K82HW5RGQHQDCJ",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_5",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/text-track-non-expense",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pantau transaksi non-pengeluaran di sini"
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_6": {
+      "$description": "cp_01M3NX22F9F4RS1NN46WAFWWN2\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F9F4RS1NN46WAFWWN2",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_6",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/text-ll-able-check-gopay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nanti kamu bisa cek riwayat pengeluaran di GoPay dan yang manual di sini.\n\nDi sini kamu bisa cek riwayat pengeluaran yang pake GoPay dan yang di luar aplikasi."
+    },
+    "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_7": {
+      "$description": "cp_01M3NX22F9FMJB3EJQMXN23QVR\nFinance › Add Expense › Expense History From Category › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F9FMJB3EJQMXN23QVR",
+          "platformKey": "gopay_finance_addexpense_expensehistoryfromcategory_gopayfinanceexpensereport_text_7",
+          "semanticPath": "add-expense/expense-history-from-category/gopay-finance-expensereport/text-since-non-expenses",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Soalnya, transaksi non-pengeluaran (tarik tunai, transfer ke rek. sendiri, dll) gak bakal muncul di laporan & analisa kamu."
+    },
+    "gopay_finance_addexpense_gopayfinanceexpensereport_cta": {
+      "$description": "cp_01M3NX22EKE74RGE1T4XS20NF3\nFinance › Add Expense › Gopay Finance Expensereport › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EKE74RGE1T4XS20NF3",
+          "platformKey": "gopay_finance_addexpense_gopayfinanceexpensereport_cta",
+          "semanticPath": "add-expense/shared/gopay-finance-expensereport/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek semua kategori"
+    },
+    "gopay_finance_addexpense_gopayfinanceexpensereport_placeholder": {
+      "$description": "cp_01M3NX22EJEV7VMTAM2RHFBN6R\nFinance › Add Expense › Gopay Finance Expensereport › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EJEV7VMTAM2RHFBN6R",
+          "platformKey": "gopay_finance_addexpense_gopayfinanceexpensereport_placeholder",
+          "semanticPath": "add-expense/shared/gopay-finance-expensereport/placeholder",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tulis keterangan kalau butuh"
+    },
+    "gopay_finance_addexpense_gopayfinanceexpensereport_title": {
+      "$description": "cp_01M3NX22EHFFZBS5WNTGQ2V9HX\nFinance › Add Expense › Gopay Finance Expensereport › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EHFFZBS5WNTGQ2V9HX",
+          "platformKey": "gopay_finance_addexpense_gopayfinanceexpensereport_title",
+          "semanticPath": "add-expense/shared/gopay-finance-expensereport/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Catat pengeluaran manual"
+    },
+    "gopay_finance_addexpense_maingopayfinanceexpensereport_cta": {
+      "$description": "cp_01M3NX22EKEK383NZNAAP85S4E\nFinance › Add Expense › Main Gopay Finance Expensereport › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EKEK383NZNAAP85S4E",
+          "platformKey": "gopay_finance_addexpense_maingopayfinanceexpensereport_cta",
+          "semanticPath": "add-expense/shared/main-gopay-finance-expensereport/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Konfirmasi"
+    },
+    "gopay_finance_addexpense_note_choosecategorygopayfinance_text": {
+      "$description": "cp_01M3NX22EPF6W8MQJHBGC4AEJP\nFinance › Add Expense › Note › Choose Category Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EPF6W8MQJHBGC4AEJP",
+          "platformKey": "gopay_finance_addexpense_note_choosecategorygopayfinance_text",
+          "semanticPath": "add-expense/note/choose-category-gopay-finance/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pilih kategori"
+    },
+    "gopay_finance_addexpense_note_feamountnotenteredgopay_toast": {
+      "$description": "cp_01M3NX22EPF8BT77S5T0ZF6BPW\nFinance › Add Expense › Note › Fe Amount Not Entered Gopay › Toast",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EPF8BT77S5T0ZF6BPW",
+          "platformKey": "gopay_finance_addexpense_note_feamountnotenteredgopay_toast",
+          "semanticPath": "add-expense/note/fe-amount-not-entered-gopay/toast",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ketik nominalnya dulu, ya"
+    },
+    "gopay_finance_addexpense_note_fecategorynotpickedgopay_toast": {
+      "$description": "cp_01M3NX22EPEVFA8GBV14VQ0EFB\nFinance › Add Expense › Note › Fe Category Not Picked Gopay › Toast",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EPEVFA8GBV14VQ0EFB",
+          "platformKey": "gopay_finance_addexpense_note_fecategorynotpickedgopay_toast",
+          "semanticPath": "add-expense/note/fe-category-not-picked-gopay/toast",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pilih kategorinya dulu, ya"
+    },
+    "gopay_finance_addexpense_note_fecopygopayfinance_text_3": {
+      "$description": "cp_01M3NX22EYE66SB12V7PY032MW\nFinance › Add Expense › Note › Fe Copy Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EYE66SB12V7PY032MW",
+          "platformKey": "gopay_finance_addexpense_note_fecopygopayfinance_text_3",
+          "semanticPath": "add-expense/note/fe-copy-gopay-finance/text-edit-details",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ganti rincian"
+    },
+    "gopay_finance_addexpense_note_fecopygopayfinance_text_4": {
+      "$description": "cp_01M3NX22EYFGWVDCKAMQGHWG5Y\nFinance › Add Expense › Note › Fe Copy Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EYFGWVDCKAMQGHWG5Y",
+          "platformKey": "gopay_finance_addexpense_note_fecopygopayfinance_text_4",
+          "semanticPath": "add-expense/note/fe-copy-gopay-finance/text-manage-expense",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Atur pengeluaran ini"
+    },
+    "gopay_finance_addexpense_note_gopayfinanceexpensereport_placeholder": {
+      "$description": "cp_01M3NX22EMEQ7A2EXSFTV2CHBH\nFinance › Add Expense › Note › Gopay Finance Expensereport › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EMEQ7A2EXSFTV2CHBH",
+          "platformKey": "gopay_finance_addexpense_note_gopayfinanceexpensereport_placeholder",
+          "semanticPath": "add-expense/note/gopay-finance-expensereport/placeholder",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ketik keterangannya di sini"
+    },
+    "gopay_finance_addexpense_note_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22EMFK8BKTZQ968D2JKF\nFinance › Add Expense › Note › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EMFK8BKTZQ968D2JKF",
+          "platformKey": "gopay_finance_addexpense_note_gopayfinanceexpensereport_text",
+          "semanticPath": "add-expense/note/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tulis keterangan"
+    },
+    "gopay_finance_addexpense_note_gopayfinanceexpensereport_text_2": {
+      "$description": "cp_01M3NX22EYE1QTHZYPGRM61ZM1\nFinance › Add Expense › Note › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EYE1QTHZYPGRM61ZM1",
+          "platformKey": "gopay_finance_addexpense_note_gopayfinanceexpensereport_text_2",
+          "semanticPath": "add-expense/note/gopay-finance-expensereport/text-delete-expense",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hapus pengeluaran"
+    },
+    "gopay_finance_addexpense_note_selectdategopayfinance_text": {
+      "$description": "cp_01M3NX22EPEV3976ATMF9VEEEW\nFinance › Add Expense › Note › Select Date Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EPEV3976ATMF9VEEEW",
+          "platformKey": "gopay_finance_addexpense_note_selectdategopayfinance_text",
+          "semanticPath": "add-expense/note/select-date-gopay-finance/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tanggal pengeluaran"
+    },
+    "gopay_finance_addexpense_note_text_10": {
+      "$description": "cp_01M3NX22ESEHY8TS38W21F2AKT\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ESEHY8TS38W21F2AKT",
+          "platformKey": "gopay_finance_addexpense_note_text_10",
+          "semanticPath": "add-expense/note/main/text-food-drink",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Makan & minum"
+    },
+    "gopay_finance_addexpense_note_text_11": {
+      "$description": "cp_01M3NX22ESFAMAXWA0RBG1W914\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ESFAMAXWA0RBG1W914",
+          "platformKey": "gopay_finance_addexpense_note_text_11",
+          "semanticPath": "add-expense/note/main/text-healthcare",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kesehatan"
+    },
+    "gopay_finance_addexpense_note_text_12": {
+      "$description": "cp_01M3NX22ETEDTSF6674ZDNE6DT\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ETEDTSF6674ZDNE6DT",
+          "platformKey": "gopay_finance_addexpense_note_text_12",
+          "semanticPath": "add-expense/note/main/text-shopping",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belanja"
+    },
+    "gopay_finance_addexpense_note_text_13": {
+      "$description": "cp_01M3NX22ETENM8GW0DFRW1HS3N\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ETENM8GW0DFRW1HS3N",
+          "platformKey": "gopay_finance_addexpense_note_text_13",
+          "semanticPath": "add-expense/note/main/text-home",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rumah"
+    },
+    "gopay_finance_addexpense_note_text_14": {
+      "$description": "cp_01M3NX22ETESZ9FWTN3GTZQZA5\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ETESZ9FWTN3GTZQZA5",
+          "platformKey": "gopay_finance_addexpense_note_text_14",
+          "semanticPath": "add-expense/note/main/text-miscellaneous",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lainnya"
+    },
+    "gopay_finance_addexpense_note_text_15": {
+      "$description": "cp_01M3NX22ETFGJV6D4R56ZG43QV\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ETFGJV6D4R56ZG43QV",
+          "platformKey": "gopay_finance_addexpense_note_text_15",
+          "semanticPath": "add-expense/note/main/text-sports-hobbies",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hobi"
+    },
+    "gopay_finance_addexpense_note_text_16": {
+      "$description": "cp_01M3NX22EVESJBC809HWJEKPVA\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EVESJBC809HWJEKPVA",
+          "platformKey": "gopay_finance_addexpense_note_text_16",
+          "semanticPath": "add-expense/note/main/text-work",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kerja"
+    },
+    "gopay_finance_addexpense_note_text_17": {
+      "$description": "cp_01M3NX22EVF0V8ZRS6MW9KXKKW\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EVF0V8ZRS6MW9KXKKW",
+          "platformKey": "gopay_finance_addexpense_note_text_17",
+          "semanticPath": "add-expense/note/main/text-tips",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tip"
+    },
+    "gopay_finance_addexpense_note_text_19": {
+      "$description": "cp_01M3NX22EVFVM9A85831GJ2T7K\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EVFVM9A85831GJ2T7K",
+          "platformKey": "gopay_finance_addexpense_note_text_19",
+          "semanticPath": "add-expense/note/main/text-travel",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Travel"
+    },
+    "gopay_finance_addexpense_note_text_2": {
+      "$description": "cp_01M3NX22EQF1VSX1CR18XBEYJZ\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EQF1VSX1CR18XBEYJZ",
+          "platformKey": "gopay_finance_addexpense_note_text_2",
+          "semanticPath": "add-expense/note/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perawatan diri"
+    },
+    "gopay_finance_addexpense_note_text_21": {
+      "$description": "cp_01M3NX22EWEVH8MW5KCGXBVAR1\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EWEVH8MW5KCGXBVAR1",
+          "platformKey": "gopay_finance_addexpense_note_text_21",
+          "semanticPath": "add-expense/note/main/text-logistics",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Logistik"
+    },
+    "gopay_finance_addexpense_note_text_22": {
+      "$description": "cp_01M3NX22EWFRABC5G6YM1HPF7J\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EWFRABC5G6YM1HPF7J",
+          "platformKey": "gopay_finance_addexpense_note_text_22",
+          "semanticPath": "add-expense/note/main/text-lifestyle",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gaya hidup"
+    },
+    "gopay_finance_addexpense_note_text_24": {
+      "$description": "cp_01M3NX22EXEJ28F8F2RWRW1H8Y\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EXEJ28F8F2RWRW1H8Y",
+          "platformKey": "gopay_finance_addexpense_note_text_24",
+          "semanticPath": "add-expense/note/main/text-saving-investment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tabungan/Investasi"
+    },
+    "gopay_finance_addexpense_note_text_25": {
+      "$description": "cp_01M3NX22EXF2BBRGN4371Z5DDX\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EXF2BBRGN4371Z5DDX",
+          "platformKey": "gopay_finance_addexpense_note_text_25",
+          "semanticPath": "add-expense/note/main/text-installment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cicilan"
+    },
+    "gopay_finance_addexpense_note_text_3": {
+      "$description": "cp_01M3NX22EQFXQR1WWRV72FRAYS\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EQFXQR1WWRV72FRAYS",
+          "platformKey": "gopay_finance_addexpense_note_text_3",
+          "semanticPath": "add-expense/note/main/text-car",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kebutuhan mobil"
+    },
+    "gopay_finance_addexpense_note_text_5": {
+      "$description": "cp_01M3NX22ERF4HTNNW8THCXCCTM\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ERF4HTNNW8THCXCCTM",
+          "platformKey": "gopay_finance_addexpense_note_text_5",
+          "semanticPath": "add-expense/note/main/text-family-personal",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kebutuhan keluarga"
+    },
+    "gopay_finance_addexpense_note_text_6": {
+      "$description": "cp_01M3NX22ERFWP85RG5N94BWYWD\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ERFWP85RG5N94BWYWD",
+          "platformKey": "gopay_finance_addexpense_note_text_6",
+          "semanticPath": "add-expense/note/main/text-education",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pendidikan"
+    },
+    "gopay_finance_addexpense_note_text_7": {
+      "$description": "cp_01M3NX22ERFXJAH898G0D49Z1E\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ERFXJAH898G0D49Z1E",
+          "platformKey": "gopay_finance_addexpense_note_text_7",
+          "semanticPath": "add-expense/note/main/text-donations",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Donasi"
+    },
+    "gopay_finance_addexpense_note_text_8": {
+      "$description": "cp_01M3NX22ESE029DQ0JG2KMFVPJ\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ESE029DQ0JG2KMFVPJ",
+          "platformKey": "gopay_finance_addexpense_note_text_8",
+          "semanticPath": "add-expense/note/main/text-gifts",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hadiah"
+    },
+    "gopay_finance_addexpense_note_text_9": {
+      "$description": "cp_01M3NX22ESEA7T6BFWYJ6AXCDE\nFinance › Add Expense › Note › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ESEA7T6BFWYJ6AXCDE",
+          "platformKey": "gopay_finance_addexpense_note_text_9",
+          "semanticPath": "add-expense/note/main/text-groceries",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belanja pokok"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_cta_2": {
+      "$description": "cp_01M3NX22F3EW99ZFQX864W98E1\nFinance › Add Expense › Not Uploaded To Lokalise › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F3EW99ZFQX864W98E1",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_cta_2",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/main/cta-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek semua kategori"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_deleteimagefecopygopay_text": {
+      "$description": "cp_01M3NX22EZESS9WCVMVEDGHDQ4\nFinance › Add Expense › Not Uploaded To Lokalise › Delete Image Fe Copy Gopay › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EZESS9WCVMVEDGHDQ4",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_deleteimagefecopygopay_text",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/delete-image-fe-copy-gopay/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hapus foto ini?"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_expensedetails_text": {
+      "$description": "cp_01M3NX22F0FVNT2R391TBMPZQG\nFinance › Add Expense › Not Uploaded To Lokalise › Expense Details › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F0FVNT2R391TBMPZQG",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_expensedetails_text",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/expense-details/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{amount}\n{category}"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_fecopygopayfinance_text": {
+      "$description": "cp_01M3NX22EZE7YA2JGEJ5AEWZK7\nFinance › Add Expense › Not Uploaded To Lokalise › Fe Copy Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EZE7YA2JGEJ5AEWZK7",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_fecopygopayfinance_text",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/fe-copy-gopay-finance/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Foto yang kamu pilih bakal dihapus dan kamu bisa pilih yang lain."
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_fecopygopayfinance_text_3": {
+      "$description": "cp_01M3NX22EZFPMT27Q0J2PF7K3B\nFinance › Add Expense › Not Uploaded To Lokalise › Fe Copy Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EZFPMT27Q0J2PF7K3B",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_fecopygopayfinance_text_3",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/fe-copy-gopay-finance/text-yes-delete",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Iya, hapus"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22F2E7DV5A7STXFAKBHP\nFinance › Add Expense › Not Uploaded To Lokalise › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F2E7DV5A7STXFAKBHP",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kategori pengeluaran"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text_2": {
+      "$description": "cp_01M3NX22F3EP89JRSABKWMW85K\nFinance › Add Expense › Not Uploaded To Lokalise › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F3EP89JRSABKWMW85K",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text_2",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/gopay-finance-expensereport/text-delete-expense",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hapus pengeluaran?"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text_3": {
+      "$description": "cp_01M3NX22F3F8S8XN7S9XG9Z4JD\nFinance › Add Expense › Not Uploaded To Lokalise › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F3F8S8XN7S9XG9Z4JD",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text_3",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/gopay-finance-expensereport/text-yes-delete",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Iya, hapus"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text_4": {
+      "$description": "cp_01M3NX22F3FW7BR5EFGCZZKJSE\nFinance › Add Expense › Not Uploaded To Lokalise › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F3FW7BR5EFGCZZKJSE",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text_4",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/gopay-finance-expensereport/text-deleted-expense",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kalau dihapus, laporan pengeluaranmu bakal ada perubahan."
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text_5": {
+      "$description": "cp_01M3NX22F4E5NT8GZZ0BFDF9B8\nFinance › Add Expense › Not Uploaded To Lokalise › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F4E5NT8GZZ0BFDF9B8",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_gopayfinanceexpensereport_text_5",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/gopay-finance-expensereport/text-expense-deleted",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran dihapus"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_text": {
+      "$description": "cp_01M3NX22F0EN4TQ4KN772DGVCQ\nFinance › Add Expense › Not Uploaded To Lokalise › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F0EN4TQ4KN772DGVCQ",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_text",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/main/text-expense-details",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rincian pengeluaran"
+    },
+    "gopay_finance_addexpense_notuploadedtolokalise_text_5": {
+      "$description": "cp_01M3NX22F1EQDBPRFCQXEPNW6F\nFinance › Add Expense › Not Uploaded To Lokalise › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22F1EQDBPRFCQXEPNW6F",
+          "platformKey": "gopay_finance_addexpense_notuploadedtolokalise_text_5",
+          "semanticPath": "add-expense/not-uploaded-to-lokalise/main/text-manually-added",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dicatat manual"
+    },
+    "gopay_finance_addexpense_text_2": {
+      "$description": "cp_01M3NX22EJFYAT1QTXT1PMCQTX\nFinance › Add Expense › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EJFYAT1QTXT1PMCQTX",
+          "platformKey": "gopay_finance_addexpense_text_2",
+          "semanticPath": "add-expense/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{date}\n{amount}"
+    },
+    "gopay_finance_addexpense_toastmarkedasanexpense_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22FDFRAT1G3CFN58A3K6\nFinance › Add Expense › Toast Marked As An Expense › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FDFRAT1G3CFN58A3K6",
+          "platformKey": "gopay_finance_addexpense_toastmarkedasanexpense_gopayfinanceexpensereport_text",
+          "semanticPath": "add-expense/toast-marked-as-an-expense/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ditandain jadi pengeluaran"
+    },
+    "gopay_finance_addexpense_toastmarkedasnotanexpense_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22FDEDWS5E807ZCKYS55\nFinance › Add Expense › Toast Marked As Not An Expense › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FDEDWS5E807ZCKYS55",
+          "platformKey": "gopay_finance_addexpense_toastmarkedasnotanexpense_gopayfinanceexpensereport_text",
+          "semanticPath": "add-expense/toast-marked-as-not-an-expense/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ditandain jadi non-pengeluaran"
+    },
+    "gopay_finance_addexpense_transactiondetailsreceipt_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22FCE1ST3T18B2BP6XYT\nFinance › Add Expense › Transaction Details Receipt › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FCE1ST3T18B2BP6XYT",
+          "platformKey": "gopay_finance_addexpense_transactiondetailsreceipt_gopayfinanceexpensereport_text",
+          "semanticPath": "add-expense/transaction-details-receipt/gopay-finance-expensereport/text-so-transaction",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biar transaksi ini dicatat di laporan pengeluaran kamu."
+    },
+    "gopay_finance_addexpense_transactiondetailsreceipt_gopayfinanceexpensereport_text_2": {
+      "$description": "cp_01M3NX22FCE29APG8PQ4XJ7E67\nFinance › Add Expense › Transaction Details Receipt › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FCE29APG8PQ4XJ7E67",
+          "platformKey": "gopay_finance_addexpense_transactiondetailsreceipt_gopayfinanceexpensereport_text_2",
+          "semanticPath": "add-expense/transaction-details-receipt/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tandain sebagai pengeluaran"
+    },
+    "gopay_finance_addexpense_transactionhistorygopayapp_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22FCFPDV8HHA5HDWNM7S\nFinance › Add Expense › Transaction History Gopay App › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FCFPDV8HHA5HDWNM7S",
+          "platformKey": "gopay_finance_addexpense_transactionhistorygopayapp_gopayfinanceexpensereport_text",
+          "semanticPath": "add-expense/transaction-history-gopay-app/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kategori pengeluaran"
+    },
+    "gopay_finance_addexpense_transactionhistorygopayapp_ifwecanshowthedata_text": {
+      "$description": "cp_01M3NX22FBFAYV6PVJXY0NDZJE\nFinance › Add Expense › Transaction History Gopay App › If We Can Show The Data › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FBFAYV6PVJXY0NDZJE",
+          "platformKey": "gopay_finance_addexpense_transactionhistorygopayapp_ifwecanshowthedata_text",
+          "semanticPath": "add-expense/transaction-history-gopay-app/if-we-can-show-the-data/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "- Kamu udah transaksi sejumlah {amount} buat {category} bulan ini\n- Kategori pengeluaran tertinggi kamu di {month} adalah {category}"
+    },
+    "gopay_finance_adhocexpensemanagement_text": {
+      "$description": "cp_01M3NX23ZSE6FREXSK9G053W8T\nFinance › Adhoc Expense Management › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZSE6FREXSK9G053W8T",
+          "platformKey": "gopay_finance_adhocexpensemanagement_text",
+          "semanticPath": "adhoc-expense-management/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pemasukan minggu ini"
+    },
+    "gopay_finance_adhocexpensemanagement_text_2": {
+      "$description": "cp_01M3NX23ZSEKP857WMJ3CSMHTY\nFinance › Adhoc Expense Management › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZSEKP857WMJ3CSMHTY",
+          "platformKey": "gopay_finance_adhocexpensemanagement_text_2",
+          "semanticPath": "adhoc-expense-management/shared/main/text-week-expense",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran minggu ini"
+    },
+    "gopay_finance_budgetsettings_cta": {
+      "$description": "cp_01M3NX22FREHZBYJWY2C4K26HM\nFinance › Budget Settings › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FREHZBYJWY2C4K26HM",
+          "platformKey": "gopay_finance_budgetsettings_cta",
+          "semanticPath": "budget-settings/shared/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Iya, hapus"
+    },
+    "gopay_finance_budgetsettings_genericcopyforphase1explore_text": {
+      "$description": "cp_01M3NX22FPEH4AJQ18JJ3TZ5VC\nFinance › Budget Settings › Generic Copy For Phase 1 Explore › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FPEH4AJQ18JJ3TZ5VC",
+          "platformKey": "gopay_finance_budgetsettings_genericcopyforphase1explore_text",
+          "semanticPath": "budget-settings/shared/generic-copy-for-phase-1-explore/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Untuk permulaan, gaji bulanan bisa dialokasikan ke 50% kebutuhan dan 30% gaya hidup"
+    },
+    "gopay_finance_budgetsettings_insightusers_text": {
+      "$description": "cp_01M3NX22FPFT78W0XWCG5WZGVJ\nFinance › Budget Settings › Insight Users › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FPFT78W0XWCG5WZGVJ",
+          "platformKey": "gopay_finance_budgetsettings_insightusers_text",
+          "semanticPath": "budget-settings/shared/insight-users/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Untuk permulaan, atur budget per minggu dan pantau secara berkala"
+    },
+    "gopay_finance_budgetview_expensereporthomeneed_text": {
+      "$description": "cp_01M3NX22FVEP99YP7XB74A9ZAD\nFinance › Budget View › Expense Report Home Need › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FVEP99YP7XB74A9ZAD",
+          "platformKey": "gopay_finance_budgetview_expensereporthomeneed_text",
+          "semanticPath": "budget-view/shared/expense-report-home-need/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Review lagi budget-mu buat jaga-jaga, ya"
+    },
+    "gopay_finance_budgetview_expensereporthomeontrack_text": {
+      "$description": "cp_01M3NX22FVEETV18DCRPQN2NS0\nFinance › Budget View › Expense Report Home On Track › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FVEETV18DCRPQN2NS0",
+          "platformKey": "gopay_finance_budgetview_expensereporthomeontrack_text",
+          "semanticPath": "budget-view/shared/expense-report-home-on-track/text-keep-pace-ll-good",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pertahankan, kamu pasti bisa!"
+    },
+    "gopay_finance_budgetview_expensereporthomeontrack_text_2": {
+      "$description": "cp_01M3NX22FVEKZRCDNQNMT6DBS9\nFinance › Budget View › Expense Report Home On Track › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FVEKZRCDNQNMT6DBS9",
+          "platformKey": "gopay_finance_budgetview_expensereporthomeontrack_text_2",
+          "semanticPath": "budget-view/shared/expense-report-home-on-track/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Budget terpantau masih aman"
+    },
+    "gopay_finance_budgetview_expensereporthomeontrackend_text": {
+      "$description": "cp_01M3NX22FVFXRV26KGDSCV5D5Q\nFinance › Budget View › Expense Report Home On Track End › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FVFXRV26KGDSCV5D5Q",
+          "platformKey": "gopay_finance_budgetview_expensereporthomeontrackend_text",
+          "semanticPath": "budget-view/shared/expense-report-home-on-track-end/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Keren, makin jago atur pengeluaran!"
+    },
+    "gopay_finance_budgetview_expensereporthomeoverbudget_text": {
+      "$description": "cp_01M3NX22FWEFE9DY5H4D6AAW51\nFinance › Budget View › Expense Report Home Over Budget › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FWEFE9DY5H4D6AAW51",
+          "platformKey": "gopay_finance_budgetview_expensereporthomeoverbudget_text",
+          "semanticPath": "budget-view/shared/expense-report-home-over-budget/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saatnya rem beberapa pengeluaran. Semangat!"
+    },
+    "gopay_finance_budgetview_gopayhome_text": {
+      "$description": "cp_01M3NX22FWE2TTCSXJHWR037VR\nFinance › Budget View › Gopay Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FWE2TTCSXJHWR037VR",
+          "platformKey": "gopay_finance_budgetview_gopayhome_text",
+          "semanticPath": "budget-view/gopay-home/main/text-attention",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hati-hati"
+    },
+    "gopay_finance_budgetview_gopayhome_text_2": {
+      "$description": "cp_01M3NX22FWEWMSY8MKSXTCX424\nFinance › Budget View › Gopay Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FWEWMSY8MKSXTCX424",
+          "platformKey": "gopay_finance_budgetview_gopayhome_text_2",
+          "semanticPath": "budget-view/gopay-home/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Aman"
+    },
+    "gopay_finance_budgetview_gopayhome_text_3": {
+      "$description": "cp_01M3NX22FXE0W88MKRZ3WRRE8B\nFinance › Budget View › Gopay Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FXE0W88MKRZ3WRRE8B",
+          "platformKey": "gopay_finance_budgetview_gopayhome_text_3",
+          "semanticPath": "budget-view/gopay-home/main/text-over-budget",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Over budget"
+    },
+    "gopay_finance_budgetview_text": {
+      "$description": "cp_01M3NX22FTEA5T1ZQWZCTB6JTC\nFinance › Budget View › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FTEA5T1ZQWZCTB6JTC",
+          "platformKey": "gopay_finance_budgetview_text",
+          "semanticPath": "budget-view/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{amount}\n{percentage}"
+    },
+    "gopay_finance_expensemanagement_comingsoonongopayhome_afterclicked_cta": {
+      "$description": "cp_01M3NX22DVF6FARDP0RCZ1NFRF\nFinance › Expense Management › Coming Soon On Gopay Home › After Clicked › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DVF6FARDP0RCZ1NFRF",
+          "platformKey": "gopay_finance_expensemanagement_comingsoonongopayhome_afterclicked_cta",
+          "semanticPath": "expense-management/coming-soon-on-gopay-home/after-clicked/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sip, nanti dikabarin"
+    },
+    "gopay_finance_expensemanagement_comingsoonongopayhome_cta": {
+      "$description": "cp_01M3NX22DVE42AN4HB4SFS64MA\nFinance › Expense Management › Coming Soon On Gopay Home › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DVE42AN4HB4SFS64MA",
+          "platformKey": "gopay_finance_expensemanagement_comingsoonongopayhome_cta",
+          "semanticPath": "expense-management/coming-soon-on-gopay-home/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, kabarin ya!"
+    },
+    "gopay_finance_expensemanagement_comingsoonongopayhome_text": {
+      "$description": "cp_01M3NX22DVFQ79AS50JGFSSE26\nFinance › Expense Management › Coming Soon On Gopay Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DVFQ79AS50JGFSSE26",
+          "platformKey": "gopay_finance_expensemanagement_comingsoonongopayhome_text",
+          "semanticPath": "expense-management/coming-soon-on-gopay-home/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sering terjadi: duit abis gak tau ke mana\nNanti kami bantu cari tau. Tunggu tanggal mainnya, ya!"
+    },
+    "gopay_finance_expensemanagement_comingsoonongopayhome_toast": {
+      "$description": "cp_01M3NX22DWECC8NJ2VFJA5J1Q7\nFinance › Expense Management › Coming Soon On Gopay Home › Toast",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DWECC8NJ2VFJA5J1Q7",
+          "platformKey": "gopay_finance_expensemanagement_comingsoonongopayhome_toast",
+          "semanticPath": "expense-management/coming-soon-on-gopay-home/main/toast",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Responmu udah dicatet ✅"
+    },
+    "gopay_finance_expensemanagement_expensehome_addexpensecardgopayfinance_text": {
+      "$description": "cp_01M3NX22EAETBBB9QJCRXMXMR5\nFinance › Expense Management › Expense Home › Add Expense Card Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EAETBBB9QJCRXMXMR5",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_addexpensecardgopayfinance_text",
+          "semanticPath": "expense-management/expense-home/add-expense-card-gopay-finance/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada pengeluaran di luar GoPay?\nDaripada di buku, catat aja di sini biar sekalian kerekam."
+    },
+    "gopay_finance_expensemanagement_expensehome_categories_text": {
+      "$description": "cp_01M3NX22E7FVG9RRTTFT4T036D\nFinance › Expense Management › Expense Home › Categories › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E7FVG9RRTTFT4T036D",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_categories_text",
+          "semanticPath": "expense-management/expense-home/categories/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kategori pengeluaran tertinggi"
+    },
+    "gopay_finance_expensemanagement_expensehome_cta": {
+      "$description": "cp_01M3NX22EBFFAB1AHKNN9CPYHT\nFinance › Expense Management › Expense Home › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EBFFAB1AHKNN9CPYHT",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_cta",
+          "semanticPath": "expense-management/expense-home/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek tips"
+    },
+    "gopay_finance_expensemanagement_expensehome_educationcard_text": {
+      "$description": "cp_01M3NX22EAFT3VN5YBPFCX0H3F\nFinance › Expense Management › Expense Home › Education Card › Text\nNote: - might ask users about what they want to learn",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EAFT3VN5YBPFCX0H3F",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_educationcard_text",
+          "semanticPath": "expense-management/expense-home/education-card/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belajar sedikit, atur uang makin gesit\nPelajari lebih jauh soal atur kategori pengeluaran, pisahin uang, dan banyak lagi!"
+    },
+    "gopay_finance_expensemanagement_expensehome_expensehistoryemptystate_text": {
+      "$description": "cp_01M3NX22E9F2N85ZSNT2C8Q3WY\nFinance › Expense Management › Expense Home › Expense History Empty State › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E9F2N85ZSNT2C8Q3WY",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_expensehistoryemptystate_text",
+          "semanticPath": "expense-management/expense-home/expense-history-empty-state/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum ada pengeluaran, nih"
+    },
+    "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22EAEY8T6BWKQJ5K43R3\nFinance › Expense Management › Expense Home › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EAEY8T6BWKQJ5K43R3",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereport_text",
+          "semanticPath": "expense-management/expense-home/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nanti kamu bisa cek riwayat pengeluaran yang pake GoPay dan yang di luar aplikasi untuk kategori ini."
+    },
+    "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereporthome_cta": {
+      "$description": "cp_01M3NX22E5FPEB745A7J46S471\nFinance › Expense Management › Expense Home › Gopay Finance Expensereport Home › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E5FPEB745A7J46S471",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereporthome_cta",
+          "semanticPath": "expense-management/expense-home/gopay-finance-expensereport-home/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Catat pengeluaran"
+    },
+    "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereporthome_cta_2": {
+      "$description": "cp_01M3NX22E9EV3BPWW0XCHD4VPY\nFinance › Expense Management › Expense Home › Gopay Finance Expensereport Home › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E9EV3BPWW0XCHD4VPY",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereporthome_cta_2",
+          "semanticPath": "expense-management/expense-home/gopay-finance-expensereport-home/cta-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek riwayat selengkapnya"
+    },
+    "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereporthome_text": {
+      "$description": "cp_01M3NX22E8F1T9297XJGDCN5AP\nFinance › Expense Management › Expense Home › Gopay Finance Expensereport Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E8F1T9297XJGDCN5AP",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereporthome_text",
+          "semanticPath": "expense-management/expense-home/gopay-finance-expensereport-home/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Riwayat pengeluaran"
+    },
+    "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereporthome_text_2": {
+      "$description": "cp_01M3NX22EAE20AMK8TH3R92V6B\nFinance › Expense Management › Expense Home › Gopay Finance Expensereport Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EAE20AMK8TH3R92V6B",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_gopayfinanceexpensereporthome_text_2",
+          "semanticPath": "expense-management/expense-home/gopay-finance-expensereport-home/text-add-expense",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Catat pengeluaran"
+    },
+    "gopay_finance_expensemanagement_expensehome_manual_label": {
+      "$description": "cp_01M3NX22E9E9MBBAFJ3CGXFA0Y\nFinance › Expense Management › Expense Home › Manual › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E9E9MBBAFJ3CGXFA0Y",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_manual_label",
+          "semanticPath": "expense-management/expense-home/manual/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dicatat manual"
+    },
+    "gopay_finance_expensemanagement_expensehome_text": {
+      "$description": "cp_01M3NX22E5E1K8SM457CAQ9NNW\nFinance › Expense Management › Expense Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E5E1K8SM457CAQ9NNW",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_text",
+          "semanticPath": "expense-management/expense-home/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total - {month}"
+    },
+    "gopay_finance_expensemanagement_expensehome_text_10": {
+      "$description": "cp_01M3NX22E8FFQVGZW296JV50Z4\nFinance › Expense Management › Expense Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E8FFQVGZW296JV50Z4",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_text_10",
+          "semanticPath": "expense-management/expense-home/main/text-merchant-product",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{merchant} {product}\n{note}\n{amount}\n{payment_method}"
+    },
+    "gopay_finance_expensemanagement_expensehome_text_2": {
+      "$description": "cp_01M3NX22E6EKW99E7GYXZJR9JB\nFinance › Expense Management › Expense Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E6EKW99E7GYXZJR9JB",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_text_2",
+          "semanticPath": "expense-management/expense-home/main/text-month-re-week-4",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{month} - Sekarang di minggu ke-4"
+    },
+    "gopay_finance_expensemanagement_expensehome_text_4": {
+      "$description": "cp_01M3NX22E6FHEB6B37YBENDQ1R\nFinance › Expense Management › Expense Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E6FHEB6B37YBENDQ1R",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_text_4",
+          "semanticPath": "expense-management/expense-home/main/text-weekly-expense-chart",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Grafik pengeluaran mingguan"
+    },
+    "gopay_finance_expensemanagement_expensehome_text_5": {
+      "$description": "cp_01M3NX22E6FQ78V408ZH9XQN1F\nFinance › Expense Management › Expense Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E6FQ78V408ZH9XQN1F",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_text_5",
+          "semanticPath": "expense-management/expense-home/main/text-higher-amount-than",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "- Naik {amount} dari bulan lalu\n- Turun {amount} dari bulan lalu"
+    },
+    "gopay_finance_expensemanagement_expensehome_text_8": {
+      "$description": "cp_01M3NX22E8E37SCKWPG85XZZDD\nFinance › Expense Management › Expense Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E8E37SCKWPG85XZZDD",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_text_8",
+          "semanticPath": "expense-management/expense-home/main/text-higher-amount-than-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "- Naik {amount} dari rata-rata\n- Turun {amount} dari rata-rata\n- Masih sesuai jalur"
+    },
+    "gopay_finance_expensemanagement_expensehome_uponscrollingtotalononthe_text": {
+      "$description": "cp_01M3NX22E5EDP8EQJH1YZ5K2KN\nFinance › Expense Management › Expense Home › Upon Scrolling Total On On The › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E5EDP8EQJH1YZ5K2KN",
+          "platformKey": "gopay_finance_expensemanagement_expensehome_uponscrollingtotalononthe_text",
+          "semanticPath": "expense-management/expense-home/upon-scrolling-total-on-on-the/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total pengeluaran"
+    },
+    "gopay_finance_expensemanagement_financehome_cta": {
+      "$description": "cp_01M3NX22E2EEKSMW15VG0YXVJG\nFinance › Expense Management › Finance Home › Cta\nNote: “Cek rekap selengkapnya” / detail recap is not really highlighted enough for them to try and check Spend Analysis page They are still unsure about what is the meaning of “cek rekap selengkapnya”, they guess it as the same with what Finance page offers.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E2EEKSMW15VG0YXVJG",
+          "platformKey": "gopay_finance_expensemanagement_financehome_cta",
+          "semanticPath": "expense-management/finance-home/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pantau pengeluaranmu pakai laporan lengkap"
+    },
+    "gopay_finance_expensemanagement_financehome_expensedecrease_text": {
+      "$description": "cp_01M3NX22E2E6JTDDQGPTJH5V9A\nFinance › Expense Management › Finance Home › Expense Decrease › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E2E6JTDDQGPTJH5V9A",
+          "platformKey": "gopay_finance_expensemanagement_financehome_expensedecrease_text",
+          "semanticPath": "expense-management/finance-home/expense-decrease/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "- Pertahankan! Kamu pasti bisaa.\n- Keren, makin jago atur pengeluaran"
+    },
+    "gopay_finance_expensemanagement_financehome_expenseemptystatefecopy_text": {
+      "$description": "cp_01M3NX22E4EE78FCSZ5XMVNAK5\nFinance › Expense Management › Finance Home › Expense Empty State Fe Copy › Text\nNote: since we've focused on tracking expenses & auto-record as a whole on the Home widget, we thought over here we could focus more on helping them know their top categories — since the empty state falls under that section too. still, we'll make a bridge by informing the auto record, but we'll mention some examples of the categories to give them some idea.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E4EE78FCSZ5XMVNAK5",
+          "platformKey": "gopay_finance_expensemanagement_financehome_expenseemptystatefecopy_text",
+          "semanticPath": "expense-management/finance-home/expense-empty-state-fe-copy/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cari tau uangmu kepake buat apa aja"
+    },
+    "gopay_finance_expensemanagement_financehome_expenseontrack_text": {
+      "$description": "cp_01M3NX22E2FK8T7PX2HFRAKA68\nFinance › Expense Management › Finance Home › Expense On Track › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E2FK8T7PX2HFRAKA68",
+          "platformKey": "gopay_finance_expensemanagement_financehome_expenseontrack_text",
+          "semanticPath": "expense-management/finance-home/expense-on-track/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Terpantau masih aman"
+    },
+    "gopay_finance_expensemanagement_financehome_fecopygopayfinancehome_text": {
+      "$description": "cp_01M3NX22E4EYAT703NE0PWQRER\nFinance › Expense Management › Finance Home › Fe Copy Gopay Finance Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E4EYAT703NE0PWQRER",
+          "platformKey": "gopay_finance_expensemanagement_financehome_fecopygopayfinancehome_text",
+          "semanticPath": "expense-management/finance-home/fe-copy-gopay-finance-home/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada 6 kategori lainnya"
+    },
+    "gopay_finance_expensemanagement_financehome_gopayfinancehomeexpensereport_cta": {
+      "$description": "cp_01M3NX22E4FKRS9C44TV8ZZGB7\nFinance › Expense Management › Finance Home › Gopay Finance Home Expensereport › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E4FKRS9C44TV8ZZGB7",
+          "platformKey": "gopay_finance_expensemanagement_financehome_gopayfinancehomeexpensereport_cta",
+          "semanticPath": "expense-management/finance-home/gopay-finance-home-expensereport/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Catat pengeluaran manual"
+    },
+    "gopay_finance_expensemanagement_financehome_gopayfinancehomeexpensereport_text": {
+      "$description": "cp_01M3NX22E5FZ9SHR7YAZBAFWQS\nFinance › Expense Management › Finance Home › Gopay Finance Home Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E5FZ9SHR7YAZBAFWQS",
+          "platformKey": "gopay_finance_expensemanagement_financehome_gopayfinancehomeexpensereport_text",
+          "semanticPath": "expense-management/finance-home/gopay-finance-home-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Buat jajan atau belanja, pengeluaranmu bakal otomatis dicatat & dikategoriin."
+    },
+    "gopay_finance_expensemanagement_financehome_text_2": {
+      "$description": "cp_01M3NX22E1FV78Z1Q643X4T77X\nFinance › Expense Management › Finance Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E1FV78Z1Q643X4T77X",
+          "platformKey": "gopay_finance_expensemanagement_financehome_text_2",
+          "semanticPath": "expense-management/finance-home/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total\n{month}"
+    },
+    "gopay_finance_expensemanagement_financehome_text_3": {
+      "$description": "cp_01M3NX22E3EJHSDWDYWXN920TW\nFinance › Expense Management › Finance Home › Text\nNote: - I think the copy doesn't have to explicitly say that we sort them by the top spending. the number speaks so already",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E3EJHSDWDYWXN920TW",
+          "platformKey": "gopay_finance_expensemanagement_financehome_text_3",
+          "semanticPath": "expense-management/finance-home/main/text-top-categories",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kategori pengeluaran tertinggi"
+    },
+    "gopay_finance_expensemanagement_financehome_text_4": {
+      "$description": "cp_01M3NX22E3F098MQ18Z7EHDPZJ\nFinance › Expense Management › Finance Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E3F098MQ18Z7EHDPZJ",
+          "platformKey": "gopay_finance_expensemanagement_financehome_text_4",
+          "semanticPath": "expense-management/finance-home/main/text-categories",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{categories}\n{percentage} dari total\n{amount}"
+    },
+    "gopay_finance_expensemanagement_financehome_text_5": {
+      "$description": "cp_01M3NX22E3F19VNR8Q83DN9AAD\nFinance › Expense Management › Finance Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E3F19VNR8Q83DN9AAD",
+          "platformKey": "gopay_finance_expensemanagement_financehome_text_5",
+          "semanticPath": "expense-management/finance-home/main/text-less-than-1",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kurang dari 1%"
+    },
+    "gopay_finance_expensemanagement_financehome_text_6": {
+      "$description": "cp_01M3NX22E3FZXTAF30E36YCZ66\nFinance › Expense Management › Finance Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E3FZXTAF30E36YCZ66",
+          "platformKey": "gopay_finance_expensemanagement_financehome_text_6",
+          "semanticPath": "expense-management/finance-home/main/text-more-than-99",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lebih dari 99%"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecard_text": {
+      "$description": "cp_01M3NX22DZF6QA5T9E596WT11T\nFinance › Expense Management › Gopay Home Shuffle Card › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DZF6QA5T9E596WT11T",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecard_text",
+          "semanticPath": "expense-management/gopay-home-shuffle-card/main/text-check-full-report",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek laporan lengkap"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecard_text_2": {
+      "$description": "cp_01M3NX22DZFT8VSNMQZ4MKK63V\nFinance › Expense Management › Gopay Home Shuffle Card › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DZFT8VSNMQZ4MKK63V",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecard_text_2",
+          "semanticPath": "expense-management/gopay-home-shuffle-card/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum ada pengeluaran tercatat\nPengeluaranmu di GoPay bakal dicatat otomatis & dibuat laporan. Atau, kamu bisa catat manual."
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardexisting_cta": {
+      "$description": "cp_01M3NX22E0EZMVY7J4R7621K9H\nFinance › Expense Management › Gopay Home Shuffle Card Existing › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E0EZMVY7J4R7621K9H",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardexisting_cta",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-existing/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pantau semua"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardexisting_ifdatacomparisonisready_text": {
+      "$description": "cp_01M3NX22DZEJPV70E0DTZ1Q2J3\nFinance › Expense Management › Gopay Home Shuffle Card Existing › If Data Comparison Is Ready › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DZEJPV70E0DTZ1Q2J3",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardexisting_ifdatacomparisonisready_text",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-existing/if-data-comparison-is-ready/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total - Mei 2022\nPengeluaranmu bulan ini turun 20% dari bulan lalu."
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardexisting_text": {
+      "$description": "cp_01M3NX22DZEZJ99EDV6ANW67XB\nFinance › Expense Management › Gopay Home Shuffle Card Existing › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DZEZJ99EDV6ANW67XB",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardexisting_text",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-existing/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada X+ kategori pengeluaran"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardexisting_text_2": {
+      "$description": "cp_01M3NX22E0FKK8BGV7TP5N27HJ\nFinance › Expense Management › Gopay Home Shuffle Card Existing › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E0FKK8BGV7TP5N27HJ",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardexisting_text_2",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-existing/main/text-top-spending",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kategori pengeluaran tertinggi"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardusers_cta": {
+      "$description": "cp_01M3NX22DXFR8AAAC263NJVDBM\nFinance › Expense Management › Gopay Home Shuffle Card Users › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DXFR8AAAC263NJVDBM",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardusers_cta",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-users/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek laporan lengkap"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardusers_returninguser_text": {
+      "$description": "cp_01M3NX22DXE0T9AJKCCJRKTRED\nFinance › Expense Management › Gopay Home Shuffle Card Users › Returning User › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DXE0T9AJKCCJRKTRED",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardusers_returninguser_text",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-users/returning-user/text-ve-spent-x",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada X kategori pengeluaran"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardusers_text_2": {
+      "$description": "cp_01M3NX22DXFXJB37S1S2YZ3AYZ\nFinance › Expense Management › Gopay Home Shuffle Card Users › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DXFXJB37S1S2YZ3AYZ",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardusers_text_2",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-users/main/text-gopay-expenses-auto",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaranmu juga tetap terkontrol."
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardusers_text_3": {
+      "$description": "cp_01M3NX22DYEMQ9YQ090FRHNPSR\nFinance › Expense Management › Gopay Home Shuffle Card Users › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DYEMQ9YQ090FRHNPSR",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardusers_text_3",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-users/main/text-ve-spent-1-category",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada 1 kategori pengeluaran"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardusers_text_4": {
+      "$description": "cp_01M3NX22DYFH3VSVJ1R33ZY9PV\nFinance › Expense Management › Gopay Home Shuffle Card Users › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DYFH3VSVJ1R33ZY9PV",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardusers_text_4",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-users/main/text-no-expense-yet",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum ada pengeluaran"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardusers_title": {
+      "$description": "cp_01M3NX22DWFFXBK4K6A3C4KYR9\nFinance › Expense Management › Gopay Home Shuffle Card Users › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DWFFXBK4K6A3C4KYR9",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardusers_title",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-users/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Laporan pengeluaran {full_month}"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_cta": {
+      "$description": "cp_01M3NX22EEE21S6ZFY9EBVMGFY\nFinance › Expense Management › Graph When Clicked On A Week › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EEE21S6ZFY9EBVMGFY",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_cta",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Konfirmasi"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_expensecategoryhistorygopay_title": {
+      "$description": "cp_01M3NX22EHFPDBZP55JR733D4H\nFinance › Expense Management › Graph When Clicked On A Week › Expense Category History Gopay › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EHFPDBZP55JR733D4H",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_expensecategoryhistorygopay_title",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/expense-category-history-gopay/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran buat {category_name}"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_fecopy_text": {
+      "$description": "cp_01M3NX22EEEWWVMYHHRQ3YR15M\nFinance › Expense Management › Graph When Clicked On A Week › Fe Copy › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EEEWWVMYHHRQ3YR15M",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_fecopy_text",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/fe-copy/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pilih bulan"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_fecopygopayfinance_text": {
+      "$description": "cp_01M3NX22EEES68863EXWKPB67W\nFinance › Expense Management › Graph When Clicked On A Week › Fe Copy Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EEES68863EXWKPB67W",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_fecopygopayfinance_text",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/fe-copy-gopay-finance/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Grafik pengeluaran bakal ada di sini"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_fecopygopayfinance_text_2": {
+      "$description": "cp_01M3NX22EGEGRR9SPFEFCCNACM\nFinance › Expense Management › Graph When Clicked On A Week › Fe Copy Gopay Finance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EGEGRR9SPFEFCCNACM",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_fecopygopayfinance_text_2",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/fe-copy-gopay-finance/text-expense-history",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Riwayat pengeluaran"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_fegopayfinanceexpensereport_cta": {
+      "$description": "cp_01M3NX22EHECXBZZQQXS2RB905\nFinance › Expense Management › Graph When Clicked On A Week › Fe Gopay Finance Expensereport › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EHECXBZZQQXS2RB905",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_fegopayfinanceexpensereport_cta",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/fe-gopay-finance-expensereport/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek semua pengeluaran di kategori ini"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_gopayfinanceexpensereport_text": {
+      "$description": "cp_01M3NX22EDEPASF6KE648634FY\nFinance › Expense Management › Graph When Clicked On A Week › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EDEPASF6KE648634FY",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_gopayfinanceexpensereport_text",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/gopay-finance-expensereport/text-compare-data-same",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kami bandingin datamu dari tanggal yang sama di bulan lalu. Kalau bulan lalu gak ada pengeluaran, kami akan bandingin dengan data terakhir di bulan sebelumnya."
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_gopayfinanceexpensereport_text_2": {
+      "$description": "cp_01M3NX22EDFFJRJZZMWCJDNWZS\nFinance › Expense Management › Graph When Clicked On A Week › Gopay Finance Expensereport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EDFFJRJZZMWCJDNWZS",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_gopayfinanceexpensereport_text_2",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/gopay-finance-expensereport/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gimana kami bandingin pengeluaranmu?"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_gopayfinanceexpensereporthome_text": {
+      "$description": "cp_01M3NX22EFFP0TQMTV7GVXBVDB\nFinance › Expense Management › Graph When Clicked On A Week › Gopay Finance Expensereport Home › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EFFP0TQMTV7GVXBVDB",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_gopayfinanceexpensereporthome_text",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/gopay-finance-expensereport-home/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nanti kamu bisa pantau transaksi mingguan tiap bulannya."
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_monthonthe_title": {
+      "$description": "cp_01M3NX22EBFK8SMEN47ZH7REMW\nFinance › Expense Management › Graph When Clicked On A Week › Month On The › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EBFK8SMEN47ZH7REMW",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_monthonthe_title",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/month-on-the/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Januari\nFebruari\nMaret\nApril\nMei\nJuni\nJuli\nAgustus\nSeptember\nOktober\nNovember\nDesember"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text": {
+      "$description": "cp_01M3NX22EBF8F89MGMB8SH7HYY\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EBF8F89MGMB8SH7HYY",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{month} - Sekarang di minggu ke-4"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_11": {
+      "$description": "cp_01M3NX22EGEDK942BBW9NW1GYY\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EGEDK942BBW9NW1GYY",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_11",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-weekly-expense-chart-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Grafik pengeluaran mingguan"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_12": {
+      "$description": "cp_01M3NX22EGF3GS2Z17FM22H84N\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EGF3GS2Z17FM22H84N",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_12",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-lower-amount-than",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "- Naik {amount} dari bulan lalu\n- Turun {amount} dari bulan lalu\n- Masih sesuai jalur"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_2": {
+      "$description": "cp_01M3NX22ECE1J87ZFRTAWT27YG\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ECE1J87ZFRTAWT27YG",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_2",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-daily-avg",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rata-rata/hari"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_3": {
+      "$description": "cp_01M3NX22ECE8WBE6AYQ3W855RD\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ECE8WBE6AYQ3W855RD",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_3",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-weekly-expense-chart",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Grafik pengeluaran mingguan"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_4": {
+      "$description": "cp_01M3NX22ECFJZR6XX6MZV1A3R9\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22ECFJZR6XX6MZV1A3R9",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_4",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-week-s-total",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total minggu ini"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_5": {
+      "$description": "cp_01M3NX22EDFC79DBAA0TC1S9XT\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EDFC79DBAA0TC1S9XT",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_5",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-got",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_6": {
+      "$description": "cp_01M3NX22EDFG2S5DJGTETEP8KB\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EDFG2S5DJGTETEP8KB",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_6",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-help",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bantuan"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_7": {
+      "$description": "cp_01M3NX22EEF6B8V0867345B1KV\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EEF6B8V0867345B1KV",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_7",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-weekly-expense-chart-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Analisa pengeluaran tiap minggu"
+    },
+    "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_9": {
+      "$description": "cp_01M3NX22EFEZM9NT8EETC953FQ\nFinance › Expense Management › Graph When Clicked On A Week › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22EFEZM9NT8EETC953FQ",
+          "platformKey": "gopay_finance_expensemanagement_graphwhenclickedonaweek_text_9",
+          "semanticPath": "expense-management/graph-when-clicked-on-a-week/main/text-total-month",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total\n{month}"
+    },
+    "gopay_finance_expensemanagementbannerin_redirecttoaddmanualinput_text": {
+      "$description": "cp_01M3NX23W1F74VA3DP5PCRC3Y3\nFinance › Expense Management Banner In › Redirect To Add Manual Input › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23W1F74VA3DP5PCRC3Y3",
+          "platformKey": "gopay_finance_expensemanagementbannerin_redirecttoaddmanualinput_text",
+          "semanticPath": "expense-management-banner-in/shared/redirect-to-add-manual-input/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Baru aja keluar uang?"
+    },
+    "gopay_finance_expensemanagementbannerin_redirecttoexpensemanager_text": {
+      "$description": "cp_01M3NX23VZFKQVQ89A52P39HZD\nFinance › Expense Management Banner In › Redirect To Expense Manager › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VZFKQVQ89A52P39HZD",
+          "platformKey": "gopay_finance_expensemanagementbannerin_redirecttoexpensemanager_text",
+          "semanticPath": "expense-management-banner-in/shared/redirect-to-expense-manager/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yuk, cek uangmu ke mana aja"
+    },
+    "gopay_finance_expensemanagementbannerin_text": {
+      "$description": "cp_01M3NX23W0E2BT12HZ6A5P6XSK\nFinance › Expense Management Banner In › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23W0E2BT12HZ6A5P6XSK",
+          "platformKey": "gopay_finance_expensemanagementbannerin_text",
+          "semanticPath": "expense-management-banner-in/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pantau pengeluaranmu secara real-time"
+    },
+    "gopay_finance_expensemanagementbannerin_text_2": {
+      "$description": "cp_01M3NX23W1EFCSZMZ9DDAT5PYB\nFinance › Expense Management Banner In › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23W1EFCSZMZ9DDAT5PYB",
+          "platformKey": "gopay_finance_expensemanagementbannerin_text_2",
+          "semanticPath": "expense-management-banner-in/shared/main/text-add-now-keep-budget",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yuk catat sekarang, biar budget tetap aman"
+    },
+    "gopay_finance_expenserecord_footerdescription_text": {
+      "$description": "cp_01M3NX23NVENP90S20ND79FT6D\nFinance › Expense Record › Footer Description › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NVENP90S20ND79FT6D",
+          "platformKey": "gopay_finance_expenserecord_footerdescription_text",
+          "semanticPath": "expense-record/footer-description/main/text-last-week",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Minggu lalu"
+    },
+    "gopay_finance_expenserecord_footerdescription_text_2": {
+      "$description": "cp_01M3NX23NVF878J75WJ755RCXS\nFinance › Expense Record › Footer Description › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NVF878J75WJ755RCXS",
+          "platformKey": "gopay_finance_expenserecord_footerdescription_text_2",
+          "semanticPath": "expense-record/footer-description/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Minggu ini"
+    },
+    "gopay_finance_expenserecord_footerdescription_text_3": {
+      "$description": "cp_01M3NX23NWE5Z93F0YPSS11JTF\nFinance › Expense Record › Footer Description › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NWE5Z93F0YPSS11JTF",
+          "platformKey": "gopay_finance_expenserecord_footerdescription_text_3",
+          "semanticPath": "expense-record/footer-description/main/text-16-22-september-2025",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "16 - 22 September 2025"
+    },
+    "gopay_finance_expenserecord_footerdescription_text_4": {
+      "$description": "cp_01M3NX23NWFX1V0C6M5NGS4SKK\nFinance › Expense Record › Footer Description › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NWFX1V0C6M5NGS4SKK",
+          "platformKey": "gopay_finance_expenserecord_footerdescription_text_4",
+          "semanticPath": "expense-record/footer-description/main/text-24-september-1",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "24 September - 1 Oktober 2025"
+    },
+    "gopay_finance_expensereport_budget_budgetview_createbudget_cta": {
+      "$description": "cp_01M3NX22FNEW3TKPNC9W44BDMS\nFinance › Expensereport › Budget › Budgetview Createbudget › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FNEW3TKPNC9W44BDMS",
+          "platformKey": "gopay_finance_expensereport_budget_budgetview_createbudget_cta",
+          "semanticPath": "expensereport/budget/budgetview-createbudget/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Atur budget bulanan"
+    },
+    "gopay_finance_expensereport_budget_budgetview_error_cantload_description": {
+      "$description": "cp_01M3NX22FNFENVQYPZXNW9J50D\nFinance › Expensereport › Budget › Budgetview Error Cantload › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FNFENVQYPZXNW9J50D",
+          "platformKey": "gopay_finance_expensereport_budget_budgetview_error_cantload_description",
+          "semanticPath": "expensereport/budget/budgetview-error-cantload/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Budget gagal muncul. Klik buat coba lagi"
+    },
+    "gopay_finance_expensereport_budget_budgetview_remainingbudget_description": {
+      "$description": "cp_01M3NX22FTF0MB3SGFB522MDGB\nFinance › Expensereport › Budget › Budgetview Remainingbudget › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FTF0MB3SGFB522MDGB",
+          "platformKey": "gopay_finance_expensereport_budget_budgetview_remainingbudget_description",
+          "semanticPath": "expensereport/budget/budgetview-remainingbudget/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sisa budget"
+    },
+    "gopay_finance_expensereport_budget_budgetview_totalexpense_title": {
+      "$description": "cp_01M3NX22FTFNQTXA3Y5P7X51V1\nFinance › Expensereport › Budget › Budgetview Totalexpense › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FTFNQTXA3Y5P7X51V1",
+          "platformKey": "gopay_finance_expensereport_budget_budgetview_totalexpense_title",
+          "semanticPath": "expensereport/budget/budgetview-totalexpense/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total pengeluaran"
+    },
+    "gopay_finance_expensereport_budgetcreation_createnew_create_cta": {
+      "$description": "cp_01M3NX22FQF70V605T1RYH5A4X\nFinance › Expensereport › Budgetcreation › Createnew Create › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FQF70V605T1RYH5A4X",
+          "platformKey": "gopay_finance_expensereport_budgetcreation_createnew_create_cta",
+          "semanticPath": "expensereport/budgetcreation/createnew-create/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pasang budget"
+    },
+    "gopay_finance_expensereport_budgetcreation_createnew_formonth_description": {
+      "$description": "cp_01M3NX22FNFRB8V7SNXEP0Z79J\nFinance › Expensereport › Budgetcreation › Createnew Formonth › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FNFRB8V7SNXEP0Z79J",
+          "platformKey": "gopay_finance_expensereport_budgetcreation_createnew_formonth_description",
+          "semanticPath": "expensereport/budgetcreation/createnew-formonth/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "buat Agustus 2023"
+    },
+    "gopay_finance_expensereport_budgetcreation_createnew_insight_returninguser_description": {
+      "$description": "cp_01M3NX22FPFJ5BYWMF1DTFGNBK\nFinance › Expensereport › Budgetcreation › Createnew Insight Returninguser › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FPFJ5BYWMF1DTFGNBK",
+          "platformKey": "gopay_finance_expensereport_budgetcreation_createnew_insight_returninguser_description",
+          "semanticPath": "expensereport/budgetcreation/createnew-insight-returninguser/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total pengeluaran bulan lalu {amount}"
+    },
+    "gopay_finance_expensereport_budgetcreation_createnew_success_title": {
+      "$description": "cp_01M3NX22FQFKCT5QVXAR24P784\nFinance › Expensereport › Budgetcreation › Createnew Success › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FQFKCT5QVXAR24P784",
+          "platformKey": "gopay_finance_expensereport_budgetcreation_createnew_success_title",
+          "semanticPath": "expensereport/budgetcreation/createnew-success/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Budget terpasang"
+    },
+    "gopay_finance_expensereport_budgetcreation_createnew_success_toast": {
+      "$description": "cp_01M3NX22FSFW4A83VYMGXP3X0R\nFinance › Expensereport › Budgetcreation › Createnew Success › Toast",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FSFW4A83VYMGXP3X0R",
+          "platformKey": "gopay_finance_expensereport_budgetcreation_createnew_success_toast",
+          "semanticPath": "expensereport/budgetcreation/createnew-success/toast",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Budget terpasang"
+    },
+    "gopay_finance_expensereport_budgetcreation_createnew_title": {
+      "$description": "cp_01M3NX22FNEY0R4GQKXPTQ71R9\nFinance › Expensereport › Budgetcreation › Createnew › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FNEY0R4GQKXPTQ71R9",
+          "platformKey": "gopay_finance_expensereport_budgetcreation_createnew_title",
+          "semanticPath": "expensereport/budgetcreation/createnew/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Atur budget bulanan"
+    },
+    "gopay_finance_expensereport_budgetedit_deletebudget_dialoguecard_description": {
+      "$description": "cp_01M3NX22FRFFXAYCD879HXK9H6\nFinance › Expensereport › Budgetedit › Deletebudget Dialog › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FRFFXAYCD879HXK9H6",
+          "platformKey": "gopay_finance_expensereport_budgetedit_deletebudget_dialoguecard_description",
+          "semanticPath": "expensereport/budgetedit/deletebudget-dialog/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Begitu dihapus, kamu harus pasang budget baru kalau mau mulai lagi."
+    },
+    "gopay_finance_expensereport_budgetedit_deletebudget_dialoguecard_title": {
+      "$description": "cp_01M3NX22FRFW1BHJWS7SZ107JG\nFinance › Expensereport › Budgetedit › Deletebudget Dialog › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FRFW1BHJWS7SZ107JG",
+          "platformKey": "gopay_finance_expensereport_budgetedit_deletebudget_dialoguecard_title",
+          "semanticPath": "expensereport/budgetedit/deletebudget-dialog/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hapus budget?"
+    },
+    "gopay_finance_expensereport_budgetedit_deletebudget_success_toast": {
+      "$description": "cp_01M3NX22FTFRD9W7X15ACZ55S4\nFinance › Expensereport › Budgetedit › Deletebudget Success › Toast",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FTFRD9W7X15ACZ55S4",
+          "platformKey": "gopay_finance_expensereport_budgetedit_deletebudget_success_toast",
+          "semanticPath": "expensereport/budgetedit/deletebudget-success/toast",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Budget dihapus"
+    },
+    "gopay_finance_expensereport_budgetedit_editamount_cta": {
+      "$description": "cp_01M3NX22FREQ4BEZYWQXPYGC2E\nFinance › Expensereport › Budgetedit › Editamount › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FREQ4BEZYWQXPYGC2E",
+          "platformKey": "gopay_finance_expensereport_budgetedit_editamount_cta",
+          "semanticPath": "expensereport/budgetedit/editamount/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Simpan budget baru"
+    },
+    "gopay_finance_expensereport_budgetedit_editamount_success_title": {
+      "$description": "cp_01M3NX22FQFN8AMTYD636BT8P1\nFinance › Expensereport › Budgetedit › Editamount Success › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FQFN8AMTYD636BT8P1",
+          "platformKey": "gopay_finance_expensereport_budgetedit_editamount_success_title",
+          "semanticPath": "expensereport/budgetedit/editamount-success/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Budget berhasil diganti"
+    },
+    "gopay_finance_expensereport_budgetedit_editamount_title": {
+      "$description": "cp_01M3NX22FQFJ48XF2AWF75EZW9\nFinance › Expensereport › Budgetedit › Editamount › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FQFJ48XF2AWF75EZW9",
+          "platformKey": "gopay_finance_expensereport_budgetedit_editamount_title",
+          "semanticPath": "expensereport/budgetedit/editamount/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ganti budget bulanan"
+    },
+    "gopay_finance_expensereport_budgetedit_success_toast": {
+      "$description": "cp_01M3NX22FSFZ9SG01BGCJ2S7AG\nFinance › Expensereport › Budgetedit › Success › Toast",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FSFZ9SG01BGCJ2S7AG",
+          "platformKey": "gopay_finance_expensereport_budgetedit_success_toast",
+          "semanticPath": "expensereport/budgetedit/success/toast",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Budget berhasil diganti"
+    },
+    "gopay_finance_expensereport_historypage_footer_description": {
+      "$description": "cp_01M3NX23NTFCYA9PZ8FJERXRBF\nFinance › Expensereport › Historypage › Footer › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NTFCYA9PZ8FJERXRBF",
+          "platformKey": "gopay_finance_expensereport_historypage_footer_description",
+          "semanticPath": "expensereport/historypage/footer/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu sudah melihat semua pencatatan yang ada."
+    },
+    "gopay_finance_expensereport_historypage_footer_title": {
+      "$description": "cp_01M3NX23NTEXMBS1F9R3AFT0VW\nFinance › Expensereport › Historypage › Footer › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NTEXMBS1F9R3AFT0VW",
+          "platformKey": "gopay_finance_expensereport_historypage_footer_title",
+          "semanticPath": "expensereport/historypage/footer/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sudah sampai akhir!"
+    },
+    "gopay_finance_expensereport_historypage_pagetitle": {
+      "$description": "cp_01M3NX23NSE52RGMRCW96NZWR7\nFinance › Expensereport › Historypage › Pagetitle › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NSE52RGMRCW96NZWR7",
+          "platformKey": "gopay_finance_expensereport_historypage_pagetitle",
+          "semanticPath": "expensereport/historypage/pagetitle/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Riwayat pencatatan"
+    },
+    "gopay_finance_expensereport_historysection_title_expense": {
+      "$description": "cp_01M3NX23NREYHS02ABA406960X\nFinance › Expensereport › Historysection › Title Expense › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NREYHS02ABA406960X",
+          "platformKey": "gopay_finance_expensereport_historysection_title_expense",
+          "semanticPath": "expensereport/historysection/title-expense/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Riwayat pengeluaran"
+    },
+    "gopay_finance_expensereport_historysection_title_income": {
+      "$description": "cp_01M3NX23NREY9VCXX1W64AD1AG\nFinance › Expensereport › Historysection › Title Income › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NREY9VCXX1W64AD1AG",
+          "platformKey": "gopay_finance_expensereport_historysection_title_income",
+          "semanticPath": "expensereport/historysection/title-income/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Riwayat pemasukan"
+    },
+    "gopay_finance_expensereport_inputexpense_error_negativeamount": {
+      "$description": "cp_01M3NX23NXFQTSY7QN4GYT13TM\nFinance › Expensereport › Inputexpense › Error Negativeamount › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NXFQTSY7QN4GYT13TM",
+          "platformKey": "gopay_finance_expensereport_inputexpense_error_negativeamount",
+          "semanticPath": "expensereport/inputexpense/error-negativeamount/error",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nominal tidak boleh minus"
+    },
+    "gopay_finance_expensereport_overviewcard_generic_and": {
+      "$description": "cp_01M3NX23NNEM0TKWQ76491MBYX\nFinance › Expensereport › Overviewcard › Generic And › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NNEM0TKWQ76491MBYX",
+          "platformKey": "gopay_finance_expensereport_overviewcard_generic_and",
+          "semanticPath": "expensereport/overviewcard/generic-and/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "dan"
+    },
+    "gopay_finance_expensereport_overviewcard_title_totalin": {
+      "$description": "cp_01M3NX23NMFQGAW7YZ00FZYDKY\nFinance › Expensereport › Overviewcard › Title Totalin › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NMFQGAW7YZ00FZYDKY",
+          "platformKey": "gopay_finance_expensereport_overviewcard_title_totalin",
+          "semanticPath": "expensereport/overviewcard/title-totalin/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total pemasukan"
+    },
+    "gopay_finance_expensereport_overviewcard_title_totalin_scrolleddown": {
+      "$description": "cp_01M3NX23NPEPYA58KHP7BFVVRN\nFinance › Expensereport › Overviewcard › Title Totalin Scrolleddown › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NPEPYA58KHP7BFVVRN",
+          "platformKey": "gopay_finance_expensereport_overviewcard_title_totalin_scrolleddown",
+          "semanticPath": "expensereport/overviewcard/title-totalin-scrolleddown/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu udah dapetin"
+    },
+    "gopay_finance_expensereport_overviewcard_title_totalout": {
+      "$description": "cp_01M3NX23NNEC8RDYC7Q4TND6DC\nFinance › Expensereport › Overviewcard › Title Totalout › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NNEC8RDYC7Q4TND6DC",
+          "platformKey": "gopay_finance_expensereport_overviewcard_title_totalout",
+          "semanticPath": "expensereport/overviewcard/title-totalout/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total pengeluaran"
+    },
+    "gopay_finance_expensereport_overviewcard_title_totalout_scrolleddown": {
+      "$description": "cp_01M3NX23NPFMXBGD1P8E3WPN2F\nFinance › Expensereport › Overviewcard › Title Totalout Scrolleddown › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NPFMXBGD1P8E3WPN2F",
+          "platformKey": "gopay_finance_expensereport_overviewcard_title_totalout_scrolleddown",
+          "semanticPath": "expensereport/overviewcard/title-totalout-scrolleddown/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu udah ngeluarin"
+    },
+    "gopay_finance_expensereport_pagetitle": {
+      "$description": "cp_01M3NX23NKE6EA7VWMNGC4DJWJ\nFinance › Expensereport › Pagetitle › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NKE6EA7VWMNGC4DJWJ",
+          "platformKey": "gopay_finance_expensereport_pagetitle",
+          "semanticPath": "expensereport/pagetitle/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Laporan keuangan"
+    },
+    "gopay_finance_expensereport_tab_title_expense": {
+      "$description": "cp_01M3NX23NMFC4TSKK50TGH1PNS\nFinance › Expensereport › Tab › Title Expense › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NMFC4TSKK50TGH1PNS",
+          "platformKey": "gopay_finance_expensereport_tab_title_expense",
+          "semanticPath": "expensereport/tab/title-expense/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran"
+    },
+    "gopay_finance_expensereport_tab_title_income": {
+      "$description": "cp_01M3NX23NKERS991JNSM7Y6RZX\nFinance › Expensereport › Tab › Title Income › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NKERS991JNSM7Y6RZX",
+          "platformKey": "gopay_finance_expensereport_tab_title_income",
+          "semanticPath": "expensereport/tab/title-income/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pemasukan"
+    },
+    "gopay_finance_financialreport_text": {
+      "$description": "cp_01M3NX23NQE6PA5GETK8D8TH07\nFinance › Financial Report › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NQE6PA5GETK8D8TH07",
+          "platformKey": "gopay_finance_financialreport_text",
+          "semanticPath": "financial-report/shared/main/text-weekly-income-chart",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Grafik pemasukan mingguan"
+    },
+    "gopay_finance_financialreport_text_2": {
+      "$description": "cp_01M3NX23NQENTVZH0ZQJHSCXAN\nFinance › Financial Report › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23NQENTVZH0ZQJHSCXAN",
+          "platformKey": "gopay_finance_financialreport_text_2",
+          "semanticPath": "financial-report/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Grafik pengeluaran mingguan"
+    },
+    "gopay_finance_gopaydiary_gdrecap_cta": {
+      "$description": "cp_01M3NX22FZFY5VKQY60BSGS4HF\nFinance › Gopay Diary › Gd Recap › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FZFY5VKQY60BSGS4HF",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_cta",
+          "semanticPath": "gopay-diary/gd-recap/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek laporan lengkapnya di app GoPay"
+    },
+    "gopay_finance_gopaydiary_gdrecap_cta_2": {
+      "$description": "cp_01M3NX22G1EEHVEJYHVKH3P41Y\nFinance › Gopay Diary › Gd Recap › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G1EEHVEJYHVKH3P41Y",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_cta_2",
+          "semanticPath": "gopay-diary/gd-recap/main/cta-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Temuin ragam promo di GoPay app"
+    },
+    "gopay_finance_gopaydiary_gdrecap_cta_3": {
+      "$description": "cp_01M3NX22G2FZBBZ910E11DD88G\nFinance › Gopay Diary › Gd Recap › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G2FZBBZ910E11DD88G",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_cta_3",
+          "semanticPath": "gopay-diary/gd-recap/main/cta-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dapetin promo lainnya di GoPay app"
+    },
+    "gopay_finance_gopaydiary_gdrecap_cta_4": {
+      "$description": "cp_01M3NX22G3EJZA3XQGPPPH5MSA\nFinance › Gopay Diary › Gd Recap › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G3EJZA3XQGPPPH5MSA",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_cta_4",
+          "semanticPath": "gopay-diary/gd-recap/main/cta-5",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Untuk berhenti langganan email, klik di sini"
+    },
+    "gopay_finance_gopaydiary_gdrecap_cta_5": {
+      "$description": "cp_01M3NX22G3FPVRF053Z5A6RYR1\nFinance › Gopay Diary › Gd Recap › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G3FPVRF053Z5A6RYR1",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_cta_5",
+          "semanticPath": "gopay-diary/gd-recap/main/cta-4",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Coba sekarang!"
+    },
+    "gopay_finance_gopaydiary_gdrecap_description": {
+      "$description": "cp_01M3NX22FYEEWSJQE8XADHA2R1\nFinance › Gopay Diary › Gd Recap › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FYEEWSJQE8XADHA2R1",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_description",
+          "semanticPath": "gopay-diary/gd-recap/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek pengeluaranmu bulan lalu biar bisa rencanain pengeluaranmu di bulan berikutnya."
+    },
+    "gopay_finance_gopaydiary_gdrecap_description_2": {
+      "$description": "cp_01M3NX22G0EY8T1CBV2C3W9KJ0\nFinance › Gopay Diary › Gd Recap › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G0EY8T1CBV2C3W9KJ0",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_description_2",
+          "semanticPath": "gopay-diary/gd-recap/main/description-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tapi masih ada kesempatan di bulan depan!"
+    },
+    "gopay_finance_gopaydiary_gdrecap_description_3": {
+      "$description": "cp_01M3NX22G1E3HARVPCPPZ4Z7Y3\nFinance › Gopay Diary › Gd Recap › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G1E3HARVPCPPZ4Z7Y3",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_description_3",
+          "semanticPath": "gopay-diary/gd-recap/main/description-3",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Biar bisa hemat sembari belanja"
+    },
+    "gopay_finance_gopaydiary_gdrecap_description_4": {
+      "$description": "cp_01M3NX22G2ETQSNEFVRK6KR39B\nFinance › Gopay Diary › Gd Recap › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G2ETQSNEFVRK6KR39B",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_description_4",
+          "semanticPath": "gopay-diary/gd-recap/main/description-4",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cashback GoPay Coins dari {n} transaksi"
+    },
+    "gopay_finance_gopaydiary_gdrecap_footer_text": {
+      "$description": "cp_01M3NX22G3FVXRWSZDS25F94D6\nFinance › Gopay Diary › Gd Recap › Footer › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G3FVXRWSZDS25F94D6",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_footer_text",
+          "semanticPath": "gopay-diary/gd-recap/footer/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Indonesia (PT Dompet Anak Bangsa) diatur dan diawasi oleh Bank Indonesia."
+    },
+    "gopay_finance_gopaydiary_gdrecap_freetransferinfo_helper": {
+      "$description": "cp_01M3NX22G2EYFA24DKEX3WVHXR\nFinance › Gopay Diary › Gd Recap › Free Transfer Info › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G2EYFA24DKEX3WVHXR",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_freetransferinfo_helper",
+          "semanticPath": "gopay-diary/gd-recap/free-transfer-info/helper",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Nikmatin gratis transfer 100x cuma di aplikasi GoPay"
+    },
+    "gopay_finance_gopaydiary_gdrecap_gpcempty_text": {
+      "$description": "cp_01M3NX22G1EHPSNC2NK3KN0CX3\nFinance › Gopay Diary › Gd Recap › Gpc Empty › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G1EHPSNC2NK3KN0CX3",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_gpcempty_text",
+          "semanticPath": "gopay-diary/gd-recap/gpc-empty/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dapetin cashback GoPay Coins"
+    },
+    "gopay_finance_gopaydiary_gdrecap_greeting_text": {
+      "$description": "cp_01M3NX22FXEWBB4A2PHRS7MA87\nFinance › Gopay Diary › Gd Recap › Greeting › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FXEWBB4A2PHRS7MA87",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_greeting_text",
+          "semanticPath": "gopay-diary/gd-recap/greeting/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hi, {name}!"
+    },
+    "gopay_finance_gopaydiary_gdrecap_period_text": {
+      "$description": "cp_01M3NX22FYE7M84GTB2143EEDP\nFinance › Gopay Diary › Gd Recap › Period › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FYE7M84GTB2143EEDP",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_period_text",
+          "semanticPath": "gopay-diary/gd-recap/period/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{month} {year}"
+    },
+    "gopay_finance_gopaydiary_gdrecap_period_text_2": {
+      "$description": "cp_01M3NX22G0FR6TYXRATJGX5PK4\nFinance › Gopay Diary › Gd Recap › Period › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G0FR6TYXRATJGX5PK4",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_period_text_2",
+          "semanticPath": "gopay-diary/gd-recap/period/text-month-year",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{month} {year}"
+    },
+    "gopay_finance_gopaydiary_gdrecap_text": {
+      "$description": "cp_01M3NX22G4FQGTE5XNSRS2VG9R\nFinance › Gopay Diary › Gd Recap › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G4FQGTE5XNSRS2VG9R",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_text",
+          "semanticPath": "gopay-diary/gd-recap/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "PT Dompet Anak Bangsa. Hak cipta dilindungi undang-undang."
+    },
+    "gopay_finance_gopaydiary_gdrecap_totalsaving_text": {
+      "$description": "cp_01M3NX22FZFH68TD8ART4NTR12\nFinance › Gopay Diary › Gd Recap › Total Saving › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FZFH68TD8ART4NTR12",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_totalsaving_text",
+          "semanticPath": "gopay-diary/gd-recap/total-saving/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total penghematan"
+    },
+    "gopay_finance_gopaydiary_gdrecap_totalspending_text": {
+      "$description": "cp_01M3NX22FYFQHVX703K182WVWX\nFinance › Gopay Diary › Gd Recap › Total Spending › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FYFQHVX703K182WVWX",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_totalspending_text",
+          "semanticPath": "gopay-diary/gd-recap/total-spending/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total pengeluaran"
+    },
+    "gopay_finance_gopaydiary_gdrecap_totalspendingcategories_text": {
+      "$description": "cp_01M3NX22FYEHA9CZJ6XKRJY1Y5\nFinance › Gopay Diary › Gd Recap › Total Spending Categories › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FYEHA9CZJ6XKRJY1Y5",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_totalspendingcategories_text",
+          "semanticPath": "gopay-diary/gd-recap/total-spending-categories/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kategori pengeluaran tertinggi"
+    },
+    "gopay_finance_gopaydiary_gdrecap_unsubscribe_text": {
+      "$description": "cp_01M3NX22G3FKCRZFCQ3VT9WGBW\nFinance › Gopay Diary › Gd Recap › Unsubscribe › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G3FKCRZFCQ3VT9WGBW",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_unsubscribe_text",
+          "semanticPath": "gopay-diary/gd-recap/unsubscribe/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Semoga laporan ini bisa ngebantu!"
+    },
+    "gopay_finance_gopaydiary_gdrecap_xmore_text": {
+      "$description": "cp_01M3NX22FZFEYRWVXHR336F7PS\nFinance › Gopay Diary › Gd Recap › X More › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FZFEYRWVXHR336F7PS",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_xmore_text",
+          "semanticPath": "gopay-diary/gd-recap/x-more/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{n} kategori lainnya"
+    },
+    "gopay_finance_gopaydiary_subject_text": {
+      "$description": "cp_01M3NX22FXEBZVGTZKQT6TBM3Q\nFinance › Gopay Diary › Subject › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FXEBZVGTZKQT6TBM3Q",
+          "platformKey": "gopay_finance_gopaydiary_subject_text",
+          "semanticPath": "gopay-diary/subject/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ini total pengeluaranmu di Desember"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_ifdecrease_text": {
+      "$description": "cp_01M3NX23Y0FXFV7HQXYBGJCN0B\nFinance › Order History Gopay Diary Email › If Decrease › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y0FXFV7HQXYBGJCN0B",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_ifdecrease_text",
+          "semanticPath": "order-history-gopay-diary-email/shared/if-decrease/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran kamu bulan ini 30% lebih sedikit dibanding bulan lalu. Tetep pantau aja, supaya budget tetep kejaga."
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_ifincreasedmorethan20_text": {
+      "$description": "cp_01M3NX23Y1F1AR6TQPM8CS0RTH\nFinance › Order History Gopay Diary Email › If Increased More Than 20 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y1F1AR6TQPM8CS0RTH",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_ifincreasedmorethan20_text",
+          "semanticPath": "order-history-gopay-diary-email/shared/if-increased-more-than-20/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran kamu bulan ini 30% lebih banyak dibanding bulan lalu. Paling banyak dari kategori Gaya hidup. Tetep pantau aja, supaya budget tetep kejaga."
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_ifincreasedmorethan50_text": {
+      "$description": "cp_01M3NX23Y1EMP8S3MX7X4FW08H\nFinance › Order History Gopay Diary Email › If Increased More Than 50 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y1EMP8S3MX7X4FW08H",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_ifincreasedmorethan50_text",
+          "semanticPath": "order-history-gopay-diary-email/shared/if-increased-more-than-50/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran kamu bulan ini 60% lebih banyak dibanding bulan lalu. Paling banyak dari kategori Gaya hidup."
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_ifincreasedmorethan70_text": {
+      "$description": "cp_01M3NX23Y2EVMSHFGB7J388N48\nFinance › Order History Gopay Diary Email › If Increased More Than 70 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y2EVMSHFGB7J388N48",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_ifincreasedmorethan70_text",
+          "semanticPath": "order-history-gopay-diary-email/shared/if-increased-more-than-70/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran kamu bulan ini 80% lebih banyak dibanding bulan lalu. Paling banyak dari kategori Gaya hidup, sekitar Rp1.000.000."
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_ifontrack_text": {
+      "$description": "cp_01M3NX23Y0E8MTNDKD22BVD7SA\nFinance › Order History Gopay Diary Email › If On Track › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y0E8MTNDKD22BVD7SA",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_ifontrack_text",
+          "semanticPath": "order-history-gopay-diary-email/shared/if-on-track/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaranmu bulan ini kurang lebih masih sama kayak bulan lalu. Konsistensi adalah kunci. 👍"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_notransactionatall_text": {
+      "$description": "cp_01M3NX23Y2F3XSARPSX77SZCSA\nFinance › Order History Gopay Diary Email › No Transaction At All › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y2F3XSARPSX77SZCSA",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_notransactionatall_text",
+          "semanticPath": "order-history-gopay-diary-email/shared/no-transaction-at-all/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belum ada data pengeluaran bulan ini. Setelah ada transaksi, nanti aku bantu jelasin pola pengeluaranmu ya 🌟"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text": {
+      "$description": "cp_01M3NX23XDFTDB9MF6GD7EV092\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XDFTDB9MF6GD7EV092",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Laporan Bulananmu di GoPay Udah Siap, Nih"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_10": {
+      "$description": "cp_01M3NX23XJEVK8SZVNZKXVAV1W\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XJEVK8SZVNZKXVAV1W",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_10",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-personal-care",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Perawatan diri"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_12": {
+      "$description": "cp_01M3NX23XKEE2TC5BPFE4PXZHG\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XKEE2TC5BPFE4PXZHG",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_12",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-car",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kebutuhan mobil"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_13": {
+      "$description": "cp_01M3NX23XMEAFRMTS1WE71PD5W\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XMEAFRMTS1WE71PD5W",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_13",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-donations",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Donasi"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_14": {
+      "$description": "cp_01M3NX23XMEYB8FKZB09K1T2B7\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XMEYB8FKZB09K1T2B7",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_14",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-education",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pendidikan"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_16": {
+      "$description": "cp_01M3NX23XNFX2AJT9PYYAQMX1Q\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XNFX2AJT9PYYAQMX1Q",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_16",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-family-personal",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kebutuhan keluarga"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_17": {
+      "$description": "cp_01M3NX23XPESCAKYS7VWXE8D49\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XPESCAKYS7VWXE8D49",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_17",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-food-drink",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Makan & minum"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_18": {
+      "$description": "cp_01M3NX23XPEXBB4MY5ZK6S3PBB\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XPEXBB4MY5ZK6S3PBB",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_18",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-gifts",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hadiah"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_19": {
+      "$description": "cp_01M3NX23XQE56VGEP02F9QGH2H\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XQE56VGEP02F9QGH2H",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_19",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-groceries",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belanja pokok"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_2": {
+      "$description": "cp_01M3NX23XEE5MTGA3Z4G9PNA49\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XEE5MTGA3Z4G9PNA49",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_2",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-here-s-quick-look",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Berikut ringkasan aktivitas keuangan kamu bulan Juli ini."
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_20": {
+      "$description": "cp_01M3NX23XQEK89NT5J48QJAHXZ\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XQEK89NT5J48QJAHXZ",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_20",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-home",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rumah"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_21": {
+      "$description": "cp_01M3NX23XQFHK9XG5E311YF0VC\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XQFHK9XG5E311YF0VC",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_21",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-healthcare",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kesehatan"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_22": {
+      "$description": "cp_01M3NX23XRF3CV67FZNWC43V50\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XRF3CV67FZNWC43V50",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_22",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-miscellaneous",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lainnya"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_23": {
+      "$description": "cp_01M3NX23XRFACTBBCBR3WZBCRG\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XRFACTBBCBR3WZBCRG",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_23",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-shopping",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Belanja"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_24": {
+      "$description": "cp_01M3NX23XSEGR8N9TQE28RWJ8W\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XSEGR8N9TQE28RWJ8W",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_24",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-sports-hobbies",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hobi"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_25": {
+      "$description": "cp_01M3NX23XSEXVBARXECDP5KDHH\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XSEXVBARXECDP5KDHH",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_25",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-tips",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tip"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_26": {
+      "$description": "cp_01M3NX23XTEG2S299F1E7054NY\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XTEG2S299F1E7054NY",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_26",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-travel",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Travel"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_28": {
+      "$description": "cp_01M3NX23XVEJFB2E68NQ1WSDQA\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XVEJFB2E68NQ1WSDQA",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_28",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-work",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kerja"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_3": {
+      "$description": "cp_01M3NX23XEFX5SXGJVME2GZB28\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XEFX5SXGJVME2GZB28",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_3",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-hey-bugi",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hi, Bugi!"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_30": {
+      "$description": "cp_01M3NX23XWE18AX3861MG0WDJK\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XWE18AX3861MG0WDJK",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_30",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-logistics",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Logistik"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_31": {
+      "$description": "cp_01M3NX23XWESAA1CWQK8QP46H4\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XWESAA1CWQK8QP46H4",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_31",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-lifestyle",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gaya hidup"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_32": {
+      "$description": "cp_01M3NX23XXECCABJJYSERPKQW6\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XXECCABJJYSERPKQW6",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_32",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-saving-investment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tabungan/Investasi"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_33": {
+      "$description": "cp_01M3NX23XXF1PVPTJ279VYBHFA\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XXF1PVPTJ279VYBHFA",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_33",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-installment",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cicilan"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_35": {
+      "$description": "cp_01M3NX23XYFEM8304M85352YK8\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XYFEM8304M85352YK8",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_35",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-quick-look-dira",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sekilas info dari Dira 💭"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_36": {
+      "$description": "cp_01M3NX23XZF4EA1S6TY88RGCHC\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XZF4EA1S6TY88RGCHC",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_36",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-dira",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Dira"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_37": {
+      "$description": "cp_01M3NX23XZFRYA88NKMRPGSCRE\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XZFRYA88NKMRPGSCRE",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_37",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-month-track",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bulan ini kamu udah sesuai budget!"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_38": {
+      "$description": "cp_01M3NX23Y0EM1S9K8T95GBG28F\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y0EM1S9K8T95GBG28F",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_38",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-manage-budget-gopay",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Atur budget di GoPay"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_39": {
+      "$description": "cp_01M3NX23Y3EMAT615A3D8R3TBF\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y3EMAT615A3D8R3TBF",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_39",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-income-categories",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kategori pemasukan"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_4": {
+      "$description": "cp_01M3NX23XFF8XSWGNYPMV7B9TM\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XFF8XSWGNYPMV7B9TM",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_4",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-1-28mio",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "+1,28jt"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_41": {
+      "$description": "cp_01M3NX23Y4E4DR43RQVJN6890C\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y4E4DR43RQVJN6890C",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_41",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-cashback",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cashback"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_42": {
+      "$description": "cp_01M3NX23Y4FXS8Q1WWE2WGHQS2\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y4FXS8Q1WWE2WGHQS2",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_42",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-reward",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Reward"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_46": {
+      "$description": "cp_01M3NX23Y7EN4SB8EF8AKJD28C\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y7EN4SB8EF8AKJD28C",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_46",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-gopay-coins-cashback",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cashback GoPay Coins dari 15 transaksi"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_47": {
+      "$description": "cp_01M3NX23Y7F1G9N7JTX3TVRFTY\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y7F1G9N7JTX3TVRFTY",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_47",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-130-000-total",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "130.000 cashback total"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_48": {
+      "$description": "cp_01M3NX23Y8EA8913G4T8351ZZY\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y8EA8913G4T8351ZZY",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_48",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-enjoy-100x-free",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kamu juga bisa nikmati 100x transfer gratis tiap bulan di aplikasi GoPay"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_49": {
+      "$description": "cp_01M3NX23Y8FQAAXMMBPTDN884V\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y8FQAAXMMBPTDN884V",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_49",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-try-now",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cobain fiturnya sekarang"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_5": {
+      "$description": "cp_01M3NX23XFF95BAB8GEDMC4F9V\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XFF95BAB8GEDMC4F9V",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_5",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-income",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pemasukan"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_50": {
+      "$description": "cp_01M3NX23Y9E48S7GRS7DY4JR9M\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y9E48S7GRS7DY4JR9M",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_50",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-pt-dompet-anak",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "PT Dompet Anak Bangsa berizin dan diawasi oleh Otoritas Jasa Keuangan (OJK) dan Bank Indonesia, serta merupakan peserta penjamin LPS."
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_51": {
+      "$description": "cp_01M3NX23Y9FX797SACHYG8DQ4B\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23Y9FX797SACHYG8DQ4B",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_51",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-hope-helps-keep",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Semoga ringkasan ini membantu kamu memantau pengeluaran. Sampai ketemu di laporan bulan depan!\n\nUntuk berhenti berlangganan email ini, klik di sini."
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_6": {
+      "$description": "cp_01M3NX23XGEGKTHPARPHPQ1M39\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XGEGKTHPARPHPQ1M39",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_6",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-expense",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_7": {
+      "$description": "cp_01M3NX23XGFDXRFF9P4QHJ4BTN\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XGFDXRFF9P4QHJ4BTN",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_7",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-500k",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "-500rb"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_8": {
+      "$description": "cp_01M3NX23XHEE68RYXTK8CM9Y0R\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XHEE68RYXTK8CM9Y0R",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_8",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-expense-categories",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kategori pengeluaran"
+    },
+    "gopay_finance_orderhistorygopaydiaryemail_text_9": {
+      "$description": "cp_01M3NX23XHF6DSVFDTCWJDXQGB\nFinance › Order History Gopay Diary Email › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23XHF6DSVFDTCWJDXQGB",
+          "platformKey": "gopay_finance_orderhistorygopaydiaryemail_text_9",
+          "semanticPath": "order-history-gopay-diary-email/shared/main/text-view-full-report",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lihat lebih lengkap di aplikasi GoPay"
+    },
+    "gopay_finance_pfmongojek_text": {
+      "$description": "cp_01M3NX23ZWFP789D5H5MHK9Z4V\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZWFP789D5H5MHK9Z4V",
+          "platformKey": "gopay_finance_pfmongojek_text",
+          "semanticPath": "pfm-on-gojek/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pinjam"
+    },
+    "gopay_finance_pfmongojek_text_10": {
+      "$description": "cp_01M3NX2402FX0VF88TJ293Q1A3\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2402FX0VF88TJ293Q1A3",
+          "platformKey": "gopay_finance_pfmongojek_text_10",
+          "semanticPath": "pfm-on-gojek/shared/main/text-currently-under",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sedang dalam perbaikan. Info lebih lanjut"
+    },
+    "gopay_finance_pfmongojek_text_11": {
+      "$description": "cp_01M3NX2403F4KB4MG7PN718ASK\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2403F4KB4MG7PN718ASK",
+          "platformKey": "gopay_finance_pfmongojek_text_11",
+          "semanticPath": "pfm-on-gojek/shared/main/text-ll-back-soon-try",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Kami lagi usahain biar cepet beres. Silakan coba lagi nanti, ya."
+    },
+    "gopay_finance_pfmongojek_text_12": {
+      "$description": "cp_01M3NX2403FXHB6S1W6W0TNBDK\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2403FXHB6S1W6W0TNBDK",
+          "platformKey": "gopay_finance_pfmongojek_text_12",
+          "semanticPath": "pfm-on-gojek/shared/main/text-gopay-currently",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay sedang dalam perbaikan"
+    },
+    "gopay_finance_pfmongojek_text_13": {
+      "$description": "cp_01M3NX2404E8FBRJK71DWDY34P\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2404E8FBRJK71DWDY34P",
+          "platformKey": "gopay_finance_pfmongojek_text_13",
+          "semanticPath": "pfm-on-gojek/shared/main/text-get-help",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Minta bantuan"
+    },
+    "gopay_finance_pfmongojek_text_14": {
+      "$description": "cp_01M3NX2404FWNR4GTRR59X9KQK\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2404FWNR4GTRR59X9KQK",
+          "platformKey": "gopay_finance_pfmongojek_text_14",
+          "semanticPath": "pfm-on-gojek/shared/main/text-close",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tutup"
+    },
+    "gopay_finance_pfmongojek_text_2": {
+      "$description": "cp_01M3NX23ZXEHZR6XJCGBTAHZAG\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZXEHZR6XJCGBTAHZAG",
+          "platformKey": "gopay_finance_pfmongojek_text_2",
+          "semanticPath": "pfm-on-gojek/shared/main/text-paylater",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "PayLater"
+    },
+    "gopay_finance_pfmongojek_text_4": {
+      "$description": "cp_01M3NX23ZYEC78Z811HTZWPFGY\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZYEC78Z811HTZWPFGY",
+          "platformKey": "gopay_finance_pfmongojek_text_4",
+          "semanticPath": "pfm-on-gojek/shared/main/text-unable-load-refresh",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gagal dimuat. Refresh"
+    },
+    "gopay_finance_pfmongojek_text_5": {
+      "$description": "cp_01M3NX23ZYFTJR1JMHG51QP1ZF\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZYFTJR1JMHG51QP1ZF",
+          "platformKey": "gopay_finance_pfmongojek_text_5",
+          "semanticPath": "pfm-on-gojek/shared/main/text-more",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Lainnya"
+    },
+    "gopay_finance_pfmongojek_text_6": {
+      "$description": "cp_01M3NX2400FTSTVDEDNT9EXBKP\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2400FTSTVDEDNT9EXBKP",
+          "platformKey": "gopay_finance_pfmongojek_text_6",
+          "semanticPath": "pfm-on-gojek/shared/main/text-gopay-tabungan",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Tabunganmu diblokir. Info lebih lanjut"
+    },
+    "gopay_finance_pfmongojek_text_7": {
+      "$description": "cp_01M3NX2401E83R1RJ7WDR85EWW\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2401E83R1RJ7WDR85EWW",
+          "platformKey": "gopay_finance_pfmongojek_text_7",
+          "semanticPath": "pfm-on-gojek/shared/main/text-value-coins-expiring",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "{value} Coins hampir hangus"
+    },
+    "gopay_finance_pfmongojek_text_8": {
+      "$description": "cp_01M3NX2401FPBV66H2QYXR65K8\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2401FPBV66H2QYXR65K8",
+          "platformKey": "gopay_finance_pfmongojek_text_8",
+          "semanticPath": "pfm-on-gojek/shared/main/text-gopay-account",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Akun GoPay-mu diblokir. Info lebih lanjut"
+    },
+    "gopay_finance_pfmongojek_text_9": {
+      "$description": "cp_01M3NX2402FG4AT142147Q02DG\nFinance › Pfm On Gojek › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2402FG4AT142147Q02DG",
+          "platformKey": "gopay_finance_pfmongojek_text_9",
+          "semanticPath": "pfm-on-gojek/shared/main/text-balance-updated-yet",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saldo belum diperbarui. Refresh"
+    },
+    "gopay_finance_transactionhistory_historylistpage_monthrecap_subtitle_error_unabletoload": {
+      "$description": "cp_01M3NX23ZQFD2AN2NQFV5NVVFF\nFinance › Transactionhistory › Historylistpage › Monthrecap Subtitle Error › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZQFD2AN2NQFV5NVVFF",
+          "platformKey": "gopay_finance_transactionhistory_historylistpage_monthrecap_subtitle_error_unabletoload",
+          "semanticPath": "transactionhistory/historylistpage/monthrecap-subtitle-error/error",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gagal memuat data pemasukan dan pengeluaranmu. Coba lagi, ya."
+    },
+    "gopay_finance_transactionhistory_historylistpage_monthrecap_subtitle_expense": {
+      "$description": "cp_01M3NX23ZRF4K9HW1W55TSYBW0\nFinance › Transactionhistory › Historylistpage › Monthrecap Subtitle Expense › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZRF4K9HW1W55TSYBW0",
+          "platformKey": "gopay_finance_transactionhistory_historylistpage_monthrecap_subtitle_expense",
+          "semanticPath": "transactionhistory/historylistpage/monthrecap-subtitle-expense/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengeluaran"
+    },
+    "gopay_finance_transactionhistory_historylistpage_monthrecap_subtitle_income": {
+      "$description": "cp_01M3NX23ZREGSV13BRCA4WZAJP\nFinance › Transactionhistory › Historylistpage › Monthrecap Subtitle Income › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZREGSV13BRCA4WZAJP",
+          "platformKey": "gopay_finance_transactionhistory_historylistpage_monthrecap_subtitle_income",
+          "semanticPath": "transactionhistory/historylistpage/monthrecap-subtitle-income/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pemasukan"
+    },
+    "gopay_finance_transactionhistory_statementpage_dialoguecard_cta_gotit": {
+      "$description": "cp_01M3NX23SZE27RT337VHGZFPTH\nFinance › Transactionhistory › Statementpage › Dialog › Cta Gotit",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23SZE27RT337VHGZFPTH",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_dialoguecard_cta_gotit",
+          "semanticPath": "transactionhistory/statementpage/dialog/cta-gotit",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke"
+    },
+    "gopay_finance_transactionhistory_statementpage_dialoguecard_description": {
+      "$description": "cp_01M3NX23SZEBCR9T5WKN2FXEMT\nFinance › Transactionhistory › Statementpage › Dialog › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23SZEBCR9T5WKN2FXEMT",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_dialoguecard_description",
+          "semanticPath": "transactionhistory/statementpage/dialog/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak ada informasi transaksi di periode yang kamu pilih. Coba pilih periode lain."
+    },
+    "gopay_finance_transactionhistory_statementpage_dialoguecard_title": {
+      "$description": "cp_01M3NX23SYE2X9DHVY5DXVCE2P\nFinance › Transactionhistory › Statementpage › Dialog › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23SYE2X9DHVY5DXVCE2P",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_dialoguecard_title",
+          "semanticPath": "transactionhistory/statementpage/dialog/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gak ada transaksi di periode yang dipilih"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_choosemonth_cta": {
+      "$description": "cp_01M3NX23VRFNPTN1HRTGS7VVEA\nFinance › Transactionhistory › Statementpage › Reviewdownload Bottom Sheet › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VRFNPTN1HRTGS7VVEA",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_choosemonth_cta",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload-bottom-sheet/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Konfirmasi"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_choosemonth_title": {
+      "$description": "cp_01M3NX23VPFKFRJ7503DVMPKTV\nFinance › Transactionhistory › Statementpage › Reviewdownload Bottom Sheet › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VPFKFRJ7503DVMPKTV",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_choosemonth_title",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload-bottom-sheet/title-2",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tentukan bulan transaksinya"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_choosemonth_year": {
+      "$description": "cp_01M3NX23VQF7YTBBP8SCRCWJM6\nFinance › Transactionhistory › Statementpage › Reviewdownload Bottom Sheet › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VQF7YTBBP8SCRCWJM6",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_choosemonth_year",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload-bottom-sheet/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tahun"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_newdownload_description": {
+      "$description": "cp_01M3NX23VNE82VEY77BWTQVYMW\nFinance › Transactionhistory › Statementpage › Reviewdownload Bottom Sheet › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VNE82VEY77BWTQVYMW",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_newdownload_description",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload-bottom-sheet/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "E-statement yang udah di-download sebelumnya akan digantikan dengan yang baru."
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_newdownload_title": {
+      "$description": "cp_01M3NX23VMF9PSGFWA72M6T7V7\nFinance › Transactionhistory › Statementpage › Reviewdownload Bottom Sheet › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VMF9PSGFWA72M6T7V7",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_bottomsheet_newdownload_title",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload-bottom-sheet/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ingin download e-statement yang baru?"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_pagecta": {
+      "$description": "cp_01M3NX23VKFBES8TM80EFJ54ER\nFinance › Transactionhistory › Statementpage › Reviewdownload Pagecta › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VKFBES8TM80EFJ54ER",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_pagecta",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload-pagecta/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Download dalam format PDF"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_processingindicator_loading": {
+      "$description": "cp_01M3NX23VKES0BK576NQW1ETZK\nFinance › Transactionhistory › Statementpage › Reviewdownload › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VKES0BK576NQW1ETZK",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_processingindicator_loading",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload/text-downloading-e",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sedang download e-statement"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_processingindicator_success": {
+      "$description": "cp_01M3NX23VJFDAV2NBJDVSA4Y2E\nFinance › Transactionhistory › Statementpage › Reviewdownload › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VJFDAV2NBJDVSA4Y2E",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_processingindicator_success",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "E-statement siap di-download"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_processingindicator_success_cta": {
+      "$description": "cp_01M3NX23VKFPHRY46AV4ZA8H3J\nFinance › Transactionhistory › Statementpage › Reviewdownload › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VKFPHRY46AV4ZA8H3J",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_processingindicator_success_cta",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Buka"
+    },
+    "gopay_finance_transactionhistory_statementpage_reviewdownload_titlepage": {
+      "$description": "cp_01M3NX23VJFCWACNZYAQ5WW9M1\nFinance › Transactionhistory › Statementpage › Reviewdownload Titlepage › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23VJFCWACNZYAQ5WW9M1",
+          "platformKey": "gopay_finance_transactionhistory_statementpage_reviewdownload_titlepage",
+          "semanticPath": "transactionhistory/statementpage/reviewdownload-titlepage/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Download e-statement"
+    },
+    "gopay_finance_userjourney_financialreportsectiondate_text": {
+      "$description": "cp_01M3NX238ZE2ZSC0AR8EFHH7G9\nFinance › User Journey › Financial Report Section Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX238ZE2ZSC0AR8EFHH7G9",
+          "platformKey": "gopay_finance_userjourney_financialreportsectiondate_text",
+          "semanticPath": "user-journey/financial-report-section-date/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pilih tanggal transaksi"
+    },
+    "gopay_finance_userjourney_financialreportsectiondate_text_2": {
+      "$description": "cp_01M3NX2390ECHBWYVSQCAP4SXR\nFinance › User Journey › Financial Report Section Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2390ECHBWYVSQCAP4SXR",
+          "platformKey": "gopay_finance_userjourney_financialreportsectiondate_text_2",
+          "semanticPath": "user-journey/financial-report-section-date/main/text-last-30-days",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "30 hari terakhir"
+    },
+    "gopay_finance_userjourney_financialreportsectiondate_text_3": {
+      "$description": "cp_01M3NX2390F02VWR00A8X9M8VZ\nFinance › User Journey › Financial Report Section Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2390F02VWR00A8X9M8VZ",
+          "platformKey": "gopay_finance_userjourney_financialreportsectiondate_text_3",
+          "semanticPath": "user-journey/financial-report-section-date/main/text-last-7-days",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "7 hari terakhir"
+    },
+    "gopay_finance_userjourney_financialreportsectiondate_text_5": {
+      "$description": "cp_01M3NX2391EV7BB572ZG34YP4D\nFinance › User Journey › Financial Report Section Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2391EV7BB572ZG34YP4D",
+          "platformKey": "gopay_finance_userjourney_financialreportsectiondate_text_5",
+          "semanticPath": "user-journey/financial-report-section-date/main/text-last-60-days",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "60 hari terakhir"
+    },
+    "gopay_finance_userjourney_financialreportsectiondate_text_7": {
+      "$description": "cp_01M3NX2392EW398NP5YWS4N25P\nFinance › User Journey › Financial Report Section Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2392EW398NP5YWS4N25P",
+          "platformKey": "gopay_finance_userjourney_financialreportsectiondate_text_7",
+          "semanticPath": "user-journey/financial-report-section-date/main/text-apply-filter",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pasang filter"
+    },
+    "gopay_finance_userjourney_financialreportsectiondate_text_8": {
+      "$description": "cp_01M3NX2392EWAR75P1YG1Q2906\nFinance › User Journey › Financial Report Section Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2392EWAR75P1YG1Q2906",
+          "platformKey": "gopay_finance_userjourney_financialreportsectiondate_text_8",
+          "semanticPath": "user-journey/financial-report-section-date/main/text-custom-date",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Custom tanggal"
+    },
+    "gopay_homepagerevamped_walletcard_toomanyattempt_description": {
+      "$description": "cp_01M3NX23ZZFKVBPGVA4BEDG2W1\nFinance › Walletcard › Toomanyattempt › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23ZZFKVBPGVA4BEDG2W1",
+          "platformKey": "gopay_homepagerevamped_walletcard_toomanyattempt_description",
+          "semanticPath": "walletcard/toomanyattempt/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tunggu dulu sebentar dan coba ulangi lagi, ya."
+    }
+  }
+}

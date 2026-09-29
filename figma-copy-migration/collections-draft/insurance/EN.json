@@ -1,0 +1,537 @@
+{
+  "insurance": {
+    "gopay_insurance_cashloaninsurancecontextual_disclaimer_alt1_text": {
+      "$description": "cp_01M3NX20D0EKZRNMKMPM08AR72\nInsurance › Cash Loan Insurance Contextual › Disclaimer › Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D0EKZRNMKMPM08AR72",
+          "platformKey": "gopay_insurance_cashloaninsurancecontextual_disclaimer_alt1_text",
+          "semanticPath": "cash-loan-insurance-contextual/disclaimer/alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "By turning on this protection, you authorize GoPay to share the necessary information with our broker and insurance partners to issue, manage, and process your policy.\n\nData shared:\n• Full name, date of birth, and National ID (NIK)\n• Your GoPay registered phone number\n• Loan amount, service fees, and selected tenure"
+    },
+    "gopay_insurance_cashloaninsurancecontextual_disclaimer_alt2_text": {
+      "$description": "cp_01M3NX20D0EWHAH12ANNTD7GAE\nInsurance › Cash Loan Insurance Contextual › Disclaimer › Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D0EWHAH12ANNTD7GAE",
+          "platformKey": "gopay_insurance_cashloaninsurancecontextual_disclaimer_alt2_text",
+          "semanticPath": "cash-loan-insurance-contextual/disclaimer/alt-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "By turning on this protection, you are deemed to authorize GoPay to share the necessary information, including but not limited to your identity, contact information, and loan details, with our insurance broker and underwriter partners. This information is used solely to issue, manage, and process your insurance policy."
+    },
+    "gopay_insurance_crackdeactivationpopup_generalalt2_text": {
+      "$description": "cp_01M3NX20D1E2X9XX4C5BASXJGF\nInsurance › Crack Deactivation Pop Up › General Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D1E2X9XX4C5BASXJGF",
+          "platformKey": "gopay_insurance_crackdeactivationpopup_generalalt2_text",
+          "semanticPath": "crack-deactivation-pop-up/general-alt-2/main/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sure you want to remove the protection?"
+    },
+    "gopay_insurance_crackdeactivationpopup_generalalt2_text_2": {
+      "$description": "cp_01M3NX20D2EJTAADDHAW1D8BR1\nInsurance › Crack Deactivation Pop Up › General Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D2EJTAADDHAW1D8BR1",
+          "platformKey": "gopay_insurance_crackdeactivationpopup_generalalt2_text_2",
+          "semanticPath": "crack-deactivation-pop-up/general-alt-2/main/text-remove",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Remove"
+    },
+    "gopay_insurance_crackdeactivationpopup_generalalt2_text_3": {
+      "$description": "cp_01M3NX20D2EX7VAQNMN6G91HYD\nInsurance › Crack Deactivation Pop Up › General Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D2EX7VAQNMN6G91HYD",
+          "platformKey": "gopay_insurance_crackdeactivationpopup_generalalt2_text_3",
+          "semanticPath": "crack-deactivation-pop-up/general-alt-2/main/text-over-9-000-people",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Over 9,000 people have already gotten their repair fee covered."
+    },
+    "gopay_insurance_crackdeactivationpopup_generalalt2_text_4": {
+      "$description": "cp_01M3NX20D2F8JS6S33BV242CWQ\nInsurance › Crack Deactivation Pop Up › General Alt 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D2F8JS6S33BV242CWQ",
+          "platformKey": "gopay_insurance_crackdeactivationpopup_generalalt2_text_4",
+          "semanticPath": "crack-deactivation-pop-up/general-alt-2/main/text-keep",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Keep it"
+    },
+    "gopay_insurance_crackinsurancenoncontextual_plansection_text": {
+      "$description": "cp_01M3NX206TE0DA4WW1CSXGA8VE\nInsurance › Crack Insurance Non Contextual › Plan Section › Text\nNote: EN Standar",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206TE0DA4WW1CSXGA8VE",
+          "platformKey": "gopay_insurance_crackinsurancenoncontextual_plansection_text",
+          "semanticPath": "crack-insurance-non-contextual/plan-section/main/text-reguler-3",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Reguler"
+    },
+    "gopay_insurance_crackinsurancenoncontextual_plansection_text_3": {
+      "$description": "cp_01M3NX206TEMM8KS0TXTP6FQ0R\nInsurance › Crack Insurance Non Contextual › Plan Section › Text\nNote: Rp200.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206TEMM8KS0TXTP6FQ0R",
+          "platformKey": "gopay_insurance_crackinsurancenoncontextual_plansection_text_3",
+          "semanticPath": "crack-insurance-non-contextual/plan-section/main/text-rp400-000",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp400.000"
+    },
+    "gopay_insurance_crackinsurancenoncontextual_plansection_text_7": {
+      "$description": "cp_01M3NX206TFV5855JQXEAFMMGB\nInsurance › Crack Insurance Non Contextual › Plan Section › Text\nNote: EN Standar",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206TFV5855JQXEAFMMGB",
+          "platformKey": "gopay_insurance_crackinsurancenoncontextual_plansection_text_7",
+          "semanticPath": "crack-insurance-non-contextual/plan-section/main/text-reguler-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Reguler"
+    },
+    "gopay_insurance_crackinsurancenoncontextual_plansection_text_8": {
+      "$description": "cp_01M3NX206TFV9SQFFCW2XRMTTE\nInsurance › Crack Insurance Non Contextual › Plan Section › Text\nNote: Rp1.000/month",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206TFV9SQFFCW2XRMTTE",
+          "platformKey": "gopay_insurance_crackinsurancenoncontextual_plansection_text_8",
+          "semanticPath": "crack-insurance-non-contextual/plan-section/main/text-rp2-000-month",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp2.000/month"
+    },
+    "gopay_insurance_cybersecurityinsurance_faq_text": {
+      "$description": "cp_01M3NX2088E499CDN0YHBRC5KM\nInsurance › Cyber Security Insurance › Faq › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2088E499CDN0YHBRC5KM",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_faq_text",
+          "semanticPath": "cyber-security-insurance/faq/main/text-get-coverage-case-up",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Get coverage for this case, up to"
+    },
+    "gopay_insurance_cybersecurityinsurance_faq_text_5": {
+      "$description": "cp_01M3NX2088FSWAYNS67AN9KQZ7\nInsurance › Cyber Security Insurance › Faq › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2088FSWAYNS67AN9KQZ7",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_faq_text_5",
+          "semanticPath": "cyber-security-insurance/faq/main/text-rp2-000-000-year",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp2,000,000/year"
+    },
+    "gopay_insurance_cybersecurityinsurance_plandetails_text_17": {
+      "$description": "cp_01M3NX208AFX9ADG6V6VWQ4H9W\nInsurance › Cyber Security Insurance › Plan Details › Text\nNote: Rp1.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX208AFX9ADG6V6VWQ4H9W",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_plandetails_text_17",
+          "semanticPath": "cyber-security-insurance/plan-details/main/text-rp3-000-000",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp3.000.000"
+    },
+    "gopay_insurance_cybersecurityinsurance_plandetails_text_5": {
+      "$description": "cp_01M3NX208AEHM96ZJSQR1PZAEW\nInsurance › Cyber Security Insurance › Plan Details › Text\nNote: EN Standar",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX208AEHM96ZJSQR1PZAEW",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_plandetails_text_5",
+          "semanticPath": "cyber-security-insurance/plan-details/main/text-reguler",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Reguler"
+    },
+    "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_10": {
+      "$description": "cp_01M3NX2088ERWBMAJ6YDNGRDD6\nInsurance › Cyber Security Insurance › Why This Insurance Section › Text\nNote: Covers your loss if your account is breached and the funds inside are stolen. Mengganti kerugian ketika akunmu diretas dan uang di dalam akun tersebut dicuri.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2088ERWBMAJ6YDNGRDD6",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_10",
+          "semanticPath": "cyber-security-insurance/why-this-insurance-section/main/text-andi-s-personal-data",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Andi's personal data was leaked, and scammer used that information to hack into his account and steal his entire balance."
+    },
+    "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_11": {
+      "$description": "cp_01M3NX2088ETNBQDYAN1841PJG\nInsurance › Cyber Security Insurance › Why This Insurance Section › Text\nNote: 1. Phising/suspicious link 1. Phising/link mencurigakan",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2088ETNBQDYAN1841PJG",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_11",
+          "semanticPath": "cyber-security-insurance/why-this-insurance-section/main/text-1-phishing",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "1. Phishing / Suspicious Link"
+    },
+    "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_13": {
+      "$description": "cp_01M3NX2088F5TBBNHEWYWES6CC\nInsurance › Cyber Security Insurance › Why This Insurance Section › Text\nNote: 3. Identity theft 3. Pencurian identitas",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2088F5TBBNHEWYWES6CC",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_13",
+          "semanticPath": "cyber-security-insurance/why-this-insurance-section/main/text-3-identity-theft",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "3. Identity Theft"
+    },
+    "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_2": {
+      "$description": "cp_01M3NX2087EXGB7VVN2XQQBSN9\nInsurance › Cyber Security Insurance › Why This Insurance Section › Text\nNote: What we cover Apa saja yang dilindungi?",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2087EXGB7VVN2XQQBSN9",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_2",
+          "semanticPath": "cyber-security-insurance/why-this-insurance-section/main/text-examples-covered",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Examples of covered cases"
+    },
+    "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_5": {
+      "$description": "cp_01M3NX2088E6EVWAE5NTKK0W1R\nInsurance › Cyber Security Insurance › Why This Insurance Section › Text\nNote: 2. Online shop scam 2. Penipuan toko online",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2088E6EVWAE5NTKK0W1R",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_5",
+          "semanticPath": "cyber-security-insurance/why-this-insurance-section/main/text-2-online-shop-scam",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "2. Online Shop Scam"
+    },
+    "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_7": {
+      "$description": "cp_01M3NX2088EEZBFJB926HHD0DS\nInsurance › Cyber Security Insurance › Why This Insurance Section › Text\nNote: Get reimbursed if your funds are stolen from your accounts after you clicking a suspicious link or attachment. Dapatkan penggantian jika uangmu dicuri setelah klik link atau download lampiran yang mencurigakan.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2088EEZBFJB926HHD0DS",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_7",
+          "semanticPath": "cyber-security-insurance/why-this-insurance-section/main/text-budi-received",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Budi received a message claiming to be from a delivery courier, asking him to click on a link. It turned out to be a scam."
+    },
+    "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_8": {
+      "$description": "cp_01M3NX2088ENCV4VBKKTHEVPT0\nInsurance › Cyber Security Insurance › Why This Insurance Section › Text\nNote: Reimburses the loss if you buy an item online and the seller fails to deliver the item entirely or delivers a counterfeit/different product. Ganti kerugian ketika penjual di toko online mengirimkan barang yang berbeda atau tidak sama sekali.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2088ENCV4VBKKTHEVPT0",
+          "platformKey": "gopay_insurance_cybersecurityinsurance_whythisinsurancesection_text_8",
+          "semanticPath": "cyber-security-insurance/why-this-insurance-section/main/text-siti-bought-latest",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Siti bought the latest smartphone from an online store. However, when the package arrived and she opened it, the contents were just a piece of wood and a brick."
+    },
+    "gopay_insurance_incomeprotection_package1_text_2": {
+      "$description": "cp_01M3NX206JF4D96QDEMRR2R148\nInsurance › Income Protection › Package 1 › Text\nNote: EN Standar",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206JF4D96QDEMRR2R148",
+          "platformKey": "gopay_insurance_incomeprotection_package1_text_2",
+          "semanticPath": "income-protection/shared/package-1/text-reguler",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Reguler"
+    },
+    "gopay_insurance_incomeprotection_package2_text_2": {
+      "$description": "cp_01M3NX206JF218P7YBRS9TAW9G\nInsurance › Income Protection › Package 2 › Text\nNote: Rp1.000/month",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206JF218P7YBRS9TAW9G",
+          "platformKey": "gopay_insurance_incomeprotection_package2_text_2",
+          "semanticPath": "income-protection/shared/package-2/text-rp2-000-month",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp2.000/month"
+    },
+    "gopay_insurance_incomeprotection_tab_tab_2": {
+      "$description": "cp_01M3NX206JFX5AXD11B9EN9NGV\nInsurance › Income Protection › Tab › Tab\nNote: EN Standar",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206JFX5AXD11B9EN9NGV",
+          "platformKey": "gopay_insurance_incomeprotection_tab_tab_2",
+          "semanticPath": "income-protection/shared/tab/tab-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Reguler"
+    },
+    "gopay_insurance_incomeprotection_text_14": {
+      "$description": "cp_01M3NX206JFK39P8ZAWNRR2NV6\nInsurance › Income Protection › Text\nNote: Rp100.000/day; max. 3 days per month",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206JFK39P8ZAWNRR2NV6",
+          "platformKey": "gopay_insurance_incomeprotection_text_14",
+          "semanticPath": "income-protection/shared/main/text-rp150-000-day-max-3",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp150.000/day;  max. 3 days per month"
+    },
+    "gopay_insurance_motorcycleinsurance_planselectionsection_text_2": {
+      "$description": "cp_01M3NX20APE189WAMX0XMEFFDG\nInsurance › Motorcycle Insurance › Plan Selection Section › Text\nNote: Standar Standar",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20APE189WAMX0XMEFFDG",
+          "platformKey": "gopay_insurance_motorcycleinsurance_planselectionsection_text_2",
+          "semanticPath": "motorcycle-insurance/plan-selection-section/main/text-premium",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Premium"
+    },
+    "gopay_insurance_personalaccident_text_16": {
+      "$description": "cp_01M3NX206AE2CSFZ5X7AA3A2X5\nInsurance › Personal Accident › Text\nNote: Rp 10.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206AE2CSFZ5X7AA3A2X5",
+          "platformKey": "gopay_insurance_personalaccident_text_16",
+          "semanticPath": "personal-accident/shared/main/text-rp-20-000-000",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 20.000.000"
+    },
+    "gopay_insurance_personalaccident_text_18": {
+      "$description": "cp_01M3NX206AE60S2YX72WG1MHBF\nInsurance › Personal Accident › Text\nNote: Rp 10.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206AE60S2YX72WG1MHBF",
+          "platformKey": "gopay_insurance_personalaccident_text_18",
+          "semanticPath": "personal-accident/shared/main/text-rp-20-000-000-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 20.000.000"
+    },
+    "gopay_insurance_personalaccident_text_30": {
+      "$description": "cp_01M3NX206AFS5BWCAA8SZF5873\nInsurance › Personal Accident › Text\nNote: EN Standar",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206AFS5BWCAA8SZF5873",
+          "platformKey": "gopay_insurance_personalaccident_text_30",
+          "semanticPath": "personal-accident/shared/main/text-reguler",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Reguler"
+    },
+    "gopay_insurance_personalaccident_text_32": {
+      "$description": "cp_01M3NX206AFY79K0T5BVJPD9BZ\nInsurance › Personal Accident › Text\nNote: Rp 5.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206AFY79K0T5BVJPD9BZ",
+          "platformKey": "gopay_insurance_personalaccident_text_32",
+          "semanticPath": "personal-accident/shared/main/text-rp-7-000-000",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 7.000.000"
+    },
+    "gopay_insurance_registrationformchildhealth_registrationforminsuredchild_option": {
+      "$description": "cp_01M3NX207SE5PTF6NC9S8YS3WW\nInsurance › Registration Form Child Health › Registration Form Insured Child › Option",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX207SE5PTF6NC9S8YS3WW",
+          "platformKey": "gopay_insurance_registrationformchildhealth_registrationforminsuredchild_option",
+          "semanticPath": "registration-form-child-health/registration-form-insured-child/main/option",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Male"
+    },
+    "gopay_insurance_registrationformchildhealth_registrationforminsuredchild_option_2": {
+      "$description": "cp_01M3NX207SEEG9SGQ3BCFXPSMG\nInsurance › Registration Form Child Health › Registration Form Insured Child › Option",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX207SEEG9SGQ3BCFXPSMG",
+          "platformKey": "gopay_insurance_registrationformchildhealth_registrationforminsuredchild_option_2",
+          "semanticPath": "registration-form-child-health/registration-form-insured-child/main/option-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Female"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_17": {
+      "$description": "cp_01M3NX20C3E7ZVDYN0KXEZEWRA\nInsurance › Travel Insurance › Provider Section › Text\nNote: Rp 20.000.000 Rp 50.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C3E7ZVDYN0KXEZEWRA",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_17",
+          "semanticPath": "travel-insurance/provider-section/main/text-rp-100-000-000",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 100.000.000"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_18": {
+      "$description": "cp_01M3NX20C3EATAR78P92G00RB8\nInsurance › Travel Insurance › Provider Section › Text\nNote: Rp 20.000.000 Rp 50.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C3EATAR78P92G00RB8",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_18",
+          "semanticPath": "travel-insurance/provider-section/main/text-rp-100-000-000-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 100.000.000"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_20": {
+      "$description": "cp_01M3NX20C3EJR923RWJE6G8G14\nInsurance › Travel Insurance › Provider Section › Text\nNote: Plan 1 Plan 2",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C3EJR923RWJE6G8G14",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_20",
+          "semanticPath": "travel-insurance/provider-section/main/text-plan-3",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Plan 3"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_26": {
+      "$description": "cp_01M3NX20C4EDCV91HN4XP6NS7H\nInsurance › Travel Insurance › Provider Section › Text\nNote: Rp 2.500.000 Rp 5.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C4EDCV91HN4XP6NS7H",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_26",
+          "semanticPath": "travel-insurance/provider-section/main/text-rp-7-500-000",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 7.500.000"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_28": {
+      "$description": "cp_01M3NX20C4EYKTB2K5NE4KZHNX\nInsurance › Travel Insurance › Provider Section › Text\nNote: Rp 5.000.000 Rp 7.500.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C4EYKTB2K5NE4KZHNX",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_28",
+          "semanticPath": "travel-insurance/provider-section/main/text-rp-10-000-000",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 10.000.000"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_31": {
+      "$description": "cp_01M3NX20C4FMG9A1VXF9581GSP\nInsurance › Travel Insurance › Provider Section › Text\nNote: Rp 50.000/ 4 hours; max Rp 500.000 Rp 75.000/ 4 hours; max Rp 750.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C4FMG9A1VXF9581GSP",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_31",
+          "semanticPath": "travel-insurance/provider-section/main/text-rp-100-000-4-hours",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 100.000/ 4 hours; max Rp 1.000.000"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_32": {
+      "$description": "cp_01M3NX20C4FN0AR2NMKNJ2KJEN\nInsurance › Travel Insurance › Provider Section › Text\nNote: Rp 7.500.000 Rp 10.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C4FN0AR2NMKNJ2KJEN",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_32",
+          "semanticPath": "travel-insurance/provider-section/main/text-rp-12-500-000",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 12.500.000"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_39": {
+      "$description": "cp_01M3NX20C5FD6T2807418FPGGF\nInsurance › Travel Insurance › Provider Section › Text\nNote: Rp 100.000/ item; max Rp 1.000.000 Rp 150.000/ item; max Rp 1.500.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C5FD6T2807418FPGGF",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_39",
+          "semanticPath": "travel-insurance/provider-section/main/text-rp-200-000-item-max",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 200.000/ item; max Rp 2.000.000"
+    },
+    "gopay_insurance_travelinsurance_providersection_text_41": {
+      "$description": "cp_01M3NX20C5FZC8ZVKTPNNQXFXN\nInsurance › Travel Insurance › Provider Section › Text\nNote: Rp 250.000/ 4 hours; max Rp 750.000 Rp 300.000/ 4 hours; max Rp 900.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20C5FZC8ZVKTPNNQXFXN",
+          "platformKey": "gopay_insurance_travelinsurance_providersection_text_41",
+          "semanticPath": "travel-insurance/provider-section/main/text-rp-350-000-4-hours",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp 350.000/ 4 hours; max Rp 1.050.000"
+    }
+  }
+}

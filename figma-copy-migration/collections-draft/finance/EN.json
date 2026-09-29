@@ -1,0 +1,56 @@
+{
+  "finance": {
+    "gopay_finance_addexpense_transactionhistorygopayapp_ifwecantshowthedata_text": {
+      "$description": "cp_01M3NX22FCEEZ8MQNSZDA5DZTE\nFinance › Add Expense › Transaction History Gopay App › If We Cant Show The Data › Text\nNote: explorations: Wonder where your money's going? We categorize your expenses so you know how much you spend on food, transport, etc. CTA: Check the full report Stay financially organized With categories, you can track where your money goes. Tap to see them. Never overspend again Check your expense categories & track where your money goes. budgeting: Controlling expenses got easier Track your spending from weekly to monthly with a categorization we've prepared for you. -- Gak perlu takut boros lagi Cek kategori pengeluaranmu & pantau uangmu kepake buat apa aja. Jaga pengeluaran biar gak berlebih Cek kategori pengeluaranmu & pantau uangmu kepake buat apa aja.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22FCEEZ8MQNSZDA5DZTE",
+          "platformKey": "gopay_finance_addexpense_transactionhistorygopayapp_ifwecantshowthedata_text",
+          "semanticPath": "add-expense/transaction-history-gopay-app/if-we-cant-show-the-data/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Never overspend again\nNow you can track where you spent your money."
+    },
+    "gopay_finance_expensemanagement_financehome_expenseincrease_text": {
+      "$description": "cp_01M3NX22E1EZ1T0E95TFMJDCB3\nFinance › Expense Management › Finance Home › Expense Increase › Text\nNote: - we can test the copy here - to test the amount vs percentage People generally want to be reminded and being notified, especially when there’s an over budget. Giving an alarm to give urgency to reduce expense and accompanied with motivation words afterward.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22E1EZ1T0E95TFMJDCB3",
+          "platformKey": "gopay_finance_expensemanagement_financehome_expenseincrease_text",
+          "semanticPath": "expense-management/finance-home/expense-increase/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "- Time to cut some expenses. You got this!\n- This is your reminder to save for a rainy day.\n- This is your reminder to buy less. Let's start now!"
+    },
+    "gopay_finance_expensemanagement_gopayhomeshufflecardusers_text": {
+      "$description": "cp_01M3NX22DWESST0V2THPZXSSMD\nFinance › Expense Management › Gopay Home Shuffle Card Users › Text\nNote: past explorations: Track expenses in real-time You can also add non-GoPay expenses, instead of writing it down. Transaksi otomatis tercatat, jadi gampang dipantau Bisa juga catat pengeluaran di luar GoPay, jadi gak perlu tulis di buku.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22DWESST0V2THPZXSSMD",
+          "platformKey": "gopay_finance_expensemanagement_gopayhomeshufflecardusers_text",
+          "semanticPath": "expense-management/gopay-home-shuffle-card-users/main/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Track expenses in real-time"
+    },
+    "gopay_finance_gopaydiary_gdrecap_gpcemptyalt1_text": {
+      "$description": "cp_01M3NX22G0ENN9K64HNKGWGYYF\nFinance › Gopay Diary › Gd Recap › Gpc Empty Alt 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22G0ENN9K64HNKGWGYYF",
+          "platformKey": "gopay_finance_gopaydiary_gdrecap_gpcemptyalt1_text",
+          "semanticPath": "gopay-diary/gd-recap/gpc-empty-alt-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "No Coins earned this month"
+    }
+  }
+}

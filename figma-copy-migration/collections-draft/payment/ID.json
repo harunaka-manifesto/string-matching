@@ -1,0 +1,1278 @@
+{
+  "payment": {
+    "gopay_payment_alternativeii_genericavailablepromoinfo_helper": {
+      "$description": "cp_01M3NX20KKE5QVH9M6PM0F4365\nPayment › Alternative Ii › Generic Available Promo Info › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KKE5QVH9M6PM0F4365",
+          "platformKey": "gopay_payment_alternativeii_genericavailablepromoinfo_helper",
+          "semanticPath": "alternative-ii/shared/generic-available-promo-info/helper",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "{n} promo tersedia buat metode ini"
+    },
+    "gopay_payment_alternativeii_pluralversion_text": {
+      "$description": "cp_01M3NX20KKFS1A0DC6QA6XTRBD\nPayment › Alternative Ii › Plural Version › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KKFS1A0DC6QA6XTRBD",
+          "platformKey": "gopay_payment_alternativeii_pluralversion_text",
+          "semanticPath": "alternative-ii/shared/plural-version/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "{n} promo tersedia buat metode ini"
+    },
+    "gopay_payment_appversion_defaultwidget_gopaytandcdisclaimer_disclaimer_2": {
+      "$description": "cp_01M3NX20KMEE48KY6R2B0W4YZ5\nPayment › App Version › Default Widget › Gopay T And C Disclaimer › Disclaimer\nNote: Bằng việc tiếp tục, bạn đã đồng ý với Điều khoản & Điều kiện của GoPay. gopay_paymentwidget_gopaydisclaimer_bycontinuing gopay_paymentwidget_gopaytncdisclaimer_tnc gopay_paymentwidget_gopaydisclaimer_and Bằng việc tiếp tục, bạn đã đồng ý với Điều khoản & Điều kiện của GoPay. gopay_paymentwidget_gopaydisclaimer_bycontinuing gopay_paymentwidget_gopaytncdisclaimer_tnc gopay_paymentwidget_gopaydisclaimer_and",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KMEE48KY6R2B0W4YZ5",
+          "platformKey": "gopay_payment_appversion_defaultwidget_gopaytandcdisclaimer_disclaimer_2",
+          "semanticPath": "app-version/default-widget/gopay-t-and-c-disclaimer/disclaimer-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "gopay_paymentwidget_gopaydisclaimer_bycontinuing\ngopay_paymentwidget_gopaytncdisclaimer_tnc\ngopay_paymentwidget_gopaydisclaimer_and"
+    },
+    "gopay_payment_checkregistrationstat_onboarding_checkprogress_cta": {
+      "$description": "cp_01M3NX20P2F93AP03ZQFCVAR2E\nPayment › Checkregistrationstat › Onboarding › Check Progress › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P2F93AP03ZQFCVAR2E",
+          "platformKey": "gopay_payment_checkregistrationstat_onboarding_checkprogress_cta",
+          "semanticPath": "checkregistrationstat/onboarding/check-progress/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Cek status pendaftaran"
+    },
+    "gopay_payment_dompetanaknamingexploration_changesnotsavedinfo_text_text": {
+      "$description": "cp_01M3NX20P8EJ6RQPM06BT5KHN2\nPayment › Dompet Anak Naming Exploration › Changes Not Saved Info › Text › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P8EJ6RQPM06BT5KHN2",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_changesnotsavedinfo_text_text",
+          "semanticPath": "dompet-anak-naming-exploration/changes-not-saved-info/text/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Perubahan belum tersimpan. Klik “Konfirmasi” untuk menerapkannya."
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_aboutchildswallet_title": {
+      "$description": "cp_01M3NX20P5EEEBKJTJMXQ4JS2F\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › About Childs Wallet › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P5EEEBKJTJMXQ4JS2F",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_aboutchildswallet_title",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/about-childs-wallet/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Tentang dompet anak"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_addchild_cta": {
+      "$description": "cp_01M3NX20P3FPCBYGVC7KCHJRHD\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Add Child › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P3FPCBYGVC7KCHJRHD",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_addchild_cta",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/add-child/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Daftarkan anak"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_balance_text": {
+      "$description": "cp_01M3NX20P3F83TMNCD9CDTBRFW\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Balance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P3F83TMNCD9CDTBRFW",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_balance_text",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/balance/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Saldo"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_cta": {
+      "$description": "cp_01M3NX20P4FF99EWS5BY7HXKTW\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P4FF99EWS5BY7HXKTW",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_cta",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/main/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Muat ulang"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_description": {
+      "$description": "cp_01M3NX20P4EF9T8KXA4JJ29QBT\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P4EF9T8KXA4JJ29QBT",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_description",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/main/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sedang mengkonfirmasi..."
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_description_2": {
+      "$description": "cp_01M3NX20P6EFC9H3HKGCDHSH9C\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P6EFC9H3HKGCDHSH9C",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_description_2",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/main/description-3",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dana program akan langsung disalurkan ke dompet anak; tidak perlu melakukan top up"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_description_3": {
+      "$description": "cp_01M3NX20P6F49V7A8HN9MJPY4F\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P6F49V7A8HN9MJPY4F",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_description_3",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/main/description-4",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dana akan dipotong otomatis, 3 hari sebelum pengantaran makanan."
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_description_4": {
+      "$description": "cp_01M3NX20P6FCPAP6KYNEKRN8WD\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P6FCPAP6KYNEKRN8WD",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_description_4",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/main/description-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Setiap anak memiliki dompetnya masing-masing. Dana tidak dapat dipindahkan dari satu dompet ke dompet lainnya."
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_edit_cta": {
+      "$description": "cp_01M3NX20P4ENMT9EP1CM8353FK\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Edit › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P4ENMT9EP1CM8353FK",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_edit_cta",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/edit/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Atur jadwal"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_mealschedule_title": {
+      "$description": "cp_01M3NX20P3E0C9DBRWNV74SB9M\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Meal Schedule › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P3E0C9DBRWNV74SB9M",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_mealschedule_title",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/meal-schedule/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Jadwal pengantaran makanan\nPeriode: {period}"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_nomealscheduled_text": {
+      "$description": "cp_01M3NX20P4E8SBA74WTPHKXF5A\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › No Meal Scheduled › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P4E8SBA74WTPHKXF5A",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_nomealscheduled_text",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/no-meal-scheduled/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sekolah tidak menjadwalkan pengantaran"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_opentoreschedule_description": {
+      "$description": "cp_01M3NX20P3FFZVF3T77NQQW153\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Open To Reschedule › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P3FFZVF3T77NQQW153",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_opentoreschedule_description",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/open-to-reschedule/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Silakan atur jadwal jika anak Anda akan absen dalam periode tersebut."
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_point1_title": {
+      "$description": "cp_01M3NX20P5FR7SKXGZTGJYYPWJ\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Point 1 › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P5FR7SKXGZTGJYYPWJ",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_point1_title",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/point-1/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Alokasi dompet"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_point2_title": {
+      "$description": "cp_01M3NX20P6EXJ9GW06AHNCN8TZ\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Point 2 › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P6EXJ9GW06AHNCN8TZ",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_point2_title",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/point-2/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Penyaluran dana"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_point3_title": {
+      "$description": "cp_01M3NX20P6FTTTMR0V6HSSJR4S\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Point 3 › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P6FTTTMR0V6HSSJR4S",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_point3_title",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/point-3/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Penggunaan dana"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_rejectedstat_text": {
+      "$description": "cp_01M3NX20P5E80VEMNYXY967KT5\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Rejected Stat › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P5E80VEMNYXY967KT5",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_rejectedstat_text",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/rejected-stat/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ditolak - ajukan ulang pendaftaran"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_schedulelock_text": {
+      "$description": "cp_01M3NX20P4ERJRAWRG5N2GRJDB\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Schedule Lock › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P4ERJRAWRG5N2GRJDB",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_schedulelock_text",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/schedule-lock/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Jadwal akan dikunci dalam {n} hari"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_schedulelocked_description": {
+      "$description": "cp_01M3NX20P3E8E8RPD0HFM2XTN3\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Schedule Locked › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P3E8E8RPD0HFM2XTN3",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_schedulelocked_description",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/schedule-locked/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Jadwal pengantaran sudah dikunci."
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_schedulemessage_description": {
+      "$description": "cp_01M3NX20P4E58R7CWQQ5ZP9F32\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Schedule Message › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P4E58R7CWQQ5ZP9F32",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_schedulemessage_description",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/schedule-message/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Silakan muat ulang untuk melihat jadwal pengantaran makanan."
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_title": {
+      "$description": "cp_01M3NX20P4F44960Y7F56JX53D\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P4F44960Y7F56JX53D",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_title",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Mengkonfirmasi jadwal pengantaran\nPeriode: {period}"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_transactionhistory_text": {
+      "$description": "cp_01M3NX20P3FC28EN5ZPHEXC8TS\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Transaction History › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P3FC28EN5ZPHEXC8TS",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_transactionhistory_text",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/transaction-history/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Riwayat transaksi"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_underreviewstat_text": {
+      "$description": "cp_01M3NX20P5EJK9556VF1KFXXHF\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Under Review Stat › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P5EJK9556VF1KFXXHF",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_underreviewstat_text",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/under-review-stat/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sedang dalam peninjauan"
+    },
+    "gopay_payment_dompetanaknamingexploration_childswalletlisting_walletname_label": {
+      "$description": "cp_01M3NX20P2FBGABB68XJWYDPF3\nPayment › Dompet Anak Naming Exploration › Childs Wallet Listing › Wallet Name › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P2FBGABB68XJWYDPF3",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_childswalletlisting_walletname_label",
+          "semanticPath": "dompet-anak-naming-exploration/childs-wallet-listing/wallet-name/label",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dompet anak"
+    },
+    "gopay_payment_dompetanaknamingexploration_editmealschedule_cta": {
+      "$description": "cp_01M3NX20P7EWZVPFVW0NZ6KW7S\nPayment › Dompet Anak Naming Exploration › Edit Meal Schedule › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P7EWZVPFVW0NZ6KW7S",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_editmealschedule_cta",
+          "semanticPath": "dompet-anak-naming-exploration/edit-meal-schedule/main/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Konfirmasi"
+    },
+    "gopay_payment_dompetanaknamingexploration_editmealschedule_description": {
+      "$description": "cp_01M3NX20P7EZMTQHKRJ9ZNBVBT\nPayment › Dompet Anak Naming Exploration › Edit Meal Schedule › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P7EZMTQHKRJ9ZNBVBT",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_editmealschedule_description",
+          "semanticPath": "dompet-anak-naming-exploration/edit-meal-schedule/main/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Hapus centang pada hari di mana anak akan absen."
+    },
+    "gopay_payment_dompetanaknamingexploration_editmealschedule_holidaystat_text": {
+      "$description": "cp_01M3NX20P7F5YTW8ATM3GG01JF\nPayment › Dompet Anak Naming Exploration › Edit Meal Schedule › Holiday Stat › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P7F5YTW8ATM3GG01JF",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_editmealschedule_holidaystat_text",
+          "semanticPath": "dompet-anak-naming-exploration/edit-meal-schedule/holiday-stat/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sekolah libur"
+    },
+    "gopay_payment_dompetanaknamingexploration_editmealschedule_nobalance_text": {
+      "$description": "cp_01M3NX20P7FAWT6412F666WGQH\nPayment › Dompet Anak Naming Exploration › Edit Meal Schedule › No Balance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P7FAWT6412F666WGQH",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_editmealschedule_nobalance_text",
+          "semanticPath": "dompet-anak-naming-exploration/edit-meal-schedule/no-balance/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Saldo habis"
+    },
+    "gopay_payment_dompetanaknamingexploration_editmealschedule_title": {
+      "$description": "cp_01M3NX20P6E14A9QR775M283BW\nPayment › Dompet Anak Naming Exploration › Edit Meal Schedule › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P6E14A9QR775M283BW",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_editmealschedule_title",
+          "semanticPath": "dompet-anak-naming-exploration/edit-meal-schedule/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Jadwal pengantaran makanan\nPeriode: {period}"
+    },
+    "gopay_payment_dompetanaknamingexploration_failedtoeditschedulecant_cta": {
+      "$description": "cp_01M3NX20P8EZNB67FH7HWK3ABP\nPayment › Dompet Anak Naming Exploration › Failed To Edit Schedule Cant › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P8EZNB67FH7HWK3ABP",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_failedtoeditschedulecant_cta",
+          "semanticPath": "dompet-anak-naming-exploration/failed-to-edit-schedule-cant/main/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, ngerti"
+    },
+    "gopay_payment_dompetanaknamingexploration_failedtoeditschedulecant_description": {
+      "$description": "cp_01M3NX20P8FQ9R2FZ9F6V3H97V\nPayment › Dompet Anak Naming Exploration › Failed To Edit Schedule Cant › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P8FQ9R2FZ9F6V3H97V",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_failedtoeditschedulecant_description",
+          "semanticPath": "dompet-anak-naming-exploration/failed-to-edit-schedule-cant/main/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Silakan atur pengubahan jadwal dari awal dan konfirmasi jika sudah selesai."
+    },
+    "gopay_payment_dompetanaknamingexploration_failedtoeditschedulecant_title": {
+      "$description": "cp_01M3NX20P8FB2RDN1FG23VJ0BV\nPayment › Dompet Anak Naming Exploration › Failed To Edit Schedule Cant › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P8FB2RDN1FG23VJ0BV",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_failedtoeditschedulecant_title",
+          "semanticPath": "dompet-anak-naming-exploration/failed-to-edit-schedule-cant/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Gagal mengubah jadwal"
+    },
+    "gopay_payment_dompetanaknamingexploration_failedtosavechangesretry_cta": {
+      "$description": "cp_01M3NX20P8EWMBR79T5Q628C6S\nPayment › Dompet Anak Naming Exploration › Failed To Save Changes Retry › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P8EWMBR79T5Q628C6S",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_failedtosavechangesretry_cta",
+          "semanticPath": "dompet-anak-naming-exploration/failed-to-save-changes-retry/main/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Refresh"
+    },
+    "gopay_payment_dompetanaknamingexploration_failedtosavechangesretry_description": {
+      "$description": "cp_01M3NX20P7F0VTCDSY5FKEDJ0W\nPayment › Dompet Anak Naming Exploration › Failed To Save Changes Retry › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P7F0VTCDSY5FKEDJ0W",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_failedtosavechangesretry_description",
+          "semanticPath": "dompet-anak-naming-exploration/failed-to-save-changes-retry/main/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ada kendala teknis. Silakan muat ulang untuk menerapkan perubahan jadwal."
+    },
+    "gopay_payment_dompetanaknamingexploration_failedtosavechangesretry_title": {
+      "$description": "cp_01M3NX20P7EJ2VCY0TA5EXG7CS\nPayment › Dompet Anak Naming Exploration › Failed To Save Changes Retry › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P7EJ2VCY0TA5EXG7CS",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_failedtosavechangesretry_title",
+          "semanticPath": "dompet-anak-naming-exploration/failed-to-save-changes-retry/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Gagal menyimpan perubahan"
+    },
+    "gopay_payment_dompetanaknamingexploration_homepage_cta": {
+      "$description": "cp_01M3NX20P0E0R984BSAH4N5C6D\nPayment › Dompet Anak Naming Exploration › Homepage › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P0E0R984BSAH4N5C6D",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_homepage_cta",
+          "semanticPath": "dompet-anak-naming-exploration/homepage/main/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Konfirmasi"
+    },
+    "gopay_payment_dompetanaknamingexploration_homepage_description": {
+      "$description": "cp_01M3NX20NZFYB9GDVRSNAXGE06\nPayment › Dompet Anak Naming Exploration › Homepage › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20NZFYB9GDVRSNAXGE06",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_homepage_description",
+          "semanticPath": "dompet-anak-naming-exploration/homepage/main/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Konfirmasi jadwal makan"
+    },
+    "gopay_payment_dompetanaknamingexploration_homepage_entrypointwalletorgpill_badge": {
+      "$description": "cp_01M3NX20NZEH5SWSKQYRGPS95S\nPayment › Dompet Anak Naming Exploration › Homepage › Entry Point Wallet Org Pill › Badge",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20NZEH5SWSKQYRGPS95S",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_homepage_entrypointwalletorgpill_badge",
+          "semanticPath": "dompet-anak-naming-exploration/homepage/entry-point-wallet-org-pill/badge",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Makan Bergizi Gratis"
+    },
+    "gopay_payment_dompetanaknamingexploration_homepage_gennie_title": {
+      "$description": "cp_01M3NX20NZEM7VVM42Y9YNAXFH\nPayment › Dompet Anak Naming Exploration › Homepage › Gennie › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20NZEM7VVM42Y9YNAXFH",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_homepage_gennie_title",
+          "semanticPath": "dompet-anak-naming-exploration/homepage/gennie/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Makan Bergizi Gratis"
+    },
+    "gopay_payment_dompetanaknamingexploration_money_category_text": {
+      "$description": "cp_01M3NX20P0FY0A6KE44QH4JTTQ\nPayment › Dompet Anak Naming Exploration › Money › Category › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P0FY0A6KE44QH4JTTQ",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_money_category_text",
+          "semanticPath": "dompet-anak-naming-exploration/money/category/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Makan Bergizi Gratis"
+    },
+    "gopay_payment_dompetanaknamingexploration_money_fundname_label": {
+      "$description": "cp_01M3NX20P0EVQ88GHHVGG1826X\nPayment › Dompet Anak Naming Exploration › Money › Fund Name › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P0EVQ88GHHVGG1826X",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_money_fundname_label",
+          "semanticPath": "dompet-anak-naming-exploration/money/fund-name/label",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dompet anak"
+    },
+    "gopay_payment_dompetanaknamingexploration_money_postregistration_description": {
+      "$description": "cp_01M3NX20P0EFESEGKMDRE03M3P\nPayment › Dompet Anak Naming Exploration › Money › Post Registration › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P0EFESEGKMDRE03M3P",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_money_postregistration_description",
+          "semanticPath": "dompet-anak-naming-exploration/money/post-registration/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dana pengantaran makanan anak"
+    },
+    "gopay_payment_dompetanaknamingexploration_money_preregistration_description": {
+      "$description": "cp_01M3NX20P0FXFA5J482MBG30V5\nPayment › Dompet Anak Naming Exploration › Money › Pre Registration › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P0FXFA5J482MBG30V5",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_money_preregistration_description",
+          "semanticPath": "dompet-anak-naming-exploration/money/pre-registration/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Daftarkan anak untuk mendapatkan dana"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_childregistration_text": {
+      "$description": "cp_01M3NX20P2FMXV634QMX402KRR\nPayment › Dompet Anak Naming Exploration › Onboarding › Child Registration › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P2FMXV634QMX402KRR",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_childregistration_text",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/child-registration/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Pendaftaran informasi anak berdasarkan Kartu Keluarga"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_dislaimer_text": {
+      "$description": "cp_01M3NX20P2FBKS7R0SD128PBQV\nPayment › Dompet Anak Naming Exploration › Onboarding › Dislaimer › Text\nNote: gopay_freemeal_consent_static gopay_freemeal_consent_tnc gopay_freemeal_consent_privacypolicy gopay_freemeal_consent_static gopay_freemeal_consent_tnc gopay_freemeal_consent_privacypolicy",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P2FBKS7R0SD128PBQV",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_dislaimer_text",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/dislaimer/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dengan menggunakan layanan ini, kamu menyetujui Syarat & Ketentuan dan Kebijakan Privasi GoPay"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_ktpverification_text": {
+      "$description": "cp_01M3NX20P1F0AAKSBYJ20N5VAS\nPayment › Dompet Anak Naming Exploration › Onboarding › Ktp Verification › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P1F0AAKSBYJ20N5VAS",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_ktpverification_text",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/ktp-verification/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Verifikasi identitas (e-KTP) & selfie"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_learnmore_cta": {
+      "$description": "cp_01M3NX20P1EDABZQP8QMGSCP08\nPayment › Dompet Anak Naming Exploration › Onboarding › Learn More › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P1EDABZQP8QMGSCP08",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_learnmore_cta",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/learn-more/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Lebih lanjut tentang program ini"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_point1_text": {
+      "$description": "cp_01M3NX20P1FJRBXB305C8E81AE\nPayment › Dompet Anak Naming Exploration › Onboarding › Point 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P1FJRBXB305C8E81AE",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_point1_text",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/point-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Daftarkan anak untuk mendapatkan dompet anak"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_point2_text": {
+      "$description": "cp_01M3NX20P1E60AAT1JS7DHP6J3\nPayment › Dompet Anak Naming Exploration › Onboarding › Point 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P1E60AAT1JS7DHP6J3",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_point2_text",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/point-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dana akan disalurkan secara otomatis ke dompet anak"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_point3_text": {
+      "$description": "cp_01M3NX20P1EYY88DQ4XMVM9J22\nPayment › Dompet Anak Naming Exploration › Onboarding › Point 3 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P1EYY88DQ4XMVM9J22",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_point3_text",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/point-3/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dana yang disalurkan hanya dapat digunakan untuk program ini"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_registrationprocess_title": {
+      "$description": "cp_01M3NX20P1FQVVN60PYVSGTEF4\nPayment › Dompet Anak Naming Exploration › Onboarding › Registration Process › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P1FQVVN60PYVSGTEF4",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_registrationprocess_title",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/registration-process/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Proses pendaftaran"
+    },
+    "gopay_payment_dompetanaknamingexploration_onboarding_title": {
+      "$description": "cp_01M3NX20P0ETK9GZ9MHEQ0DYE4\nPayment › Dompet Anak Naming Exploration › Onboarding › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P0ETK9GZ9MHEQ0DYE4",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_onboarding_title",
+          "semanticPath": "dompet-anak-naming-exploration/onboarding/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Makan Bergizi Gratis"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_1star_text": {
+      "$description": "cp_01M3NX20PBFGJVNS319SXXSRRS\nPayment › Dompet Anak Naming Exploration › Order Detail › 1 Star › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PBFGJVNS319SXXSRRS",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_1star_text",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/1-star/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Mengecewakan"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_2stars_text": {
+      "$description": "cp_01M3NX20PBEGA87ZD9N8FVFT3B\nPayment › Dompet Anak Naming Exploration › Order Detail › 2 Stars › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PBEGA87ZD9N8FVFT3B",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_2stars_text",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/2-stars/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Kurang memuaskan"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_3stars_text": {
+      "$description": "cp_01M3NX20PBES995ETQ5D2WNEE1\nPayment › Dompet Anak Naming Exploration › Order Detail › 3 Stars › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PBES995ETQ5D2WNEE1",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_3stars_text",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/3-stars/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Cukup oke"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_4stars_text": {
+      "$description": "cp_01M3NX20PBEV0THC2EZT54JBVB\nPayment › Dompet Anak Naming Exploration › Order Detail › 4 Stars › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PBEV0THC2EZT54JBVB",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_4stars_text",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/4-stars/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rasa enak, menu lengkap"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_5stars_text": {
+      "$description": "cp_01M3NX20PBENMTWFMK57BFTTAE\nPayment › Dompet Anak Naming Exploration › Order Detail › 5 Stars › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PBENMTWFMK57BFTTAE",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_5stars_text",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/5-stars/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sangat memuaskan!"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_additionalnote_helper": {
+      "$description": "cp_01M3NX20PBEQXB1HMY4W144HCJ\nPayment › Dompet Anak Naming Exploration › Order Detail › Additional Note › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PBEQXB1HMY4W144HCJ",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_additionalnote_helper",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/additional-note/helper",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ceritakan penilaianmu lebih lanjut"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_placeholder": {
+      "$description": "cp_01M3NX20PBF9XBG52J9GRBPM4R\nPayment › Dompet Anak Naming Exploration › Order Detail › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PBF9XBG52J9GRBPM4R",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_placeholder",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/main/placeholder",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ketik di sini"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_ratingcue_text": {
+      "$description": "cp_01M3NX20PAFCRR69574F2PFKH6\nPayment › Dompet Anak Naming Exploration › Order Detail › Rating Cue › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PAFCRR69574F2PFKH6",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_ratingcue_text",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/rating-cue/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Beri nilai untuk makanan anak"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_ratinginfo_helper": {
+      "$description": "cp_01M3NX20PAF4QV5YBV1BNWGNK4\nPayment › Dompet Anak Naming Exploration › Order Detail › Rating Info › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PAF4QV5YBV1BNWGNK4",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_ratinginfo_helper",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/rating-info/helper",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "(1 mengecewakan, 5 memuaskan)"
+    },
+    "gopay_payment_dompetanaknamingexploration_orderdetail_title": {
+      "$description": "cp_01M3NX20PAEEWV059C0FX9YT7E\nPayment › Dompet Anak Naming Exploration › Order Detail › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PAEEWV059C0FX9YT7E",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_orderdetail_title",
+          "semanticPath": "dompet-anak-naming-exploration/order-detail/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Bagaimana kualitas makanan yang diantar?"
+    },
+    "gopay_payment_dompetanaknamingexploration_transactionhistory_deliverydate_text": {
+      "$description": "cp_01M3NX20PAEGZSRBWKKJX4XJ4M\nPayment › Dompet Anak Naming Exploration › Transaction History › Delivery Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PAEGZSRBWKKJX4XJ4M",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_transactionhistory_deliverydate_text",
+          "semanticPath": "dompet-anak-naming-exploration/transaction-history/delivery-date/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengantaran: {day}, {date}"
+    },
+    "gopay_payment_dompetanaknamingexploration_transactionhistory_moneyin_title": {
+      "$description": "cp_01M3NX20P9FFPRRKBQ5WR1DY73\nPayment › Dompet Anak Naming Exploration › Transaction History › Money In › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P9FFPRRKBQ5WR1DY73",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_transactionhistory_moneyin_title",
+          "semanticPath": "dompet-anak-naming-exploration/transaction-history/money-in/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Alokasi dana - Makan Bergizi Gratis"
+    },
+    "gopay_payment_dompetanaknamingexploration_transactionhistory_moneyout_title": {
+      "$description": "cp_01M3NX20P9FGTBQYEBMTA7P1W2\nPayment › Dompet Anak Naming Exploration › Transaction History › Money Out › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P9FGTBQYEBMTA7P1W2",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_transactionhistory_moneyout_title",
+          "semanticPath": "dompet-anak-naming-exploration/transaction-history/money-out/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Pengantaran makanan - Makan Bergizi Gratis"
+    },
+    "gopay_payment_dompetanaknamingexploration_transactionhistory_paymethod_text": {
+      "$description": "cp_01M3NX20PAEKB8EJFM5B97XCDZ\nPayment › Dompet Anak Naming Exploration › Transaction History › Pay Method › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PAEKB8EJFM5B97XCDZ",
+          "platformKey": "gopay_payment_dompetanaknamingexploration_transactionhistory_paymethod_text",
+          "semanticPath": "dompet-anak-naming-exploration/transaction-history/pay-method/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dompet anak"
+    },
+    "gopay_payment_editschedule_editmealschedule_title": {
+      "$description": "cp_01M3NX20P6F0MTZ3CWE300QY5V\nPayment › Editschedule › Edit Meal Schedule › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P6F0MTZ3CWE300QY5V",
+          "platformKey": "gopay_payment_editschedule_editmealschedule_title",
+          "semanticPath": "editschedule/edit-meal-schedule/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Edit jadwal pengantaran"
+    },
+    "gopay_payment_enterpinvar1_description": {
+      "$description": "cp_01M3NX20HCENVBFRS2FPYX3HXB\nPayment › Enter Pin Var 1 › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HCENVBFRS2FPYX3HXB",
+          "platformKey": "gopay_payment_enterpinvar1_description",
+          "semanticPath": "enter-pin-var-1/shared/main/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "PIN kamu dibutuhin buat menyelesaikan proses pembayaran."
+    },
+    "gopay_payment_enterpinvar1_forgotpin_text": {
+      "$description": "cp_01M3NX20HCFSWR9B2REAKWNDWH\nPayment › Enter Pin Var 1 › Forgot Pin › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HCFSWR9B2REAKWNDWH",
+          "platformKey": "gopay_payment_enterpinvar1_forgotpin_text",
+          "semanticPath": "enter-pin-var-1/shared/forgot-pin/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Lupa PIN"
+    },
+    "gopay_payment_enterpinvar1_title": {
+      "$description": "cp_01M3NX20HCFY8V4ABX1VHBX4DV\nPayment › Enter Pin Var 1 › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HCFY8V4ABX1VHBX4DV",
+          "platformKey": "gopay_payment_enterpinvar1_title",
+          "semanticPath": "enter-pin-var-1/shared/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Masukkin PIN GoPay"
+    },
+    "gopay_payment_enterpinvar2_enterpin_description": {
+      "$description": "cp_01M3NX20HDE7NVQEFCM291PTYV\nPayment › Enter Pin Var 2 › Enter Pin › Description\nNote: Your PIN is needed to complete the payment process. PIN kamu dibutuhin buat menyelesaikan proses pembayaran ini. Your PIN is needed to complete the payment process.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HDE7NVQEFCM291PTYV",
+          "platformKey": "gopay_payment_enterpinvar2_enterpin_description",
+          "semanticPath": "enter-pin-var-2/enter-pin/main/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Silakan ketik 6 digit PIN kamu buat lanjut."
+    },
+    "gopay_payment_enterpinvar2_enterpin_forgetpin_text": {
+      "$description": "cp_01M3NX20HDEX7BJK8SVXTCB4Q7\nPayment › Enter Pin Var 2 › Enter Pin › Forget Pin › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HDEX7BJK8SVXTCB4Q7",
+          "platformKey": "gopay_payment_enterpinvar2_enterpin_forgetpin_text",
+          "semanticPath": "enter-pin-var-2/enter-pin/forget-pin/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Lupa PIN"
+    },
+    "gopay_payment_enterpinvar2_enterpin_inputpin_title": {
+      "$description": "cp_01M3NX20HDF538P7E8BXEX9NWK\nPayment › Enter Pin Var 2 › Enter Pin › Input Pin › Title\nNote: Your PIN PIN kamu Your PIN",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HDF538P7E8BXEX9NWK",
+          "platformKey": "gopay_payment_enterpinvar2_enterpin_inputpin_title",
+          "semanticPath": "enter-pin-var-2/enter-pin/input-pin/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "PIN"
+    },
+    "gopay_payment_enterpinvar2_enterpin_message_description": {
+      "$description": "cp_01M3NX20HDFVEVZHAJZFVHSMS0\nPayment › Enter Pin Var 2 › Enter Pin › Message › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HDFVEVZHAJZFVHSMS0",
+          "platformKey": "gopay_payment_enterpinvar2_enterpin_message_description",
+          "semanticPath": "enter-pin-var-2/enter-pin/message/description",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "PIN-nya salah. Coba lagi, ya."
+    },
+    "gopay_payment_enterpinvar2_enterpin_pin_text": {
+      "$description": "cp_01M3NX20HDFRHAXQGFC98DEQZS\nPayment › Enter Pin Var 2 › Enter Pin › Pin › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HDFRHAXQGFC98DEQZS",
+          "platformKey": "gopay_payment_enterpinvar2_enterpin_pin_text",
+          "semanticPath": "enter-pin-var-2/enter-pin/pin/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "xxxxxx"
+    },
+    "gopay_payment_enterpinvar2_enterpin_title": {
+      "$description": "cp_01M3NX20HCF5ETFD64R39JSAFV\nPayment › Enter Pin Var 2 › Enter Pin › Title\nNote: Enter GoPay PIN Masukkan PIN GoPay Enter GoPay PIN",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HCF5ETFD64R39JSAFV",
+          "platformKey": "gopay_payment_enterpinvar2_enterpin_title",
+          "semanticPath": "enter-pin-var-2/enter-pin/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Masukkin PIN GoPay"
+    },
+    "gopay_payment_landingpage_childswalletlisting_title": {
+      "$description": "cp_01M3NX20P2F308R8348HKJP7SQ\nPayment › Landingpage › Childs Wallet Listing › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P2F308R8348HKJP7SQ",
+          "platformKey": "gopay_payment_landingpage_childswalletlisting_title",
+          "semanticPath": "landingpage/childs-wallet-listing/main/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Makan Bergizi Gratis"
+    },
+    "gopay_payment_manualpinredirection_text_23": {
+      "$description": "cp_01M3NX20RWEJ1RPMNBBVPV5RE2\nPayment › Manual Pin Redirection › Text\nNote: dd month yyyy & 24 hours, hh:mm lokalise dd month yyyy & 24 hours, hh:mm lokalise",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20RWEJ1RPMNBBVPV5RE2",
+          "platformKey": "gopay_payment_manualpinredirection_text_23",
+          "semanticPath": "manual-pin-redirection/shared/main/text-dd-month-yyyy-24",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "lokalise"
+    },
+    "gopay_payment_merchantaccountintegration_gopayaccountsafetylinkedapps_alt1_cta": {
+      "$description": "cp_01M3NX20GTF78V3QTF5AHD0CMS\nPayment › Merchant Account Integration › Gopay Accountsafety Linkedapps › Alt 1 › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20GTF78V3QTF5AHD0CMS",
+          "platformKey": "gopay_payment_merchantaccountintegration_gopayaccountsafetylinkedapps_alt1_cta",
+          "semanticPath": "merchant-account-integration/gopay-accountsafety-linkedapps/alt-1/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ok, got it"
+    },
+    "gopay_payment_merchantaccountintegration_gopayaccountsafetylinkedapps_alt2_cta": {
+      "$description": "cp_01M3NX20GTFY8R0R8VJ5D484GH\nPayment › Merchant Account Integration › Gopay Accountsafety Linkedapps › Alt 2 › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20GTFY8R0R8VJ5D484GH",
+          "platformKey": "gopay_payment_merchantaccountintegration_gopayaccountsafetylinkedapps_alt2_cta",
+          "semanticPath": "merchant-account-integration/gopay-accountsafety-linkedapps/alt-2/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ke rekan usaha"
+    },
+    "gopay_payment_mpm_galleryaccess_cta": {
+      "$description": "cp_01M3NX20FMF98BSD09G034VH0Y\nPayment › Mpm › Gallery Access › Cta\nNote: Yes, continue Oke, lanjut Yes, continue Oke, lanjut",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FMF98BSD09G034VH0Y",
+          "platformKey": "gopay_payment_mpm_galleryaccess_cta",
+          "semanticPath": "mpm/gallery-access/main/cta-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Oke, lanjut"
+    },
+    "gopay_payment_mpm_galleryaccess_description_2": {
+      "$description": "cp_01M3NX20FMFVGVZHCM5FG0ARFF\nPayment › Mpm › Gallery Access › Description\nNote: So you can select which photo you want to add as your profile photo. Biar kamu bisa pilih foto mana yang kamu ingin jadikan foto profil. So you can select which photo you want to add as your profile photo. Biar kamu bisa pilih foto mana yang kamu ingin jadikan foto profil.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FMFVGVZHCM5FG0ARFF",
+          "platformKey": "gopay_payment_mpm_galleryaccess_description_2",
+          "semanticPath": "mpm/gallery-access/main/description-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Biar kamu bisa pilih foto mana yang kamu ingin jadikan foto profil."
+    },
+    "gopay_payment_mpm_galleryaccess_title": {
+      "$description": "cp_01M3NX20FKE6AT9XJF73RRS7E3\nPayment › Mpm › Gallery Access › Title\nNote: Allow us to access your gallery? Bolehkah kami akses galerimu? Allow us to access your gallery? Bolehkah kami akses galerimu?",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FKE6AT9XJF73RRS7E3",
+          "platformKey": "gopay_payment_mpm_galleryaccess_title",
+          "semanticPath": "mpm/gallery-access/main/title-2",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Bolehkah kami akses galerimu?"
+    },
+    "gopay_payment_promo_get_cashbackrp_text": {
+      "$description": "cp_01M3NX20KHEGMTR0M3XKGTJSAT\nPayment › Promo › Get › Cashback Rp › Text\nNote: Nhận hoàn tiền Rp%s",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KHEGMTR0M3XKGTJSAT",
+          "platformKey": "gopay_payment_promo_get_cashbackrp_text",
+          "semanticPath": "promo/get/cashback-rp/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Rp{amount} cashback tersedia"
+    },
+    "gopay_payment_promo_get_discountrp_text": {
+      "$description": "cp_01M3NX20KHFYM8CSHE0FGVVY7C\nPayment › Promo › Get › Discount Rp › Text\nNote: Tổng ưu đãi cho đơn hàng: Rp%s",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KHFYM8CSHE0FGVVY7C",
+          "platformKey": "gopay_payment_promo_get_discountrp_text",
+          "semanticPath": "promo/get/discount-rp/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Dapetin diskon Rp{amount}"
+    },
+    "gopay_payment_promo_total_savingrp_text": {
+      "$description": "cp_01M3NX20KHFA68Q6KYB6TWP6B8\nPayment › Promo › Total › Saving Rp › Text\nNote: Tiết kiệm: Rp%s",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KHFA68Q6KYB6TWP6B8",
+          "platformKey": "gopay_payment_promo_total_savingrp_text",
+          "semanticPath": "promo/total/saving-rp/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Total hemat: Rp{amount}"
+    },
+    "gopay_payment_register_onboarding_register_cta": {
+      "$description": "cp_01M3NX20P2ES6TF0BX74GV6EGB\nPayment › Register › Onboarding › Register › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P2ES6TF0BX74GV6EGB",
+          "platformKey": "gopay_payment_register_onboarding_register_cta",
+          "semanticPath": "register/onboarding/register/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Daftar"
+    },
+    "gopay_payment_rejectionreason_reason1_text": {
+      "$description": "cp_01M3NX20P9E0X9YR9J3SSSXA8A\nPayment › Rejectionreason › Reason1 › Reason 1 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P9E0X9YR9J3SSSXA8A",
+          "platformKey": "gopay_payment_rejectionreason_reason1_text",
+          "semanticPath": "rejectionreason/reason1/reason-1/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Identitas anakmu tidak terdaftar di sekolah yang berpartisipasi dalam program ini."
+    },
+    "gopay_payment_rejectionreason_reason2_text": {
+      "$description": "cp_01M3NX20P9ECGT8QKHB5CY794N\nPayment › Rejectionreason › Reason2 › Reason 2 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P9ECGT8QKHB5CY794N",
+          "platformKey": "gopay_payment_rejectionreason_reason2_text",
+          "semanticPath": "rejectionreason/reason2/reason-2/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Sekolah anakmu tidak sesuai dengan data. Pastikan untuk memasukkan nama sekolah di mana anakmu terdaftar saat ini."
+    },
+    "gopay_payment_rejectionreason_reason3_text": {
+      "$description": "cp_01M3NX20P9FTJ8PGFJ2ZH5WT2M\nPayment › Rejectionreason › Reason3 › Reason 3 › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P9FTJ8PGFJ2ZH5WT2M",
+          "platformKey": "gopay_payment_rejectionreason_reason3_text",
+          "semanticPath": "rejectionreason/reason3/reason-3/text",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Kelas anakmu tidak sesuai dengan data. Pastikan untuk memasukkan kelas sesuai dengan tingkat pendidikan anakmu saat ini."
+    },
+    "gopay_payment_rejectionreason_rejection_stat_title": {
+      "$description": "cp_01M3NX20P8E699APPH2R3N411D\nPayment › Rejectionreason › Rejection › Stat › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P8E699APPH2R3N411D",
+          "platformKey": "gopay_payment_rejectionreason_rejection_stat_title",
+          "semanticPath": "rejectionreason/rejection/stat/title",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Pendaftaran kamu belum berhasil"
+    },
+    "gopay_payment_resubmitapplication_rejection_cta": {
+      "$description": "cp_01M3NX20P9FA1TXBZ7G00B0TW0\nPayment › Resubmitapplication › Rejection › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P9FA1TXBZ7G00B0TW0",
+          "platformKey": "gopay_payment_resubmitapplication_rejection_cta",
+          "semanticPath": "resubmitapplication/rejection/main/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Ajukan ulang"
+    },
+    "gopay_payment_showless_childswalletlisting_showless_cta": {
+      "$description": "cp_01M3NX20P5EEWT0MJ28RK1WEMN\nPayment › Showless › Childs Wallet Listing › Show Less › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P5EEWT0MJ28RK1WEMN",
+          "platformKey": "gopay_payment_showless_childswalletlisting_showless_cta",
+          "semanticPath": "showless/childs-wallet-listing/show-less/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Tutup"
+    },
+    "gopay_payment_showmore_childswalletlisting_showmore_cta": {
+      "$description": "cp_01M3NX20P5FPS9VRH55F9GNQQH\nPayment › Showmore › Childs Wallet Listing › Show More › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20P5FPS9VRH55F9GNQQH",
+          "platformKey": "gopay_payment_showmore_childswalletlisting_showmore_cta",
+          "semanticPath": "showmore/childs-wallet-listing/show-more/cta",
+          "status": "draft"
+        }
+      },
+      "$type": "string",
+      "$value": "Lihat dompet lainnya"
+    }
+  }
+}

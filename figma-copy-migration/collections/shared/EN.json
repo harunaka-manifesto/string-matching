@@ -1,0 +1,4931 @@
+{
+  "shared": {
+    "gopay_coins_paymentlisting_dialogue_unavailablemerchant_cta": {
+      "$description": "cp_01M3NX20KZFSH9SE0HJWA8C8AC\nShared › Paymentlisting › Dialog › Unavailablemerchant › Cta\nNote: Đã rõ Đã rõ",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KZFSH9SE0HJWA8C8AC",
+          "platformKey": "gopay_coins_paymentlisting_dialogue_unavailablemerchant_cta",
+          "semanticPath": "paymentlisting/dialog/unavailablemerchant/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Got it"
+    },
+    "gopay_coins_paymentlisting_dialogue_unavailablemerchant_description": {
+      "$description": "cp_01M3NX20KZEKP9NKRGMN03K1CS\nShared › Paymentlisting › Dialog › Unavailablemerchant › Description\nNote: Không sao, bạn vẫn có thể sử dụng các hình thức thanh toán khác. Không sao, bạn vẫn có thể sử dụng các hình thức thanh toán khác.",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KZEKP9NKRGMN03K1CS",
+          "platformKey": "gopay_coins_paymentlisting_dialogue_unavailablemerchant_description",
+          "semanticPath": "paymentlisting/dialog/unavailablemerchant/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Worry not, you can still continue your payment using other method."
+    },
+    "gopay_coins_paymentlisting_dialogue_unavailablemerchant_title": {
+      "$description": "cp_01M3NX20KYFV5SP4KGH458MGBQ\nShared › Paymentlisting › Dialog › Unavailablemerchant › Title\nNote: GoPay Coins hiện chưa áp dụng tại cửa hàng này GoPay Coins hiện chưa áp dụng tại cửa hàng này",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KYFV5SP4KGH458MGBQ",
+          "platformKey": "gopay_coins_paymentlisting_dialogue_unavailablemerchant_title",
+          "semanticPath": "paymentlisting/dialog/unavailablemerchant/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Coins are not available yet for this merchant"
+    },
+    "gopay_generic_error_dialoguecard_noconnection_gotosettings_cta": {
+      "$description": "cp_01M3NX20J9FBGTD0NW1XTWA9VV\nShared › Error › Gotosettings › Dialog Noconnection › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20J9FBGTD0NW1XTWA9VV",
+          "platformKey": "gopay_generic_error_dialoguecard_noconnection_gotosettings_cta",
+          "semanticPath": "error/gotosettings/dialog-noconnection/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Go to Settings"
+    },
+    "gopay_generic_error_dialoguecard_noconnection_refresh_cta": {
+      "$description": "cp_01M3NX20J9E3J8WDE483XYH2ZR\nShared › Error › Refresh › Dialog Noconnection › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20J9E3J8WDE483XYH2ZR",
+          "platformKey": "gopay_generic_error_dialoguecard_noconnection_refresh_cta",
+          "semanticPath": "error/refresh/dialog-noconnection/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Refresh"
+    },
+    "gopay_generic_error_dialoguecard_noconnection_title": {
+      "$description": "cp_01M3NX20J9FMA97F0RC1S8PNFC\nShared › Error › Noconnection › Dialog › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20J9FMA97F0RC1S8PNFC",
+          "platformKey": "gopay_generic_error_dialoguecard_noconnection_title",
+          "semanticPath": "error/noconnection/dialog/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "You seem to be offline"
+    },
+    "gopay_generic_error_pagination_connectionerror_description": {
+      "$description": "cp_01M3NX20V3ECX9TZ9NB1CT7PYF\nShared › Error › Connectionerror › Pagination › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V3ECX9TZ9NB1CT7PYF",
+          "platformKey": "gopay_generic_error_pagination_connectionerror_description",
+          "semanticPath": "error/connectionerror/pagination/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Check your internet connection on Settings or try to refresh the page."
+    },
+    "gopay_generic_error_pagination_connectionerror_refresh_cta": {
+      "$description": "cp_01M3NX20V4EQTTE3WCMCA4ZEZW\nShared › Error › Refresh › Pagination Connectionerror › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V4EQTTE3WCMCA4ZEZW",
+          "platformKey": "gopay_generic_error_pagination_connectionerror_refresh_cta",
+          "semanticPath": "error/refresh/pagination-connectionerror/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Refresh"
+    },
+    "gopay_generic_error_pagination_connectionerror_settings_cta": {
+      "$description": "cp_01M3NX20V3E77AE1EGZVT326JY\nShared › Error › Settings › Pagination Connectionerror › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V3E77AE1EGZVT326JY",
+          "platformKey": "gopay_generic_error_pagination_connectionerror_settings_cta",
+          "semanticPath": "error/settings/pagination-connectionerror/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Go to Settings"
+    },
+    "gopay_generic_error_pagination_connectionerror_title": {
+      "$description": "cp_01M3NX20V3F89TYNVBN3PFJ54J\nShared › Error › Connectionerror › Pagination › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V3F89TYNVBN3PFJ54J",
+          "platformKey": "gopay_generic_error_pagination_connectionerror_title",
+          "semanticPath": "error/connectionerror/pagination/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "You seem to be offline"
+    },
+    "gopay_generic_error_pagination_servererror_cta": {
+      "$description": "cp_01M3NX20V3FYAS7JCSQZWW04ZD\nShared › Error › Server Error › Pagination › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V3FYAS7JCSQZWW04ZD",
+          "platformKey": "gopay_generic_error_pagination_servererror_cta",
+          "semanticPath": "error/server-error/pagination/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Refresh"
+    },
+    "gopay_generic_error_pagination_servererror_description": {
+      "$description": "cp_01M3NX20V3FPGVD303861VG1AA\nShared › Error › Server Error › Pagination › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V3FPGVD303861VG1AA",
+          "platformKey": "gopay_generic_error_pagination_servererror_description",
+          "semanticPath": "error/server-error/pagination/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "We're working on it. Please try again after a few minutes."
+    },
+    "gopay_generic_error_pagination_servererror_title": {
+      "$description": "cp_01M3NX20V3FWJV1MWRS7SB8M0C\nShared › Error › Server Error › Pagination › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V3FWJV1MWRS7SB8M0C",
+          "platformKey": "gopay_generic_error_pagination_servererror_title",
+          "semanticPath": "error/server-error/pagination/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "There's a technical error"
+    },
+    "gopay_promotion_promo_detail_expiry_date": {
+      "$description": "cp_01M3NX20HHFAAAVG51JWYFGR16\nShared › Promo › Detail › Expiry Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HHFAAAVG51JWYFGR16",
+          "platformKey": "gopay_promotion_promo_detail_expiry_date",
+          "semanticPath": "promo/detail/expiry-date/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Valid until {expiry_date}"
+    },
+    "gopay_promotion_widget_promolisting_actualsaving_coins": {
+      "$description": "cp_01M3NX20HGF7GSP66WTM6D235T\nShared › Widget › Promolisting › Actualsaving Coins › Value",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HGF7GSP66WTM6D235T",
+          "platformKey": "gopay_promotion_widget_promolisting_actualsaving_coins",
+          "semanticPath": "widget/promolisting/actualsaving-coins/value",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "You'll get {cashback_amount} GoPay Coins."
+    },
+    "gopay_promotion_widget_promolisting_actualsaving_gopay": {
+      "$description": "cp_01M3NX20HHFG18CVZGA6B0K3M5\nShared › Widget › Promolisting › Actualsaving Gopay › Value",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HHFG18CVZGA6B0K3M5",
+          "platformKey": "gopay_promotion_widget_promolisting_actualsaving_gopay",
+          "semanticPath": "widget/promolisting/actualsaving-gopay/value",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "You'll get Rp{cashback_amount} cashback."
+    },
+    "gopay_promotion_widget_promolisting_selectpromo_description": {
+      "$description": "cp_01M3NX20HGE8HRZ42E4NGB6M9Z\nShared › Widget › Promolisting › Selectpromo › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HGE8HRZ42E4NGB6M9Z",
+          "platformKey": "gopay_promotion_widget_promolisting_selectpromo_description",
+          "semanticPath": "widget/promolisting/selectpromo/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Spend less with available promos below"
+    },
+    "gopay_promotion_widget_promolisting_selectpromo_title": {
+      "$description": "cp_01M3NX20HGFD59801S3ZJRFM8B\nShared › Widget › Promolisting › Selectpromo › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HGFD59801S3ZJRFM8B",
+          "platformKey": "gopay_promotion_widget_promolisting_selectpromo_title",
+          "semanticPath": "widget/promolisting/selectpromo/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Select promo"
+    },
+    "gopay_qr_codeexpires_title": {
+      "$description": "cp_01M3NX20G1EG8BTW3056PDPJBJ\nShared › Codeexpires › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20G1EG8BTW3056PDPJBJ",
+          "platformKey": "gopay_qr_codeexpires_title",
+          "semanticPath": "codeexpires/shared/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Code expires in"
+    },
+    "gopay_qr_renewcode_cta": {
+      "$description": "cp_01M3NX20G2ESEV9VB77VS98183\nShared › Renewcode › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20G2ESEV9VB77VS98183",
+          "platformKey": "gopay_qr_renewcode_cta",
+          "semanticPath": "renewcode/shared/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Renew"
+    },
+    "gopay_shared_accidentaldeath_text": {
+      "$description": "cp_01M3NX206AFD19RYJT0812YXA7\nShared › Common › Accidental Death › Text\nNote: Rp 10.000.000",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206AFD19RYJT0812YXA7",
+          "platformKey": "gopay_shared_accidentaldeath_text",
+          "semanticPath": "common/accidental-death/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Accidental death"
+    },
+    "gopay_shared_activate_cta": {
+      "$description": "cp_01M3NX202EEEQ8AENAK3D0AHK8\nShared › Common › Activate › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202EEEQ8AENAK3D0AHK8",
+          "platformKey": "gopay_shared_activate_cta",
+          "semanticPath": "common/activate/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Activate"
+    },
+    "gopay_shared_activateautosave_text": {
+      "$description": "cp_01M3NX22WEFB2V5SM6EGJ4NAJM\nShared › Common › Activate Auto Save › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22WEFB2V5SM6EGJ4NAJM",
+          "platformKey": "gopay_shared_activateautosave_text",
+          "semanticPath": "common/activate-auto-save/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Activate auto save"
+    },
+    "gopay_shared_activatenow_cta": {
+      "$description": "cp_01M3NX203YFFRRJ0T1GZP48DPW\nShared › Common › Activate Now › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203YFFRRJ0T1GZP48DPW",
+          "platformKey": "gopay_shared_activatenow_cta",
+          "semanticPath": "common/activate-now/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Activate now"
+    },
+    "gopay_shared_activatesimpanan_text": {
+      "$description": "cp_01M3NX2028FYJRWX5PNGD1ZH9H\nShared › Common › Activate Simpanan › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028FYJRWX5PNGD1ZH9H",
+          "platformKey": "gopay_shared_activatesimpanan_text",
+          "semanticPath": "common/activate-simpanan/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Activate Simpanan"
+    },
+    "gopay_shared_activation_text": {
+      "$description": "cp_01M3NX206AE2GVRJJSG62WCYED\nShared › Common › Activation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206AE2GVRJJSG62WCYED",
+          "platformKey": "gopay_shared_activation_text",
+          "semanticPath": "common/activation/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Activation"
+    },
+    "gopay_shared_active_label": {
+      "$description": "cp_01M3NX202KEC8VAQNMYZF29EYA\nShared › Common › Active › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202KEC8VAQNMYZF29EYA",
+          "platformKey": "gopay_shared_active_label",
+          "semanticPath": "common/active/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Active"
+    },
+    "gopay_shared_activephonenumber_text": {
+      "$description": "cp_01M3NX204MFCZR7NV9J30HMG0E\nShared › Common › Active Phone Number › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204MFCZR7NV9J30HMG0E",
+          "platformKey": "gopay_shared_activephonenumber_text",
+          "semanticPath": "common/active-phone-number/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Active phone number"
+    },
+    "gopay_shared_addedto_text": {
+      "$description": "cp_01M3NX2029E4Y87SWV9KX4668Z\nShared › Common › Added To › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029E4Y87SWV9KX4668Z",
+          "platformKey": "gopay_shared_addedto_text",
+          "semanticPath": "common/added-to/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Added to"
+    },
+    "gopay_shared_addmember_cta": {
+      "$description": "cp_01M3NX213YEGDBJYMVJTDPVM1M\nShared › Common › Add Member › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213YEGDBJYMVJTDPVM1M",
+          "platformKey": "gopay_shared_addmember_cta",
+          "semanticPath": "common/add-member/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Add member"
+    },
+    "gopay_shared_addnote_title": {
+      "$description": "cp_01M3NX213RE2M8JEZDM7S9GZBM\nShared › Common › Add Note › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213RE2M8JEZDM7S9GZBM",
+          "platformKey": "gopay_shared_addnote_title",
+          "semanticPath": "common/add-note/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Add note"
+    },
+    "gopay_shared_adjustamount_cta": {
+      "$description": "cp_01M3NX22KSFSDAWTD9WP24QWXE\nShared › Common › Adjust Amount › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22KSFSDAWTD9WP24QWXE",
+          "platformKey": "gopay_shared_adjustamount_cta",
+          "semanticPath": "common/adjust-amount/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Adjust amount"
+    },
+    "gopay_shared_adminfee_title": {
+      "$description": "cp_01M3NX2029E3FBVS28GNZKTPP4\nShared › Common › Admin Fee › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029E3FBVS28GNZKTPP4",
+          "platformKey": "gopay_shared_adminfee_title",
+          "semanticPath": "common/admin-fee/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Admin fee"
+    },
+    "gopay_shared_afterpurchase_text": {
+      "$description": "cp_01M3NX206AEC59Y9292MBDG7X3\nShared › Common › After Purchase › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206AEC59Y9292MBDG7X3",
+          "platformKey": "gopay_shared_afterpurchase_text",
+          "semanticPath": "common/after-purchase/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "after purchase"
+    },
+    "gopay_shared_all_tab": {
+      "$description": "cp_01M3NX202BEQA8DFPJ3P29S4VP\nShared › Common › All › Tab",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202BEQA8DFPJ3P29S4VP",
+          "platformKey": "gopay_shared_all_tab",
+          "semanticPath": "common/all/main/tab",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "All"
+    },
+    "gopay_shared_allow_ctasecondary": {
+      "$description": "cp_01M3NX2029E3CVQ364XAF8QJ92\nShared › Common › Allow › Cta Secondary",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029E3CVQ364XAF8QJ92",
+          "platformKey": "gopay_shared_allow_ctasecondary",
+          "semanticPath": "common/allow/main/cta-secondary",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Allow"
+    },
+    "gopay_shared_andthatsnottheonlybenefit_text": {
+      "$description": "cp_01M3NX21HVFFS8V5BYFDM8JB26\nShared › Common › And That S Not The Only Benefit › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21HVFFS8V5BYFDM8JB26",
+          "platformKey": "gopay_shared_andthatsnottheonlybenefit_text",
+          "semanticPath": "common/and-that-s-not-the-only-benefit/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "And that’s not the only benefit 🤩"
+    },
+    "gopay_shared_apply_cta": {
+      "$description": "cp_01M3NX20W2FAJTRVK62YMVFP3N\nShared › Common › Apply › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20W2FAJTRVK62YMVFP3N",
+          "platformKey": "gopay_shared_apply_cta",
+          "semanticPath": "common/apply/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Apply"
+    },
+    "gopay_shared_applychanges_cta": {
+      "$description": "cp_01M3NX2149FZJA05XBKKXGY9D9\nShared › Common › Apply Changes › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2149FZJA05XBKKXGY9D9",
+          "platformKey": "gopay_shared_applychanges_cta",
+          "semanticPath": "common/apply-changes/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Apply changes"
+    },
+    "gopay_shared_areyousurewanttomissthefreetrial_text": {
+      "$description": "cp_01M3NX20D1EVJT970BBH0Q1PN7\nShared › Common › Are You Sure Want To Miss The Fr › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D1EVJT970BBH0Q1PN7",
+          "platformKey": "gopay_shared_areyousurewanttomissthefreetrial_text",
+          "semanticPath": "common/are-you-sure-want-to-miss-the-fr/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Are you sure want to miss the free trial?"
+    },
+    "gopay_shared_autodebit_description": {
+      "$description": "cp_01M3NX205XEH08RZNX7ZVNBYQD\nShared › Common › Auto Debit › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205XEH08RZNX7ZVNBYQD",
+          "platformKey": "gopay_shared_autodebit_description",
+          "semanticPath": "common/auto-debit/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Auto debit"
+    },
+    "gopay_shared_back_cta": {
+      "$description": "cp_01M3NX209CEW9AJVGN11MZBTWY\nShared › Common › Back › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX209CEW9AJVGN11MZBTWY",
+          "platformKey": "gopay_shared_back_cta",
+          "semanticPath": "common/back/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Back"
+    },
+    "gopay_shared_backtohome_cta": {
+      "$description": "cp_01M3NX202PFCGBSRZJQPG7PM00\nShared › Common › Back To Home › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202PFCGBSRZJQPG7PM00",
+          "platformKey": "gopay_shared_backtohome_cta",
+          "semanticPath": "common/back-to-home/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Back to home"
+    },
+    "gopay_shared_backtomerchant_cta": {
+      "$description": "cp_01M3NX20H4FX1VSJFNNQ13DG9N\nShared › Common › Back To Merchant › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20H4FX1VSJFNNQ13DG9N",
+          "platformKey": "gopay_shared_backtomerchant_cta",
+          "semanticPath": "common/back-to-merchant/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Back to merchant"
+    },
+    "gopay_shared_balance_text": {
+      "$description": "cp_01M3NX20KKEXFAH13KWE1P5DB5\nShared › Common › Balance › Text\nNote: Số dư: Số dư:",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KKEXFAH13KWE1P5DB5",
+          "platformKey": "gopay_shared_balance_text",
+          "semanticPath": "common/balance/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Balance"
+    },
+    "gopay_shared_bankaccount_text": {
+      "$description": "cp_01M3NX2029EBZVG94VHB8HJHHP\nShared › Common › Bank Account › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029EBZVG94VHB8HJHHP",
+          "platformKey": "gopay_shared_bankaccount_text",
+          "semanticPath": "common/bank-account/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bank account"
+    },
+    "gopay_shared_banktransfer_title": {
+      "$description": "cp_01M3NX20VEFAH9Q25MWY6QJNN1\nShared › Common › Bank Transfer › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20VEFAH9Q25MWY6QJNN1",
+          "platformKey": "gopay_shared_banktransfer_title",
+          "semanticPath": "common/bank-transfer/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bank transfer"
+    },
+    "gopay_shared_bcaoneklik_value": {
+      "$description": "cp_01M3NX20KCE5KTBZWYDZ446AZ4\nShared › Common › Bca Oneklik › Value",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KCE5KTBZWYDZ446AZ4",
+          "platformKey": "gopay_shared_bcaoneklik_value",
+          "semanticPath": "common/bca-oneklik/main/value",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "BCA OneKlik"
+    },
+    "gopay_shared_benefitthatyoullget_text": {
+      "$description": "cp_01M3NX2069FN495NVZ4GDJA94Y\nShared › Common › Benefit That You Ll Get › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2069FN495NVZ4GDJA94Y",
+          "platformKey": "gopay_shared_benefitthatyoullget_text",
+          "semanticPath": "common/benefit-that-you-ll-get/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Benefit that you'll get"
+    },
+    "gopay_shared_bills_title": {
+      "$description": "cp_01M3NX20PKFQ19RYQ4HYPRF8D6\nShared › Common › Bills › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PKFQ19RYQ4HYPRF8D6",
+          "platformKey": "gopay_shared_bills_title",
+          "semanticPath": "common/bills/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Bills"
+    },
+    "gopay_shared_blocked_helper": {
+      "$description": "cp_01M3NX20KHFZNS3X2RZZQ4B0FK\nShared › Common › Blocked › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KHFZNS3X2RZZQ4B0FK",
+          "platformKey": "gopay_shared_blocked_helper",
+          "semanticPath": "common/blocked/main/helper",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Blocked"
+    },
+    "gopay_shared_bridirectdebit_label": {
+      "$description": "cp_01M3NX20HVE5F8XJYTQBBGFRYQ\nShared › Common › Bri Direct Debit › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HVE5F8XJYTQBBGFRYQ",
+          "platformKey": "gopay_shared_bridirectdebit_label",
+          "semanticPath": "common/bri-direct-debit/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "BRI Direct Debit"
+    },
+    "gopay_shared_buy_text": {
+      "$description": "cp_01M3NX202FF13BXZX512W1G46D\nShared › Common › Buy › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202FF13BXZX512W1G46D",
+          "platformKey": "gopay_shared_buy_text",
+          "semanticPath": "common/buy/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Buy"
+    },
+    "gopay_shared_buynow_cta": {
+      "$description": "cp_01M3NX205MF20S34QQYHAFWQYG\nShared › Common › Buy Now › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205MF20S34QQYHAFWQYG",
+          "platformKey": "gopay_shared_buynow_cta",
+          "semanticPath": "common/buy-now/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Buy now"
+    },
+    "gopay_shared_bycontinuingyouagreetoourtermsandconditions_disclaimer": {
+      "$description": "cp_01M3NX20SBETKV923VWQB3RF5N\nShared › Common › By Continuing You Agree To Our T › Disclaimer",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20SBETKV923VWQB3RF5N",
+          "platformKey": "gopay_shared_bycontinuingyouagreetoourtermsandconditions_disclaimer",
+          "semanticPath": "common/by-continuing-you-agree-to-our-t/main/disclaimer",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "By continuing you agree to our Terms & Conditions"
+    },
+    "gopay_shared_bycontinuingyouagreetoourtermsandconditions_disclaimer_2": {
+      "$description": "cp_01M3NX21C0E3W8HRPX8AXRR1BT\nShared › Common › By Continuing You Agree To Our T › Disclaimer",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21C0E3W8HRPX8AXRR1BT",
+          "platformKey": "gopay_shared_bycontinuingyouagreetoourtermsandconditions_disclaimer_2",
+          "semanticPath": "common/by-continuing-you-agree-to-our-t/main/disclaimer",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "By continuing, you agree to our Terms & Conditions"
+    },
+    "gopay_shared_bycontinuingyouagreetoourtermsandconditions_text": {
+      "$description": "cp_01M3NX227RFT5TMBA4EFAHM34M\nShared › Common › By Continuing You Agree To Our T › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX227RFT5TMBA4EFAHM34M",
+          "platformKey": "gopay_shared_bycontinuingyouagreetoourtermsandconditions_text",
+          "semanticPath": "common/by-continuing-you-agree-to-our-t/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "By continuing you agree to our Terms & Conditions,"
+    },
+    "gopay_shared_cancel_cta": {
+      "$description": "cp_01M3NX2029FG8BK4QXEVRTDX0K\nShared › Common › Cancel › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029FG8BK4QXEVRTDX0K",
+          "platformKey": "gopay_shared_cancel_cta",
+          "semanticPath": "common/cancel/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cancel"
+    },
+    "gopay_shared_cancelchanges_title": {
+      "$description": "cp_01M3NX20R8E4YV6ADA0YRA1RYK\nShared › Common › Cancel Changes › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20R8E4YV6ADA0YRA1RYK",
+          "platformKey": "gopay_shared_cancelchanges_title",
+          "semanticPath": "common/cancel-changes/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cancel changes"
+    },
+    "gopay_shared_cancelled_text": {
+      "$description": "cp_01M3NX218KEX0TYZG4P6493F60\nShared › Common › Cancelled › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX218KEX0TYZG4P6493F60",
+          "platformKey": "gopay_shared_cancelled_text",
+          "semanticPath": "common/cancelled/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cancelled"
+    },
+    "gopay_shared_cancerinsurance_text": {
+      "$description": "cp_01M3NX204QFDRAYPW7DZKAN0ZE\nShared › Common › Cancer Insurance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QFDRAYPW7DZKAN0ZE",
+          "platformKey": "gopay_shared_cancerinsurance_text",
+          "semanticPath": "common/cancer-insurance/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cancer Insurance"
+    },
+    "gopay_shared_canipayininstallments_text": {
+      "$description": "cp_01M3NX206EEFFS3FKG0C3AT6F5\nShared › Common › Can I Pay In Installments › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206EEFFS3FKG0C3AT6F5",
+          "platformKey": "gopay_shared_canipayininstallments_text",
+          "semanticPath": "common/can-i-pay-in-installments/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Can I pay in installments?"
+    },
+    "gopay_shared_cantcontinuewithgopaylater_title": {
+      "$description": "cp_01M3NX20HSF4GBTVKS1W15RRTW\nShared › Common › Can T Continue With Gopay Later › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HSF4GBTVKS1W15RRTW",
+          "platformKey": "gopay_shared_cantcontinuewithgopaylater_title",
+          "semanticPath": "common/can-t-continue-with-gopay-later/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Can’t continue with GoPay Later"
+    },
+    "gopay_shared_cashbenefit_text": {
+      "$description": "cp_01M3NX205JFFF9P7F0V2MY8WHW\nShared › Common › Cash Benefit › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205JFFF9P7F0V2MY8WHW",
+          "platformKey": "gopay_shared_cashbenefit_text",
+          "semanticPath": "common/cash-benefit/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Cash benefit"
+    },
+    "gopay_shared_change_cta": {
+      "$description": "cp_01M3NX20SFE39S8V9M92JJATCA\nShared › Common › Change › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20SFE39S8V9M92JJATCA",
+          "platformKey": "gopay_shared_change_cta",
+          "semanticPath": "common/change/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Change"
+    },
+    "gopay_shared_changepin_text": {
+      "$description": "cp_01M3NX21P2EQZSSN629GM0SD6X\nShared › Common › Change Pin › Text\nNote: Đổi mã PIN",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21P2EQZSSN629GM0SD6X",
+          "platformKey": "gopay_shared_changepin_text",
+          "semanticPath": "common/change-pin/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Change PIN"
+    },
+    "gopay_shared_check_cta": {
+      "$description": "cp_01M3NX20WPEQ0SH7JAECWKF88N\nShared › Common › Check › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20WPEQ0SH7JAECWKF88N",
+          "platformKey": "gopay_shared_check_cta",
+          "semanticPath": "common/check/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Check"
+    },
+    "gopay_shared_choosehowtosplityourbill_title": {
+      "$description": "cp_01M3NX214WEGEBP46BQW87AFEA\nShared › Common › Choose How To Split Your Bill › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX214WEGEBP46BQW87AFEA",
+          "platformKey": "gopay_shared_choosehowtosplityourbill_title",
+          "semanticPath": "common/choose-how-to-split-your-bill/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Choose how to split your bill"
+    },
+    "gopay_shared_claim_cta": {
+      "$description": "cp_01M3NX206DEDKT0HB085DS6Y4T\nShared › Common › Claim › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206DEDKT0HB085DS6Y4T",
+          "platformKey": "gopay_shared_claim_cta",
+          "semanticPath": "common/claim/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Claim"
+    },
+    "gopay_shared_claimed_label": {
+      "$description": "cp_01M3NX20A7FARAKDFP08TWB056\nShared › Common › Claimed › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20A7FARAKDFP08TWB056",
+          "platformKey": "gopay_shared_claimed_label",
+          "semanticPath": "common/claimed/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Claimed"
+    },
+    "gopay_shared_claimmethod_text": {
+      "$description": "cp_01M3NX2071FVE8S77FZ7XXJ6JA\nShared › Common › Claim Method › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2071FVE8S77FZ7XXJ6JA",
+          "platformKey": "gopay_shared_claimmethod_text",
+          "semanticPath": "common/claim-method/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Claim method"
+    },
+    "gopay_shared_claimmethods_text": {
+      "$description": "cp_01M3NX204XE3ETV4YWPK7ZMTG3\nShared › Common › Claim Methods › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XE3ETV4YWPK7ZMTG3",
+          "platformKey": "gopay_shared_claimmethods_text",
+          "semanticPath": "common/claim-methods/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Claim methods"
+    },
+    "gopay_shared_clear_cta": {
+      "$description": "cp_01M3NX205AEYF83SNKSCAB31XH\nShared › Common › Clear › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205AEYF83SNKSCAB31XH",
+          "platformKey": "gopay_shared_clear_cta",
+          "semanticPath": "common/clear/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Clear"
+    },
+    "gopay_shared_comingsoon_helper": {
+      "$description": "cp_01M3NX202FE7TST3ZRQ9M1QKN6\nShared › Common › Coming Soon › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202FE7TST3ZRQ9M1QKN6",
+          "platformKey": "gopay_shared_comingsoon_helper",
+          "semanticPath": "common/coming-soon/main/helper",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Coming soon"
+    },
+    "gopay_shared_commuterline_label": {
+      "$description": "cp_01M3NX212ME0KA8DKPP8D3R0AQ\nShared › Common › Commuter Line › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX212ME0KA8DKPP8D3R0AQ",
+          "platformKey": "gopay_shared_commuterline_label",
+          "semanticPath": "common/commuter-line/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Commuter Line"
+    },
+    "gopay_shared_completed_title": {
+      "$description": "cp_01M3NX202HEMNAHC4HNPC9PD72\nShared › Common › Completed › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202HEMNAHC4HNPC9PD72",
+          "platformKey": "gopay_shared_completed_title",
+          "semanticPath": "common/completed/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Completed"
+    },
+    "gopay_shared_continue_cta": {
+      "$description": "cp_01M3NX2028EATR4C2W50G3JT1E\nShared › Common › Continue › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028EATR4C2W50G3JT1E",
+          "platformKey": "gopay_shared_continue_cta",
+          "semanticPath": "common/continue/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Continue"
+    },
+    "gopay_shared_continuepayment_cta": {
+      "$description": "cp_01M3NX202AF41VMDPSD6E2J2H3\nShared › Common › Continue Payment › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202AF41VMDPSD6E2J2H3",
+          "platformKey": "gopay_shared_continuepayment_cta",
+          "semanticPath": "common/continue-payment/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Continue payment"
+    },
+    "gopay_shared_continueyourpurchase_text": {
+      "$description": "cp_01M3NX2030EZPSVWCA20C1847A\nShared › Common › Continue Your Purchase › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2030EZPSVWCA20C1847A",
+          "platformKey": "gopay_shared_continueyourpurchase_text",
+          "semanticPath": "common/continue-your-purchase/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Continue your purchase"
+    },
+    "gopay_shared_coverage_tab": {
+      "$description": "cp_01M3NX204JF449PQ0PEMJN1XYJ\nShared › Common › Coverage › Tab",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JF449PQ0PEMJN1XYJ",
+          "platformKey": "gopay_shared_coverage_tab",
+          "semanticPath": "common/coverage/main/tab",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Coverage"
+    },
+    "gopay_shared_coveragelimit_text": {
+      "$description": "cp_01M3NX206AE13VRTM9ZZ2YK9T4\nShared › Common › Coverage Limit › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206AE13VRTM9ZZ2YK9T4",
+          "platformKey": "gopay_shared_coveragelimit_text",
+          "semanticPath": "common/coverage-limit/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Coverage limit"
+    },
+    "gopay_shared_creategroup_cta": {
+      "$description": "cp_01M3NX228KFA0TWDFCVZ8T01TP\nShared › Common › Create Group › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX228KFA0TWDFCVZ8T01TP",
+          "platformKey": "gopay_shared_creategroup_cta",
+          "semanticPath": "common/create-group/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Create group"
+    },
+    "gopay_shared_createnew_cta": {
+      "$description": "cp_01M3NX20STF2PANC6MH9WAB9KT\nShared › Common › Create New › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20STF2PANC6MH9WAB9KT",
+          "platformKey": "gopay_shared_createnew_cta",
+          "semanticPath": "common/create-new/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Create new"
+    },
+    "gopay_shared_createsimpanan_badge": {
+      "$description": "cp_01M3NX22T1EMFRA3EGF42PBQJM\nShared › Common › Create Simpanan › Badge",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22T1EMFRA3EGF42PBQJM",
+          "platformKey": "gopay_shared_createsimpanan_badge",
+          "semanticPath": "common/create-simpanan/main/badge",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Create Simpanan"
+    },
+    "gopay_shared_currentbalance_text": {
+      "$description": "cp_01M3NX203NE339TD3CQBHPTT2D\nShared › Common › Current Balance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203NE339TD3CQBHPTT2D",
+          "platformKey": "gopay_shared_currentbalance_text",
+          "semanticPath": "common/current-balance/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Current balance"
+    },
+    "gopay_shared_daily_text": {
+      "$description": "cp_01M3NX202KER2B17E44T1GC6H5\nShared › Common › Daily › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202KER2B17E44T1GC6H5",
+          "platformKey": "gopay_shared_daily_text",
+          "semanticPath": "common/daily/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Daily"
+    },
+    "gopay_shared_date_title": {
+      "$description": "cp_01M3NX2029ECXRJGHFC7FRN8XB\nShared › Common › Date › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029ECXRJGHFC7FRN8XB",
+          "platformKey": "gopay_shared_date_title",
+          "semanticPath": "common/date/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Date"
+    },
+    "gopay_shared_dateandtime_text": {
+      "$description": "cp_01M3NX20RQEN8V5PRWTF0QAXC3\nShared › Common › Date And Time › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20RQEN8V5PRWTF0QAXC3",
+          "platformKey": "gopay_shared_dateandtime_text",
+          "semanticPath": "common/date-and-time/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Date & Time"
+    },
+    "gopay_shared_dateofbirth_title": {
+      "$description": "cp_01M3NX202CEA88E2R4T703GJRZ\nShared › Common › Date Of Birth › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CEA88E2R4T703GJRZ",
+          "platformKey": "gopay_shared_dateofbirth_title",
+          "semanticPath": "common/date-of-birth/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Date of birth"
+    },
+    "gopay_shared_dateofbirthisrequired_description": {
+      "$description": "cp_01M3NX2052EEJB7XZQQ4R6SEJ3\nShared › Common › Date Of Birth Is Required › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052EEJB7XZQQ4R6SEJ3",
+          "platformKey": "gopay_shared_dateofbirthisrequired_description",
+          "semanticPath": "common/date-of-birth-is-required/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Date of birth is required"
+    },
+    "gopay_shared_deactivated_text": {
+      "$description": "cp_01M3NX2354EZ0SHX4CBC01A3J6\nShared › Common › Deactivated › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2354EZ0SHX4CBC01A3J6",
+          "platformKey": "gopay_shared_deactivated_text",
+          "semanticPath": "common/deactivated/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Deactivated"
+    },
+    "gopay_shared_decline_cta": {
+      "$description": "cp_01M3NX2029EMCV4RXB1FHJ451Y\nShared › Common › Decline › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029EMCV4RXB1FHJ451Y",
+          "platformKey": "gopay_shared_decline_cta",
+          "semanticPath": "common/decline/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Decline"
+    },
+    "gopay_shared_default_badge": {
+      "$description": "cp_01M3NX21KKFT5S9WRWYB45N1PM\nShared › Common › Default › Badge",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21KKFT5S9WRWYB45N1PM",
+          "platformKey": "gopay_shared_default_badge",
+          "semanticPath": "common/default/main/badge",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Default"
+    },
+    "gopay_shared_delete_cta": {
+      "$description": "cp_01M3NX202MEKBRHQDFS0K9E7Q2\nShared › Common › Delete › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202MEKBRHQDFS0K9E7Q2",
+          "platformKey": "gopay_shared_delete_cta",
+          "semanticPath": "common/delete/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Delete"
+    },
+    "gopay_shared_details_tab": {
+      "$description": "cp_01M3NX2028FKKS1AZ50GYFGXCT\nShared › Common › Details › Tab",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028FKKS1AZ50GYFGXCT",
+          "platformKey": "gopay_shared_details_tab",
+          "semanticPath": "common/details/main/tab",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Details"
+    },
+    "gopay_shared_digitalfraudinsurance_text": {
+      "$description": "cp_01M3NX2087F9TBK7GHAYMQZ0V5\nShared › Common › Digital Fraud Insurance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2087F9TBK7GHAYMQZ0V5",
+          "platformKey": "gopay_shared_digitalfraudinsurance_text",
+          "semanticPath": "common/digital-fraud-insurance/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Digital fraud insurance"
+    },
+    "gopay_shared_digitalgold_text": {
+      "$description": "cp_01M3NX202FF3MAGTFA4D8HJKSC\nShared › Common › Digital Gold › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202FF3MAGTFA4D8HJKSC",
+          "platformKey": "gopay_shared_digitalgold_text",
+          "semanticPath": "common/digital-gold/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Digital gold"
+    },
+    "gopay_shared_done_cta": {
+      "$description": "cp_01M3NX212YF5NS0CB6A0BH20PF\nShared › Common › Done › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX212YF5NS0CB6A0BH20PF",
+          "platformKey": "gopay_shared_done_cta",
+          "semanticPath": "common/done/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Done"
+    },
+    "gopay_shared_download_cta": {
+      "$description": "cp_01M3NX202TEV2TKG3ZP8CD9WJ0\nShared › Common › Download › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202TEV2TKG3ZP8CD9WJ0",
+          "platformKey": "gopay_shared_download_cta",
+          "semanticPath": "common/download/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Download"
+    },
+    "gopay_shared_downloadpolicy_text": {
+      "$description": "cp_01M3NX204VFTTVDW2RX16R75X4\nShared › Common › Download Policy › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204VFTTVDW2RX16R75X4",
+          "platformKey": "gopay_shared_downloadpolicy_text",
+          "semanticPath": "common/download-policy/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Download policy"
+    },
+    "gopay_shared_downpayment_text": {
+      "$description": "cp_01M3NX202FE9ZTRKHG7MF9WZQH\nShared › Common › Down Payment › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202FE9ZTRKHG7MF9WZQH",
+          "platformKey": "gopay_shared_downpayment_text",
+          "semanticPath": "common/down-payment/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Down payment"
+    },
+    "gopay_shared_duedate_label": {
+      "$description": "cp_01M3NX204QEP7AGEHM3KRDDMHX\nShared › Common › Due Date › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QEP7AGEHM3KRDDMHX",
+          "platformKey": "gopay_shared_duedate_label",
+          "semanticPath": "common/due-date/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Due date"
+    },
+    "gopay_shared_duetoday_label": {
+      "$description": "cp_01M3NX2042FDRSMV9F394WA76M\nShared › Common › Due Today › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2042FDRSMV9F394WA76M",
+          "platformKey": "gopay_shared_duetoday_label",
+          "semanticPath": "common/due-today/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Due today"
+    },
+    "gopay_shared_edit_cta": {
+      "$description": "cp_01M3NX205SF96ASAMP4EXXGGSW\nShared › Common › Edit › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205SF96ASAMP4EXXGGSW",
+          "platformKey": "gopay_shared_edit_cta",
+          "semanticPath": "common/edit/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Edit"
+    },
+    "gopay_shared_editinformation_text": {
+      "$description": "cp_01M3NX2063FJBA98W84T09HXDS\nShared › Common › Edit Information › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2063FJBA98W84T09HXDS",
+          "platformKey": "gopay_shared_editinformation_text",
+          "semanticPath": "common/edit-information/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Edit information"
+    },
+    "gopay_shared_email_title": {
+      "$description": "cp_01M3NX2028E9WSXA8DPH2VY6RJ\nShared › Common › Email › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028E9WSXA8DPH2VY6RJ",
+          "platformKey": "gopay_shared_email_title",
+          "semanticPath": "common/email/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Email"
+    },
+    "gopay_shared_emailisrequired_description": {
+      "$description": "cp_01M3NX2052E4H9D427B19HKH84\nShared › Common › Email Is Required › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052E4H9D427B19HKH84",
+          "platformKey": "gopay_shared_emailisrequired_description",
+          "semanticPath": "common/email-is-required/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Email is required"
+    },
+    "gopay_shared_entergopaypin_title": {
+      "$description": "cp_01M3NX20JKEZ8A209ESR9D2XF9\nShared › Common › Enter Gopay Pin › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20JKEZ8A209ESR9D2XF9",
+          "platformKey": "gopay_shared_entergopaypin_title",
+          "semanticPath": "common/enter-gopay-pin/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Enter GoPay PIN"
+    },
+    "gopay_shared_enterotpcode_title": {
+      "$description": "cp_01M3NX20GKEYNA2F2YAX2Q03G1\nShared › Common › Enter Otp Code › Title\nNote: need to be adjusted need to be adjusted",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20GKEYNA2F2YAX2Q03G1",
+          "platformKey": "gopay_shared_enterotpcode_title",
+          "semanticPath": "common/enter-otp-code/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Enter OTP code"
+    },
+    "gopay_shared_enterpin_title": {
+      "$description": "cp_01M3NX20HDFEVR8ZQ43ZQDHZC5\nShared › Common › Enter Pin › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HDFEVR8ZQ43ZQDHZC5",
+          "platformKey": "gopay_shared_enterpin_title",
+          "semanticPath": "common/enter-pin/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Enter PIN"
+    },
+    "gopay_shared_entertainment_title": {
+      "$description": "cp_01M3NX218AFCD8YTVDH2HFMYV2\nShared › Common › Entertainment › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX218AFCD8YTVDH2HFMYV2",
+          "platformKey": "gopay_shared_entertainment_title",
+          "semanticPath": "common/entertainment/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Entertainment"
+    },
+    "gopay_shared_entertherightemailformat_error": {
+      "$description": "cp_01M3NX2052FQMATGYHPT5V86ZX\nShared › Common › Enter The Right Email Format › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052FQMATGYHPT5V86ZX",
+          "platformKey": "gopay_shared_entertherightemailformat_error",
+          "semanticPath": "common/enter-the-right-email-format/main/error",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Enter the right email format"
+    },
+    "gopay_shared_enterthetopupamount_text": {
+      "$description": "cp_01M3NX22S5FPRTP6VYZ62CE2WQ\nShared › Common › Enter The Top Up Amount › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22S5FPRTP6VYZ62CE2WQ",
+          "platformKey": "gopay_shared_enterthetopupamount_text",
+          "semanticPath": "common/enter-the-top-up-amount/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Enter the top-up amount."
+    },
+    "gopay_shared_enterthetopupamount_title": {
+      "$description": "cp_01M3NX21EGE0WSJ1WNHJ5VNW5G\nShared › Common › Enter The Top Up Amount › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21EGE0WSJ1WNHJ5VNW5G",
+          "platformKey": "gopay_shared_enterthetopupamount_title",
+          "semanticPath": "common/enter-the-top-up-amount/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Enter the top up amount"
+    },
+    "gopay_shared_enteryouemailhere_placeholder": {
+      "$description": "cp_01M3NX2052EDPSHP6XCQD7BDVG\nShared › Common › Enter You Email Here › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052EDPSHP6XCQD7BDVG",
+          "platformKey": "gopay_shared_enteryouemailhere_placeholder",
+          "semanticPath": "common/enter-you-email-here/main/placeholder",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Enter you email here"
+    },
+    "gopay_shared_estimatedtime_text": {
+      "$description": "cp_01M3NX202AEF8RVD1T360BA66G\nShared › Common › Estimated Time › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202AEF8RVD1T360BA66G",
+          "platformKey": "gopay_shared_estimatedtime_text",
+          "semanticPath": "common/estimated-time/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Estimated time"
+    },
+    "gopay_shared_ewallet_text": {
+      "$description": "cp_01M3NX22J9EY2SZTHM4S3TP1CH\nShared › Common › E Wallet › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22J9EY2SZTHM4S3TP1CH",
+          "platformKey": "gopay_shared_ewallet_text",
+          "semanticPath": "common/e-wallet/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "E-wallet"
+    },
+    "gopay_shared_exceptions_text": {
+      "$description": "cp_01M3NX204XF1QA0590HHYQJVVE\nShared › Common › Exceptions › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XF1QA0590HHYQJVVE",
+          "platformKey": "gopay_shared_exceptions_text",
+          "semanticPath": "common/exceptions/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Exceptions"
+    },
+    "gopay_shared_exclusions_text": {
+      "$description": "cp_01M3NX206CE74TM3XWSF3A59ZE\nShared › Common › Exclusions › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206CE74TM3XWSF3A59ZE",
+          "platformKey": "gopay_shared_exclusions_text",
+          "semanticPath": "common/exclusions/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Exclusions"
+    },
+    "gopay_shared_expensereport_title": {
+      "$description": "cp_01M3NX21TZENXS2RK8TC3MY2C9\nShared › Common › Expense Report › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21TZENXS2RK8TC3MY2C9",
+          "platformKey": "gopay_shared_expensereport_title",
+          "semanticPath": "common/expense-report/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Expense report"
+    },
+    "gopay_shared_expired_badge": {
+      "$description": "cp_01M3NX205PEYWVZ8N18B389TKF\nShared › Common › Expired › Badge",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205PEYWVZ8N18B389TKF",
+          "platformKey": "gopay_shared_expired_badge",
+          "semanticPath": "common/expired/main/badge",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Expired"
+    },
+    "gopay_shared_expiresin_description": {
+      "$description": "cp_01M3NX223HF5GRKBPVGYW32D9M\nShared › Common › Expires In › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX223HF5GRKBPVGYW32D9M",
+          "platformKey": "gopay_shared_expiresin_description",
+          "semanticPath": "common/expires-in/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Expires in"
+    },
+    "gopay_shared_expireson_label": {
+      "$description": "cp_01M3NX22XPE2QB790TDWVME79Y\nShared › Common › Expires On › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22XPE2QB790TDWVME79Y",
+          "platformKey": "gopay_shared_expireson_label",
+          "semanticPath": "common/expires-on/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Expires on"
+    },
+    "gopay_shared_expirydate_title": {
+      "$description": "cp_01M3NX2074EXNART0NF2CD0AEE\nShared › Common › Expiry Date › Title\nNote: DD-MM-YYYY DD-MM-YYYY",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2074EXNART0NF2CD0AEE",
+          "platformKey": "gopay_shared_expirydate_title",
+          "semanticPath": "common/expiry-date/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Expiry date"
+    },
+    "gopay_shared_failed_text": {
+      "$description": "cp_01M3NX202JFX8BRDKHZY1AT7WT\nShared › Common › Failed › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202JFX8BRDKHZY1AT7WT",
+          "platformKey": "gopay_shared_failed_text",
+          "semanticPath": "common/failed/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Failed"
+    },
+    "gopay_shared_failedpayment_title": {
+      "$description": "cp_01M3NX20NREKEV7WW8SFX4EX96\nShared › Common › Failed Payment › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20NREKEV7WW8SFX4EX96",
+          "platformKey": "gopay_shared_failedpayment_title",
+          "semanticPath": "common/failed-payment/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Failed payment"
+    },
+    "gopay_shared_failedtoload_title": {
+      "$description": "cp_01M3NX2029EN48YXGXTMN6PE8J\nShared › Common › Failed To Load › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029EN48YXGXTMN6PE8J",
+          "platformKey": "gopay_shared_failedtoload_title",
+          "semanticPath": "common/failed-to-load/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Failed to load"
+    },
+    "gopay_shared_female_text": {
+      "$description": "cp_01M3NX202CE0JVGFJKNZA55T8Y\nShared › Common › Female › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CE0JVGFJKNZA55T8Y",
+          "platformKey": "gopay_shared_female_text",
+          "semanticPath": "common/female/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Female"
+    },
+    "gopay_shared_forgotpin_cta": {
+      "$description": "cp_01M3NX20GZET0STRKFVXA077G9\nShared › Common › Forgot Pin › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20GZET0STRKFVXA077G9",
+          "platformKey": "gopay_shared_forgotpin_cta",
+          "semanticPath": "common/forgot-pin/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Forgot PIN"
+    },
+    "gopay_shared_free_badge": {
+      "$description": "cp_01M3NX202AE0EBN2QB6YVBVKV0\nShared › Common › Free › Badge",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202AE0EBN2QB6YVBVKV0",
+          "platformKey": "gopay_shared_free_badge",
+          "semanticPath": "common/free/main/badge",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Free"
+    },
+    "gopay_shared_freeadminfee_helper": {
+      "$description": "cp_01M3NX22H2FRMRFG0ET2GYMHAR\nShared › Common › Free Admin Fee › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22H2FRMRFG0ET2GYMHAR",
+          "platformKey": "gopay_shared_freeadminfee_helper",
+          "semanticPath": "common/free-admin-fee/main/helper",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Free admin fee!"
+    },
+    "gopay_shared_freetopup_cta": {
+      "$description": "cp_01M3NX21MPE1B87PDYYPEM3K28\nShared › Common › Free Top Up › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21MPE1B87PDYYPEM3K28",
+          "platformKey": "gopay_shared_freetopup_cta",
+          "semanticPath": "common/free-top-up/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Free top up"
+    },
+    "gopay_shared_frequentlyaskedquestion_text": {
+      "$description": "cp_01M3NX203XFA09VZJCJ9RM1WRH\nShared › Common › Frequently Asked Question › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203XFA09VZJCJ9RM1WRH",
+          "platformKey": "gopay_shared_frequentlyaskedquestion_text",
+          "semanticPath": "common/frequently-asked-question/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Frequently asked question"
+    },
+    "gopay_shared_frequentlyaskedquestions_text": {
+      "$description": "cp_01M3NX204SFTDBG687YDD2JW2N\nShared › Common › Frequently Asked Questions › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204SFTDBG687YDD2JW2N",
+          "platformKey": "gopay_shared_frequentlyaskedquestions_text",
+          "semanticPath": "common/frequently-asked-questions/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Frequently asked questions"
+    },
+    "gopay_shared_frequentlytransferred_title": {
+      "$description": "cp_01M3NX22J0F14859N5982Z88KT\nShared › Common › Frequently Transferred › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22J0F14859N5982Z88KT",
+          "platformKey": "gopay_shared_frequentlytransferred_title",
+          "semanticPath": "common/frequently-transferred/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Frequently transferred"
+    },
+    "gopay_shared_from_text": {
+      "$description": "cp_01M3NX212VFR2TFRVM9PRW35Z6\nShared › Common › From › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX212VFR2TFRVM9PRW35Z6",
+          "platformKey": "gopay_shared_from_text",
+          "semanticPath": "common/from/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "From"
+    },
+    "gopay_shared_fullname_title": {
+      "$description": "cp_01M3NX202CFTN95YAPV07XSQCN\nShared › Common › Full Name › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CFTN95YAPV07XSQCN",
+          "platformKey": "gopay_shared_fullname_title",
+          "semanticPath": "common/full-name/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Full name"
+    },
+    "gopay_shared_fullnameisrequired_description": {
+      "$description": "cp_01M3NX2051FP1RSHCC14VX7PTC\nShared › Common › Full Name Is Required › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051FP1RSHCC14VX7PTC",
+          "platformKey": "gopay_shared_fullnameisrequired_description",
+          "semanticPath": "common/full-name-is-required/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Full name is required"
+    },
+    "gopay_shared_fullyprotected_text": {
+      "$description": "cp_01M3NX204NFEWS0E1HTTTYJDTY\nShared › Common › Fully Protected › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204NFEWS0E1HTTTYJDTY",
+          "platformKey": "gopay_shared_fullyprotected_text",
+          "semanticPath": "common/fully-protected/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Fully protected"
+    },
+    "gopay_shared_gender_title": {
+      "$description": "cp_01M3NX202CFGQV7K8EG51WF6MD\nShared › Common › Gender › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CFGQV7K8EG51WF6MD",
+          "platformKey": "gopay_shared_gender_title",
+          "semanticPath": "common/gender/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gender"
+    },
+    "gopay_shared_genderisrequired_description": {
+      "$description": "cp_01M3NX2051FJPTJ4Q85D0W7B41\nShared › Common › Gender Is Required › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051FJPTJ4Q85D0W7B41",
+          "platformKey": "gopay_shared_genderisrequired_description",
+          "semanticPath": "common/gender-is-required/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gender is required"
+    },
+    "gopay_shared_getdetails_text": {
+      "$description": "cp_01M3NX203PFX9T7K05Y4BYFQK9\nShared › Common › Get Details › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203PFX9T7K05Y4BYFQK9",
+          "platformKey": "gopay_shared_getdetails_text",
+          "semanticPath": "common/get-details/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Get details"
+    },
+    "gopay_shared_getstarted_cta": {
+      "$description": "cp_01M3NX202MFE88MD8K0Z0QBHMD\nShared › Common › Get Started › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202MFE88MD8K0Z0QBHMD",
+          "platformKey": "gopay_shared_getstarted_cta",
+          "semanticPath": "common/get-started/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Get started"
+    },
+    "gopay_shared_gift_description": {
+      "$description": "cp_01M3NX21DQEG38JAZ84PQK8F7X\nShared › Common › Gift › Description\nNote: Avoiding \"Hadiah\" biar gk kyk sister feature Avoiding \"Hadiah\" biar gk kyk sister feature",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21DQEG38JAZ84PQK8F7X",
+          "platformKey": "gopay_shared_gift_description",
+          "semanticPath": "common/gift/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gift"
+    },
+    "gopay_shared_goback_cta": {
+      "$description": "cp_01M3NX2173E2ZBCNCFRWCR4EG5\nShared › Common › Go Back › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2173E2ZBCNCFRWCR4EG5",
+          "platformKey": "gopay_shared_goback_cta",
+          "semanticPath": "common/go-back/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Go back"
+    },
+    "gopay_shared_gold_text": {
+      "$description": "cp_01M3NX202DEMD8HFWEATYTV2WG\nShared › Common › Gold › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202DEMD8HFWEATYTV2WG",
+          "platformKey": "gopay_shared_gold_text",
+          "semanticPath": "common/gold/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gold"
+    },
+    "gopay_shared_goldinstallment_text": {
+      "$description": "cp_01M3NX202FF08AJMWRNS1HFESB\nShared › Common › Gold Installment › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202FF08AJMWRNS1HFESB",
+          "platformKey": "gopay_shared_goldinstallment_text",
+          "semanticPath": "common/gold-installment/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gold installment"
+    },
+    "gopay_shared_goldinstallmentaccountisactive_text": {
+      "$description": "cp_01M3NX2034EPM9193HVKYZXSWG\nShared › Common › Gold Installment Account Is Acti › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2034EPM9193HVKYZXSWG",
+          "platformKey": "gopay_shared_goldinstallmentaccountisactive_text",
+          "semanticPath": "common/gold-installment-account-is-acti/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Gold installment account is active"
+    },
+    "gopay_shared_gopay_label": {
+      "$description": "cp_01M3NX20GVEWPT38C2NYTP5N17\nShared › Common › Gopay › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20GVEWPT38C2NYTP5N17",
+          "platformKey": "gopay_shared_gopay_label",
+          "semanticPath": "common/gopay/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay"
+    },
+    "gopay_shared_gopaycoins_label": {
+      "$description": "cp_01M3NX20KEE68A9XJP95X4SBCV\nShared › Common › Gopay Coins › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KEE68A9XJP95X4SBCV",
+          "platformKey": "gopay_shared_gopaycoins_label",
+          "semanticPath": "common/gopay-coins/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Coins"
+    },
+    "gopay_shared_gopaycoinsexpired_title": {
+      "$description": "cp_01M3NX20XZEK5RQA5MY53CE8DJ\nShared › Common › Gopay Coins Expired › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20XZEK5RQA5MY53CE8DJ",
+          "platformKey": "gopay_shared_gopaycoinsexpired_title",
+          "semanticPath": "common/gopay-coins-expired/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Coins expired"
+    },
+    "gopay_shared_gopaysaldo_text": {
+      "$description": "cp_01M3NX20KEEJ4VD43MFC13YGEM\nShared › Common › Gopay Saldo › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KEEJ4VD43MFC13YGEM",
+          "platformKey": "gopay_shared_gopaysaldo_text",
+          "semanticPath": "common/gopay-saldo/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Saldo"
+    },
+    "gopay_shared_gopaytabungan_label": {
+      "$description": "cp_01M3NX20X1ENKVTZEJJH28XYEB\nShared › Common › Gopay Tabungan › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20X1ENKVTZEJJH28XYEB",
+          "platformKey": "gopay_shared_gopaytabungan_label",
+          "semanticPath": "common/gopay-tabungan/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Tabungan"
+    },
+    "gopay_shared_gopaytabunganbyjago_text": {
+      "$description": "cp_01M3NX20KEE4EBMRC15MG57BMY\nShared › Common › Gopay Tabungan By Jago › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KEE4EBMRC15MG57BMY",
+          "platformKey": "gopay_shared_gopaytabunganbyjago_text",
+          "semanticPath": "common/gopay-tabungan-by-jago/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay Tabungan by Jago"
+    },
+    "gopay_shared_gopaytopup_title": {
+      "$description": "cp_01M3NX2114FNAB0QSCBRRPBDD6\nShared › Common › Gopay Top Up › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2114FNAB0QSCBRRPBDD6",
+          "platformKey": "gopay_shared_gopaytopup_title",
+          "semanticPath": "common/gopay-top-up/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "GoPay top up"
+    },
+    "gopay_shared_gotohttpspolisprodiginowcom_text": {
+      "$description": "cp_01M3NX2074FW88H2BRC82TGZ9V\nShared › Common › Go To Https Polis Prodiginow Com › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2074FW88H2BRC82TGZ9V",
+          "platformKey": "gopay_shared_gotohttpspolisprodiginowcom_text",
+          "semanticPath": "common/go-to-https-polis-prodiginow-com/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Go to https://polis.prodiginow.com/."
+    },
+    "gopay_shared_group_text": {
+      "$description": "cp_01M3NX20S9E2ZAK9VYZ146YBZD\nShared › Common › Group › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20S9E2ZAK9VYZ146YBZD",
+          "platformKey": "gopay_shared_group_text",
+          "semanticPath": "common/group/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Group"
+    },
+    "gopay_shared_health_text": {
+      "$description": "cp_01M3NX205PE2WBJ3AMHMP2VQWA\nShared › Common › Health › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205PE2WBJ3AMHMP2VQWA",
+          "platformKey": "gopay_shared_health_text",
+          "semanticPath": "common/health/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Health"
+    },
+    "gopay_shared_healthinsurance_text": {
+      "$description": "cp_01M3NX205PEY2BZYJF6CAVH6ZR\nShared › Common › Health Insurance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205PEY2BZYJF6CAVH6ZR",
+          "platformKey": "gopay_shared_healthinsurance_text",
+          "semanticPath": "common/health-insurance/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Health insurance"
+    },
+    "gopay_shared_heartattackinsurance_text": {
+      "$description": "cp_01M3NX204QEHAS5GHM2NVNF7KP\nShared › Common › Heart Attack Insurance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QEHAS5GHM2NVNF7KP",
+          "platformKey": "gopay_shared_heartattackinsurance_text",
+          "semanticPath": "common/heart-attack-insurance/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Heart Attack Insurance"
+    },
+    "gopay_shared_helpusimprove_cta": {
+      "$description": "cp_01M3NX21KHF5XA3R8DHJZXF1K5\nShared › Common › Help Us Improve › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21KHF5XA3R8DHJZXF1K5",
+          "platformKey": "gopay_shared_helpusimprove_cta",
+          "semanticPath": "common/help-us-improve/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Help us improve"
+    },
+    "gopay_shared_holdonanewofferjustdropped_text": {
+      "$description": "cp_01M3NX207BEV48VNEXJW615DSX\nShared › Common › Hold On A New Offer Just Dropped › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX207BEV48VNEXJW615DSX",
+          "platformKey": "gopay_shared_holdonanewofferjustdropped_text",
+          "semanticPath": "common/hold-on-a-new-offer-just-dropped/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hold on, a new offer just dropped!"
+    },
+    "gopay_shared_hospitalcashplan_text": {
+      "$description": "cp_01M3NX206QFG28KBXZEA8R9VYT\nShared › Common › Hospital Cash Plan › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206QFG28KBXZEA8R9VYT",
+          "platformKey": "gopay_shared_hospitalcashplan_text",
+          "semanticPath": "common/hospital-cash-plan/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Hospital Cash Plan"
+    },
+    "gopay_shared_howitworks_cta": {
+      "$description": "cp_01M3NX203VFD4SQHP09K48Z6JE\nShared › Common › How It Works › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203VFD4SQHP09K48Z6JE",
+          "platformKey": "gopay_shared_howitworks_cta",
+          "semanticPath": "common/how-it-works/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "How it works"
+    },
+    "gopay_shared_howthisinsuranceworks_text": {
+      "$description": "cp_01M3NX206YFSJT9RK896H7M6J4\nShared › Common › How This Insurance Works › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206YFSJT9RK896H7M6J4",
+          "platformKey": "gopay_shared_howthisinsuranceworks_text",
+          "semanticPath": "common/how-this-insurance-works/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "How this insurance works"
+    },
+    "gopay_shared_howthisproductworks_tab": {
+      "$description": "cp_01M3NX205JF92S3R3Y0D6NEHKR\nShared › Common › How This Product Works › Tab",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205JF92S3R3Y0D6NEHKR",
+          "platformKey": "gopay_shared_howthisproductworks_tab",
+          "semanticPath": "common/how-this-product-works/main/tab",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "How this product works"
+    },
+    "gopay_shared_howtoclaim_text": {
+      "$description": "cp_01M3NX204KE8STVX61YE655NTM\nShared › Common › How To Claim › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KE8STVX61YE655NTM",
+          "platformKey": "gopay_shared_howtoclaim_text",
+          "semanticPath": "common/how-to-claim/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "How to claim"
+    },
+    "gopay_shared_idnumber_text": {
+      "$description": "cp_01M3NX204KE3WB8WDT530FB90N\nShared › Common › Id Number › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KE3WB8WDT530FB90N",
+          "platformKey": "gopay_shared_idnumber_text",
+          "semanticPath": "common/id-number/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "ID number"
+    },
+    "gopay_shared_idnumbernik_title": {
+      "$description": "cp_01M3NX207PEVV9R2RM8W4WPGRG\nShared › Common › Id Number Nik › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX207PEVV9R2RM8W4WPGRG",
+          "platformKey": "gopay_shared_idnumbernik_title",
+          "semanticPath": "common/id-number-nik/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "ID number (NIK)"
+    },
+    "gopay_shared_inpatientcoverage_text": {
+      "$description": "cp_01M3NX204XFQ5BY9GDNG8E3CP6\nShared › Common › Inpatient Coverage › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XFQ5BY9GDNG8E3CP6",
+          "platformKey": "gopay_shared_inpatientcoverage_text",
+          "semanticPath": "common/inpatient-coverage/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Inpatient coverage"
+    },
+    "gopay_shared_inprogress_text": {
+      "$description": "cp_01M3NX202HF7ZV6QFZ34JHQHA6\nShared › Common › In Progress › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202HF7ZV6QFZ34JHQHA6",
+          "platformKey": "gopay_shared_inprogress_text",
+          "semanticPath": "common/in-progress/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "In progress"
+    },
+    "gopay_shared_insertyouratmcardandenteryourpin_text": {
+      "$description": "cp_01M3NX22S6EZAT8828KJ4ESQHK\nShared › Common › Insert Your Atm Card And Enter Y › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22S6EZAT8828KJ4ESQHK",
+          "platformKey": "gopay_shared_insertyouratmcardandenteryourpin_text",
+          "semanticPath": "common/insert-your-atm-card-and-enter-y/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Insert your ATM card and enter your PIN."
+    },
+    "gopay_shared_instant_text": {
+      "$description": "cp_01M3NX2028EB8B7QTGQSCP4Q43\nShared › Common › Instant › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028EB8B7QTGQSCP4Q43",
+          "platformKey": "gopay_shared_instant_text",
+          "semanticPath": "common/instant/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Instant"
+    },
+    "gopay_shared_insurancecoverage_text": {
+      "$description": "cp_01M3NX204XF2G83D0PS9ATWEDP\nShared › Common › Insurance Coverage › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XF2G83D0PS9ATWEDP",
+          "platformKey": "gopay_shared_insurancecoverage_text",
+          "semanticPath": "common/insurance-coverage/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Insurance coverage"
+    },
+    "gopay_shared_insurancedetails_text": {
+      "$description": "cp_01M3NX2076ED3SC60D6M8SKR0M\nShared › Common › Insurance Details › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2076ED3SC60D6M8SKR0M",
+          "platformKey": "gopay_shared_insurancedetails_text",
+          "semanticPath": "common/insurance-details/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Insurance details"
+    },
+    "gopay_shared_insuranceprovider_text": {
+      "$description": "cp_01M3NX2075FJHV1WK0QG7WQPSP\nShared › Common › Insurance Provider › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2075FJHV1WK0QG7WQPSP",
+          "platformKey": "gopay_shared_insuranceprovider_text",
+          "semanticPath": "common/insurance-provider/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Insurance provider"
+    },
+    "gopay_shared_invite_cta": {
+      "$description": "cp_01M3NX21JDEJCBC07WBCVST53T\nShared › Common › Invite › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21JDEJCBC07WBCVST53T",
+          "platformKey": "gopay_shared_invite_cta",
+          "semanticPath": "common/invite/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Invite"
+    },
+    "gopay_shared_keepit_text": {
+      "$description": "cp_01M3NX206SFARAKYXAPECSYNF2\nShared › Common › Keep It › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206SFARAKYXAPECSYNF2",
+          "platformKey": "gopay_shared_keepit_text",
+          "semanticPath": "common/keep-it/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Keep it"
+    },
+    "gopay_shared_learnmore_cta": {
+      "$description": "cp_01M3NX2050FCJ9583N9TS5S7DK\nShared › Common › Learn More › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050FCJ9583N9TS5S7DK",
+          "platformKey": "gopay_shared_learnmore_cta",
+          "semanticPath": "common/learn-more/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Learn more"
+    },
+    "gopay_shared_letsearnmoreruby_text": {
+      "$description": "cp_01M3NX2233EHSRQ21924BET73W\nShared › Common › Let S Earn More Ruby › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2233EHSRQ21924BET73W",
+          "platformKey": "gopay_shared_letsearnmoreruby_text",
+          "semanticPath": "common/let-s-earn-more-ruby/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Let’s earn more Ruby!"
+    },
+    "gopay_shared_letsgo_cta": {
+      "$description": "cp_01M3NX20THED2TBSM3NT57P49A\nShared › Common › Let S Go › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20THED2TBSM3NT57P49A",
+          "platformKey": "gopay_shared_letsgo_cta",
+          "semanticPath": "common/let-s-go/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Let's go!"
+    },
+    "gopay_shared_limit_text": {
+      "$description": "cp_01M3NX205JFQQRG2DDKJBD0P1Y\nShared › Common › Limit › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205JFQQRG2DDKJBD0P1Y",
+          "platformKey": "gopay_shared_limit_text",
+          "semanticPath": "common/limit/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Limit"
+    },
+    "gopay_shared_linkaja_label": {
+      "$description": "cp_01M3NX20KGEGF8N7B56SJZZJ75\nShared › Common › Linkaja › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KGEGF8N7B56SJZZJ75",
+          "platformKey": "gopay_shared_linkaja_label",
+          "semanticPath": "common/linkaja/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "LinkAja"
+    },
+    "gopay_shared_linkedapps_title": {
+      "$description": "cp_01M3NX20GQF75BW3EY3NT8D0DC\nShared › Common › Linked Apps › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20GQF75BW3EY3NT8D0DC",
+          "platformKey": "gopay_shared_linkedapps_title",
+          "semanticPath": "common/linked-apps/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Linked apps"
+    },
+    "gopay_shared_linkyourcontactstogopay_title": {
+      "$description": "cp_01M3NX213XF1SSV2H6Z14RBDST\nShared › Common › Link Your Contacts To Gopay › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213XF1SSV2H6Z14RBDST",
+          "platformKey": "gopay_shared_linkyourcontactstogopay_title",
+          "semanticPath": "common/link-your-contacts-to-gopay/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Link your contacts to GoPay"
+    },
+    "gopay_shared_location_text": {
+      "$description": "cp_01M3NX20FBEAHT4B7M3B0GEFYG\nShared › Common › Location › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FBEAHT4B7M3B0GEFYG",
+          "platformKey": "gopay_shared_location_text",
+          "semanticPath": "common/location/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Location"
+    },
+    "gopay_shared_male_text": {
+      "$description": "cp_01M3NX202CEGRSXD1K5XDSKZBP\nShared › Common › Male › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CEGRSXD1K5XDSKZBP",
+          "platformKey": "gopay_shared_male_text",
+          "semanticPath": "common/male/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Male"
+    },
+    "gopay_shared_manageyouraccount_cta": {
+      "$description": "cp_01M3NX21EPFXPVCYG2ZYYTPNMK\nShared › Common › Manage Your Account › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21EPFXPVCYG2ZYYTPNMK",
+          "platformKey": "gopay_shared_manageyouraccount_cta",
+          "semanticPath": "common/manage-your-account/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Manage your account"
+    },
+    "gopay_shared_mandatory_badge": {
+      "$description": "cp_01M3NX2029E3GTHNRJ85A5YZM9\nShared › Common › Mandatory › Badge",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029E3GTHNRJ85A5YZM9",
+          "platformKey": "gopay_shared_mandatory_badge",
+          "semanticPath": "common/mandatory/main/badge",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Mandatory"
+    },
+    "gopay_shared_maybelater_cta": {
+      "$description": "cp_01M3NX205WFQBTZ1834RFQR8ZV\nShared › Common › Maybe Later › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205WFQBTZ1834RFQR8ZV",
+          "platformKey": "gopay_shared_maybelater_cta",
+          "semanticPath": "common/maybe-later/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Maybe later"
+    },
+    "gopay_shared_moneybackguarantee_label": {
+      "$description": "cp_01M3NX21N8FCPV6EYQ94DKY0D0\nShared › Common › Money Back Guarantee › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21N8FCPV6EYQ94DKY0D0",
+          "platformKey": "gopay_shared_moneybackguarantee_label",
+          "semanticPath": "common/money-back-guarantee/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Money Back Guarantee"
+    },
+    "gopay_shared_month_text": {
+      "$description": "cp_01M3NX204JE44V2H1DGRWHM21R\nShared › Common › Month › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204JE44V2H1DGRWHM21R",
+          "platformKey": "gopay_shared_month_text",
+          "semanticPath": "common/month/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "/month"
+    },
+    "gopay_shared_month_text_2": {
+      "$description": "cp_01M3NX23GVFCASV28SHCAFS7C1\nShared › Common › Month › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23GVFCASV28SHCAFS7C1",
+          "platformKey": "gopay_shared_month_text_2",
+          "semanticPath": "common/month/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Month"
+    },
+    "gopay_shared_monthly_text": {
+      "$description": "cp_01M3NX202KEH9VMV8QQP836C7X\nShared › Common › Monthly › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202KEH9VMV8QQP836C7X",
+          "platformKey": "gopay_shared_monthly_text",
+          "semanticPath": "common/monthly/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Monthly"
+    },
+    "gopay_shared_monthlyincome_text": {
+      "$description": "cp_01M3NX203KE06SBMTDRSX9TDQ8\nShared › Common › Monthly Income › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203KE06SBMTDRSX9TDQ8",
+          "platformKey": "gopay_shared_monthlyincome_text",
+          "semanticPath": "common/monthly-income/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Monthly income"
+    },
+    "gopay_shared_moredetails_cta": {
+      "$description": "cp_01M3NX20FVFW9T83ZJBQ0KY4JJ\nShared › Common › More Details › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FVFW9T83ZJBQ0KY4JJ",
+          "platformKey": "gopay_shared_moredetails_cta",
+          "semanticPath": "common/more-details/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "More details"
+    },
+    "gopay_shared_moreinfo_helper": {
+      "$description": "cp_01M3NX205CE4YVTYPEBBQA5R8Y\nShared › Common › More Info › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205CE4YVTYPEBBQA5R8Y",
+          "platformKey": "gopay_shared_moreinfo_helper",
+          "semanticPath": "common/more-info/main/helper",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "More info"
+    },
+    "gopay_shared_motorcycleinsurance_text": {
+      "$description": "cp_01M3NX2094FXRV1WN4PRZ8NKP7\nShared › Common › Motorcycle Insurance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2094FXRV1WN4PRZ8NKP7",
+          "platformKey": "gopay_shared_motorcycleinsurance_text",
+          "semanticPath": "common/motorcycle-insurance/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Motorcycle insurance"
+    },
+    "gopay_shared_multifinanceanakbangsa_text": {
+      "$description": "cp_01M3NX202NEKF9CER2YPZV652P\nShared › Common › Multifinance Anak Bangsa › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202NEKF9CER2YPZV652P",
+          "platformKey": "gopay_shared_multifinanceanakbangsa_text",
+          "semanticPath": "common/multifinance-anak-bangsa/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Multifinance Anak Bangsa"
+    },
+    "gopay_shared_name_label": {
+      "$description": "cp_01M3NX203KESVVDGYYVQVS5910\nShared › Common › Name › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203KESVVDGYYVQVS5910",
+          "platformKey": "gopay_shared_name_label",
+          "semanticPath": "common/name/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Name"
+    },
+    "gopay_shared_needhelp_cta": {
+      "$description": "cp_01M3NX202EFKTAYKVGKB5GPSWJ\nShared › Common › Need Help › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202EFKTAYKVGKB5GPSWJ",
+          "platformKey": "gopay_shared_needhelp_cta",
+          "semanticPath": "common/need-help/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Need help?"
+    },
+    "gopay_shared_needmoretimetoprocess_label": {
+      "$description": "cp_01M3NX202PF8A8FS7QDXKZVSSD\nShared › Common › Need More Time To Process › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202PF8A8FS7QDXKZVSSD",
+          "platformKey": "gopay_shared_needmoretimetoprocess_label",
+          "semanticPath": "common/need-more-time-to-process/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Need more time to process"
+    },
+    "gopay_shared_new_badge": {
+      "$description": "cp_01M3NX2069F2YB4BPHET7K3CK3\nShared › Common › New › Badge",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2069F2YB4BPHET7K3CK3",
+          "platformKey": "gopay_shared_new_badge",
+          "semanticPath": "common/new/main/badge",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "New"
+    },
+    "gopay_shared_nextduedate_text": {
+      "$description": "cp_01M3NX2055EY0BVQV1M4GF8862\nShared › Common › Next Due Date › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055EY0BVQV1M4GF8862",
+          "platformKey": "gopay_shared_nextduedate_text",
+          "semanticPath": "common/next-due-date/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Next due date"
+    },
+    "gopay_shared_nik_text": {
+      "$description": "cp_01M3NX202CF07B80J3ET60V615\nShared › Common › Nik › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CF07B80J3ET60V615",
+          "platformKey": "gopay_shared_nik_text",
+          "semanticPath": "common/nik/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "NIK"
+    },
+    "gopay_shared_nikisrequired_description": {
+      "$description": "cp_01M3NX2051FZF8ZHT9AN2XQVSW\nShared › Common › Nik Is Required › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051FZF8ZHT9AN2XQVSW",
+          "platformKey": "gopay_shared_nikisrequired_description",
+          "semanticPath": "common/nik-is-required/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "NIK is required"
+    },
+    "gopay_shared_nokeepit_cta": {
+      "$description": "cp_01M3NX207AEE0V29NXA5Q8FRD4\nShared › Common › No Keep It › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX207AEE0V29NXA5Q8FRD4",
+          "platformKey": "gopay_shared_nokeepit_cta",
+          "semanticPath": "common/no-keep-it/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "No, keep it"
+    },
+    "gopay_shared_nonumberssymbolsoremojiallowed_error": {
+      "$description": "cp_01M3NX204KE06BHJEVTH42YJ7T\nShared › Common › No Numbers Symbols Or Emoji Allo › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204KE06BHJEVTH42YJ7T",
+          "platformKey": "gopay_shared_nonumberssymbolsoremojiallowed_error",
+          "semanticPath": "common/no-numbers-symbols-or-emoji-allo/main/error",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "No numbers, symbols, or emoji allowed."
+    },
+    "gopay_shared_nostay_cta": {
+      "$description": "cp_01M3NX20H4F48A10CH9M61Z376\nShared › Common › No Stay › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20H4F48A10CH9M61Z376",
+          "platformKey": "gopay_shared_nostay_cta",
+          "semanticPath": "common/no-stay/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "No, stay"
+    },
+    "gopay_shared_nostayhere_ctaprimary": {
+      "$description": "cp_01M3NX204CEYGRNNNS4HAN9THH\nShared › Common › No Stay Here › Cta Primary",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204CEYGRNNNS4HAN9THH",
+          "platformKey": "gopay_shared_nostayhere_ctaprimary",
+          "semanticPath": "common/no-stay-here/main/cta-primary",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "No, stay here"
+    },
+    "gopay_shared_notavailable_text": {
+      "$description": "cp_01M3NX2050F4CAHET82NXP275Q\nShared › Common › Not Available › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050F4CAHET82NXP275Q",
+          "platformKey": "gopay_shared_notavailable_text",
+          "semanticPath": "common/not-available/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Not available"
+    },
+    "gopay_shared_nothanks_text": {
+      "$description": "cp_01M3NX206SF948AX4NPE852WDV\nShared › Common › No Thanks › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206SF948AX4NPE852WDV",
+          "platformKey": "gopay_shared_nothanks_text",
+          "semanticPath": "common/no-thanks/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "No, thanks"
+    },
+    "gopay_shared_notnow_ctaprimary": {
+      "$description": "cp_01M3NX20V4EQZRW5JNND4JXQ5R\nShared › Common › Not Now › Cta Primary",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V4EQZRW5JNND4JXQ5R",
+          "platformKey": "gopay_shared_notnow_ctaprimary",
+          "semanticPath": "common/not-now/main/cta-primary",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Not now"
+    },
+    "gopay_shared_occupation_text": {
+      "$description": "cp_01M3NX2028EZJR546YVYJM3G5H\nShared › Common › Occupation › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028EZJR546YVYJM3G5H",
+          "platformKey": "gopay_shared_occupation_text",
+          "semanticPath": "common/occupation/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Occupation"
+    },
+    "gopay_shared_ok_cta": {
+      "$description": "cp_01M3NX20KZEAABCNTJQFHFJPYM\nShared › Common › Ok › Cta\nNote: Đã rõ Đã rõ",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KZEAABCNTJQFHFJPYM",
+          "platformKey": "gopay_shared_ok_cta",
+          "semanticPath": "common/ok/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Okay"
+    },
+    "gopay_shared_okgotit_cta": {
+      "$description": "cp_01M3NX202CEDDVNJS16SBEA8W0\nShared › Common › Ok Got It › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CEDDVNJS16SBEA8W0",
+          "platformKey": "gopay_shared_okgotit_cta",
+          "semanticPath": "common/ok-got-it/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Ok, got it"
+    },
+    "gopay_shared_onestepclosertobeprotected_text": {
+      "$description": "cp_01M3NX206GFGGR87MM0GWH8P1Y\nShared › Common › One Step Closer To Be Protected › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206GFGGR87MM0GWH8P1Y",
+          "platformKey": "gopay_shared_onestepclosertobeprotected_text",
+          "semanticPath": "common/one-step-closer-to-be-protected/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "One step closer to be protected"
+    },
+    "gopay_shared_open_text": {
+      "$description": "cp_01M3NX235BF79VD87QXFSSRQTH\nShared › Common › Open › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX235BF79VD87QXFSSRQTH",
+          "platformKey": "gopay_shared_open_text",
+          "semanticPath": "common/open/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Open"
+    },
+    "gopay_shared_opengopayapp_cta": {
+      "$description": "cp_01M3NX202VFFXRTKSANJYHPWZ5\nShared › Common › Open Gopay App › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202VFFXRTKSANJYHPWZ5",
+          "platformKey": "gopay_shared_opengopayapp_cta",
+          "semanticPath": "common/open-gopay-app/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Open GoPay app"
+    },
+    "gopay_shared_opennow_cta": {
+      "$description": "cp_01M3NX202WEJ2TF3PY12H08J17\nShared › Common › Open Now › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202WEJ2TF3PY12H08J17",
+          "platformKey": "gopay_shared_opennow_cta",
+          "semanticPath": "common/open-now/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Open now"
+    },
+    "gopay_shared_or_title": {
+      "$description": "cp_01M3NX20JQFJ18RYA8GCYJKGMC\nShared › Common › Or › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20JQFJ18RYA8GCYJKGMC",
+          "platformKey": "gopay_shared_or_title",
+          "semanticPath": "common/or/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "or"
+    },
+    "gopay_shared_other_text": {
+      "$description": "cp_01M3NX2046FNKR3ZWCTK8CFWT0\nShared › Common › Other › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2046FNKR3ZWCTK8CFWT0",
+          "platformKey": "gopay_shared_other_text",
+          "semanticPath": "common/other/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Other"
+    },
+    "gopay_shared_otherreason_title": {
+      "$description": "cp_01M3NX205AEM4BMJR6XVMGVZ9T\nShared › Common › Other Reason › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205AEM4BMJR6XVMGVZ9T",
+          "platformKey": "gopay_shared_otherreason_title",
+          "semanticPath": "common/other-reason/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Other reason"
+    },
+    "gopay_shared_others_label": {
+      "$description": "cp_01M3NX202CF5TV67VG83DHWB3M\nShared › Common › Others › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CF5TV67VG83DHWB3M",
+          "platformKey": "gopay_shared_others_label",
+          "semanticPath": "common/others/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Others"
+    },
+    "gopay_shared_outpatientcoverage_text": {
+      "$description": "cp_01M3NX204WFEDB3P3XK70QY6VC\nShared › Common › Outpatient Coverage › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204WFEDB3P3XK70QY6VC",
+          "platformKey": "gopay_shared_outpatientcoverage_text",
+          "semanticPath": "common/outpatient-coverage/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Outpatient coverage"
+    },
+    "gopay_shared_overdue_label": {
+      "$description": "cp_01M3NX202TETE8ATD8KRRENS3E\nShared › Common › Overdue › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202TETE8ATD8KRRENS3E",
+          "platformKey": "gopay_shared_overdue_label",
+          "semanticPath": "common/overdue/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Overdue"
+    },
+    "gopay_shared_paid_cta": {
+      "$description": "cp_01M3NX2030E5XT93EPH1HAWST1\nShared › Common › Paid › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2030E5XT93EPH1HAWST1",
+          "platformKey": "gopay_shared_paid_cta",
+          "semanticPath": "common/paid/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Paid"
+    },
+    "gopay_shared_payment_label": {
+      "$description": "cp_01M3NX202FF5WRY39J6B38JKJ5\nShared › Common › Payment › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202FF5WRY39J6B38JKJ5",
+          "platformKey": "gopay_shared_payment_label",
+          "semanticPath": "common/payment/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Payment"
+    },
+    "gopay_shared_paymentdetails_title": {
+      "$description": "cp_01M3NX202DFS8BQMTPB3W59CXD\nShared › Common › Payment Details › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202DFS8BQMTPB3W59CXD",
+          "platformKey": "gopay_shared_paymentdetails_title",
+          "semanticPath": "common/payment-details/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Payment details"
+    },
+    "gopay_shared_paymentfailed_text": {
+      "$description": "cp_01M3NX20B7F03AZXQYERNJGKQ6\nShared › Common › Payment Failed › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20B7F03AZXQYERNJGKQ6",
+          "platformKey": "gopay_shared_paymentfailed_text",
+          "semanticPath": "common/payment-failed/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Payment failed"
+    },
+    "gopay_shared_paymentmethod_title": {
+      "$description": "cp_01M3NX2029ED5BB7MJ7339VNFJ\nShared › Common › Payment Method › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029ED5BB7MJ7339VNFJ",
+          "platformKey": "gopay_shared_paymentmethod_title",
+          "semanticPath": "common/payment-method/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Payment method"
+    },
+    "gopay_shared_paymentsuccessful_title": {
+      "$description": "cp_01M3NX20FYEB5867PQS8HZ4EXH\nShared › Common › Payment Successful › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FYEB5867PQS8HZ4EXH",
+          "platformKey": "gopay_shared_paymentsuccessful_title",
+          "semanticPath": "common/payment-successful/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Payment successful"
+    },
+    "gopay_shared_paynow_text": {
+      "$description": "cp_01M3NX2029EQYAKGXFDVNXY35M\nShared › Common › Pay Now › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029EQYAKGXFDVNXY35M",
+          "platformKey": "gopay_shared_paynow_text",
+          "semanticPath": "common/pay-now/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pay now"
+    },
+    "gopay_shared_pending_text": {
+      "$description": "cp_01M3NX2038F1YBHT1NEFMYNK8Q\nShared › Common › Pending › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2038F1YBHT1NEFMYNK8Q",
+          "platformKey": "gopay_shared_pending_text",
+          "semanticPath": "common/pending/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Pending"
+    },
+    "gopay_shared_personal_tab": {
+      "$description": "cp_01M3NX20S9FMS9RQ6E1H793N9F\nShared › Common › Personal › Tab",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20S9FMS9RQ6E1H793N9F",
+          "platformKey": "gopay_shared_personal_tab",
+          "semanticPath": "common/personal/main/tab",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Personal"
+    },
+    "gopay_shared_personaldetails_text": {
+      "$description": "cp_01M3NX2028F4HS6YJZ4M3GQC57\nShared › Common › Personal Details › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028F4HS6YJZ4M3GQC57",
+          "platformKey": "gopay_shared_personaldetails_text",
+          "semanticPath": "common/personal-details/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Personal details"
+    },
+    "gopay_shared_personalinformation_title": {
+      "$description": "cp_01M3NX202EE239MJPA1ZXWFFY4\nShared › Common › Personal Information › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202EE239MJPA1ZXWFFY4",
+          "platformKey": "gopay_shared_personalinformation_title",
+          "semanticPath": "common/personal-information/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Personal information"
+    },
+    "gopay_shared_peryear_text": {
+      "$description": "cp_01M3NX2050FD8T644Z5DNHMQJ8\nShared › Common › Per Year › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050FD8T644Z5DNHMQJ8",
+          "platformKey": "gopay_shared_peryear_text",
+          "semanticPath": "common/per-year/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "per year"
+    },
+    "gopay_shared_phonenumber_title": {
+      "$description": "cp_01M3NX2028ETSA7M7GSV51T6MM\nShared › Common › Phone Number › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028ETSA7M7GSV51T6MM",
+          "platformKey": "gopay_shared_phonenumber_title",
+          "semanticPath": "common/phone-number/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Phone number"
+    },
+    "gopay_shared_phonenumberisrequired_description": {
+      "$description": "cp_01M3NX2052FX0BR6VQSEXCMT2G\nShared › Common › Phone Number Is Required › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2052FX0BR6VQSEXCMT2G",
+          "platformKey": "gopay_shared_phonenumberisrequired_description",
+          "semanticPath": "common/phone-number-is-required/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Phone number is required"
+    },
+    "gopay_shared_plandetails_text": {
+      "$description": "cp_01M3NX2096E4PR6W3F3V21SS3F\nShared › Common › Plan Details › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2096E4PR6W3F3V21SS3F",
+          "platformKey": "gopay_shared_plandetails_text",
+          "semanticPath": "common/plan-details/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Plan details"
+    },
+    "gopay_shared_pleasefilloutyourdata_subtitle": {
+      "$description": "cp_01M3NX2051FK8RBBWD0KDZGSHC\nShared › Common › Please Fill Out Your Data › Subtitle",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051FK8RBBWD0KDZGSHC",
+          "platformKey": "gopay_shared_pleasefilloutyourdata_subtitle",
+          "semanticPath": "common/please-fill-out-your-data/main/subtitle",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Please fill out your data"
+    },
+    "gopay_shared_pleasetryagainafterafewminutes_description": {
+      "$description": "cp_01M3NX20JGE7YVH751NM06JGEG\nShared › Common › Please Try Again After A Few Min › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20JGE7YVH751NM06JGEG",
+          "platformKey": "gopay_shared_pleasetryagainafterafewminutes_description",
+          "semanticPath": "common/please-try-again-after-a-few-min/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Please try again after a few minutes."
+    },
+    "gopay_shared_pleaseuseothermethodtocontinue_description": {
+      "$description": "cp_01M3NX20FZE289Q0J2WQW3FMAR\nShared › Common › Please Use Other Method To Conti › Description",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FZE289Q0J2WQW3FMAR",
+          "platformKey": "gopay_shared_pleaseuseothermethodtocontinue_description",
+          "semanticPath": "common/please-use-other-method-to-conti/main/description",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Please use other method to continue."
+    },
+    "gopay_shared_pleasewaitabit_text": {
+      "$description": "cp_01M3NX202EE5W8MRGDQ8H35DBJ\nShared › Common › Please Wait A Bit › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202EE5W8MRGDQ8H35DBJ",
+          "platformKey": "gopay_shared_pleasewaitabit_text",
+          "semanticPath": "common/please-wait-a-bit/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Please wait a bit..."
+    },
+    "gopay_shared_policyisvalidforoneyear_title": {
+      "$description": "cp_01M3NX204RE3SSY0Z4KFM1B8Z5\nShared › Common › Policy Is Valid For One Year › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RE3SSY0Z4KFM1B8Z5",
+          "platformKey": "gopay_shared_policyisvalidforoneyear_title",
+          "semanticPath": "common/policy-is-valid-for-one-year/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Policy is valid for one year"
+    },
+    "gopay_shared_policynumber_text": {
+      "$description": "cp_01M3NX2055EQ5TESYAPNQ20R7G\nShared › Common › Policy Number › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2055EQ5TESYAPNQ20R7G",
+          "platformKey": "gopay_shared_policynumber_text",
+          "semanticPath": "common/policy-number/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Policy number"
+    },
+    "gopay_shared_popular_badge": {
+      "$description": "cp_01M3NX202KEVXS0T65JE282BJ5\nShared › Common › Popular › Badge",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202KEVXS0T65JE282BJ5",
+          "platformKey": "gopay_shared_popular_badge",
+          "semanticPath": "common/popular/main/badge",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Popular"
+    },
+    "gopay_shared_popular_text": {
+      "$description": "cp_01M3NX202HEC2SRK4F9XV6ZCTJ\nShared › Common › Popular › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202HEC2SRK4F9XV6ZCTJ",
+          "platformKey": "gopay_shared_popular_text",
+          "semanticPath": "common/popular/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "(Popular)"
+    },
+    "gopay_shared_portfoliovalue_text": {
+      "$description": "cp_01M3NX2027FVQRDQQDYMBME1PY\nShared › Common › Portfolio Value › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2027FVQRDQQDYMBME1PY",
+          "platformKey": "gopay_shared_portfoliovalue_text",
+          "semanticPath": "common/portfolio-value/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Portfolio value"
+    },
+    "gopay_shared_poweredby_title": {
+      "$description": "cp_01M3NX202MEHZB4D9QYE27DQE7\nShared › Common › Powered By › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202MEHZB4D9QYE27DQE7",
+          "platformKey": "gopay_shared_poweredby_title",
+          "semanticPath": "common/powered-by/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Powered by"
+    },
+    "gopay_shared_premium_text": {
+      "$description": "cp_01M3NX204REFARV52ZSPM7JV0H\nShared › Common › Premium › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204REFARV52ZSPM7JV0H",
+          "platformKey": "gopay_shared_premium_text",
+          "semanticPath": "common/premium/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Premium"
+    },
+    "gopay_shared_premiumprice_text": {
+      "$description": "cp_01M3NX204QE30R01W20MRHWXY0\nShared › Common › Premium Price › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204QE30R01W20MRHWXY0",
+          "platformKey": "gopay_shared_premiumprice_text",
+          "semanticPath": "common/premium-price/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Premium price"
+    },
+    "gopay_shared_preparetherequireddocuments_text": {
+      "$description": "cp_01M3NX206DFM4S749X4ZVE1NFV\nShared › Common › Prepare The Required Documents › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206DFM4S749X4ZVE1NFV",
+          "platformKey": "gopay_shared_preparetherequireddocuments_text",
+          "semanticPath": "common/prepare-the-required-documents/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Prepare the required documents."
+    },
+    "gopay_shared_prizes_text": {
+      "$description": "cp_01M3NX203RFYQSYMB1BX5FATSP\nShared › Common › Prizes › Text\nNote: Prizes Hadiah Prizes Hadiah",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203RFYQSYMB1BX5FATSP",
+          "platformKey": "gopay_shared_prizes_text",
+          "semanticPath": "common/prizes/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Prizes"
+    },
+    "gopay_shared_processingyourrequest_text": {
+      "$description": "cp_01M3NX2073F969TTYYJ6NDH6ZP\nShared › Common › Processing Your Request › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2073F969TTYYJ6NDH6ZP",
+          "platformKey": "gopay_shared_processingyourrequest_text",
+          "semanticPath": "common/processing-your-request/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Processing your request"
+    },
+    "gopay_shared_promos_title": {
+      "$description": "cp_01M3NX20V0FTG9V3M4FR2GGT2F\nShared › Common › Promos › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20V0FTG9V3M4FR2GGT2F",
+          "platformKey": "gopay_shared_promos_title",
+          "semanticPath": "common/promos/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Promos"
+    },
+    "gopay_shared_protectyouraccount_text": {
+      "$description": "cp_01M3NX20EEFVDSVD4EVGQFH6ZK\nShared › Common › Protect Your Account › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20EEFVDSVD4EVGQFH6ZK",
+          "platformKey": "gopay_shared_protectyouraccount_text",
+          "semanticPath": "common/protect-your-account/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Protect your account!"
+    },
+    "gopay_shared_purchasedpolicyisvalidforoneyear_text": {
+      "$description": "cp_01M3NX2096FYASCPTJAAS0M1XP\nShared › Common › Purchased Policy Is Valid For On › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2096FYASCPTJAAS0M1XP",
+          "platformKey": "gopay_shared_purchasedpolicyisvalidforoneyear_text",
+          "semanticPath": "common/purchased-policy-is-valid-for-on/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Purchased policy is valid for one year"
+    },
+    "gopay_shared_qris_cta": {
+      "$description": "cp_01M3NX20NHEDARYRA3E6Y8E5CX\nShared › Common › Qris › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20NHEDARYRA3E6Y8E5CX",
+          "platformKey": "gopay_shared_qris_cta",
+          "semanticPath": "common/qris/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "QRIS"
+    },
+    "gopay_shared_received_title": {
+      "$description": "cp_01M3NX22XKFMA8Q3JBGT119RR1\nShared › Common › Received › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22XKFMA8Q3JBGT119RR1",
+          "platformKey": "gopay_shared_received_title",
+          "semanticPath": "common/received/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Received"
+    },
+    "gopay_shared_recommended_text": {
+      "$description": "cp_01M3NX202GEM4TPN3H7W7T1YN0\nShared › Common › Recommended › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202GEM4TPN3H7W7T1YN0",
+          "platformKey": "gopay_shared_recommended_text",
+          "semanticPath": "common/recommended/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "(Recommended)"
+    },
+    "gopay_shared_recommended_text_2": {
+      "$description": "cp_01M3NX205XFER8WQMDK7R1EVFP\nShared › Common › Recommended › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205XFER8WQMDK7R1EVFP",
+          "platformKey": "gopay_shared_recommended_text_2",
+          "semanticPath": "common/recommended/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Recommended"
+    },
+    "gopay_shared_recommendedmethods_title": {
+      "$description": "cp_01M3NX20KKEXBBDKA69PHMN8FB\nShared › Common › Recommended Methods › Title\nNote: Phương thức được đề xuất Phương thức được đề xuất",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KKEXBBDKA69PHMN8FB",
+          "platformKey": "gopay_shared_recommendedmethods_title",
+          "semanticPath": "common/recommended-methods/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Recommended methods"
+    },
+    "gopay_shared_refund_title": {
+      "$description": "cp_01M3NX202TFVBRSPC60D08WWRW\nShared › Common › Refund › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202TFVBRSPC60D08WWRW",
+          "platformKey": "gopay_shared_refund_title",
+          "semanticPath": "common/refund/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Refund"
+    },
+    "gopay_shared_registrationform_title": {
+      "$description": "cp_01M3NX2043E08AVKJ0340J2KQJ\nShared › Common › Registration Form › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2043E08AVKJ0340J2KQJ",
+          "platformKey": "gopay_shared_registrationform_title",
+          "semanticPath": "common/registration-form/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Registration form"
+    },
+    "gopay_shared_reguler_text": {
+      "$description": "cp_01M3NX204RE2QT4ZF6MQ0TCPS4\nShared › Common › Reguler › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RE2QT4ZF6MQ0TCPS4",
+          "platformKey": "gopay_shared_reguler_text",
+          "semanticPath": "common/reguler/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Reguler"
+    },
+    "gopay_shared_rejected_text": {
+      "$description": "cp_01M3NX202ZEEVB1302JPNNEAFC\nShared › Common › Rejected › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202ZEEVB1302JPNNEAFC",
+          "platformKey": "gopay_shared_rejected_text",
+          "semanticPath": "common/rejected/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Rejected"
+    },
+    "gopay_shared_remindme_cta": {
+      "$description": "cp_01M3NX20QMFZ5S55D7JJ23ZRYX\nShared › Common › Remind Me › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20QMFZ5S55D7JJ23ZRYX",
+          "platformKey": "gopay_shared_remindme_cta",
+          "semanticPath": "common/remind-me/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Remind me"
+    },
+    "gopay_shared_remove_cta": {
+      "$description": "cp_01M3NX20D1EV3BBPDXNDKTTA0P\nShared › Common › Remove › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D1EV3BBPDXNDKTTA0P",
+          "platformKey": "gopay_shared_remove_cta",
+          "semanticPath": "common/remove/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Remove"
+    },
+    "gopay_shared_repay_cta": {
+      "$description": "cp_01M3NX202TFR6A8MWG73TDSRBB\nShared › Common › Repay › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202TFR6A8MWG73TDSRBB",
+          "platformKey": "gopay_shared_repay_cta",
+          "semanticPath": "common/repay/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Repay"
+    },
+    "gopay_shared_request_title": {
+      "$description": "cp_01M3NX21RZEEXRBQJKHHANTM42\nShared › Common › Request › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21RZEEXRBQJKHHANTM42",
+          "platformKey": "gopay_shared_request_title",
+          "semanticPath": "common/request/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Request"
+    },
+    "gopay_shared_retry_cta": {
+      "$description": "cp_01M3NX202VEBB8YW7XKR5BY62R\nShared › Common › Retry › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202VEBB8YW7XKR5BY62R",
+          "platformKey": "gopay_shared_retry_cta",
+          "semanticPath": "common/retry/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Retry"
+    },
+    "gopay_shared_return_text": {
+      "$description": "cp_01M3NX202AFJ49HMV1A6ZGE387\nShared › Common › Return › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202AFJ49HMV1A6ZGE387",
+          "platformKey": "gopay_shared_return_text",
+          "semanticPath": "common/return/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Return"
+    },
+    "gopay_shared_reviewpayment_text": {
+      "$description": "cp_01M3NX2054FN584PA73KGGGGPR\nShared › Common › Review Payment › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2054FN584PA73KGGGGPR",
+          "platformKey": "gopay_shared_reviewpayment_text",
+          "semanticPath": "common/review-payment/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Review payment"
+    },
+    "gopay_shared_rpxxxxxgr_text": {
+      "$description": "cp_01M3NX202FEHDS60V1VNYF752B\nShared › Common › Rpxxxxx Gr › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202FEHDS60V1VNYF752B",
+          "platformKey": "gopay_shared_rpxxxxxgr_text",
+          "semanticPath": "common/rpxxxxx-gr/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "RpXXXXX/gr"
+    },
+    "gopay_shared_save_cta": {
+      "$description": "cp_01M3NX205AEM9S4PHF0W246T99\nShared › Common › Save › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205AEM9S4PHF0W246T99",
+          "platformKey": "gopay_shared_save_cta",
+          "semanticPath": "common/save/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Save"
+    },
+    "gopay_shared_savedaccounts_title": {
+      "$description": "cp_01M3NX2043E60T1K65H2SJQ6WX\nShared › Common › Saved Accounts › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2043E60T1K65H2SJQ6WX",
+          "platformKey": "gopay_shared_savedaccounts_title",
+          "semanticPath": "common/saved-accounts/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Saved accounts"
+    },
+    "gopay_shared_savemorewithvoucherpacks_title": {
+      "$description": "cp_01M3NX20XFFT5S9N5WPJTETZQB\nShared › Common › Save More With Voucher Packs › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20XFFT5S9N5WPJTETZQB",
+          "platformKey": "gopay_shared_savemorewithvoucherpacks_title",
+          "semanticPath": "common/save-more-with-voucher-packs/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Save more with Voucher Packs"
+    },
+    "gopay_shared_scratchcard_title": {
+      "$description": "cp_01M3NX21YPE8YVRDR6EV5MT8N8\nShared › Common › Scratch Card › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21YPE8YVRDR6EV5MT8N8",
+          "platformKey": "gopay_shared_scratchcard_title",
+          "semanticPath": "common/scratch-card/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Scratch card"
+    },
+    "gopay_shared_search_title": {
+      "$description": "cp_01M3NX20F7F3MS0YDRC8P39622\nShared › Common › Search › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20F7F3MS0YDRC8P39622",
+          "platformKey": "gopay_shared_search_title",
+          "semanticPath": "common/search/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Search"
+    },
+    "gopay_shared_seeall_cta": {
+      "$description": "cp_01M3NX2028EX5B3DWYC918ACK2\nShared › Common › See All › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028EX5B3DWYC918ACK2",
+          "platformKey": "gopay_shared_seeall_cta",
+          "semanticPath": "common/see-all/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "See all"
+    },
+    "gopay_shared_seecoveragedetails_cta": {
+      "$description": "cp_01M3NX2069EX4SRS85MZ8RQEJV\nShared › Common › See Coverage Details › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2069EX4SRS85MZ8RQEJV",
+          "platformKey": "gopay_shared_seecoveragedetails_cta",
+          "semanticPath": "common/see-coverage-details/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "See coverage details"
+    },
+    "gopay_shared_seemore_cta": {
+      "$description": "cp_01M3NX202VEK5R75E3GYKANDA4\nShared › Common › See More › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202VEK5R75E3GYKANDA4",
+          "platformKey": "gopay_shared_seemore_cta",
+          "semanticPath": "common/see-more/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "See more"
+    },
+    "gopay_shared_seeplans_text": {
+      "$description": "cp_01M3NX206QFYABA5RNCRKVS0GH\nShared › Common › See Plans › Text\nNote: 11",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206QFYABA5RNCRKVS0GH",
+          "platformKey": "gopay_shared_seeplans_text",
+          "semanticPath": "common/see-plans/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "See plans"
+    },
+    "gopay_shared_selectage_text": {
+      "$description": "cp_01M3NX2060EBHBCBVEKEGHCV9K\nShared › Common › Select Age › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2060EBHBCBVEKEGHCV9K",
+          "platformKey": "gopay_shared_selectage_text",
+          "semanticPath": "common/select-age/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Select age"
+    },
+    "gopay_shared_selectdate_placeholder": {
+      "$description": "cp_01M3NX202KE3QBB8YRCARTQR7Z\nShared › Common › Select Date › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202KE3QBB8YRCARTQR7Z",
+          "platformKey": "gopay_shared_selectdate_placeholder",
+          "semanticPath": "common/select-date/main/placeholder",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Select date"
+    },
+    "gopay_shared_selectpaymentmethod_title": {
+      "$description": "cp_01M3NX20FJEK08VV8ESW39M73W\nShared › Common › Select Payment Method › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FJEK08VV8ESW39M73W",
+          "platformKey": "gopay_shared_selectpaymentmethod_title",
+          "semanticPath": "common/select-payment-method/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Select payment method"
+    },
+    "gopay_shared_selecttenor_text": {
+      "$description": "cp_01M3NX202NF5S8SHM0B5TE1P3C\nShared › Common › Select Tenor › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202NF5S8SHM0B5TE1P3C",
+          "platformKey": "gopay_shared_selecttenor_text",
+          "semanticPath": "common/select-tenor/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Select tenor"
+    },
+    "gopay_shared_sell_cta": {
+      "$description": "cp_01M3NX2029EWH9CVRQ0RTP3F8B\nShared › Common › Sell › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029EWH9CVRQ0RTP3F8B",
+          "platformKey": "gopay_shared_sell_cta",
+          "semanticPath": "common/sell/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sell"
+    },
+    "gopay_shared_sent_title": {
+      "$description": "cp_01M3NX22XJFCSA0PJJMVPAV18Z\nShared › Common › Sent › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22XJFCSA0PJJMVPAV18Z",
+          "platformKey": "gopay_shared_sent_title",
+          "semanticPath": "common/sent/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sent"
+    },
+    "gopay_shared_share_cta": {
+      "$description": "cp_01M3NX216YE5MTKXNT055BNYMY\nShared › Common › Share › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX216YE5MTKXNT055BNYMY",
+          "platformKey": "gopay_shared_share_cta",
+          "semanticPath": "common/share/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Share"
+    },
+    "gopay_shared_sharedpaymentmethod_title": {
+      "$description": "cp_01M3NX20SPF46TPH30FKTMM3FF\nShared › Common › Shared Payment Method › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20SPF46TPH30FKTMM3FF",
+          "platformKey": "gopay_shared_sharedpaymentmethod_title",
+          "semanticPath": "common/shared-payment-method/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Shared payment method"
+    },
+    "gopay_shared_showless_text": {
+      "$description": "cp_01M3NX2029E8PA70RM9WDYP56M\nShared › Common › Show Less › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029E8PA70RM9WDYP56M",
+          "platformKey": "gopay_shared_showless_text",
+          "semanticPath": "common/show-less/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Show less"
+    },
+    "gopay_shared_showmore_cta": {
+      "$description": "cp_01M3NX2029E1E8HSBAZW8ZCF6G\nShared › Common › Show More › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029E1E8HSBAZW8ZCF6G",
+          "platformKey": "gopay_shared_showmore_cta",
+          "semanticPath": "common/show-more/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Show more"
+    },
+    "gopay_shared_showqr_cta": {
+      "$description": "cp_01M3NX213NE21AQNEKJXK1K2C4\nShared › Common › Show Qr › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213NE21AQNEKJXK1K2C4",
+          "platformKey": "gopay_shared_showqr_cta",
+          "semanticPath": "common/show-qr/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Show QR"
+    },
+    "gopay_shared_simpanan_title": {
+      "$description": "cp_01M3NX202BECTTK7TPKP3PZBFM\nShared › Common › Simpanan › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202BECTTK7TPKP3PZBFM",
+          "platformKey": "gopay_shared_simpanan_title",
+          "semanticPath": "common/simpanan/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Simpanan"
+    },
+    "gopay_shared_skip_text": {
+      "$description": "cp_01M3NX20BNF0VANFQD53403E56\nShared › Common › Skip › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20BNF0VANFQD53403E56",
+          "platformKey": "gopay_shared_skip_text",
+          "semanticPath": "common/skip/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Skip"
+    },
+    "gopay_shared_sourceoffund_text": {
+      "$description": "cp_01M3NX202MFV58K3JGKBDD00Z4\nShared › Common › Source Of Fund › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202MFV58K3JGKBDD00Z4",
+          "platformKey": "gopay_shared_sourceoffund_text",
+          "semanticPath": "common/source-of-fund/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Source of fund"
+    },
+    "gopay_shared_sourceofincome_text": {
+      "$description": "cp_01M3NX2028EPAB8J14P26NWM8Q\nShared › Common › Source Of Income › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028EPAB8J14P26NWM8Q",
+          "platformKey": "gopay_shared_sourceofincome_text",
+          "semanticPath": "common/source-of-income/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Source of income"
+    },
+    "gopay_shared_specialforyou_title": {
+      "$description": "cp_01M3NX2027FXJ9A5HD14TT0FEN\nShared › Common › Special For You › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2027FXJ9A5HD14TT0FEN",
+          "platformKey": "gopay_shared_specialforyou_title",
+          "semanticPath": "common/special-for-you/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Special for you"
+    },
+    "gopay_shared_splitbill_title": {
+      "$description": "cp_01M3NX213HFDPREBS948W4F50M\nShared › Common › Split Bill › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213HFDPREBS948W4F50M",
+          "platformKey": "gopay_shared_splitbill_title",
+          "semanticPath": "common/split-bill/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Split bill"
+    },
+    "gopay_shared_standar_text": {
+      "$description": "cp_01M3NX204RFTJSE36RZTAT7QP1\nShared › Common › Standar › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204RFTJSE36RZTAT7QP1",
+          "platformKey": "gopay_shared_standar_text",
+          "semanticPath": "common/standar/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Standar"
+    },
+    "gopay_shared_status_text": {
+      "$description": "cp_01M3NX2029FFQS8P71ERR7MSAW\nShared › Common › Status › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029FFQS8P71ERR7MSAW",
+          "platformKey": "gopay_shared_status_text",
+          "semanticPath": "common/status/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Status"
+    },
+    "gopay_shared_stayhere_cta": {
+      "$description": "cp_01M3NX20EVE77R3H4P136M136C\nShared › Common › Stay Here › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20EVE77R3H4P136M136C",
+          "platformKey": "gopay_shared_stayhere_cta",
+          "semanticPath": "common/stay-here/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Stay here"
+    },
+    "gopay_shared_staytunedmoretocome_text": {
+      "$description": "cp_01M3NX23CRFWWB7YF40R24RVDR\nShared › Common › Stay Tuned More To Come › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23CRFWWB7YF40R24RVDR",
+          "platformKey": "gopay_shared_staytunedmoretocome_text",
+          "semanticPath": "common/stay-tuned-more-to-come/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Stay tuned, more to come!"
+    },
+    "gopay_shared_stecusimpanteruscuan_title": {
+      "$description": "cp_01M3NX23QGE0KT2FW4HJZZ7RM2\nShared › Common › Stecu Simpan Terus Cuan › Title\nNote: takeout copy \"in partnership with Bibit\"",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23QGE0KT2FW4HJZZ7RM2",
+          "platformKey": "gopay_shared_stecusimpanteruscuan_title",
+          "semanticPath": "common/stecu-simpan-terus-cuan/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "SteCu: Simpan terus Cuan"
+    },
+    "gopay_shared_stecusimpanteruscuan_title_2": {
+      "$description": "cp_01M3NX23QBFRNRPVHPHWZ73R57\nShared › Common › Stecu Simpan Terus Cuan › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23QBFRNRPVHPHWZ73R57",
+          "platformKey": "gopay_shared_stecusimpanteruscuan_title_2",
+          "semanticPath": "common/stecu-simpan-terus-cuan/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "SteCu: Simpan terus Cuan ✨"
+    },
+    "gopay_shared_submit_cta": {
+      "$description": "cp_01M3NX204CEJQV7Q9PGFZ052TQ\nShared › Common › Submit › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204CEJQV7Q9PGFZ052TQ",
+          "platformKey": "gopay_shared_submit_cta",
+          "semanticPath": "common/submit/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Submit"
+    },
+    "gopay_shared_sureyouwanttoremovetheprotection_text": {
+      "$description": "cp_01M3NX20D1F7XTE92XZ9JGTE1J\nShared › Common › Sure You Want To Remove The Prot › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20D1F7XTE92XZ9JGTE1J",
+          "platformKey": "gopay_shared_sureyouwanttoremovetheprotection_text",
+          "semanticPath": "common/sure-you-want-to-remove-the-prot/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Sure you want to remove the protection?"
+    },
+    "gopay_shared_tabungan_text": {
+      "$description": "cp_01M3NX21E0FT58Z5GVYQYMV0KE\nShared › Common › Tabungan › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E0FT58Z5GVYQYMV0KE",
+          "platformKey": "gopay_shared_tabungan_text",
+          "semanticPath": "common/tabungan/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tabungan"
+    },
+    "gopay_shared_tagihandriver_text": {
+      "$description": "cp_01M3NX22HZFFJAN5FHBGVAYGM2\nShared › Common › Tagihan Driver › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22HZFFJAN5FHBGVAYGM2",
+          "platformKey": "gopay_shared_tagihandriver_text",
+          "semanticPath": "common/tagihan-driver/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tagihan driver"
+    },
+    "gopay_shared_takeaselfie_cta": {
+      "$description": "cp_01M3NX21F8E34RSDFXYGTS4F0J\nShared › Common › Take A Selfie › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21F8E34RSDFXYGTS4F0J",
+          "platformKey": "gopay_shared_takeaselfie_cta",
+          "semanticPath": "common/take-a-selfie/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Take a selfie"
+    },
+    "gopay_shared_taptoupdate_helper": {
+      "$description": "cp_01M3NX20XTFCBASDCYTNFYRMMN\nShared › Common › Tap To Update › Helper",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20XTFCBASDCYTNFYRMMN",
+          "platformKey": "gopay_shared_taptoupdate_helper",
+          "semanticPath": "common/tap-to-update/main/helper",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tap to update"
+    },
+    "gopay_shared_tenoroption_error": {
+      "$description": "cp_01M3NX202NEXNR5GB0QM9Z4RP5\nShared › Common › Tenor Option › Error",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202NEXNR5GB0QM9Z4RP5",
+          "platformKey": "gopay_shared_tenoroption_error",
+          "semanticPath": "common/tenor-option/main/error",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Tenor option"
+    },
+    "gopay_shared_termsandconditions_title": {
+      "$description": "cp_01M3NX203ME7WR4WJ3EBFMQ88S\nShared › Common › Terms And Conditions › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX203ME7WR4WJ3EBFMQ88S",
+          "platformKey": "gopay_shared_termsandconditions_title",
+          "semanticPath": "common/terms-and-conditions/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Terms and conditions"
+    },
+    "gopay_shared_text_text": {
+      "$description": "cp_01M3NX21Z3EECR6EPMZYMCAZK1\nShared › Common › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21Z3EECR6EPMZYMCAZK1",
+          "platformKey": "gopay_shared_text_text",
+          "semanticPath": "common/shared/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "-"
+    },
+    "gopay_shared_theresachangeinthegoldprice_text": {
+      "$description": "cp_01M3NX202HE98BKW0JRP6BSQR3\nShared › Common › There S A Change In The Gold Pri › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202HE98BKW0JRP6BSQR3",
+          "platformKey": "gopay_shared_theresachangeinthegoldprice_text",
+          "semanticPath": "common/there-s-a-change-in-the-gold-pri/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "There's a change in the gold price"
+    },
+    "gopay_shared_theresnoonehere_title": {
+      "$description": "cp_01M3NX21RZFXVAAVY2TCF4WE6E\nShared › Common › There S No One Here › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21RZFXVAAVY2TCF4WE6E",
+          "platformKey": "gopay_shared_theresnoonehere_title",
+          "semanticPath": "common/there-s-no-one-here/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "There's no one here"
+    },
+    "gopay_shared_thingsthatarenotcovered_text": {
+      "$description": "cp_01M3NX204XE99SMXR32JD19PEQ\nShared › Common › Things That Are Not Covered › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX204XE99SMXR32JD19PEQ",
+          "platformKey": "gopay_shared_thingsthatarenotcovered_text",
+          "semanticPath": "common/things-that-are-not-covered/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Things that are not covered"
+    },
+    "gopay_shared_time_text": {
+      "$description": "cp_01M3NX2029EM88Z7MYYX58BXWT\nShared › Common › Time › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029EM88Z7MYYX58BXWT",
+          "platformKey": "gopay_shared_time_text",
+          "semanticPath": "common/time/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Time"
+    },
+    "gopay_shared_to_text": {
+      "$description": "cp_01M3NX212VF02S2285M5Z1ADRV\nShared › Common › To › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX212VF02S2285M5Z1ADRV",
+          "platformKey": "gopay_shared_to_text",
+          "semanticPath": "common/to/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "To"
+    },
+    "gopay_shared_todaysprice_subtitle": {
+      "$description": "cp_01M3NX202FE928VN1AAWZ0CBX5\nShared › Common › Today S Price › Subtitle",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202FE928VN1AAWZ0CBX5",
+          "platformKey": "gopay_shared_todaysprice_subtitle",
+          "semanticPath": "common/today-s-price/main/subtitle",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Today's price"
+    },
+    "gopay_shared_topup_cta": {
+      "$description": "cp_01M3NX2029E019RYHVMPWT5Z53\nShared › Common › Top Up › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029E019RYHVMPWT5Z53",
+          "platformKey": "gopay_shared_topup_cta",
+          "semanticPath": "common/top-up/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Top up"
+    },
+    "gopay_shared_topupamount_title": {
+      "$description": "cp_01M3NX2029F5ASKNGPBAR44N4V\nShared › Common › Top Up Amount › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029F5ASKNGPBAR44N4V",
+          "platformKey": "gopay_shared_topupamount_title",
+          "semanticPath": "common/top-up-amount/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Top up amount"
+    },
+    "gopay_shared_topupsuccessful_text": {
+      "$description": "cp_01M3NX23M0EWXR1QYW0JFR9B24\nShared › Common › Top Up Successful › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX23M0EWXR1QYW0JFR9B24",
+          "platformKey": "gopay_shared_topupsuccessful_text",
+          "semanticPath": "common/top-up-successful/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Top-up successful"
+    },
+    "gopay_shared_topupsuccessful_title": {
+      "$description": "cp_01M3NX21ESEXFSNZC82CEPVB8R\nShared › Common › Top Up Successful › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21ESEXFSNZC82CEPVB8R",
+          "platformKey": "gopay_shared_topupsuccessful_title",
+          "semanticPath": "common/top-up-successful/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Top up successful"
+    },
+    "gopay_shared_topupsuccessful_title_2": {
+      "$description": "cp_01M3NX22MDEK889CD8KS6DZBBR\nShared › Common › Top Up Successful › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22MDEK889CD8KS6DZBBR",
+          "platformKey": "gopay_shared_topupsuccessful_title_2",
+          "semanticPath": "common/top-up-successful/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Top up successful 💰"
+    },
+    "gopay_shared_total_value": {
+      "$description": "cp_01M3NX2029ENBSQA2ZFV9NS8T2\nShared › Common › Total › Value",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029ENBSQA2ZFV9NS8T2",
+          "platformKey": "gopay_shared_total_value",
+          "semanticPath": "common/total/main/value",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total"
+    },
+    "gopay_shared_totalamount_value": {
+      "$description": "cp_01M3NX2029EHZR91ARQPKBNJET\nShared › Common › Total Amount › Value",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029EHZR91ARQPKBNJET",
+          "platformKey": "gopay_shared_totalamount_value",
+          "semanticPath": "common/total-amount/main/value",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Total amount"
+    },
+    "gopay_shared_transactiondetails_title": {
+      "$description": "cp_01M3NX2029F0SASRWRPN9H9T37\nShared › Common › Transaction Details › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029F0SASRWRPN9H9T37",
+          "platformKey": "gopay_shared_transactiondetails_title",
+          "semanticPath": "common/transaction-details/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transaction details"
+    },
+    "gopay_shared_transactionfailed_text": {
+      "$description": "cp_01M3NX20QKEYGR7BXH25DR5Z5N\nShared › Common › Transaction Failed › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20QKEYGR7BXH25DR5Z5N",
+          "platformKey": "gopay_shared_transactionfailed_text",
+          "semanticPath": "common/transaction-failed/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transaction failed"
+    },
+    "gopay_shared_transactionhistory_title": {
+      "$description": "cp_01M3NX2028ECS9YG6GZNDMWT9K\nShared › Common › Transaction History › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028ECS9YG6GZNDMWT9K",
+          "platformKey": "gopay_shared_transactionhistory_title",
+          "semanticPath": "common/transaction-history/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transaction history"
+    },
+    "gopay_shared_transactionid_text": {
+      "$description": "cp_01M3NX2029F4N9CNF8MA1HVCYA\nShared › Common › Transaction Id › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029F4N9CNF8MA1HVCYA",
+          "platformKey": "gopay_shared_transactionid_text",
+          "semanticPath": "common/transaction-id/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transaction ID"
+    },
+    "gopay_shared_transfer_cta": {
+      "$description": "cp_01M3NX20PXF5NV2KNFR39RHR5K\nShared › Common › Transfer › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PXF5NV2KNFR39RHR5K",
+          "platformKey": "gopay_shared_transfer_cta",
+          "semanticPath": "common/transfer/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transfer"
+    },
+    "gopay_shared_transferfailed_title": {
+      "$description": "cp_01M3NX22KHFGTAP8QC9VPANS8Y\nShared › Common › Transfer Failed › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22KHFGTAP8QC9VPANS8Y",
+          "platformKey": "gopay_shared_transferfailed_title",
+          "semanticPath": "common/transfer-failed/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transfer failed"
+    },
+    "gopay_shared_transfernow_cta": {
+      "$description": "cp_01M3NX21TAFF1AB9PXB8NMPF0S\nShared › Common › Transfer Now › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21TAFF1AB9PXB8NMPF0S",
+          "platformKey": "gopay_shared_transfernow_cta",
+          "semanticPath": "common/transfer-now/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transfer now"
+    },
+    "gopay_shared_transport_text": {
+      "$description": "cp_01M3NX20E4F3GB2MYDW7MFRCX8\nShared › Common › Transport › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20E4F3GB2MYDW7MFRCX8",
+          "platformKey": "gopay_shared_transport_text",
+          "semanticPath": "common/transport/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Transport"
+    },
+    "gopay_shared_tryagain_cta": {
+      "$description": "cp_01M3NX20J6E8KA52XNYKHY8FSR\nShared › Common › Try Again › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20J6E8KA52XNYKHY8FSR",
+          "platformKey": "gopay_shared_tryagain_cta",
+          "semanticPath": "common/try-again/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Try again"
+    },
+    "gopay_shared_trynow_cta": {
+      "$description": "cp_01M3NX20NGERWB2B6XPPDWHX23\nShared › Common › Try Now › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20NGERWB2B6XPPDWHX23",
+          "platformKey": "gopay_shared_trynow_cta",
+          "semanticPath": "common/try-now/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Try now"
+    },
+    "gopay_shared_typeyourlegalnamehere_placeholder": {
+      "$description": "cp_01M3NX2051E40RKYFJJS1JZN4E\nShared › Common › Type Your Legal Name Here › Placeholder",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2051E40RKYFJJS1JZN4E",
+          "platformKey": "gopay_shared_typeyourlegalnamehere_placeholder",
+          "semanticPath": "common/type-your-legal-name-here/main/placeholder",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Type your legal name here"
+    },
+    "gopay_shared_undermaintenance_helper": {
+      "$description": "cp_01M3NX20KXFSMBQ2EXXS5NHJRF\nShared › Common › Under Maintenance › Helper\nNote: Đang bảo trì Đang bảo trì",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KXFSMBQ2EXXS5NHJRF",
+          "platformKey": "gopay_shared_undermaintenance_helper",
+          "semanticPath": "common/under-maintenance/main/helper",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Under maintenance"
+    },
+    "gopay_shared_underreview_text": {
+      "$description": "cp_01M3NX20HTERAAMVPKZKXJ4ESB\nShared › Common › Under Review › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20HTERAAMVPKZKXJ4ESB",
+          "platformKey": "gopay_shared_underreview_text",
+          "semanticPath": "common/under-review/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Under review"
+    },
+    "gopay_shared_unlimited_text": {
+      "$description": "cp_01M3NX2050FE2AWM31BJPP8V2J\nShared › Common › Unlimited › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2050FE2AWM31BJPP8V2J",
+          "platformKey": "gopay_shared_unlimited_text",
+          "semanticPath": "common/unlimited/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Unlimited"
+    },
+    "gopay_shared_unlimitedbalance_title": {
+      "$description": "cp_01M3NX21E2F2J8W6BYBS0J4SKX\nShared › Common › Unlimited Balance › Title\nNote: \"analytics_properties\": { \"benefit\": \"UnlimitedBalance\" }",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21E2F2J8W6BYBS0J4SKX",
+          "platformKey": "gopay_shared_unlimitedbalance_title",
+          "semanticPath": "common/unlimited-balance/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Unlimited balance"
+    },
+    "gopay_shared_updatenow_text": {
+      "$description": "cp_01M3NX2040EJ38308KCD87B5YB\nShared › Common › Update Now › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2040EJ38308KCD87B5YB",
+          "platformKey": "gopay_shared_updatenow_text",
+          "semanticPath": "common/update-now/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Update now"
+    },
+    "gopay_shared_upgradenow_text": {
+      "$description": "cp_01M3NX21Q3E2DTN8M9AR3PC22J\nShared › Common › Upgrade Now › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21Q3E2DTN8M9AR3PC22J",
+          "platformKey": "gopay_shared_upgradenow_text",
+          "semanticPath": "common/upgrade-now/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Upgrade now"
+    },
+    "gopay_shared_validuntil_text": {
+      "$description": "cp_01M3NX2058F3882SXXQ27FD0RN\nShared › Common › Valid Until › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2058F3882SXXQ27FD0RN",
+          "platformKey": "gopay_shared_validuntil_text",
+          "semanticPath": "common/valid-until/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Valid until"
+    },
+    "gopay_shared_vanumbercreated_text": {
+      "$description": "cp_01M3NX205DFMSA0ZA15MGSRCN3\nShared › Common › Va Number Created › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX205DFMSA0ZA15MGSRCN3",
+          "platformKey": "gopay_shared_vanumbercreated_text",
+          "semanticPath": "common/va-number-created/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "VA number created"
+    },
+    "gopay_shared_verificationdata_text": {
+      "$description": "cp_01M3NX2029ETBAKZ6HR3MVX46C\nShared › Common › Verification Data › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029ETBAKZ6HR3MVX46C",
+          "platformKey": "gopay_shared_verificationdata_text",
+          "semanticPath": "common/verification-data/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Verification data"
+    },
+    "gopay_shared_verificationmethod_text": {
+      "$description": "cp_01M3NX21F1ES2SYF5QW2GE3S77\nShared › Common › Verification Method › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21F1ES2SYF5QW2GE3S77",
+          "platformKey": "gopay_shared_verificationmethod_text",
+          "semanticPath": "common/verification-method/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Verification method"
+    },
+    "gopay_shared_verifyingyourdocument_text": {
+      "$description": "cp_01M3NX2028FWBTRG0WQ80297CE\nShared › Common › Verifying Your Document › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2028FWBTRG0WQ80297CE",
+          "platformKey": "gopay_shared_verifyingyourdocument_text",
+          "semanticPath": "common/verifying-your-document/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Verifying your document"
+    },
+    "gopay_shared_view_cta": {
+      "$description": "cp_01M3NX202CE4QS4TSXYZSZ8W8F\nShared › Common › View › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202CE4QS4TSXYZSZ8W8F",
+          "platformKey": "gopay_shared_view_cta",
+          "semanticPath": "common/view/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "View"
+    },
+    "gopay_shared_viewall_cta": {
+      "$description": "cp_01M3NX214VEHSSWBZ7570BRZPF\nShared › Common › View All › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX214VEHSSWBZ7570BRZPF",
+          "platformKey": "gopay_shared_viewall_cta",
+          "semanticPath": "common/view-all/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "View all"
+    },
+    "gopay_shared_viewdetails_cta": {
+      "$description": "cp_01M3NX221HE82VKXE16NG10MEV\nShared › Common › View Details › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX221HE82VKXE16NG10MEV",
+          "platformKey": "gopay_shared_viewdetails_cta",
+          "semanticPath": "common/view-details/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "View details"
+    },
+    "gopay_shared_viewtransactions_text": {
+      "$description": "cp_01M3NX20RPFN6VWPCB9X3NTJS3\nShared › Common › View Transactions › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20RPFN6VWPCB9X3NTJS3",
+          "platformKey": "gopay_shared_viewtransactions_text",
+          "semanticPath": "common/view-transactions/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "View transactions"
+    },
+    "gopay_shared_viewxmore_text": {
+      "$description": "cp_01M3NX22NFEVD8DWGTE44N4EHG\nShared › Common › View X More › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22NFEVD8DWGTE44N4EHG",
+          "platformKey": "gopay_shared_viewxmore_text",
+          "semanticPath": "common/view-x-more/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "View X more"
+    },
+    "gopay_shared_virtualaccount_label": {
+      "$description": "cp_01M3NX20N5EVM83WZCXD7P2DF7\nShared › Common › Virtual Account › Label",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20N5EVM83WZCXD7P2DF7",
+          "platformKey": "gopay_shared_virtualaccount_label",
+          "semanticPath": "common/virtual-account/main/label",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Virtual account"
+    },
+    "gopay_shared_waytoomanyattempts_title": {
+      "$description": "cp_01M3NX20PEFDT9RA3RQDQ5VHAW\nShared › Common › Way Too Many Attempts › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PEFDT9RA3RQDQ5VHAW",
+          "platformKey": "gopay_shared_waytoomanyattempts_title",
+          "semanticPath": "common/way-too-many-attempts/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Way too many attempts!"
+    },
+    "gopay_shared_wellcovertheexpensebelowforoneyear_text": {
+      "$description": "cp_01M3NX2096E359TW2VGS2C66ZR\nShared › Common › We Ll Cover The Expense Below Fo › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2096E359TW2VGS2C66ZR",
+          "platformKey": "gopay_shared_wellcovertheexpensebelowforoneyear_text",
+          "semanticPath": "common/we-ll-cover-the-expense-below-fo/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "We'll cover the expense below for one year"
+    },
+    "gopay_shared_wellkeepyouupdatedontheprocess_text": {
+      "$description": "cp_01M3NX2035ENE9Z4ME8NVB2CDP\nShared › Common › We Ll Keep You Updated On The Pr › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2035ENE9Z4ME8NVB2CDP",
+          "platformKey": "gopay_shared_wellkeepyouupdatedontheprocess_text",
+          "semanticPath": "common/we-ll-keep-you-updated-on-the-pr/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "We'll keep you updated on the process!"
+    },
+    "gopay_shared_wellkeepyouupdatedontheprocess_text_2": {
+      "$description": "cp_01M3NX2034EZK81ED3T1VVRX28\nShared › Common › We Ll Keep You Updated On The Pr › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2034EZK81ED3T1VVRX28",
+          "platformKey": "gopay_shared_wellkeepyouupdatedontheprocess_text_2",
+          "semanticPath": "common/we-ll-keep-you-updated-on-the-pr/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "We'll keep you updated on the process 🙏"
+    },
+    "gopay_shared_whyyouneedthisinsurance_text": {
+      "$description": "cp_01M3NX2095F27RJVVHT1S2GQ7P\nShared › Common › Why You Need This Insurance › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2095F27RJVVHT1S2GQ7P",
+          "platformKey": "gopay_shared_whyyouneedthisinsurance_text",
+          "semanticPath": "common/why-you-need-this-insurance/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Why you need this insurance"
+    },
+    "gopay_shared_withdraw_cta": {
+      "$description": "cp_01M3NX2029E17S6XJ4ZKKFCPW7\nShared › Common › Withdraw › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2029E17S6XJ4ZKKFCPW7",
+          "platformKey": "gopay_shared_withdraw_cta",
+          "semanticPath": "common/withdraw/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Withdraw"
+    },
+    "gopay_shared_yes_ctasecondary": {
+      "$description": "cp_01M3NX208TE0682KQM22D0J2FG\nShared › Common › Yes › Cta Secondary",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX208TE0682KQM22D0J2FG",
+          "platformKey": "gopay_shared_yes_ctasecondary",
+          "semanticPath": "common/yes/main/cta-secondary",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yes"
+    },
+    "gopay_shared_yescancel_cta": {
+      "$description": "cp_01M3NX20FSEYPSBSS55M6DT18A\nShared › Common › Yes Cancel › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20FSEYPSBSS55M6DT18A",
+          "platformKey": "gopay_shared_yescancel_cta",
+          "semanticPath": "common/yes-cancel/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yes, cancel"
+    },
+    "gopay_shared_yescontinue_cta": {
+      "$description": "cp_01M3NX22AVEWK9ZK9PJP6NXYNB\nShared › Common › Yes Continue › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX22AVEWK9ZK9PJP6NXYNB",
+          "platformKey": "gopay_shared_yescontinue_cta",
+          "semanticPath": "common/yes-continue/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yes, continue"
+    },
+    "gopay_shared_yesdelete_ctasecondary": {
+      "$description": "cp_01M3NX20PQFQTTYDMVZ9APVH97\nShared › Common › Yes Delete › Cta Secondary",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20PQFQTTYDMVZ9APVH97",
+          "platformKey": "gopay_shared_yesdelete_ctasecondary",
+          "semanticPath": "common/yes-delete/main/cta-secondary",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yes, delete"
+    },
+    "gopay_shared_yesremove_cta": {
+      "$description": "cp_01M3NX207AEPMBV706T2DESKPZ\nShared › Common › Yes Remove › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX207AEPMBV706T2DESKPZ",
+          "platformKey": "gopay_shared_yesremove_cta",
+          "semanticPath": "common/yes-remove/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yes, remove"
+    },
+    "gopay_shared_yessure_text": {
+      "$description": "cp_01M3NX206SFRBSGZFBHDH06DX4\nShared › Common › Yes Sure › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206SFRBSGZFBHDH06DX4",
+          "platformKey": "gopay_shared_yessure_text",
+          "semanticPath": "common/yes-sure/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Yes, sure"
+    },
+    "gopay_shared_youdonthaveenoughbalance_title": {
+      "$description": "cp_01M3NX20KZEHF8WAZXPV41QVY5\nShared › Common › You Don T Have Enough Balance › Title\nNote: Số dư của bạn không đủ Số dư của bạn không đủ",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20KZEHF8WAZXPV41QVY5",
+          "platformKey": "gopay_shared_youdonthaveenoughbalance_title",
+          "semanticPath": "common/you-don-t-have-enough-balance/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "You don't have enough balance"
+    },
+    "gopay_shared_yourbalancewillbededucted_text": {
+      "$description": "cp_01M3NX2105E03SHYBDF9PHV5V6\nShared › Common › Your Balance Will Be Deducted › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2105E03SHYBDF9PHV5V6",
+          "platformKey": "gopay_shared_yourbalancewillbededucted_text",
+          "semanticPath": "common/your-balance-will-be-deducted/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Your balance will be deducted"
+    },
+    "gopay_shared_yourgoldhasbeensold_pushtitle": {
+      "$description": "cp_01M3NX202JE91T2EBD44TW7582\nShared › Common › Your Gold Has Been Sold › Push Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202JE91T2EBD44TW7582",
+          "platformKey": "gopay_shared_yourgoldhasbeensold_pushtitle",
+          "semanticPath": "common/your-gold-has-been-sold/main/push-title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Your gold has been sold 💰"
+    },
+    "gopay_shared_yourgoldhasbeensold_text": {
+      "$description": "cp_01M3NX2034E8HATFWVTZYV1MDX\nShared › Common › Your Gold Has Been Sold › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX2034E8HATFWVTZYV1MDX",
+          "platformKey": "gopay_shared_yourgoldhasbeensold_text",
+          "semanticPath": "common/your-gold-has-been-sold/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Your gold has been sold 🎉"
+    },
+    "gopay_shared_yourinterestsummary_title": {
+      "$description": "cp_01M3NX21EPEHQ85R2SJB9F1Z3T\nShared › Common › Your Interest Summary › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX21EPEHQ85R2SJB9F1Z3T",
+          "platformKey": "gopay_shared_yourinterestsummary_title",
+          "semanticPath": "common/your-interest-summary/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Your interest summary"
+    },
+    "gopay_shared_yourpaymentisinprogress_title": {
+      "$description": "cp_01M3NX20B6E4DTFYSN6YNS1M9V\nShared › Common › Your Payment Is In Progress › Title",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX20B6E4DTFYSN6YNS1M9V",
+          "platformKey": "gopay_shared_yourpaymentisinprogress_title",
+          "semanticPath": "common/your-payment-is-in-progress/main/title",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Your payment is in progress"
+    },
+    "gopay_shared_yourpolicyhasbeenterminated_text": {
+      "$description": "cp_01M3NX206GF7484RKBV26G9TZJ\nShared › Common › Your Policy Has Been Terminated › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX206GF7484RKBV26G9TZJ",
+          "platformKey": "gopay_shared_yourpolicyhasbeenterminated_text",
+          "semanticPath": "common/your-policy-has-been-terminated/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Your policy has been terminated"
+    },
+    "gopay_shared_yourpurchaselimit_text": {
+      "$description": "cp_01M3NX202NE0TT5K4Z2SX5MQW8\nShared › Common › Your Purchase Limit › Text",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX202NE0TT5K4Z2SX5MQW8",
+          "platformKey": "gopay_shared_yourpurchaselimit_text",
+          "semanticPath": "common/your-purchase-limit/main/text",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "Your purchase limit"
+    },
+    "gopay_splitbill_requestandsplitbillhistory_cta": {
+      "$description": "cp_01M3NX213KE00AFWEPS7ENENQ4\nShared › Requestandsplitbillhistory › Request And Split Bill Landing › Cta",
+      "$extensions": {
+        "com.gopay.copy": {
+          "id": "cp_01M3NX213KE00AFWEPS7ENENQ4",
+          "platformKey": "gopay_splitbill_requestandsplitbillhistory_cta",
+          "semanticPath": "requestandsplitbillhistory/request-and-split-bill-landing/main/cta",
+          "status": "active"
+        }
+      },
+      "$type": "string",
+      "$value": "View all of the history"
+    }
+  }
+}

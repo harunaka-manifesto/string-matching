@@ -58,6 +58,10 @@ zero-opacity content, intersects bounds and clipping ancestors, includes
 partial visibility, and prefers a user-correctable false positive for unusual
 rendering. No sibling occlusion analysis or whole-page fallback is performed.
 
+## Copy identity & variables
+
+Copy variable identity, naming and plugin rules live in `docs/plugin-copy-rules.md` (authoritative), with the design rationale in `docs/copy-identity-architecture.md`. Legacy copy is in the Figma collections `# Legacy 1–5`; new strings go into per-product collections.
+
 ## Change log
 
 | Date       | Change                                                                                                                                                        |
