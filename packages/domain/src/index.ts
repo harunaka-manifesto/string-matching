@@ -3,5 +3,6 @@ export * from './name-normalization';
 export * from './non-copy-heuristics';
 export * from './reading-order';
 export * from './sequence-prefill';
+export * from './string-ranking';
 export * from './variable-search';
 export * from './visibility';

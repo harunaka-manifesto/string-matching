@@ -16,7 +16,8 @@ export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
   /** Import values for every library variable whose key is not in `knownKeys`. */
   z.object({ type: z.literal('index:sync'), knownKeys: z.array(z.string()) }),
   z.object({ type: z.literal('index:save'), bytes: BytesSchema }),
-  z.object({ type: z.literal('layer:focus'), layerId: z.string() }),
+  /** Selects the layer on canvas; `zoom` also scrolls and zooms to it. */
+  z.object({ type: z.literal('layer:focus'), layerId: z.string(), zoom: z.boolean().optional() }),
   z.object({ type: z.literal('layers:select'), layerIds: z.array(z.string()) }),
   z.object({ type: z.literal('flags:select') }),
   z.object({
@@ -44,6 +45,8 @@ export const PluginToUiMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('selection'), selection: SelectionInfoSchema.nullable() }),
   z.object({ type: z.literal('apply:done'), summary: ApplySummarySchema }),
   z.object({ type: z.literal('flags:selected'), count: z.number().int() }),
+  /** Variable keys already bound somewhere on the current page (ranks search results). */
+  z.object({ type: z.literal('usage'), keys: z.array(z.string()) }),
   z.object({ type: z.literal('error'), message: z.string() }),
 ]);
 export type PluginToUiMessage = z.infer<typeof PluginToUiMessageSchema>;

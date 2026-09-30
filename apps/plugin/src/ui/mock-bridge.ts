@@ -15,6 +15,25 @@ export function mockBridge(): UiBridge {
   const emit = (message: PluginToUiMessage) =>
     setTimeout(() => listeners.forEach((listener) => listener(message)), 30);
 
+  const params = new URLSearchParams(location.search);
+  const frameName = params.get('frame') ?? 'Investment – Landing page';
+  let listing: LibraryListingItem[] = [];
+  const humanize = (name: string) =>
+    name
+      .slice(name.lastIndexOf('/') + 1)
+      .replace(/^gopay_[a-z]+_/u, '')
+      .replace(/_/gu, ' ');
+  // Values shared by many products, to exercise product ranking.
+  const extras: [string, string, string][] = [
+    ['investment/gopay_investment_onboarding_gotit_cta', 'Got it', 'Oke, paham'],
+    ['transfer/gopay_transfer_success_gotit_cta', 'Got it', 'Oke'],
+    ['savings/gopay_savings_termdeposit_gotit_cta', 'Got it', 'Oke'],
+    ['shared/gopay_shared_cta_gotit', 'Got it', 'Oke'],
+    ['shared/gopay_shared_cta_continue', 'Continue', 'Lanjut'],
+    ['transfer/gopay_transfer_confirm_continue_cta', 'Continue', 'Lanjut'],
+  ];
+  const values = new Map(extras.map(([name, en, id]) => [name, { en, id }]));
+
   const layers: LayerInfo[] = [
     ['Title', 'Lorem ipsum dolor'],
     ['Subtitle', 'Lorem ipsum dolor sit amet consectetur'],
@@ -22,8 +41,8 @@ export function mockBridge(): UiBridge {
     ['Label', 'Lorem ipsum'],
     ['Body', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'],
     ['Date', '12 Agu 2026'],
-    ['Caption', 'Lorem ipsum dolor sit'],
-    ['Button label', 'Lorem'],
+    ['Caption', 'Start investing from Rp10.000'],
+    ['Button label', 'Got it'],
   ].map(([name, characters], i) => ({
     id: `1:${i + 1}`,
     name: name!,
@@ -34,19 +53,12 @@ export function mockBridge(): UiBridge {
     stored: null,
     autoSkipReason: nonCopyReason({ characters: characters!, layerName: name!, ancestorNames: [] }),
   }));
-  const selection: SelectionInfo = {
+  const selection = (): SelectionInfo => ({
     frameId: '1:0',
-    frameName: 'Investment – Landing page',
-    contextNames: ['Investment – Landing page', 'Investment', 'Flows'],
+    frameName,
+    contextNames: [frameName, 'Flows'],
     layers,
-  };
-
-  let listing: LibraryListingItem[] = [];
-  const humanize = (name: string) =>
-    name
-      .slice(name.lastIndexOf('/') + 1)
-      .replace(/^gopay_[a-z]+_/u, '')
-      .replace(/_/gu, ' ');
+  });
 
   return {
     subscribe(listener) {
@@ -57,28 +69,52 @@ export function mockBridge(): UiBridge {
       switch (message.type) {
         case 'ui:ready':
           emit({ type: 'index:cached', bytes: null });
-          emit({ type: 'selection', selection });
+          emit({ type: 'selection', selection: selection() });
           return;
         case 'index:sync': {
           const tabs = JSON.parse(await gunzipText(base64ToBytes(ORDER_INDEX_GZIP_BASE64))) as {
             tabs: Record<string, string[]>;
           };
-          const names = [...new Set(tabs.tabs.INVESTMENT?.slice(0, 400) ?? [])];
+          const all = Object.values(tabs.tabs).flat();
+          const names = [
+            ...new Set([
+              ...(tabs.tabs.INVESTMENT?.slice(0, 400) ?? []),
+              ...(tabs.tabs.TRANSFER?.slice(0, 200) ?? []),
+              ...all.filter((name) => name.startsWith('shared/')).slice(0, 60),
+              ...extras.map(([name]) => name),
+            ]),
+          ];
           listing = [...names].sort().map((name, order) => ({
             key: `key-${order}`,
             name,
-            collection: '# Legacy 5: Investment',
+            collection: '# Legacy 5',
             order,
           }));
           emit({ type: 'index:listing', listing, toImport: listing.length });
-          const values = listing.map((item) => ({
+          const loaded = listing.map((item) => ({
             key: item.key,
-            en: humanize(item.name),
-            id: `ID: ${humanize(item.name)}`,
+            en: values.get(item.name)?.en ?? humanize(item.name),
+            id: values.get(item.name)?.id ?? `ID: ${humanize(item.name)}`,
             description: '',
           }));
-          emit({ type: 'index:values', values, done: values.length, total: values.length });
+          // Arrive in batches like the real import, so progress UI shows.
+          for (let start = 0; start < loaded.length; start += 150)
+            emit({
+              type: 'index:values',
+              values: loaded.slice(start, start + 150),
+              done: Math.min(start + 150, loaded.length),
+              total: loaded.length,
+            });
           emit({ type: 'index:synced', failed: 0 });
+          // The Caption layer starts bound, so "Replaces" and "Unbinds" can be tried.
+          const caption = listing.find(
+            (item) => item.name === 'investment/gopay_investment_onboarding_gotit_cta',
+          );
+          if (caption && !layers[6]!.boundKey && !params.has('fresh')) {
+            layers[6] = { ...layers[6]!, boundKey: caption.key, boundName: caption.name };
+            emit({ type: 'selection', selection: selection() });
+          }
+          emit({ type: 'usage', keys: listing.slice(0, 40).map((item) => item.key) });
           return;
         }
         case 'apply':

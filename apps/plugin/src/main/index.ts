@@ -6,7 +6,7 @@ import {
   type UiToPluginMessage,
 } from '@string-binder/contracts';
 import { applyDecisions } from './apply';
-import { forgetVariableCache } from './layer-state';
+import { boundVariableId, forgetVariableCache, variableById } from './layer-state';
 import {
   IMPORT_BATCH_SIZE,
   importValues,
@@ -88,14 +88,30 @@ async function syncIndex(knownKeys: readonly string[]): Promise<void> {
   }
 }
 
-async function selectLayers(ids: readonly string[]): Promise<number> {
+let usagePageId: string | null = null;
+
+/** Keys bound on the current page, sent once per page and again after apply. */
+async function sendUsage(force = false): Promise<void> {
+  const page = figma.currentPage;
+  if (!force && usagePageId === page.id) return;
+  usagePageId = page.id;
+  const ids = new Set<string>();
+  for (const node of page.findAllWithCriteria({ types: ['TEXT'] })) {
+    const id = boundVariableId(node);
+    if (id) ids.add(id);
+  }
+  const variables = await Promise.all([...ids].map((id) => variableById(id)));
+  post({ type: 'usage', keys: variables.flatMap((variable) => (variable ? [variable.key] : [])) });
+}
+
+async function selectLayers(ids: readonly string[], zoom = true): Promise<number> {
   const nodes: SceneNode[] = [];
   for (const id of ids) {
     const node = await figma.getNodeByIdAsync(id);
     if (node && node.type !== 'DOCUMENT' && node.type !== 'PAGE') nodes.push(node as SceneNode);
   }
   figma.currentPage.selection = nodes;
-  if (nodes.length) figma.viewport.scrollAndZoomIntoView(nodes);
+  if (nodes.length && zoom) figma.viewport.scrollAndZoomIntoView(nodes);
   return nodes.length;
 }
 
@@ -107,6 +123,7 @@ async function handle(message: UiToPluginMessage): Promise<void> {
         bytes: ((await figma.clientStorage.getAsync(CACHE_KEY)) as Uint8Array | undefined) ?? null,
       });
       await onSelectionChange(true);
+      await sendUsage();
       return;
     case 'selection:refresh':
       await onSelectionChange(true);
@@ -118,7 +135,7 @@ async function handle(message: UiToPluginMessage): Promise<void> {
       await figma.clientStorage.setAsync(CACHE_KEY, message.bytes);
       return;
     case 'layer:focus':
-      await selectLayers([message.layerId]);
+      await selectLayers([message.layerId], message.zoom ?? true);
       return;
     case 'layers:select':
       await selectLayers(message.layerIds);
@@ -139,6 +156,7 @@ async function handle(message: UiToPluginMessage): Promise<void> {
       forgetVariableCache();
       post({ type: 'apply:done', summary });
       await sendSelection();
+      await sendUsage(true);
       return;
     }
   }
@@ -155,5 +173,7 @@ figma.on('selectionchange', () => {
 });
 figma.on('currentpagechange', () => {
   activeRootId = null;
-  onSelectionChange(true).catch((error) => post({ type: 'error', message: describe(error) }));
+  onSelectionChange(true)
+    .then(() => sendUsage())
+    .catch((error) => post({ type: 'error', message: describe(error) }));
 });

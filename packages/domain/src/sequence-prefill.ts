@@ -115,3 +115,23 @@ export function prefillSequence(
   }
   return result;
 }
+
+/** Keeps only keys `keep` accepts, so prefill never walks into another product's strings. */
+export function filterSequenceSource(
+  source: SequenceSource,
+  keep: (key: string) => boolean,
+): SequenceSource {
+  const sequences = new Map<string, readonly string[]>();
+  const positions = new Map<string, SequencePosition[]>();
+  for (const [sequence, keys] of source.sequences) {
+    const kept = keys.filter(keep);
+    if (!kept.length) continue;
+    sequences.set(sequence, kept);
+    kept.forEach((key, index) => {
+      const list = positions.get(key) ?? [];
+      list.push({ sequence, index });
+      positions.set(key, list);
+    });
+  }
+  return { sequences, positions };
+}

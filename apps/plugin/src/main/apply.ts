@@ -15,7 +15,9 @@ async function loadFonts(node: TextNode): Promise<void> {
   await Promise.all(fonts.map((font) => figma.loadFontAsync(font)));
 }
 
+/** Binds and names the layer after its string, e.g. `investment/gopay_investment_…_title`. */
 async function bind(node: TextNode, variable: Variable): Promise<boolean> {
+  if (node.name !== variable.name) node.name = variable.name;
   if (boundVariableId(node) === variable.id) return false;
   await loadFonts(node);
   node.setBoundVariable('characters', variable);
@@ -71,11 +73,14 @@ export async function applyDecisions(
   const boundSources = new Map<string, Variable>();
   const skippedSources = new Set<string>();
   const sourceNodes = new Map<string, TextNode>();
+  // Taken before binding renames layers, so duplicates still match on their original names.
+  const snapshots = new Map<string, TextNodeSnapshot>();
 
   for (const decision of decisions) {
     const node = await figma.getNodeByIdAsync(decision.layerId);
     if (!node || node.type !== 'TEXT') continue;
     sourceNodes.set(node.id, node);
+    snapshots.set(node.id, snapshotText(node, frame));
     try {
       switch (decision.action) {
         case 'bind': {
@@ -115,10 +120,7 @@ export async function applyDecisions(
   }
 
   const sources: TextNodeSnapshot[] = [];
-  for (const id of [...boundSources.keys(), ...skippedSources]) {
-    const node = sourceNodes.get(id)!;
-    sources.push(snapshotText(node, frame));
-  }
+  for (const id of [...boundSources.keys(), ...skippedSources]) sources.push(snapshots.get(id)!);
   if (sources.length) {
     const candidates = pageCandidates(frame);
     const nodesById = new Map(candidates.map((item) => [item.node.id, item.node]));

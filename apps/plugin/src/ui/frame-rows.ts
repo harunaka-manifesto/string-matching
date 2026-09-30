@@ -145,5 +145,5 @@ export function useFrameRows(selection: SelectionInfo | null, sequences: Sequenc
 
   const reset = useCallback(() => setStates(new Map()), []);
 
-  return { rows, update, pick, reset };
+  return { rows, update, pick, reset, dirty: states.size > 0 };
 }
