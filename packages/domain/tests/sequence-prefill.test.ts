@@ -109,3 +109,20 @@ describe('prefillSequence', () => {
     expect(keys(result)).toEqual(['unknown', null]);
   });
 });
+
+it('keeps legacy order after canonical shared names replace duplicate variables', () => {
+  const source = buildSequenceSource({
+    orderedNames: { A: ['transfer/old', 'transfer/next'] },
+    variables: [
+      {
+        key: 'shared',
+        name: 'shared/canonical',
+        collection: 'Shared',
+        order: 0,
+        aliases: ['transfer/old'],
+      },
+      { key: 'next', name: 'transfer/next', collection: 'Transfer', order: 1 },
+    ],
+  });
+  expect(source.sequences.get('sheet:A')).toEqual(['shared', 'next']);
+});

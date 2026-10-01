@@ -32,9 +32,18 @@ export function buildSequenceSource(input: {
   /** Legacy sheet tabs → variable names in row order (may repeat across tabs). */
   orderedNames: Readonly<Record<string, readonly string[]>>;
   /** Library variables with their collection and listing order. */
-  variables: readonly { key: string; name: string; collection: string; order: number }[];
+  variables: readonly {
+    key: string;
+    name: string;
+    collection: string;
+    order: number;
+    aliases?: readonly string[];
+  }[];
 }): SequenceSource {
   const keyByName = new Map(input.variables.map((variable) => [variable.name, variable.key]));
+  for (const variable of input.variables)
+    for (const alias of variable.aliases ?? [])
+      if (!keyByName.has(alias)) keyByName.set(alias, variable.key);
   const sequences = new Map<string, string[]>();
   const positions = new Map<string, SequencePosition[]>();
   const add = (sequence: string, keys: string[]) => {

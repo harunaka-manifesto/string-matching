@@ -8,6 +8,8 @@
   },
   "scripts": {
     "build": "pnpm build:order-index && pnpm --filter @string-binder/plugin build",
+    "prepare:library": "node scripts/prepare-copy-library.mjs",
+    "test:library": "node scripts/copy-migration/exact-merge.test.mjs",
     "build:order-index": "node scripts/build-order-index.mjs",
     "dev:ui": "pnpm --filter @string-binder/plugin dev:ui",
     "lint": "eslint . --max-warnings=0",

@@ -32,6 +32,7 @@ export const LayerInfoSchema = z.object({
   characters: z.string(),
   /** True when the layer sits inside a component instance. */
   inInstance: z.boolean(),
+  contextNames: z.array(z.string()).optional(),
   boundKey: z.string().nullable(),
   boundName: z.string().nullable(),
   stored: StoredLayerStateSchema.nullable(),

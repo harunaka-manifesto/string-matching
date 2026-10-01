@@ -1,3 +1,4 @@
+export * from './copy-identity';
 export * from './layer-similarity';
 export * from './name-normalization';
 export * from './non-copy-heuristics';

@@ -80,6 +80,7 @@ async function layerInfo(node: TextNode, root: SceneNode): Promise<LayerInfo> {
     name: node.name,
     characters: node.characters,
     inInstance: insideInstance(node, root),
+    contextNames: ancestorNames(node, root),
     boundKey: variable?.key ?? null,
     boundName: variable?.name ?? null,
     stored: readLayerState(node),

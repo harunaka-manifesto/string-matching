@@ -3,7 +3,7 @@ import {
   filterSequenceSource,
   guessProduct,
   productLabel,
-  productOf,
+  inProduct,
   SHARED_PRODUCT,
 } from '@string-binder/domain';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -148,14 +148,19 @@ export function App({ bridge }: { bridge: UiBridge }) {
     () =>
       selection
         ? guessProduct({
-            boundNames: selection.layers.flatMap((layer) =>
-              layer.boundName ? [layer.boundName] : [],
-            ),
+            boundNames: selection.layers.flatMap((layer) => {
+              const entry = layer.boundKey ? index.entries.get(layer.boundKey) : undefined;
+              return entry?.product
+                ? [`${entry.product}/${entry.name}`]
+                : layer.boundName
+                  ? [layer.boundName]
+                  : [];
+            }),
             contextNames: selection.contextNames,
             vocabulary: index.vocabulary,
           })
         : null,
-    [selection, index.vocabulary],
+    [selection, index.vocabulary, index.entries],
   );
   const chosen = selection ? scopes.get(selection.frameId) : undefined;
   const scope: Scope = chosen ?? guess;
@@ -165,10 +170,11 @@ export function App({ bridge }: { bridge: UiBridge }) {
   };
 
   const sequences = useMemo(() => {
-    if (!scope || scope === 'all') return index.sequences;
+    if (scope === 'all') return index.sequences;
+    if (!scope) return filterSequenceSource(index.sequences, () => false);
     return filterSequenceSource(index.sequences, (key) => {
-      const product = productOf(index.entries.get(key)?.name ?? '');
-      return product === scope || product === SHARED_PRODUCT;
+      const item = index.entries.get(key);
+      return !!item && inProduct(item, scope);
     });
   }, [scope, index.sequences, index.entries]);
 
@@ -378,143 +384,161 @@ export function App({ bridge }: { bridge: UiBridge }) {
 
   return (
     <main className="app">
-      <header className="top">
-        <div className="top__row">
-          <div className="top__title">
-            <h1 title={selection?.frameName}>{selection?.frameName ?? 'String Binder'}</h1>
-          </div>
-          {selection && (
+      <div className="workspace" {...(searchOpen || result ? { inert: '' } : {})}>
+        <header className="top">
+          <div className="top__row">
+            <div className="top__title">
+              <span className="eyebrow">{selection ? 'Selected frame' : 'String Binder'}</span>
+              <h1 title={selection?.frameName}>{selection?.frameName ?? 'String Binder'}</h1>
+            </div>
+            {selection && (
+              <Menu
+                triggerClassName={`scope ${scope === null ? 'scope--unset' : ''}`}
+                triggerLabel={
+                  chosen
+                    ? 'Product for this frame'
+                    : guess
+                      ? 'Product, guessed from frame and page names. Click to change.'
+                      : 'Choose the product this frame belongs to'
+                }
+                title="Search strings in"
+                items={scopeItems}
+                align="end"
+                trigger={() => (
+                  <>
+                    {!chosen && guess && <Icon name="sparkle" className="scope__auto" />}
+                    <span className="scope__label">
+                      {scope === null
+                        ? 'Choose product'
+                        : scope === 'all'
+                          ? 'All products'
+                          : productLabel(scope)}
+                    </span>
+                    <Icon name="chevron" />
+                  </>
+                )}
+              />
+            )}
             <Menu
-              triggerClassName={`scope ${scope === null ? 'scope--unset' : ''}`}
-              triggerLabel={
-                chosen
-                  ? 'Product for this frame'
-                  : guess
-                    ? 'Product, guessed from frame and page names. Click to change.'
-                    : 'Choose the product this frame belongs to'
-              }
-              title="Rank strings from"
-              items={scopeItems}
+              triggerClassName="icon-button"
+              triggerLabel="More actions"
+              items={overflowItems}
               align="end"
-              trigger={() => (
-                <>
-                  {!chosen && guess && <Icon name="sparkle" className="scope__auto" />}
-                  <span className="scope__label">
-                    {scope === null
-                      ? 'Choose product'
-                      : scope === 'all'
-                        ? 'All products'
-                        : productLabel(scope)}
-                  </span>
-                  <Icon name="chevron" />
-                </>
-              )}
+              trigger={() => <Icon name="more" />}
             />
+          </div>
+          {progress !== null && (
+            <div className="progress" role="progressbar" aria-label="Loading strings">
+              <span style={{ transform: `scaleX(${progress})` }} />
+            </div>
           )}
-          <Menu
-            triggerClassName="icon-button"
-            triggerLabel="More actions"
-            items={overflowItems}
-            align="end"
-            trigger={() => <Icon name="more" />}
-          />
-        </div>
-        {progress !== null && (
-          <div className="progress" role="progressbar" aria-label="Loading strings">
-            <span style={{ transform: `scaleX(${progress})` }} />
+        </header>
+
+        <IndexNotice status={index.status} onRefresh={index.refresh} />
+
+        {!selection ? (
+          <div className="intro">
+            <div className="intro__art" aria-hidden="true">
+              <Icon name="frame" />
+            </div>
+            <h2>Select a frame to bind its copy</h2>
+            <ol>
+              <li>Select one frame, component or instance on the canvas.</li>
+              <li>Choose the first layer’s string. The rest follow the legacy sheet order.</li>
+              <li>Fix what’s off, skip non-copy, flag copy that needs a new string.</li>
+              <li>Apply. Matching layers on this page get the same strings.</li>
+            </ol>
+          </div>
+        ) : selection.layers.length === 0 ? (
+          <div className="intro">
+            <h2>No visible text in this frame</h2>
+            <p className="intro__text">Select a frame that contains text layers.</p>
+          </div>
+        ) : (
+          <>
+            <div className="rows__heading">
+              <h2>Review text layers</h2>
+              <span>{rows.length} layers · reading order</span>
+            </div>
+            <ol className="rows" aria-label="Text layers in reading order">
+              {rows.map((row, i) => (
+                <LayerRow
+                  key={row.layer.id}
+                  row={row}
+                  entry={row.key ? index.entries.get(row.key) : undefined}
+                  previous={row.layer.boundKey ? index.entries.get(row.layer.boundKey) : undefined}
+                  active={row.layer.id === activeId}
+                  cascade={cascade[i]!}
+                  onActivate={() => activate(row.layer.id, true)}
+                  onChoose={() => openSearch(row.layer.id)}
+                  onReveal={() =>
+                    bridge.send({ type: 'layer:focus', layerId: row.layer.id, zoom: true })
+                  }
+                  onChange={(change) => frame.update(row.layer.id, change)}
+                />
+              ))}
+            </ol>
+          </>
+        )}
+
+        {toast && (
+          <div
+            className={`toast toast--${toast.tone}`}
+            role={toast.tone === 'error' ? 'alert' : 'status'}
+            key={toast.id}
+          >
+            <span>{toast.text}</span>
+            <button
+              type="button"
+              className="icon-button"
+              aria-label="Dismiss"
+              onClick={() => setToast(null)}
+            >
+              <Icon name="close" />
+            </button>
           </div>
         )}
-      </header>
 
-      <IndexNotice status={index.status} onRefresh={index.refresh} />
-
-      {!selection ? (
-        <div className="intro">
-          <div className="intro__art" aria-hidden="true">
-            <Icon name="frame" />
-          </div>
-          <h2>Select a frame to bind its copy</h2>
-          <ol>
-            <li>Select one frame, component or instance on the canvas.</li>
-            <li>Choose the first layer’s string. The rest follow the legacy sheet order.</li>
-            <li>Fix what’s off, skip non-copy, flag copy that needs a new string.</li>
-            <li>Apply. Matching layers on this page get the same strings.</li>
-          </ol>
-        </div>
-      ) : selection.layers.length === 0 ? (
-        <div className="intro">
-          <h2>No visible text in this frame</h2>
-          <p className="intro__text">Select a frame that contains text layers.</p>
-        </div>
-      ) : (
-        <ol className="rows" aria-label="Text layers in reading order">
-          {rows.map((row, i) => (
-            <LayerRow
-              key={row.layer.id}
-              row={row}
-              entry={row.key ? index.entries.get(row.key) : undefined}
-              previous={row.layer.boundKey ? index.entries.get(row.layer.boundKey) : undefined}
-              active={row.layer.id === activeId}
-              cascade={cascade[i]!}
-              onActivate={() => activate(row.layer.id, true)}
-              onChoose={() => openSearch(row.layer.id)}
-              onReveal={() =>
-                bridge.send({ type: 'layer:focus', layerId: row.layer.id, zoom: true })
-              }
-              onChange={(change) => frame.update(row.layer.id, change)}
-            />
-          ))}
-        </ol>
-      )}
-
-      {toast && (
-        <div
-          className={`toast toast--${toast.tone}`}
-          role={toast.tone === 'error' ? 'alert' : 'status'}
-          key={toast.id}
-        >
-          <span>{toast.text}</span>
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="Dismiss"
-            onClick={() => setToast(null)}
-          >
-            <Icon name="close" />
-          </button>
-        </div>
-      )}
-
-      {selection && selection.layers.length > 0 && (
-        <footer className="footer">
-          <div className="tally" aria-live="polite">
-            <span>
-              <strong>{toBind}</strong> to bind
-            </span>
-            {counts.replace > 0 && <span className="tally--warning">{counts.replace} replace</span>}
-            {counts.unbind > 0 && <span className="tally--danger">{counts.unbind} unbind</span>}
-            {counts.empty > 0 && <span>{counts.empty} empty</span>}
-            {counts.flag > 0 && <span className="tally--warning">{counts.flag} flagged</span>}
-            {counts.skip > 0 && <span className="tally--quiet">{counts.skip} skipped</span>}
-          </div>
-          <button
-            type="button"
-            className={`button button--primary ${applying ? 'is-busy' : ''}`}
-            disabled={applying}
-            onClick={apply}
-            title="Apply  ⌘↵"
-          >
-            {applying ? 'Applying…' : 'Apply'}
-          </button>
-        </footer>
-      )}
-
+        {selection && selection.layers.length > 0 && (
+          <footer className="footer">
+            <div className="tally" aria-live="polite">
+              <span>
+                <strong>{toBind}</strong> to bind
+              </span>
+              {counts.replace > 0 && (
+                <span className="tally--warning">{counts.replace} replace</span>
+              )}
+              {counts.unbind > 0 && <span className="tally--danger">{counts.unbind} unbind</span>}
+              {counts.empty > 0 && <span>{counts.empty} empty</span>}
+              {counts.flag > 0 && <span className="tally--warning">{counts.flag} flagged</span>}
+              {counts.skip > 0 && <span className="tally--quiet">{counts.skip} skipped</span>}
+            </div>
+            <button
+              type="button"
+              className={`button button--primary ${applying ? 'is-busy' : ''}`}
+              disabled={applying}
+              onClick={apply}
+              title="Apply  ⌘↵"
+            >
+              {applying ? 'Applying…' : 'Apply to frame & page'}
+            </button>
+          </footer>
+        )}
+      </div>
       {searchMounted && selection && searchRow && (
-        <div className="overlay" data-state={searchOpen ? 'open' : 'closed'}>
+        <div
+          className="overlay"
+          data-state={searchOpen ? 'open' : 'closed'}
+          {...(!searchOpen ? { inert: '' } : {})}
+        >
           <SearchPanel
             key={searchRow.layer.id}
             canvasText={searchRow.layer.characters.replace(/\s+/gu, ' ').trim()}
             layerName={searchRow.layer.name}
+            contextNames={[
+              ...(searchRow.layer.contextNames ?? []),
+              ...(selection?.contextNames ?? []),
+            ]}
             current={searchRow.key ? index.entries.get(searchRow.key) : undefined}
             currentKey={searchRow.key}
             anchorHint={anchorHint}

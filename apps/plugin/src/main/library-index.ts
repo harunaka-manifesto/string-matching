@@ -83,20 +83,33 @@ function modesOf(collectionId: string): Promise<Map<string, ModeLanguage>> {
   return modes;
 }
 
-async function stringValue(value: VariableValue, depth = 0): Promise<string> {
+async function stringValue(
+  value: VariableValue,
+  language: ModeLanguage,
+  seen = new Set<string>(),
+): Promise<string> {
   if (typeof value === 'string') return value;
   if (
-    depth < 3 &&
-    typeof value === 'object' &&
-    value !== null &&
-    'type' in value &&
-    value.type === 'VARIABLE_ALIAS'
-  ) {
-    const target = await figma.variables.getVariableByIdAsync(value.id);
-    const first = target ? Object.values(target.valuesByMode)[0] : undefined;
-    return first === undefined ? '' : stringValue(first, depth + 1);
-  }
-  return '';
+    typeof value !== 'object' ||
+    value === null ||
+    !('type' in value) ||
+    value.type !== 'VARIABLE_ALIAS'
+  )
+    return '';
+  if (seen.has(value.id)) throw new Error('Circular string variable alias.');
+  seen.add(value.id);
+  const target = await figma.variables.getVariableByIdAsync(value.id);
+  if (!target) throw new Error('String variable alias target is missing.');
+  const modes = await modesOf(target.variableCollectionId);
+  const modeId = language ? [...modes].find(([, locale]) => locale === language)?.[0] : undefined;
+  const next = modeId
+    ? target.valuesByMode[modeId]
+    : language
+      ? undefined
+      : Object.values(target.valuesByMode)[0];
+  if (next === undefined)
+    throw new Error('String variable alias is missing the requested language mode.');
+  return stringValue(next, language, seen);
 }
 
 export async function readVariableValues(variable: Variable): Promise<VariableValues> {
@@ -106,8 +119,8 @@ export async function readVariableValues(variable: Variable): Promise<VariableVa
   const values = { en: '', id: '' };
   const unnamed: string[] = [];
   for (const [modeId, value] of Object.entries(variable.valuesByMode)) {
-    const text = await stringValue(value);
-    const language = modes.get(modeId);
+    const language = modes.get(modeId) ?? null;
+    const text = await stringValue(value, language);
     if (language) values[language] = text;
     else unnamed.push(text);
   }

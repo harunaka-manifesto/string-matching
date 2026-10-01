@@ -1,0 +1,23 @@
+{
+  "before": 16393,
+  "after": 12885,
+  "exactGroups": 1838,
+  "sharedGroups": 480,
+  "merged": 3508,
+  "collections": {
+    "account-safety": 338,
+    "finance": 230,
+    "group": 502,
+    "home": 1118,
+    "insurance": 2369,
+    "investment": 941,
+    "lending": 435,
+    "payment": 1162,
+    "promo": 1103,
+    "savings": 1012,
+    "shared": 847,
+    "split-bill": 449,
+    "transfer": 2015,
+    "transport": 364
+  }
+}

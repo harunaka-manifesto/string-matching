@@ -12,13 +12,15 @@ the same page get the same strings automatically.
    layers in reading order: top to bottom, then left to right.
 3. Check the **product** chip at the top. The plugin guesses it from strings
    already bound in the frame, then from frame, section and page names; if it
-   can't tell, it asks on the first search. Search ranks that product's strings
-   (and `shared/…` strings) first, and prefill never leaves it. **All products**
-   in the search panel widens a single search.
-4. Choose the string for the first layer. Results are ranked: exact EN/ID
-   matches, then values that start with the query, then word matches, then
-   key-name matches. Strings already bound on the page get a boost. Each result
-   shows its legacy screen, so identical values like "Got it" can be told apart.
+   can't tell, it asks on the first search. Search and prefill show only that product and `shared/…` strings. Change the
+   product menu to **All products** only when deliberately searching across streams.
+4. Choose the string for the first layer. Search covers EN/ID copy, full keys,
+   legacy aliases, immutable Copy IDs, descriptions and screen context. Exact
+   keys/IDs and full-copy matches lead; frame/component context, layer role,
+   canvas text and nearby bindings refine the order. One spelling error is
+   tolerated. Each result shows its key, context and match hints. Exact
+   bilingual duplicates collapse into one result, preferring Shared; different
+   translations remain separate. The best 20 results appear first.
    - The layers below follow the **legacy sheet order**, so a correctly anchored
      screen usually needs only a few fixes.
    - Shift a suggestion with `[` / `]` (or the arrows in the open row) to move
@@ -28,7 +30,7 @@ the same page get the same strings automatically.
    status-bar or keyboard text start skipped. Flag (`F`) layers that need a
    string that doesn't exist yet. `U` unbinds. An open row shows before → after
    when apply would replace or remove an existing binding.
-6. Click **Apply** (`⌘↵`). The plugin:
+6. Click **Apply to frame & page** (`⌘↵`). The plugin:
    - binds the strings and renames each bound layer to the full variable name
      (e.g. `investment/gopay_investment_…_title`);
    - remembers skips and flags on each layer (shared plugin data `copy/state`);
@@ -107,3 +109,24 @@ These can only be checked in a real file that uses the library:
 - Binding `characters` on text inside instances.
 - Renaming text layers inside instances (it creates a name override) and how
   long the page-wide usage scan takes on large pages.
+
+## Shared-copy migration and future editing
+
+`pnpm prepare:library` generates product-based import packs, a preserved-ID
+registry and exact merge redirects in `figma-copy-migration/reimport`.
+`pnpm test:library` checks exact equality, identity, aliases and idempotency.
+The original migration ledger is unchanged. See
+[the import guide](figma-copy-migration/reimport/README.md) before replacing
+existing variables or bindings.
+
+The future create/edit feature will use a shared backend for versioned writes
+and a sync plugin running in the library file. On the team's non-Enterprise
+Figma plan, an editor still publishes the library. The complete concurrency,
+identity, sync-recovery and developer-export plan is in
+[docs/string-registry-backend.md](docs/string-registry-backend.md).
+
+Future authoring uses the tested `copy-identity.ts` helpers in the domain package:
+UUIDv7 Copy IDs persist across retries; normalized context determines a frozen
+developer key; permanent reservations cover current keys, aliases and tombstones.
+The backend plan specifies create-only transactions and revision conflicts so
+concurrent writers cannot overwrite an existing identity.

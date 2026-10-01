@@ -4,6 +4,7 @@ import {
   normalizedFields,
   productOf,
   productVocabulary,
+  roleOf,
   type RankFields,
   type SearchableVariable,
   type SequenceSource,
@@ -20,11 +21,24 @@ export type StringEntry = SearchableVariable & {
   /** Readable legacy screen, e.g. `Investment Leaderboard › how to join · title`. */
   path: string;
   fields: RankFields;
+  copyId: string;
+  aliases: readonly string[];
+  contexts: readonly { product: string; path: string; role: string }[];
 };
 
 /** Legacy section and screen per variable name, from the generated order index. */
 type LegacyPath = { section: string; screen: string; context: string; role: string };
+type SearchMetadata = {
+  copyId: string;
+  canonicalName: string;
+  role: string;
+  aliases: string[];
+  contexts: { product: string; path: string; role: string }[];
+};
+const searchMetadata = new Map<string, SearchMetadata>();
 type OrderIndex = {
+  metadata?: Record<string, [copyId: string, canonicalName: string, role: string]>;
+  catalog?: Record<string, Pick<SearchMetadata, 'aliases' | 'contexts'>>;
   tabs: Record<string, string[]>;
   sections: string[];
   paths: Record<string, [section: number, screen: string, context: string, role: string]>;
@@ -69,7 +83,12 @@ type CacheFile = { v: 1; rows: CacheRow[] };
 /** Save progress every N imported values so a closed plugin resumes where it stopped. */
 const SAVE_EVERY = 2000;
 
+const baseProduct = (item: LibraryListingItem) => productOf(item.name, item.collection);
+
 function entry(item: LibraryListingItem, values?: Omit<VariableValues, 'key'>): StringEntry {
+  const metadata = searchMetadata.get(item.name);
+  const copyId =
+    values?.description.match(/^cp_[0-7][0-9A-HJKMNP-TV-Z]{25}/u)?.[0] ?? metadata?.copyId ?? '';
   const base = {
     key: item.key,
     name: item.name,
@@ -79,8 +98,19 @@ function entry(item: LibraryListingItem, values?: Omit<VariableValues, 'key'>): 
     id: values?.id ?? '',
     description: values?.description ?? '',
     loaded: !!values,
-    product: productOf(item.name),
-    path: readablePath(item.name),
+    product: baseProduct(item),
+    path:
+      baseProduct(item) === 'shared' && metadata && metadata.contexts.length > 1
+        ? `Shared copy · ${metadata.contexts.length} contexts`
+        : readablePath(item.name),
+    copyId,
+    aliases: [
+      ...(metadata?.aliases ?? []),
+      item.name.slice(item.name.lastIndexOf('/') + 1),
+      item.key,
+    ],
+    contexts: metadata?.contexts ?? [],
+    role: metadata?.role ?? roleOf([item.name.split('_').at(-1) ?? '']),
   };
   return { ...base, fields: normalizedFields(base) };
 }
@@ -114,6 +144,14 @@ let orderIndex: Promise<OrderIndex> | null = null;
 function loadOrderIndex(): Promise<OrderIndex> {
   orderIndex ??= gunzipText(base64ToBytes(ORDER_INDEX_GZIP_BASE64)).then((text) => {
     const index = JSON.parse(text) as OrderIndex;
+    for (const [name, [copyId, canonicalName, role]] of Object.entries(index.metadata ?? {}))
+      searchMetadata.set(name, {
+        copyId,
+        canonicalName,
+        role,
+        aliases: index.catalog?.[canonicalName]?.aliases ?? [],
+        contexts: index.catalog?.[canonicalName]?.contexts ?? [],
+      });
     for (const [name, [section, screen, context, role]] of Object.entries(index.paths ?? {}))
       legacyPaths.set(name, { section: index.sections[section] ?? '', screen, context, role });
     return index;
@@ -230,7 +268,14 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
   const list = useMemo(() => [...entries.current.values()], [version]);
   const collections = useMemo(() => [...new Set(list.map((item) => item.collection))], [list]);
   const sequences = useMemo(
-    () => buildSequenceSource({ orderedNames: tabs, variables: [...entries.current.values()] }),
+    () =>
+      buildSequenceSource({
+        orderedNames: tabs,
+        variables: [...entries.current.values()].map((item) => ({
+          ...item,
+          aliases: item.aliases.filter((alias) => alias.includes('/')),
+        })),
+      }),
     [tabs, listingVersion],
   );
   const products = useMemo(() => {
@@ -245,7 +290,7 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
     () =>
       productVocabulary(
         [...entries.current.values()].map((item) => ({
-          name: item.name,
+          name: `${item.product}/${item.name}`,
           section: legacyPaths.get(item.name)?.section,
         })),
       ),

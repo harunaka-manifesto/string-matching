@@ -1,5 +1,8 @@
 import {
   normalizeForSearch,
+  normalizedFields,
+  inProduct,
+  roleOf,
   productLabel,
   queryTokens,
   rankStrings,
@@ -10,8 +13,9 @@ import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import type { Product, StringEntry } from '../string-index';
 import { Icon } from './Icon';
 import { isPlaceholder } from './LayerRow';
+import { Menu } from './Menu';
 
-const PAGE = 60;
+const PAGE = 20;
 
 /** `null`: not chosen yet. `'all'`: the writer chose every product. */
 export type Scope = string | 'all' | null;
@@ -65,6 +69,7 @@ function Highlight({ text, tokens }: { text: string; tokens: readonly string[] }
 export function SearchPanel(props: {
   canvasText: string;
   layerName: string;
+  contextNames: readonly string[];
   current: StringEntry | undefined;
   currentKey: string | null;
   anchorHint: string | null;
@@ -81,66 +86,107 @@ export function SearchPanel(props: {
   const [query, setQuery] = useState('');
   const deferred = useDeferredValue(query);
   const [active, setActive] = useState(0);
-  const [limits, setLimits] = useState({ scope: PAGE, other: 12 });
-  // Widening to every product is for this search only; the frame keeps its product.
-  const [wide, setWide] = useState(false);
+  const [limit, setLimit] = useState(PAGE);
+  const [showRelated, setShowRelated] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const frameProduct = props.scope && props.scope !== 'all' ? props.scope : null;
-  const product = wide ? null : frameProduct;
+  const product = props.scope && props.scope !== 'all' ? props.scope : null;
 
   useEffect(() => {
     input.current?.focus();
-  }, []);
-  useEffect(() => setLimits({ scope: PAGE, other: 12 }), [deferred, product]);
+  }, [props.scope]);
+  useEffect(() => {
+    setLimit(PAGE);
+    setShowRelated(false);
+  }, [deferred, product]);
 
   const tokens = useMemo(() => queryTokens(deferred), [deferred]);
-  const near = useMemo(
-    () => neighbours(props.currentKey ?? props.anchorHint, props.sequences, props.entries),
-    [props.currentKey, props.anchorHint, props.sequences, props.entries],
-  );
+  const near = useMemo(() => {
+    const near = neighbours(props.currentKey ?? props.anchorHint, props.sequences, props.entries);
+    return {
+      ...near,
+      items: props.scope === null ? [] : near.items.filter((item) => inProduct(item, product)),
+    };
+  }, [props.currentKey, props.anchorHint, props.sequences, props.entries, props.scope, product]);
   const ranked = useMemo(
     () =>
-      rankStrings(props.list, deferred, {
-        fields: (item) => item.fields,
+      rankStrings(props.scope === null ? [] : props.list, deferred, {
+        fields: (item) => {
+          const contexts = item.contexts.filter(
+            (context) => !product || context.product === product,
+          );
+          return contexts.length
+            ? normalizedFields({
+                ...item,
+                path: contexts.map((context) => context.path).join(' '),
+                role: contexts.find((context) => context.role !== 'text')?.role ?? item.fields.role,
+              })
+            : item.fields;
+        },
         scope: product,
         used: props.used,
+        context: [props.layerName, ...props.contextNames],
+        layerText: isPlaceholder(props.canvasText) ? '' : props.canvasText,
+        role: roleOf([props.layerName, ...props.contextNames]),
+        nearby: new Set(near.items.map((item) => item.key)),
+        currentKey: props.currentKey,
+        identity: (item) =>
+          item.loaded && item.en && item.id ? JSON.stringify([item.en, item.id]) : null,
       }),
-    [props.list, deferred, product, props.used],
+    [
+      props.list,
+      deferred,
+      product,
+      props.used,
+      props.scope,
+      props.contextNames,
+      props.layerName,
+      props.canvasText,
+      props.currentKey,
+      near.items,
+    ],
   );
 
+  const strong = useMemo(
+    () => ranked.inScope.filter((item) => (ranked.details.get(item.key)?.score ?? 0) >= 1200),
+    [ranked],
+  );
+  const related = strong.length
+    ? ranked.inScope.filter((item) => (ranked.details.get(item.key)?.score ?? 0) < 1200)
+    : [];
   const sections: Section[] = useMemo(() => {
     if (!tokens.length)
       return near.items.length
         ? [{ id: 'near', title: 'In legacy order', count: 0, items: near.items, more: false }]
         : [];
     const result: Section[] = [];
-    if (ranked.inScope.length)
+    const best = strong.length ? strong : ranked.inScope;
+    if (best.length)
       result.push({
         id: 'scope',
         title: product ? `${productLabel(product)} + shared` : 'All products',
-        count: ranked.inScope.length,
-        items: ranked.inScope.slice(0, limits.scope),
-        more: ranked.inScope.length > limits.scope,
+        count: best.length,
+        items: best.slice(0, limit),
+        more: best.length > limit,
       });
-    if (ranked.other.length)
+    if (showRelated && related.length)
       result.push({
-        id: 'other',
-        title: 'Other products',
-        count: ranked.other.length,
-        items: ranked.other.slice(0, limits.other),
-        more: ranked.other.length > limits.other,
+        id: 'related',
+        title: 'More keyword matches',
+        count: related.length,
+        items: related.slice(0, limit),
+        more: related.length > limit,
       });
     return result;
-  }, [tokens, near, ranked, product, limits]);
+  }, [tokens, near, ranked, product, limit, strong, related, showRelated]);
 
   const flat = useMemo(() => sections.flatMap((section) => section.items), [sections]);
   const initialActive = useMemo(() => {
-    let index = flat.findIndex((item) => item.key === props.currentKey);
+    let index = tokens.length ? -1 : flat.findIndex((item) => item.key === props.currentKey);
     if (index === -1 && !tokens.length) index = flat.findIndex((item) => item.key === near.next);
     return index === -1 ? 0 : index;
   }, [flat, props.currentKey, tokens.length, near.next]);
-  useEffect(() => setActive(initialActive), [initialActive]);
+  useEffect(() => setActive(initialActive), [initialActive, deferred, product]);
   useEffect(() => {
     listRef.current
       ?.querySelector<HTMLElement>(`[data-index="${active}"]`)
@@ -152,14 +198,16 @@ export function SearchPanel(props: {
   useEffect(() => {
     if (!pendingPick.current || deferred !== query) return;
     pendingPick.current = false;
-    if (flat[initialActive]) props.onPick(flat[initialActive]!.key);
+    if (flat[initialActive]?.loaded) props.onPick(flat[initialActive]!.key);
   });
 
   const onKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'ArrowDown') setActive((value) => Math.min(flat.length - 1, value + 1));
+    if ((event.target as HTMLElement).closest('button') && event.key !== 'Escape') return;
+    if (event.key === 'ArrowDown')
+      setActive((value) => Math.max(0, Math.min(flat.length - 1, value + 1)));
     else if (event.key === 'ArrowUp') setActive((value) => Math.max(0, value - 1));
     else if (event.key === 'Enter' && deferred !== query) pendingPick.current = true;
-    else if (event.key === 'Enter' && flat[active]) props.onPick(flat[active]!.key);
+    else if (event.key === 'Enter' && flat[active]?.loaded) props.onPick(flat[active]!.key);
     else if (event.key === 'Escape') {
       if (query) setQuery('');
       else props.onClose();
@@ -173,7 +221,13 @@ export function SearchPanel(props: {
   let index = -1;
 
   return (
-    <section className="search" aria-label="Choose a string" onKeyDown={onKeyDown}>
+    <section
+      className="search"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Choose a string"
+      onKeyDown={onKeyDown}
+    >
       <header className="search__head">
         <button
           type="button"
@@ -185,6 +239,7 @@ export function SearchPanel(props: {
           <Icon name="back" />
         </button>
         <div className="search__layer">
+          <span className="eyebrow">Choose a library string</span>
           <span className={`search__canvas ${canvasQuiet ? 'is-placeholder' : ''}`}>
             {props.canvasText || 'Empty text'}
           </span>
@@ -201,12 +256,51 @@ export function SearchPanel(props: {
       </header>
 
       <div className="search__bar">
+        <div className="search__scope">
+          <span className="eyebrow">Product stream</span>
+          <Menu
+            triggerClassName={`scope ${props.scope === null ? 'scope--unset' : ''}`}
+            triggerLabel="Change search product stream"
+            title="Search strings in"
+            align="end"
+            items={[
+              ...props.products
+                .filter((item) => item.id !== SHARED_PRODUCT)
+                .map((item) => ({
+                  id: item.id,
+                  label: productLabel(item.id),
+                  checked: item.id === props.scope,
+                  onSelect: () => props.onScope(item.id),
+                })),
+              {
+                id: 'all',
+                label: 'All products',
+                checked: props.scope === 'all',
+                separatorBefore: true,
+                onSelect: () => props.onScope('all'),
+              },
+            ]}
+            trigger={() => (
+              <>
+                <span className="scope__label">
+                  {props.scope === null
+                    ? 'Choose product'
+                    : product
+                      ? `${productLabel(product)} + shared`
+                      : 'All products'}
+                </span>
+                <Icon name="chevron" />
+              </>
+            )}
+          />
+        </div>
         <label className="field">
           <Icon name="search" />
           <input
             ref={input}
             type="text"
-            placeholder="Search EN, ID or key"
+            placeholder="Search copy, key, ID or context"
+            aria-label="Search copy, key, ID or context"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             role="combobox"
@@ -229,28 +323,6 @@ export function SearchPanel(props: {
             </button>
           )}
         </label>
-        {frameProduct && (
-          <div className="scope-toggle" role="radiogroup" aria-label="Search in">
-            <button
-              type="button"
-              role="radio"
-              aria-checked={!wide}
-              className={`scope-toggle__item ${!wide ? 'is-on' : ''}`}
-              onClick={() => setWide(false)}
-            >
-              {productLabel(frameProduct)}
-            </button>
-            <button
-              type="button"
-              role="radio"
-              aria-checked={wide}
-              className={`scope-toggle__item ${wide ? 'is-on' : ''}`}
-              onClick={() => setWide(true)}
-            >
-              All products
-            </button>
-          </div>
-        )}
       </div>
 
       <div className="search__results" id="search-results" role="listbox" ref={listRef}>
@@ -258,8 +330,8 @@ export function SearchPanel(props: {
           <div className="prompt">
             <p className="prompt__title">Which product is this frame?</p>
             <p className="prompt__text">
-              Strings from it rank first, and suggestions stay inside it. You can change this at the
-              top any time.
+              Search and suggestions show only this product and shared copy. Change the product
+              stream above any time.
             </p>
             <div className="chips">
               {props.products
@@ -286,11 +358,14 @@ export function SearchPanel(props: {
         )}
 
         {!tokens.length && !sections.length && props.scope !== null && (
-          <p className="empty">Type to search every string by EN, ID or key.</p>
+          <p className="empty">Type to search copy, keys, IDs or screen context.</p>
         )}
-        {tokens.length > 0 && ranked.total === 0 && (
+        {props.scope !== null && tokens.length > 0 && ranked.total === 0 && (
           <div className="empty">
-            <p>No string matches “{deferred}”.</p>
+            <p>
+              No string matches “{deferred}”
+              {product ? ` in ${productLabel(product)} or shared copy` : ''}.
+            </p>
             <p className="empty__hint">If this copy is new, go back and flag the layer (F).</p>
           </div>
         )}
@@ -315,9 +390,26 @@ export function SearchPanel(props: {
                   aria-selected={i === active}
                   className={`result ${i === active ? 'is-active' : ''} ${isCurrent ? 'is-current' : ''}`}
                   onPointerMove={() => i !== active && setActive(i)}
-                  onClick={() => props.onPick(item.key)}
+                  aria-disabled={!item.loaded}
+                  onClick={() => item.loaded && props.onPick(item.key)}
                 >
+                  <div className="result__header">
+                    <span className="result__product">
+                      {productLabel(item.product)} · {item.fields.role || 'text'}
+                    </span>
+                    <span className="result__badges">
+                      {tokens.length > 0 && i === 0 && strong.length > 0 && (
+                        <span className="tag tag--suggested">Top match</span>
+                      )}
+                      {isCurrent && <span className="tag tag--picked">Current</span>}
+                      {isNext && <span className="tag tag--suggested">Next</span>}
+                      {!isCurrent && props.used.has(item.key) && (
+                        <span className="tag">On page</span>
+                      )}
+                    </span>
+                  </div>
                   <span className="result__en">
+                    <span className="locale-label">EN</span>
                     {item.loaded ? (
                       <Highlight text={item.en || item.id || '—'} tokens={tokens} />
                     ) : (
@@ -326,20 +418,25 @@ export function SearchPanel(props: {
                   </span>
                   {item.loaded && item.id && item.en && (
                     <span className="result__id">
+                      <span className="locale-label">ID</span>
                       <Highlight text={item.id} tokens={tokens} />
                     </span>
                   )}
                   <span className="result__meta">
-                    {(section.id === 'other' || item.product === SHARED_PRODUCT || !product) && (
-                      <span className="result__product">{productLabel(item.product)}</span>
-                    )}
-                    <span className="result__path">{item.path}</span>
+                    <span className="result__path">
+                      <Highlight text={item.path} tokens={tokens} />
+                    </span>
                   </span>
-                  <span className="result__badges">
-                    {isCurrent && <span className="tag tag--picked">Current</span>}
-                    {isNext && <span className="tag tag--suggested">Next</span>}
-                    {!isCurrent && props.used.has(item.key) && <span className="tag">On page</span>}
+                  <span className="result__key mono" title={item.name}>
+                    <Highlight text={item.name} tokens={tokens} />
                   </span>
+                  {tokens.length > 0 && (
+                    <span className="result__hints">
+                      {ranked.details.get(item.key)?.reasons.slice(0, 3).join(' · ')}
+                      {(ranked.details.get(item.key)?.duplicates ?? 0) > 1 &&
+                        ` · ${ranked.details.get(item.key)!.duplicates} identical copies`}
+                    </span>
+                  )}
                 </div>
               );
             })}
@@ -347,33 +444,39 @@ export function SearchPanel(props: {
               <button
                 type="button"
                 className="search__more"
-                onClick={() =>
-                  setLimits((current) =>
-                    section.id === 'other'
-                      ? { ...current, other: current.other + PAGE }
-                      : { ...current, scope: current.scope + PAGE },
-                  )
-                }
+                onClick={() => setLimit((current) => current + PAGE)}
               >
                 Show {Math.min(PAGE, section.count - section.items.length)} more
               </button>
             )}
           </div>
         ))}
+        {tokens.length > 0 && related.length > 0 && !showRelated && (
+          <button type="button" className="search__more" onClick={() => setShowRelated(true)}>
+            Show {related.length} more keyword matches
+          </button>
+        )}
       </div>
 
       <footer className="search__foot">
         {activeItem ? (
-          <span className="search__key mono" title={activeItem.name}>
-            {activeItem.name}
+          <span className="search__selection">
+            <span className="eyebrow">Selected string</span>
+            <span className="search__key mono" title={activeItem.copyId || activeItem.name}>
+              {activeItem.copyId || activeItem.name}
+            </span>
           </span>
         ) : (
           <span />
         )}
-        <span className="keys">
-          <kbd>↑</kbd>
-          <kbd>↓</kbd> move <kbd>↵</kbd> pick <kbd>esc</kbd> back
-        </span>
+        <button
+          type="button"
+          className="button button--primary"
+          disabled={!activeItem?.loaded}
+          onClick={() => activeItem?.loaded && props.onPick(activeItem.key)}
+        >
+          Choose string <kbd>↵</kbd>
+        </button>
       </footer>
     </section>
   );

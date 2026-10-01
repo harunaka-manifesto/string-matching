@@ -1,8 +1,11 @@
 # Copy variable rules for the Figma plugin (handoff)
 
-Status: **authoritative for plugin work** as of 2026-09-29. Where this file conflicts with [copy-identity-architecture.md](copy-identity-architecture.md), this file wins. The architecture doc explains *why*; this file states *what the plugin must do today*.
+> **2026-10-02 update:** Search is strictly scoped to the selected product plus Shared. The user authorized exact full-locale duplicate consolidation, superseding the older reviewer-only promotion rule for this prepared migration. See [replacement import guide](../figma-copy-migration/reimport/README.md) and [concurrent authoring plan](string-registry-backend.md). Original imported variables remain in place until migration; the hosted registry and library sync workflow described there are future implementation, not deployed functionality.
+
+Status: **authoritative for plugin work** as of 2026-09-29. Where this file conflicts with [copy-identity-architecture.md](copy-identity-architecture.md), this file wins. The architecture doc explains _why_; this file states _what the plugin must do today_.
 
 Terms:
+
 - **[DONE]** means the step is finished and verified in Figma.
 - **[RULE]** means the plugin must follow it.
 - **[OPEN]** means the user still has to decide.
@@ -13,19 +16,21 @@ Terms:
 
 All legacy copy from the 7 Google Sheets tabs is already imported into the Figma library file **"GoPay Strings"** as String Variables. It sits in 5 collections that the user renamed with a `# Legacy` prefix:
 
-| Collection (exact Figma name, may be truncated in UI) | Variables | Groups inside |
-|---|---|---|
-| `# Legacy 1: Finance, Insurance, Shared` | 3,743 | finance, insurance, insurance-health-insurance-pre-ut, shared |
-| `# Legacy 2: Account, Split bill, Transfer` | 3,641 | account-safety, split-bill, transfer |
-| `# Legacy 3: Group, Payment, Savings` | 3,837 | group, payment, savings |
-| `# Legacy 4: Home, Lending, Promo, Transport` | 3,864 | home, lending, promo, transport |
-| `# Legacy 5: Investment` | 1,308 | investment |
+| Collection (exact Figma name, may be truncated in UI) | Variables | Groups inside                                                 |
+| ----------------------------------------------------- | --------- | ------------------------------------------------------------- |
+| `# Legacy 1: Finance, Insurance, Shared`              | 3,743     | finance, insurance, insurance-health-insurance-pre-ut, shared |
+| `# Legacy 2: Account, Split bill, Transfer`           | 3,641     | account-safety, split-bill, transfer                          |
+| `# Legacy 3: Group, Payment, Savings`                 | 3,837     | group, payment, savings                                       |
+| `# Legacy 4: Home, Lending, Promo, Transport`         | 3,864     | home, lending, promo, transport                               |
+| `# Legacy 5: Investment`                              | 1,308     | investment                                                    |
 
 Total: **16,393 variables**.
+
 - Source files: `figma-copy-migration/import-packs/pack-*/{EN,ID}.json`.
 - Per-entity truth: `figma-copy-migration/registry/copy-registry.jsonl`, which holds 20,602 entities including archived, merged and held ones.
 
 What an imported legacy variable looks like:
+
 - **Name:** `<group>/<platformKey>`, e.g. `home/gopay_accessibilityfraud_header`. There is exactly one group level. The legacy group names are domain names (home, lending, …), not the new product names.
 - **Modes:** `ID` and `EN`. In the Figma UI the **ID column comes first**. Always resolve modes **by name, never by index**.
 - **Description** (if Figma kept it on import; verify): line 1 is `cp_<ID>`, line 2 is `Domain › Feature › Screen › Context › Role`, and line 3 is an optional `Note: …`.
@@ -53,6 +58,7 @@ What an imported legacy variable looks like:
 ## 3. Naming a new variable [RULE]
 
 **Variable name:** `<platformKey>`, flat, with **no group**. The collection already equals the product, so an extra group would only add nesting. The user asked to keep nesting shallow.
+
 - **[OPEN]** If the user later wants one group level (e.g. feature) inside product collections, the name becomes `<feature>/<platformKey>`. The key stays the same.
 
 **platformKey grammar**, for new strings only (legacy keys are kept as they are):
@@ -84,18 +90,19 @@ gopay_<productToken>[_<feature>][_<screen>][_<context>]_<role>[_<qualifier>][_<n
 
 **Inference sources**, in priority order. Never trust default layer names such as "Text" or "Frame 12".
 
-| Field | Primary | Fallback |
-|---|---|---|
-| product | file or page config mapping to product | one dropdown |
-| feature | Figma section name mapped through the product's feature aliases | page name; otherwise omitted |
-| screen | top-level frame name | parent frame; otherwise omitted |
-| context | nearest named component or instance (e.g. "Bottom sheet") plus a `state` variant | frame-name suffix; otherwise omitted |
-| role | design-system text style or layer role | layer-name vocabulary; otherwise ask with one radio row |
-| qualifier | button `hierarchy` variant | none |
+| Field     | Primary                                                                          | Fallback                                                |
+| --------- | -------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| product   | file or page config mapping to product                                           | one dropdown                                            |
+| feature   | Figma section name mapped through the product's feature aliases                  | page name; otherwise omitted                            |
+| screen    | top-level frame name                                                             | parent frame; otherwise omitted                         |
+| context   | nearest named component or instance (e.g. "Bottom sheet") plus a `state` variant | frame-name suffix; otherwise omitted                    |
+| role      | design-system text style or layer role                                           | layer-name vocabulary; otherwise ask with one radio row |
+| qualifier | button `hierarchy` variant                                                       | none                                                    |
 
-**Writer UX:** one confirmation screen showing the key and the description line, plus at most one question (product *or* role). Writers never type IDs or keys. Editing the key before creation is allowed and gets validated.
+**Writer UX:** one confirmation screen showing the key and the description line, plus at most one question (product _or_ role). Writers never type IDs or keys. Editing the key before creation is allowed and gets validated.
 
 **Description**, written and regenerated by the plugin:
+
 ```
 cp_<ID>
 <Product> › <Feature> › <Screen> › <Context> › <Role>
@@ -119,6 +126,7 @@ Note: <optional, the only line humans may edit>
 ## 5. Reuse before create [RULE]
 
 Search order when a writer creates copy for a layer:
+
 1. If the layer or its main component is already bound, keep the binding (auto).
 2. If the text matches an entry in the legacy `shared` group (382 curated shared strings, e.g. `shared/gopay_shared_topup_cta`), **suggest** it first.
    - The match is on normalized text: case-insensitive, trailing `?!.:…` ignored, `&` = `and`, `okay` = `ok`.
@@ -138,15 +146,15 @@ Search order when a writer creates copy for a layer:
 
 ## 7. Lifecycle [RULE]
 
-| Event | ID | Key/name | Other |
-|---|---|---|---|
-| Wording edited | same | same | — |
-| Screen renamed / feature moved | same | same | Regenerate description line 2 |
-| Moved to another product | same | same key | Create in the target collection with the same `cp_`, rebind layers, delete the old variable, update the registry |
-| Frame duplicated | same | same | Bindings are kept |
-| Duplicate becomes a new screen | **new** IDs + `forkedFrom` | new keys | Suggest a fork when ≥50% of bindings' description screens ≠ the frame name. Never fork `shared` bindings |
-| Deprecated | same | same | Warn on new bindings. Archive after 90 days with 0 bindings |
-| Deleted | tombstoned forever | key reserved forever | Never reused |
+| Event                          | ID                         | Key/name             | Other                                                                                                            |
+| ------------------------------ | -------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Wording edited                 | same                       | same                 | —                                                                                                                |
+| Screen renamed / feature moved | same                       | same                 | Regenerate description line 2                                                                                    |
+| Moved to another product       | same                       | same key             | Create in the target collection with the same `cp_`, rebind layers, delete the old variable, update the registry |
+| Frame duplicated               | same                       | same                 | Bindings are kept                                                                                                |
+| Duplicate becomes a new screen | **new** IDs + `forkedFrom` | new keys             | Suggest a fork when ≥50% of bindings' description screens ≠ the frame name. Never fork `shared` bindings         |
+| Deprecated                     | same                       | same                 | Warn on new bindings. Archive after 90 days with 0 bindings                                                      |
+| Deleted                        | tombstoned forever         | key reserved forever | Never reused                                                                                                     |
 
 ## 8. Registry and migration artifacts
 

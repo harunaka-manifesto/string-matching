@@ -15,3 +15,9 @@ graphify-out/
 .terraform/
 *.tfstate*
 .terraform.lock.hcl
+
+# Reproducible replacement library artifacts (pnpm prepare:library).
+figma-copy-migration/reimport/collections/
+figma-copy-migration/reimport/registry.jsonl
+figma-copy-migration/reimport/merge-map.json
+figma-copy-migration/reimport/merge-events.jsonl

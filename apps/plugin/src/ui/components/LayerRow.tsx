@@ -125,140 +125,149 @@ export function LayerRow(props: {
         <span className="row__body">
           <span className={`row__canvas ${quiet ? 'is-placeholder' : ''}`}>
             {canvas || 'Empty text'}
-            {quiet && <span className="row__layer-name"> · {layer.name}</span>}
           </span>
           <span className="row__value">{value}</span>
+          <span className="row__layer-name">{layer.name}</span>
         </span>
-        {TAG[kind] && <span className={`tag tag--${kind}`}>{TAG[kind]}</span>}
+        <span className="row__trailing">
+          {TAG[kind] && <span className={`tag tag--${kind}`}>{TAG[kind]}</span>}
+          <span className="row__choose">
+            {kind === 'empty' ? 'Choose' : 'Review'} <Icon name="chevron" />
+          </span>
+        </span>
       </button>
 
       <div className="row__detail" aria-hidden={!active}>
-        <div className="row__detail-inner">
-          {(kind === 'replace' || kind === 'unbind') && previous && (
-            <div className="diff">
-              <div className="diff__side">
-                <span className="diff__label">Now</span>
-                <s className="diff__old">
-                  <Value entry={previous} />
-                </s>
+        {active && (
+          <div className="row__detail-inner">
+            {(kind === 'replace' || kind === 'unbind') && previous && (
+              <div className="diff">
+                <div className="diff__side">
+                  <span className="diff__label">Now</span>
+                  <s className="diff__old">
+                    <Value entry={previous} />
+                  </s>
+                </div>
+                <Icon name="arrow" className="diff__arrow" />
+                <div className="diff__side">
+                  <span className="diff__label">After apply</span>
+                  <span className="diff__new">
+                    {kind === 'unbind' ? 'No string' : <Value entry={entry} />}
+                  </span>
+                </div>
               </div>
-              <Icon name="arrow" className="diff__arrow" />
-              <div className="diff__side">
-                <span className="diff__label">After apply</span>
-                <span className="diff__new">
-                  {kind === 'unbind' ? 'No string' : <Value entry={entry} />}
-                </span>
-              </div>
-            </div>
-          )}
+            )}
 
-          {entry && kind !== 'skip' && kind !== 'flag' && kind !== 'unbind' && (
-            <dl className="facts">
-              {entry.loaded && entry.id && (
+            {entry && kind !== 'skip' && kind !== 'flag' && kind !== 'unbind' && (
+              <dl className="facts">
+                {entry.loaded && entry.id && (
+                  <>
+                    <dt>Bahasa</dt>
+                    <dd>{entry.id}</dd>
+                  </>
+                )}
+                <dt>Screen</dt>
+                <dd>{entry.path || '—'}</dd>
+                <dt>Key</dt>
+                <dd className="mono" title={entry.name}>
+                  {entry.name}
+                </dd>
+              </dl>
+            )}
+
+            <div className="row__actions">
+              {active && (
                 <>
-                  <dt>ID</dt>
-                  <dd>{entry.id}</dd>
-                </>
-              )}
-              <dt>Screen</dt>
-              <dd>{entry.path || '—'}</dd>
-              <dt>Key</dt>
-              <dd className="mono" title={entry.name}>
-                {entry.name}
-              </dd>
-            </dl>
-          )}
-
-          <div className="row__actions">
-            {active && (
-              <>
-                {kind !== 'skip' && (
+                  {kind !== 'skip' && (
+                    <button
+                      type="button"
+                      className="button button--secondary"
+                      onClick={props.onChoose}
+                    >
+                      {key ? 'Change string' : 'Choose string'} <Kbd>↵</Kbd>
+                    </button>
+                  )}
+                  {kind === 'suggested' && (
+                    <span className="segmented" role="group" aria-label="Shift suggestion">
+                      <button
+                        type="button"
+                        className="icon-button"
+                        title="Earlier string in order, this row and below  ["
+                        aria-label="Earlier string"
+                        onClick={() =>
+                          onChange((current) => ({ ...current, shift: current.shift - 1 }))
+                        }
+                      >
+                        <Icon name="up" />
+                      </button>
+                      <button
+                        type="button"
+                        className="icon-button"
+                        title="Later string in order, this row and below  ]"
+                        aria-label="Later string"
+                        onClick={() =>
+                          onChange((current) => ({ ...current, shift: current.shift + 1 }))
+                        }
+                      >
+                        <Icon name="down" />
+                      </button>
+                    </span>
+                  )}
+                  <span className="spacer" />
+                  {layer.boundKey && state.status === 'include' && (
+                    <button
+                      type="button"
+                      className="icon-button"
+                      title={state.unbind || kind === 'unbind' ? 'Keep binding  U' : 'Unbind  U'}
+                      aria-label={state.unbind ? 'Keep binding' : 'Unbind'}
+                      aria-pressed={state.unbind}
+                      onClick={() =>
+                        onChange((current) =>
+                          current.unbind
+                            ? { ...current, unbind: false }
+                            : { ...current, pick: null, unbind: true },
+                        )
+                      }
+                    >
+                      <Icon name={state.unbind ? 'undo' : 'unlink'} />
+                    </button>
+                  )}
                   <button
                     type="button"
-                    className="button button--secondary"
-                    onClick={props.onChoose}
+                    className={`button button--secondary ${state.status === 'flag' ? 'is-on is-on--warning' : ''}`}
+                    title={
+                      state.status === 'flag' ? 'Remove flag  F' : 'Flag: needs a new string  F'
+                    }
+                    aria-label="Needs a new string"
+                    aria-pressed={state.status === 'flag'}
+                    onClick={() => toggle('flag')}
                   >
-                    {key ? 'Change string' : 'Choose string'} <Kbd>↵</Kbd>
+                    <Icon name="flag" /> Flag new copy
                   </button>
-                )}
-                {kind === 'suggested' && (
-                  <span className="segmented" role="group" aria-label="Shift suggestion">
-                    <button
-                      type="button"
-                      className="icon-button"
-                      title="Earlier string in order, this row and below  ["
-                      aria-label="Earlier string"
-                      onClick={() =>
-                        onChange((current) => ({ ...current, shift: current.shift - 1 }))
-                      }
-                    >
-                      <Icon name="up" />
-                    </button>
-                    <button
-                      type="button"
-                      className="icon-button"
-                      title="Later string in order, this row and below  ]"
-                      aria-label="Later string"
-                      onClick={() =>
-                        onChange((current) => ({ ...current, shift: current.shift + 1 }))
-                      }
-                    >
-                      <Icon name="down" />
-                    </button>
-                  </span>
-                )}
-                <span className="spacer" />
-                {layer.boundKey && state.status === 'include' && (
+                  <button
+                    type="button"
+                    className={`button button--secondary ${state.status === 'skip' ? 'is-on' : ''}`}
+                    title={state.status === 'skip' ? 'Include this layer  S' : 'Skip: not copy  S'}
+                    aria-label="Skip layer"
+                    aria-pressed={state.status === 'skip'}
+                    onClick={() => toggle('skip')}
+                  >
+                    <Icon name="skip" /> {state.status === 'skip' ? 'Include' : 'Skip'}
+                  </button>
                   <button
                     type="button"
                     className="icon-button"
-                    title={state.unbind || kind === 'unbind' ? 'Keep binding  U' : 'Unbind  U'}
-                    aria-label={state.unbind ? 'Keep binding' : 'Unbind'}
-                    aria-pressed={state.unbind}
-                    onClick={() =>
-                      onChange((current) =>
-                        current.unbind
-                          ? { ...current, unbind: false }
-                          : { ...current, pick: null, unbind: true },
-                      )
-                    }
+                    title="Zoom to layer"
+                    aria-label="Zoom to layer"
+                    onClick={props.onReveal}
                   >
-                    <Icon name={state.unbind ? 'undo' : 'unlink'} />
+                    <Icon name="target" />
                   </button>
-                )}
-                <button
-                  type="button"
-                  className={`icon-button ${state.status === 'flag' ? 'is-on is-on--warning' : ''}`}
-                  title={state.status === 'flag' ? 'Remove flag  F' : 'Flag: needs a new string  F'}
-                  aria-label="Needs a new string"
-                  aria-pressed={state.status === 'flag'}
-                  onClick={() => toggle('flag')}
-                >
-                  <Icon name="flag" />
-                </button>
-                <button
-                  type="button"
-                  className={`icon-button ${state.status === 'skip' ? 'is-on' : ''}`}
-                  title={state.status === 'skip' ? 'Include this layer  S' : 'Skip: not copy  S'}
-                  aria-label="Skip layer"
-                  aria-pressed={state.status === 'skip'}
-                  onClick={() => toggle('skip')}
-                >
-                  <Icon name="skip" />
-                </button>
-                <button
-                  type="button"
-                  className="icon-button"
-                  title="Zoom to layer"
-                  aria-label="Zoom to layer"
-                  onClick={props.onReveal}
-                >
-                  <Icon name="target" />
-                </button>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </li>
   );
