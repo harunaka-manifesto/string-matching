@@ -1,6 +1,16 @@
 import type { LibraryListingItem, VariableValues } from '@string-binder/contracts';
 import { catalog, WorkflowError } from './registry-api';
-import { materialize } from './delivery';
+import { recordFingerprint } from '@string-binder/domain';
+import {
+  materialize,
+  baselineOf,
+  copyIdOf,
+  actual,
+  sameValues,
+  allTexts,
+  fonts,
+  verifiesSaved,
+} from './delivery';
 
 /** Parallel imports per batch; one batch is also one progress message to the UI. */
 export const IMPORT_BATCH_SIZE = 40;
@@ -50,10 +60,64 @@ export async function listLocalStrings(): Promise<{
 
 /** Local variables resolve directly; library variables are imported by key. */
 export async function variableByKey(key: string): Promise<Variable> {
-  if(key.startsWith('registry:')){
-    const [,id,rev]=key.split(':');const cat=await catalog(true);const record=cat.records.find(r=>r.copyId===id);
-    if(!record||record.revision!==Number(rev))throw new WorkflowError('REVISION_CONFLICT','Copy changed since selection; refresh the catalog and review again');
-    return materialize(record,cat.products.find(p=>p.id===record.product)?.displayName??record.product);
+  if (key.startsWith('registry:')) {
+    const [, id, rev] = key.split(':');
+    let online = true;
+    const cat = await catalog(true).catch(async () => {
+      online = false;
+      return catalog();
+    });
+    const record = cat.records.find((r) => r.copyId === id);
+    if (!record || record.revision !== Number(rev))
+      throw new WorkflowError(
+        'REVISION_CONFLICT',
+        'Copy changed since selection; refresh the catalog and review again',
+      );
+    const mapping = cat.mappings.find(
+      (m) =>
+        m.copyId === record.copyId &&
+        m.publishedRevision === record.revision &&
+        m.syncedRevision === record.revision &&
+        m.fingerprint === recordFingerprint(record),
+    );
+    if (mapping) {
+      try {
+        const v = await figma.variables.importVariableByKeyAsync(mapping.variableKey);
+        if (await verifiesSaved(v, record)) return v;
+      } catch {
+        /* Published copy can be temporarily unavailable. */
+      }
+    }
+    if (!online) {
+      for (const v of await figma.variables.getLocalVariablesAsync('STRING'))
+        if (await verifiesSaved(v, record)) return v;
+      throw new WorkflowError(
+        'UNAVAILABLE',
+        'This saved revision is not available in Figma while offline',
+      );
+    }
+    const mirrors = await figma.variables.getLocalVariablesAsync('STRING');
+    const changing = new Set(
+      mirrors
+        .filter(
+          (v) =>
+            copyIdOf(v) === record.copyId &&
+            v.getSharedPluginData('copy', 'delivery') === '1' &&
+            baselineOf(v)?.revision !== record.revision,
+        )
+        .map((v) => v.id),
+    );
+    if (changing.size) {
+      const usages = (await allTexts()).filter((n) => {
+        const b = n.boundVariables?.characters;
+        return b && !Array.isArray(b) && changing.has(b.id);
+      });
+      await Promise.all(usages.map(fonts));
+    }
+    return materialize(
+      record,
+      cat.products.find((p) => p.id === record.product)?.displayName ?? record.product,
+    );
   }
   return localByKey.get(key) ?? figma.variables.importVariableByKeyAsync(key);
 }

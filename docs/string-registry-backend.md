@@ -1,117 +1,156 @@
-# String Binder: concurrent authoring and library delivery
+# String Binder: authoring, Supabase registry and library sync
 
-Decision prepared on 2026-10-02; immediate-binding and Sheets-access constraints added on 2026-10-06. The team's Figma plan is recorded as non-Enterprise. This is the implementation plan for the later create/edit feature; no authoring service is deployed. Writers must be able to bind newly saved copy immediately in their working files, before library sync or publication. The user has a service account approved only for Google Sheet editing and wants to avoid requesting additional GCP access.
-
-## Recommended source of truth
-
-Use the hosted registry as the authoritative copy store. Figma's GoPay Strings file is its published delivery surface. All plugin clients write through one authenticated backend; they do not compete to edit library variables directly.
-
-Use Google Sheets as the initial registry, with one Apps Script project providing authenticated reads and serialized writes, subject to confirming Workspace deployment policy and Figma connectivity. Apps Script can use an automatically managed default Cloud project, avoiding a new Cloud Run or Firestore deployment: [default Cloud projects](https://developers.google.com/apps-script/guides/cloud-platform-projects). This route executes as an authorized Google user and does not require the existing service-account key. Sheet editing permission for the service account does not itself authorize Apps Script deployment. If an existing approved server is already available, it can instead use that service account behind an authenticated API, but it must supply equivalent single-writer coordination. Keep search local over a versioned catalog using the ranking implemented here.
-
-The user can request access to create Apps Script; availability of an existing server is unknown. Proceed with the Apps Script route as the planning assumption, with deployment/access and authenticated plugin connectivity still unverified. Prefer a maintainer-owned standalone script and keep its code/settings restricted to maintainers; ordinary writers use the plugin and do not need editor access to either the script or managed registry tabs.
-
-The unavoidable boundary: Figma's Variables REST API requires Enterprise membership and appropriate seats/permissions. Even on Enterprise, writing variables does not publish them. With this team's plan, a plugin must run **inside the library file**, write its local variables, and an editor must publish the library in Figma. A server alone cannot provide unattended cross-file write-and-publish on this plan. See [Figma Variables API requirements](https://developers.figma.com/docs/rest-api/variables/) and [variable endpoints](https://developers.figma.com/docs/rest-api/variables-endpoints/). The documented API has local/published reads and local writes; the Plugin API exposes publishing status, not a publishing operation: [Variable API](https://developers.figma.com/docs/plugins/api/Variable/).
+Accepted implementation specification, 2026-10-06. Supabase is the authoritative saved registry. Working files and GoPay Strings are editable delivery surfaces that carry committed identity/revision metadata. Deployment is pending the team's Supabase project setup. Local fixtures support development without authentication; remote requests always validate credentials.
 
 ```mermaid
 flowchart LR
-  W[Writers in design files] -->|Create / edit / review| API[Authenticated Apps Script API]
-  API --> DB[Google Sheets registry + revision log]
-  DB -->|Approved changes| L[Sync plugin in GoPay Strings file]
-  L -->|Write local variables| F[Figma library draft]
-  F -->|Editor publishes in Figma| P[Published string library]
-  P --> D[Designers bind strings]
-  P --> V[Developers export published variables]
-  DB -->|Catalog + saved revisions| W
-  W -->|Create / update local preview variables| M[Immediate bindings in working file]
-  P -->|Published mappings; plugin migrates previews| M
+ W[Writer in working file] --> API[Token-gated Supabase Edge Function]
+ API --> DB[Postgres registry and immutable revisions]
+ API --> V[Immediate local variables and bindings]
+ L[Plugin in GoPay Strings] <-->|Reviewed Push and Pull| API
+ L -->|Manual Figma publication| P[Team library]
+ P -->|Exact revision verification| V
+ V --> M[Read-only official MCP frame extraction]
 ```
 
-“Saved and bound locally” and “Available in library” are separate states. Immediate binding uses a local preview variable in the working file; it does not wait for publication. The sync plugin can stay open during a writing session to reduce delivery delay, but it cannot work while the library file/plugin is closed. A working-file plugin likewise cannot refresh local previews or migrate their bindings while closed. If fully unattended immediate publication is mandatory, Figma cannot be the sole delivery channel under the current plan; developers would also need a registry release endpoint. An Enterprise upgrade removes the open-library requirement for _writing_, while publishing still needs its own supported workflow.
+## Chosen defaults
 
-## Records and concurrency
+- Supabase Free pilot in Singapore; no Google integration, Apps Script or user login.
+- Embed only a limited team token in the internal writer build. Publisher setup uses a separate credential stored privately on the maintainer's device. Server/database credentials remain outside the plugin.
+- Writers review and submit copy without a second approval gate. New strings bind locally immediately; central library publication happens separately.
+- EN and ID are both required for creates and wording edits. Preserve exact whitespace, Unicode and line breaks; trimming only detects empty fields.
+- Exact bilingual duplicates are suggestions. Explicit reuse retains identity; explicit distinct creation receives a new identity, even for identical wording.
+- IDs and developer keys are immutable. Context and translations can change. Historical aliases, redirects, tombstones and migration history remain preserved.
+- Working files refresh while their plugin is open. Library changes require reviewed Push/Pull. Closed files catch up on later plugin/library updates.
+- One designated publisher initially. A renewable lease coordinates sessions, but does not make Figma edits transactional.
 
-| Managed Sheet tab | Purpose |
-| ----------------- | ------- |
-| `Copies` | One row per immutable Copy ID: frozen platform key, locale values, context, usages, status, revision, actors, redirects and tombstone |
-| `Keys` | Permanent reservation of every current key and historical alias, pointing to a Copy ID; never delete reservations |
-| `Requests` | Actor/request ID, payload hash and saved response for safe retries; reject reuse with a different payload |
-| `Changes` | Append-only audit revisions and delivery work items; also supports catalog deltas |
-| `Libraries` | Allowed Figma files, publisher leases and checkpoints |
-| `Mappings` | Library/Copy ID to Figma collection/variable ID and key, synced revision, published revision and previous mappings |
-| `Meta` | Catalog sequence and schema version, committed with each mutation |
+The embedded token is extractable and authorizes its holder. It does not prove writer identity. Device IDs and optional names are unverified attribution. Direct anonymous table/RPC access is denied. Publication and sync acknowledgement require the publisher credential. See [Supabase API key guidance](https://supabase.com/docs/guides/getting-started/api-keys).
 
-Every mutation goes through the same Apps Script project and `LockService.getScriptLock()`: acquire the lock, reread authoritative state, check request/revision/key reservations, then commit copy, key reservation, request response, change event and catalog sequence in one Sheets `spreadsheets.batchUpdate`. Release the lock in finally; return a retryable busy result on lock timeout. A batch applies its subrequests atomically, but does not make the preceding read conditional: the script lock and exclusive write path supply that missing coordination. See [Lock Service](https://developers.google.com/apps-script/reference/lock/) and [atomic Sheets batches](https://developers.google.com/workspace/sheets/api/guides/batch).
+## Writer journeys
 
-An uncertain commit outcome is not a failed save. Retain a durable in-flight mutation manifest and reconcile the request record and intended rows before retrying an append or admitting conflicting writes. If the outcome cannot be established, block mutations for maintainer recovery rather than risk duplicate creation or stale overwrites. This recovery path must be exercised in the implementation spike; a script lock alone is not a database transaction.
+### Open and apply existing copy
 
-Managed tabs are protected from ordinary writer edits, structural changes and independent service-account jobs. Human edits and other scripts do not honor the Apps Script lock; approved manual maintenance must use the API or happen during a write pause. Use filter views instead of physically sorting storage rows. Optional exact-value lookup caches are derived, never authoritative; verify actual locale values under the lock. Do not rely on separate SpreadsheetApp writes for an atomic save.
+Open the plugin and choose **Apply existing copies** or **Create new copies**. Library sync is secondary. Read cached copy immediately and connect in the background. Switching modes preserves drafts.
 
-Create uses a client-generated CSPRNG UUIDv7 Copy ID and a persistent request ID. IDs avoid collisions, but do **not** prevent lost edits or duplicate copy; serialized validation and the atomic commit do that. For two simultaneous identical creates, the second execution checks the first execution's committed values and reuses the entity with an added usage. For two simultaneous key collisions, reserve the next available `_2`, `_3` under the lock, honoring tombstones and aliases. Never invent a random replacement key after a failed save.
+Apply keeps existing product-plus-Shared search, ranking, selection, skips, includes, unbinds and flags. Select a frame, choose/search saved copy, and review selected changes and matching targets on the current page before Confirm Apply. Conflicting existing bindings are retained. Managed text layers are renamed to the frozen developer key.
 
-Edit sends `expectedRevision`. Under the lock, compare it to the current revision; a mismatch returns a structured revision conflict with both versions for review. Never silently overwrite the other writer. Increase the entity revision and write its immutable change record together. Client retries reuse the same request ID, including after an ambiguous timeout. Enforce writer/reviewer/publisher roles server-side; never put the service-account private key or an organization-wide write secret in the plugin. Per-writer revocable tokens provisioned by a maintainer are an initial authentication option if approved; store token verifiers server-side and derive the actor from the verified token, not an email in the request. Workspace sign-in is preferable if its plugin handoff can be verified without additional GCP access.
+A record can be applied before central publication. The controller resolves the selected registry revision, materializes local EN/ID delivery variables when needed, and binds those occurrences. A newer registry revision invalidates a stale reviewed selection instead of silently applying another wording.
 
-Exact reuse compares **every available locale**, including placeholder names, case, punctuation, whitespace and line breaks. Missing translations remain draft and cannot accidentally merge with an approved bilingual string. Numeric/data-only values and whole placeholders remain contextual. A shared-copy edit affects all usages: show that impact, require review, and offer “Create a variant” to fork an ID for a product-specific change. Shared identity does not mean translations are interchangeable.
+### Create canvas copy
 
-## Deterministic creation rules
+1. Write copy into a Figma frame and select the frame.
+2. Choose Create new copies. Visible text appears in reading order; every row starts **Keep as is**. Hidden text is excluded. Non-copy candidates show a reason and remain available for explicit inclusion.
+3. Choose individual rows or Select eligible unbound rows. Select a product. Set the frame's canvas language, with per-row EN/ID overrides. Canvas wording fills that language; enter the translation in the plugin. Both fields remain editable.
+4. Correct inferred screen/context/role, inspect duplicate suggestions, and review the provisional key, bilingual pair, product collection and fixed occurrence targets. Concurrent creations may add a suffix to the final key.
+5. Save and apply. Preflight source fingerprints/fonts; commit the reviewed registry batch; receive final IDs/keys/revisions; create/reuse local variables; bind approved occurrences; rename layers; show saved/apply results separately.
+6. Move to the next frame. Drafts and unfinished operations survive mode changes, selection changes and reopen.
 
-The runnable helpers live in `packages/domain/src/copy-identity.ts`, exported from `@string-binder/domain`. `createCopyId(timestamp, entropy)` uses the migration's UUIDv7/Crockford format. The caller must obtain ten CSPRNG bytes using Web Crypto in the UI or `node:crypto` on the server. `isCopyId` checks the encoding, UUID version and variant. Do not use `Math.random`, text hashes, timestamps alone, counters or Figma node IDs as identity.
+Keep rows receive no creation, rebinding, renaming or parent-language-mode change. If a kept occurrence already uses an intentionally edited shared identity, it follows that identity's updated value.
 
-“Deterministic” means one creation operation always retains the same identity and one normalized context proposes the same developer key. It does not mean independently creating the same wording generates the same ID. Exact-copy reuse belongs in the serialized registry service, preserving the existing canonical ID.
+### Reuse, edit, variant and restore
 
-1. Generate and persist the proposed Copy ID and request ID once before sending. Keep them across network retries and UI restarts. Same actor/request ID + same canonical payload returns the saved response. Reusing a request ID for different content returns a structured conflict.
-2. Normalize product, feature, screen and context with `copyKeyStem`; role and optional primary/secondary/tertiary qualifier are explicit. Example: Split bill / Pay & split / Confirm / CTA primary → `gopay_splitbill_payandsplit_confirm_cta_primary`. Key normalization excludes locale and wording. Reject unsupported roles or an overlong key for correction.
-3. Under the script lock, read the request, existing exact values, proposed ID and candidate key reservations **before any writes**. An exact approved match returns its canonical ID. An existing proposed ID owned by a different creation operation returns a structured conflict; never update that entity, treat it as reuse, or silently regenerate identity.
-4. `nextCopyKey` proposes the bare key, then the smallest available ordinal from `_2`. Supply all current keys, aliases and tombstones reread under the lock. Enforce create-only semantics in the API and include copy, usages, permanent key reservation, request response and audit work item in the same atomic batch. Every retry must reacquire the lock and recheck the request before computing mutations. A client-side free-key check alone provides no concurrency guarantee.
-5. Return the committed canonical ID/key to the plugin. Freeze both on all later wording and context edits. A fork is a fresh operation with `forkedFrom`; deletion retains permanent reservations. Never let an edit endpoint accept changes to identity/key, and reject stale `expectedRevision`.
+- **Reuse existing:** compare product, context, key and both translations; select the saved identity. Do not automatically merge identical concurrent submissions.
+- **Edit existing globally:** keep ID/key; edit both languages and context; review the global effect. Saving uses the reviewed expected revision. Current-file usages update in place or move from older published variables to newer local delivery variables. Other open plugins poll; closed files and the library catch up later. Do not claim a complete cross-file usage count.
+- **Create variant:** new ID/key with `forkedFrom`; bind the selected frame and reviewed duplicates. Other usages retain the original identity. Duplicating a frame alone does not fork identities.
+- **Manual local variable change:** automatic refresh protects it. Open the bound row to review an edit, create a variant, or explicitly restore saved values. Restoration warns that all known usages of the local variable are affected.
 
-The helper test covers repeatable UUID encoding, invalid IDs, normalization, alias/tombstone reservations and ordinal collisions. The service must additionally test concurrent executions, lock timeout and restart/retry recovery when implemented; these helpers do not constitute a deployed concurrent allocator.
+## Library journeys
 
-## API and writer flow
+Publisher setup stores the separate credential and registered library URL privately. File markers are routing checks, never authentication. GoPay Strings uses its supplied URL and verified existing local variable key; the controller does not depend on `figma.fileKey`, which requires private-plugin API access. See [Figma file-key API](https://developers.figma.com/docs/plugins/api/figma/#filekey).
 
-The table names logical operations. For Apps Script, implement them through doGet/doPost action dispatch, not an assumed PATCH-capable REST router. Return structured JSON success/error envelopes, including conflict and busy codes, rather than relying on custom HTTP error statuses. First prove an authenticated request from the real Figma plugin, response redirects and domain allowlisting, and a successful read/write round trip. Apps Script deployment permissions and browser/network behavior must be verified before calling this a no-new-access deployment. See [web apps](https://developers.google.com/apps-script/guides/web) and [Content Service redirects](https://developers.google.com/apps-script/guides/content).
+### Check, Push and direct creation
 
-| Operation                               | Contract                                                                                                                                      |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `GET /catalog?stream=transfer`          | Only that stream and shared copies; include aliases, usages, record revisions, publication state and redirects                                |
-| `POST /copies`                          | Request ID, proposed Copy ID, product/usage, inferred role and localized values; response is created or reused plus canonical ID/key/revision |
-| `PATCH /copies/:id`                     | Request ID + expected revision + edited fields; immutable identity/key cannot be changed                                                      |
-| `POST /copies/:id/approve`              | Reviewer checks translations, placeholders and shared impact; enqueues approved revision for library delivery                                 |
-| `POST /libraries/:id/lease`             | Publisher-only, short renewable lease; one sync session for this library                                                                      |
-| `GET /libraries/:id/pending`            | Approved revisions and mappings, plus unresolved failures                                                                                     |
-| `POST /libraries/:id/ack`               | Lease token + exact applied revisions + returned Figma IDs/keys; mark synced, never automatically published                                   |
-| `POST /libraries/:id/confirm-published` | Publisher confirms the specific revision manifest after publishing and verifying status; mark released revisions                              |
+Edit EN/ID variable values in GoPay Strings, then Library sync → Check changes → choose Use Figma / Push or Combine → Review → Confirm. The same validation, revision checks and transaction function used by writers saves the batch. Only afterward does Figma receive committed metadata. Existing variables update in place; IDs, developer keys and Figma variable keys remain stable.
 
-Select a frame → infer product, role and context → show existing matches → select unbound text to create → confirm copies and translations → save to the registry → immediately create/reuse a local preview variable and bind the layer. The plugin handles IDs and keys. A missing locale is shown as a translation task, not filled with the other language; immediate binding requires a value for the selected locale. A new string gets “Bound locally · waiting for library sync”, then “Bound locally · waiting for publish”, then “Using published library”. Binding to the actual team variable is enabled only after it has a published key. The UI distinguishes a local preview from a published team variable.
+For a genuinely new variable in a product collection, review both translations and context, choose distinct creation or explicit duplicate reuse, then Push. Attach the saved identity to that existing variable. Do not create another Figma variable for the same direct-library submission. Explicit reuse consolidates its occurrences onto the canonical variable; remove the temporary variable only after verified rebinding and no remaining references.
 
-The catalog should deliver a complete initial snapshot and immutable revision changes with a stable cursor. Apply updates by Copy ID and revision, including redirects/tombstones; capture a change cursor **before** building the snapshot, then replay changes so concurrent updates are not lost. Overlap pages and deduplicate change IDs when equal timestamps cross page boundaries. Publish a fresh catalog after delivery so the current per-user cache does not keep old copy indefinitely.
+Resolve unidentified legacy variables by existing registry keys/aliases. Ambiguous ownership blocks reconciliation. Never mint a replacement identity or add new entries to `# Legacy` collections.
 
-## Immediate bindings and working-file sync
+### Pull and conflict resolution
 
-1. Keep the registry authoritative. A local preview is a delivery copy, identified by the existing immutable Copy ID, not a separate entity. Store the Copy ID, last applied revision and preview marker on the local variable; retain the published mapping separately. Layer names remain the frozen developer key, and managed layers also carry the Copy ID. Never identify an entity solely by its current text or layer name.
-2. Create previews in a dedicated plugin-managed collection, hidden from library publication. Resolve EN/ID modes by name and preserve the selected layer/frame locale when binding or migrating. Materialize only copy used in this file, not the entire catalog. The plugin already supports reading and binding local variables; extend that path rather than creating a second binding engine.
-3. Save to the backend first, then materialize the committed canonical ID/key/revision in Figma. A network retry reuses the request ID; a Figma failure after a successful save offers retry-binding without recreating the entity. Reuse one local preview per Copy ID in a file. Concurrent plugin sessions in the same Figma file can still race because Figma writes have no database transaction: rescan before creation, detect duplicate previews and reconcile their bindings. Do not claim that a backend lease makes Figma writes atomic.
-4. Editing existing copy uses PATCH with expectedRevision. To preview the committed edit immediately, create/reuse its local preview and switch occurrences bound to its known published variable in the current file to that preview. Scan all pages when applying a file-wide replacement; preserve unrelated bindings and report instances or layers that cannot be changed. The same Copy ID/key remains. Offer an explicit fork for a change intended only for this screen.
-5. Refresh used-copy revisions on plugin open, before binding, after a save and periodically while open. A simple API poll is sufficient for the first version. Update a local preview's value in place, so its bound occurrences update together. Compare the last applied snapshot with local Figma values before overwriting; manual local edits require reconciliation through the registry. Other files with active plugins refresh on their next poll; closed plugins refresh when run again.
-6. When a published mapping is available, import the real library variable and migrate preview-bound occurrences in this file. Migrate only when the confirmed published revision covers the preview revision and the imported values/modes match that release. Never replace revision 8 preview copy with revision 7 published copy. Make rebinding resumable and retain previews while any bindings remain; remove only verified unused managed previews. Failed or inaccessible occurrences remain visibly pending.
-7. Existing library-bound occurrences in other files receive released changes through Figma's normal library-update workflow. Local-preview occurrences require working-file plugin sync. Thus all occurrences converge, but neither a database save nor a plugin running in one file guarantees instant updates across every closed file. Search must distinguish latest saved copy from published values and refresh changed revisions, not just discover new variable keys.
+Pull missing/changed saved revisions into the correct product collection, resolve language modes by name, and preserve existing variable keys. Review a fixed manifest; edits arriving afterward stay pending. Protect unpushed Figma changes. Restoring a changed frozen key is an explicit Pull action.
 
-For the initial backend, use one authenticated Apps Script API and the managed Sheet tabs, with revision records doubling as pending delivery work. No separate queue broker, search service or real-time collaboration engine is required. Cache the catalog for plugin search and transfer deltas; save explicit actions rather than every keystroke. Batch edits and use backoff/jitter for polling. Benchmark at the existing roughly 20k-copy catalog and expected simultaneous writer count before rollout; Sheets API and Apps Script quotas are deployment limits, not a guarantee of database-like throughput. See [Sheets quotas](https://developers.google.com/workspace/sheets/api/limits) and [Apps Script quotas](https://developers.google.com/apps-script/guides/services/quotas).
+Compare three versions: **B** = last synchronized record; **L** = actual local values/context; **R** = current saved registry record.
 
-## Library sync
+| Comparison                             | State / action                                                  |
+| -------------------------------------- | --------------------------------------------------------------- |
+| L = B and R = B                        | Up to date                                                      |
+| L differs; R = B                       | Local changes; reviewed Push                                    |
+| L = B; R differs                       | Remote changes; reviewed Pull                                   |
+| L = R                                  | Adopt saved revision without a wording edit                     |
+| L and R both differ and disagree       | Conflict                                                        |
+| Missing trusted B                      | Explicit initial reconciliation                                 |
+| Missing variable                       | Pull to recreate; keep registry identity and record new mapping |
+| Identity/key mismatch or missing modes | Resolve error; do not infer a new identity                      |
 
-1. Verify the exact allowed library file and a publisher lease. In the library, match variables using `copy/id` plugin data, then description line 1. Backfill legacy IDs from the registry. Ambiguous/missing identity is a failure to review, not permission to mint a replacement.
-2. Resolve `EN` and `ID` by name. Create missing approved entities in product collections or Shared; keep a 4,000-variable operational limit and split numbered partitions. Figma currently documents a 5,000-variable API limit, so 4,000 is headroom, not its physical limit.
-3. Update existing variables in place, preserving Figma keys. For each applied revision store the Copy ID, revision and operation ID on the variable as well as its description. Upsert by ID and rescan before creation on recovery; a crash before acknowledgement must not create a second variable. Resolve aliases by locale, not first mode.
-4. Write and acknowledge a fixed revision manifest. Edits arriving during sync stay queued for the next pass. An acknowledgement for revision 4 cannot clear revision 5. Renew the lease during the pass. If it is lost, stop writes; on takeover rescan and reconcile. Figma edits are not a distributed transaction with the registry, so the backend must not describe the lease as an absolute fence against a stale plugin client. A sole designated publisher is the simplest operational starting point.
-5. Show failures and “Publish these changes in Figma”. After the editor publishes, use variable publish statuses and the saved manifest for confirmation. Only then acknowledge those revisions as published. Crash recovery repeats reconciliation and acknowledgement safely.
-6. Designers accept library updates and reload the Binder catalog. Developers fetch the **published library file**, not arbitrary design-file copies or pending backend drafts. On a non-Enterprise plan, use a plugin exporter in the library file for the released revision manifest and EN/ID bundles; Variables REST export is also Enterprise-gated. Retain immutable export snapshots matching each published manifest, including legacy-key redirects. The exporter must refuse pending draft revisions or export the saved last-published snapshot; dumping current local variable values while unpublished edits exist would expose the wrong release.
+For conflicts, show B/L/R and offer Use Supabase, Use Figma, Combine, or Defer. Use Figma/Combine saves against the currently reviewed R revision; a later remote change reopens the conflict. Defer does not modify the record. Adopt requires matching bilingual values; use Pull to explicitly replace local wording.
 
-Do not let direct library edits become an untracked second source of truth. The sync screen compares Figma values and stored revisions before writing; a manual discrepancy blocks that entity and offers import-as-registry-edit with normal revision review. A library-file rename or move changes mappings, not Copy IDs or developer keys.
+Push commits before Figma metadata stamping. Pull writes Figma before acknowledgement. Persist compressed fixed manifests, operation IDs, successes and outstanding work privately; retries rescan before creation. Recheck the publisher lease before each chunk and stop on lease loss. An old acknowledgement never clears a newer revision.
 
-## Rollout
+### Publish and migrate bindings
 
-The search fixes work against the current library. `pnpm prepare:library` generates the replacement package and exact merge map without editing the original migration ledger. The package preserves all 20,602 IDs, archives 3,508 exact duplicates through redirects, and emits 12,885 active variables; 847 are in Shared.
+After reviewed Push/Pull, publish through Figma, then Verify publication. The controller checks all applied entries against their exact records, actual bilingual values, baseline revision and `CURRENT` publish status. Only then acknowledge the manifest's published revisions.
 
-For a clean import, duplicate GoPay Strings first, import the per-product packs and both modes, backfill IDs, verify values and mappings, then publish. Existing design bindings still reference the old Figma keys: use the merge map and old Copy IDs to migrate bindings before retiring any original variables. Reimporting JSON alone does not repair existing bindings. Alternatively, keep the original variables as compatibility aliases to canonical shared variables while files transition. The search now collapses exact copies without needing this migration immediately.
+Working-file refresh migrates local bindings only when the registry mapping, published revision, imported identity and actual bilingual values agree with the needed revision. Older published wording cannot replace a newer local revision. Keep managed local variables until no bindings reference them. Protect manual edits and preserve each occurrence's locale; do not detach instances automatically.
 
-Build create/edit after verifying Apps Script deployment/authentication/connectivity, registry Sheet access, library file allowlist and publisher ownership. Implementation order: authenticated serialized registry → catalog/deltas → writer create/edit with immediate local previews → working-file revision refresh → library sync/recovery → publication confirmation and preview migration → published export. Test two same-key creates, two identical-copy creates, competing edits, lock timeout, ambiguous save timeout, save-success/bind-failure recovery, same-file duplicate previews, a lost publish acknowledgement, a publisher crash during create, editing a newer revision during sync, locale preservation and interrupted migration. Do not deploy an empty backend or install another search service before these flows are implemented. A later move to a transactional database retains Copy IDs, revisions and API contracts; Cloud Run/Firestore is a future capacity option, not an initial access requirement.
+## Recovery and statuses
+
+| Case                                       | Behavior                                                                                 |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| Missing translation / invalid placeholders | Highlight validation; complete or Keep before submission                                 |
+| Canvas changes after review                | Commit remains saved; changed occurrences remain unapplied for reconciliation            |
+| Save succeeds, binding/font/metadata fails | Saved, with outstanding Figma work; retry using the saved response                       |
+| Save response lost / times out             | Look up or resend the same request ID and payload/identities                             |
+| Competing edits                            | First valid commit succeeds; second gets latest record/conflict, no partial batch writes |
+| Concurrent same-stem creates               | Transactionally allocate distinct final keys with `_2`, `_3`, etc.                       |
+| Backend/token/configuration unavailable    | Preserve drafts/cache; disable saves; existing available Figma bindings remain usable    |
+| Variable renamed/deleted                   | Keep identity/key; explicit reconciliation restores name or recreates mapping            |
+| Duplicate delivery mirrors                 | Reconcile same identity; never automatically fork                                        |
+| Publisher interrupted or lease lost        | Resume fixed manifest from verified state; preserve partial successes                    |
+| New edits during Pull/publication          | Leave newer revisions pending                                                            |
+| Figma Undo                                 | Undo canvas only; saved registry records and reservations remain                         |
+
+Working-file messages distinguish Draft, Saved not applied, Bound locally, update/manual-conflict warnings and published delivery. Library diff/results distinguish Up to date, Local changes, Remote changes, Conflict and Needs publish. Completion never implies publication or instant updates to closed files.
+
+## Controller, registry and delivery contracts
+
+Typed UI/controller operations carry correlation IDs. Network requests run in the native controller; polling/debounce/timers run in the UI. The generated manifest allows the configured Supabase project origin, validated by the sandbox check. Browser helpers remain excluded from native/domain/shared runtime code.
+
+The 640 × 760 authoring/sync window has a scrolling body and persistent actions. Apply retains its compact layout. Shared selection, duplicate matching, fonts, language resolution, search and binding primitives are reused. New bindings/variants affect selected and reviewed page targets; global edits and refresh load current-file pages as needed and report inaccessible occurrences.
+
+| Storage                                      | Responsibility                                                        |
+| -------------------------------------------- | --------------------------------------------------------------------- |
+| `copies`                                     | Current committed record; preserved legacy metadata                   |
+| `key_reservations`                           | Globally unique frozen keys, historical aliases and tombstones        |
+| `copy_revisions`                             | Immutable bilingual/context revisions                                 |
+| `requests`                                   | Idempotent payload hash and saved result                              |
+| `changes`, `registry_head`                   | Commit-ordered catalog/delivery changes                               |
+| `products`                                   | One configured product/name/key-token/legacy-group list               |
+| `libraries`, `library_mappings`, `sync_runs` | Destination registration, leases, exact manifests and acknowledgement |
+| `migration_history`                          | Preserved original ledger and prepared merge events                   |
+
+The Edge Function exposes catalog, ordered changes, batch submission, request status, immutable revision lookup, and publisher-only library start/ack/publication. Administrator bootstrap/backup/restore RPCs are absent from the team router. Tables and RPCs deny direct anonymous/authenticated access. Token hashes support overlap during rotation, and database counters enforce rate limits. Disabling the platform JWT check does not bypass custom token validation. [Edge Function authentication](https://supabase.com/docs/guides/functions/auth).
+
+Every reviewed batch acquires the registry-head transaction lock, validates all expected revisions/idempotency/permissions, allocates permanent key reservations, writes copies/revisions/events/request response, and commits together. Create is create-only. A repeated request returns its saved result; a changed payload using that ID is rejected. Conflicting actions to one identity must agree. Context edits do not rekey. Keys use authoritative normalization/shortening and preserve role/qualifier when adding collision suffixes.
+
+Full catalog reads use one consistent database snapshot and aggregate all rows, avoiding default row limits. Deltas return bounded ordered pages and advance the cursor only through returned events. Sequence allocation holds the lock through commit, preventing missed concurrent events. Search runs over cached data. Compress private catalogs/drafts/manifests; respect Figma's 5 MB per-plugin quota by evicting disposable caches before durable work, and refuse a submission if its recovery journal cannot be persisted. [Figma client storage](https://developers.figma.com/docs/plugins/api/figma-clientStorage/). Poll every 30 seconds with jitter/backoff; refresh before submission and after save. Realtime subscriptions are outside v1.
+
+Only used identities materialize in working files. Product collections have explicit management markers, EN/ID modes and `TEXT_CONTENT` scope. Unrelated existing names receive a `<Product> · String Binder` delivery collection; partition after 4,000 variables. Working delivery variables are hidden from publication. Use the existing `copy` shared-data namespace for identity, committed records and compatible occurrence snapshots; descriptions retain readable context/Note plus compact revision/fingerprint metadata. Incomplete or stale metadata cannot make an unverified frame ready for developer handoff.
+
+## Developer handoff
+
+Developers supply frame links to their official Figma MCP client and run the versioned read-only extractor. The bundle includes frame/node occurrences, immutable IDs, developer keys, applied revisions/locales, exact EN/ID records, unmanaged text and consistency issues. Local committed copy needs no central publication.
+
+Resolve aliases by named locale. Verify actual values against metadata. Report unknown identities, unpushed wording, missing modes, stale fingerprints and conflicting revisions. Bounded chunks are assembled completely; changes during/between reads require restarting. Never fetch newer backend wording to substitute for the frame snapshot. Cross-file assembly must report identity/revision/value disagreements. See [developer instructions](developer-handoff.md).
+
+## Build and rollout
+
+Implementation modules cover typed contracts/domain rules, deterministic mock journeys, Postgres/Edge Function, writer save/materialization/recovery, working-file refresh, library Push/Pull/conflicts/publication and read-only extraction. [Deployment instructions](supabase-setup.md) cover secrets, bootstrap, rotation, external encrypted backups and empty-project restore testing.
+
+Bootstrap preserves all existing identities, aliases, tombstones and migration redirects. The current dry run found **62 historical key ownership conflicts** across the 20,602-record prepared registry. It emits `figma-copy-migration/reports/registry-bootstrap-conflicts.json` and blocks remote import until these are explicitly resolved. Figma mapping registration happens through reviewed initial library reconciliation; it is never guessed by bootstrap.
+
+Validate unit/domain/native-controller/MCP tests, PGlite transaction tests and browser journeys, plus Node 22 typecheck/lint/build/sandbox checks. Local simulations do not replace deployed multi-connection concurrency testing or real Figma/MCP/publication acceptance. `pnpm test:staging` exercises ten concurrent creates and competing edits against a disposable configured registry seeded with at least 20,000 records.
+
+Pilot acceptance: writer create/local binding, competing edit, variant/global update, direct library Push, remote Pull, interrupted recovery, verified publication and complete developer bundle. Measure storage/history, transfer/invocations, latency, conflicts, failures, sync lag and publication backlog. Use daily external encrypted backups and verify restoration. Check Free limits at rollout and upgrade when operational needs warrant it: [Supabase pricing](https://supabase.com/pricing).
+
+Branches/releases, automatic publication, unattended updates to closed files, admin rekeying and destructive registry deletion are outside v1.

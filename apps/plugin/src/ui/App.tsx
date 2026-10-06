@@ -1,4 +1,9 @@
-import type { ApplySummary, SelectionInfo } from '@string-binder/contracts';
+import type {
+  ApplySummary,
+  SelectionInfo,
+  ApplyPreview,
+  LayerDecision,
+} from '@string-binder/contracts';
 import {
   filterSequenceSource,
   guessProduct,
@@ -7,6 +12,7 @@ import {
   SHARED_PRODUCT,
 } from '@string-binder/domain';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { request } from './workflow-client';
 import type { UiBridge } from './bridge';
 import { Icon } from './components/Icon';
 import { LayerRow, rowKind, type RowKind } from './components/LayerRow';
@@ -86,17 +92,24 @@ function cascadeOf(rows: readonly ResolvedRow[]): number[] {
   });
 }
 
-export function App({ bridge }: { bridge: UiBridge }) {
+export function App({ bridge, active = true }: { bridge: UiBridge; active?: boolean }) {
   const index = useStringIndex(bridge);
   const [selection, setSelection] = useState<SelectionInfo | null>(null);
   const [searchFor, setSearchFor] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [review, setReview] = useState<{
+    frameId: string;
+    decisions: LayerDecision[];
+    preview: ApplyPreview;
+  } | null>(null);
   const [applying, setApplying] = useState(false);
   const [result, setResult] = useState<{ summary: ApplySummary; frameName: string } | null>(null);
   const [toast, setToast] = useState<Toast | null>(null);
   const [used, setUsed] = useState<ReadonlySet<string>>(() => new Set());
   const [scopes, setScopes] = useState<ReadonlyMap<string, Exclude<Scope, null>>>(() => new Map());
   const appliedFrame = useRef('');
+  const selectedFrame = useRef<string | null>(null);
+  selectedFrame.current = selection?.frameId ?? null;
 
   const say = useCallback((text: string, tone: Toast['tone'] = 'info') => {
     setToast({ id: Date.now(), text, tone });
@@ -108,6 +121,7 @@ export function App({ bridge }: { bridge: UiBridge }) {
         switch (event.type) {
           case 'selection':
             setSelection(event.selection);
+            setReview(null);
             setSearchFor(null);
             return;
           case 'apply:done':
@@ -235,7 +249,17 @@ export function App({ bridge }: { bridge: UiBridge }) {
     if (!selection || applying || !selection.layers.length) return;
     setApplying(true);
     appliedFrame.current = selection.frameName;
-    bridge.send({ type: 'apply', frameId: selection.frameId, decisions: decisionsFor(rows) });
+    const frameId = selection.frameId;
+    const decisions = decisionsFor(rows);
+    void request<ApplyPreview>(bridge, 'apply:preview', { frameId, decisions })
+      .then((preview) => {
+        if (selectedFrame.current === frameId) setReview({ frameId, decisions, preview });
+        setApplying(false);
+      })
+      .catch((e) => {
+        setApplying(false);
+        say(e instanceof Error ? e.message : String(e), 'error');
+      });
   };
   const closeResult = useCallback(() => setResult(null), []);
 
@@ -258,10 +282,10 @@ export function App({ bridge }: { bridge: UiBridge }) {
     document
       .getElementById(`row-${activeId}`)
       ?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }, [activeId]);
+  }, [activeId, active]);
 
   useEffect(() => {
-    if (searchOpen || result || !rows.length) return;
+    if (!active || review || searchOpen || result || !rows.length) return;
     const onKey = (event: KeyboardEvent) => {
       if (isTyping(event.target)) return;
       const meta = event.metaKey || event.ctrlKey;
@@ -558,6 +582,34 @@ export function App({ bridge }: { bridge: UiBridge }) {
         </div>
       )}
 
+      {review && (
+        <div className="overlay overlay--sheet" data-state="open">
+          <section className="studio-body apply-review" role="dialog" aria-label="Review Apply">
+            <h2>Review Apply</h2>
+            <p>
+              {review.decisions.filter((d) => d.action === 'bind').length} selected bindings ·{' '}
+              {review.preview.targets.length} matching page targets
+            </p>
+            {review.preview.targets.map((t) => (
+              <p key={t.nodeId}>
+                {t.frameName} · {t.nodeId}
+              </p>
+            ))}
+            <p>Different existing bindings are kept and reported as conflicts.</p>
+            <button onClick={() => setReview(null)}>Back to review</button>
+            <button
+              disabled={applying}
+              onClick={() => {
+                setApplying(true);
+                bridge.send({ type: 'apply', ...review });
+                setReview(null);
+              }}
+            >
+              Confirm Apply
+            </button>
+          </section>
+        </div>
+      )}
       {resultMounted && lastResult.current && (
         <div className="overlay overlay--sheet" data-state={result ? 'open' : 'closed'}>
           <SummaryPanel

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "account-safety",
+    "displayName": "Account Safety",
+    "keyToken": "accountsafety",
+    "legacyGroups": ["account-safety"]
+  },
+  {
+    "id": "finance",
+    "displayName": "Finance",
+    "keyToken": "finance",
+    "legacyGroups": ["finance"]
+  },
+  {
+    "id": "group",
+    "displayName": "Group",
+    "keyToken": "group",
+    "legacyGroups": ["group"]
+  },
+  {
+    "id": "home",
+    "displayName": "Home",
+    "keyToken": "home",
+    "legacyGroups": ["home"]
+  },
+  {
+    "id": "insurance",
+    "displayName": "Insurance",
+    "keyToken": "insurance",
+    "legacyGroups": ["insurance", "insurance-health-insurance-pre-ut"]
+  },
+  {
+    "id": "investment",
+    "displayName": "Investment",
+    "keyToken": "investment",
+    "legacyGroups": ["investment"]
+  },
+  {
+    "id": "lending",
+    "displayName": "Lending",
+    "keyToken": "lending",
+    "legacyGroups": ["lending"]
+  },
+  {
+    "id": "payment",
+    "displayName": "Payment",
+    "keyToken": "payment",
+    "legacyGroups": ["payment"]
+  },
+  {
+    "id": "promo",
+    "displayName": "Promo",
+    "keyToken": "promo",
+    "legacyGroups": ["promo"]
+  },
+  {
+    "id": "savings",
+    "displayName": "Savings",
+    "keyToken": "savings",
+    "legacyGroups": ["savings"]
+  },
+  {
+    "id": "shared",
+    "displayName": "Shared",
+    "keyToken": "shared",
+    "legacyGroups": ["shared"]
+  },
+  {
+    "id": "split-bill",
+    "displayName": "Split Bill",
+    "keyToken": "splitbill",
+    "legacyGroups": ["split-bill"]
+  },
+  {
+    "id": "transfer",
+    "displayName": "Transfer",
+    "keyToken": "transfer",
+    "legacyGroups": ["transfer"]
+  },
+  {
+    "id": "transport",
+    "displayName": "Transport",
+    "keyToken": "transport",
+    "legacyGroups": ["transport"]
+  }
+]

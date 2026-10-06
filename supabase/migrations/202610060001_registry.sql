@@ -1,4 +1,5 @@
 create schema if not exists copy_private;
+create table copy_private.migration_history(event_index integer primary key,event jsonb not null);
 create table copy_private.products(id text primary key, record jsonb not null);
 create table copy_private.copies(copy_id text primary key, record jsonb not null);
 create table copy_private.key_reservations(key text primary key, copy_id text not null);
@@ -14,14 +15,14 @@ create table copy_private.sync_runs(id text primary key, library_id text not nul
 
 -- Single statement, hence one MVCC snapshot; aggregates avoid PostgREST's row cap.
 create function public.copy_registry_catalog() returns jsonb language sql stable security invoker set search_path='' as $$
- select jsonb_build_object('seq',h.seq,'records',coalesce((select jsonb_agg(record order by copy_id) from copy_private.copies),'[]'::jsonb),'products',coalesce((select jsonb_agg(record order by id) from copy_private.products),'[]'::jsonb),'mappings',coalesce((select jsonb_agg(record order by library_id,copy_id) from copy_private.library_mappings),'[]'::jsonb)) from copy_private.registry_head h;
+ select jsonb_build_object('seq',h.seq,'records',coalesce((select jsonb_agg(record - 'legacy' order by copy_id) from copy_private.copies),'[]'::jsonb),'products',coalesce((select jsonb_agg(record order by id) from copy_private.products),'[]'::jsonb),'mappings',coalesce((select jsonb_agg(record order by library_id,copy_id) from copy_private.library_mappings),'[]'::jsonb)) from copy_private.registry_head h;
 $$;
 create function public.copy_registry_changes(after_seq bigint) returns jsonb language sql stable security invoker set search_path='' as $$
  with page as (select seq,event from copy_private.changes where seq>after_seq order by seq limit 500)
  select jsonb_build_object('seq',coalesce((select max(seq) from page),after_seq),'events',coalesce((select jsonb_agg(event order by seq) from page),'[]'::jsonb),'more',exists(select 1 from copy_private.changes where seq>coalesce((select max(seq) from page),after_seq)));
 $$;
 create function public.copy_registry_request(request_id text) returns jsonb language sql stable security invoker set search_path='' as $$ select result from copy_private.requests where request_id=$1 $$;
-create function public.copy_registry_revision(copy_id text, revision integer) returns jsonb language sql stable security invoker set search_path='' as $$ select record from copy_private.copy_revisions where copy_id=$1 and revision=$2 $$;
+create function public.copy_registry_revision(copy_id text, revision integer) returns jsonb language sql stable security invoker set search_path='' as $$ select record - 'legacy' from copy_private.copy_revisions where copy_id=$1 and revision=$2 $$;
 create function public.copy_registry_rate(credential text, allowed integer default 180) returns boolean language plpgsql security invoker set search_path='' as $$
  declare b bigint:=floor(extract(epoch from now())/60); n integer;
  begin
@@ -59,7 +60,7 @@ create function public.copy_registry_submit(batch jsonb, payload_hash text) retu
  if jsonb_array_length(conflicts)>0 then return jsonb_build_object('error','REVISION_CONFLICT','message','Saved copy changed since review','conflicts',conflicts); end if;
  for op in select value from jsonb_array_elements(batch->'operations') loop
    select record into current_record from copy_private.copies where copy_id=op->>'copyId';
-   if op->>'action'='reuse' then result_records:=result_records||jsonb_build_array(current_record); continue; end if;
+   if op->>'action'='reuse' then result_records:=result_records||jsonb_build_array(current_record - 'legacy'); continue; end if;
    if op->>'action'='create' then
      key_stem:=op->>'stem'; allocated:=key_stem; ordinal:=2;
      ending:='_'||(op->'context'->>'role')||case when op->'context' ? 'qualifier' then '_'||(op->'context'->>'qualifier') else '' end;
@@ -77,8 +78,8 @@ create function public.copy_registry_submit(batch jsonb, payload_hash text) retu
    insert into copy_private.copies values(next_record->>'copyId',next_record) on conflict(copy_id) do update set record=excluded.record;
    insert into copy_private.copy_revisions values(next_record->>'copyId',rev,next_record);
    head:=head+1;
-   insert into copy_private.changes values(head,jsonb_build_object('type','copy','record',next_record,'attribution',batch->'attribution','requestId',batch->>'requestId'));
-   result_records:=result_records||jsonb_build_array(next_record);
+   insert into copy_private.changes values(head,jsonb_build_object('type','copy','record',next_record - 'legacy','attribution',batch->'attribution','requestId',batch->>'requestId'));
+   result_records:=result_records||jsonb_build_array(next_record - 'legacy');
  end loop;
  update copy_private.registry_head set seq=head where id=true;
  next_record:=jsonb_build_object('requestId',batch->>'requestId','records',result_records,'seq',head);
@@ -91,12 +92,14 @@ create function public.copy_registry_library(operation text, args jsonb) returns
  begin
  select seq into head from copy_private.registry_head where id=true for update;
  if operation='start' then
+   if (select count(*) from jsonb_array_elements(args->'manifest'))<>(select count(distinct m->>'copyId') from jsonb_array_elements(args->'manifest') m) then return jsonb_build_object('error','VALIDATION','message','Manifest identities must be unique'); end if;
    insert into copy_private.libraries(id,file_key) values(args->>'libraryId',args->>'fileKey') on conflict(id) do nothing;
    select * into lib from copy_private.libraries where id=args->>'libraryId' for update;
    if lib.file_key<>args->>'fileKey' then return jsonb_build_object('error','DESTINATION','message','Library URL does not match registration'); end if;
    select * into run from copy_private.sync_runs where id=args->>'runId';
    if found then
      if run.library_id<>lib.id or run.owner<>args->>'owner' then return jsonb_build_object('error','LEASE','message','Sync run belongs to another session'); end if;
+     if run.manifest<>args->'manifest' then return jsonb_build_object('error','REQUEST_REUSED','message','Sync manifest is immutable'); end if;
      existing_manifest:=run.manifest;
    else
      existing_manifest:=args->'manifest';
@@ -114,8 +117,13 @@ create function public.copy_registry_library(operation text, args jsonb) returns
  if not found then return jsonb_build_object('error','VALIDATION','message','Sync run not found'); end if;
  if operation='manifest' then return to_jsonb(run); end if;
  select * into lib from copy_private.libraries where id=run.library_id;
+ if operation='renew' then
+   if run.owner<>args->>'owner' or (lib.owner<>run.owner and lib.lease_until>now()) then return jsonb_build_object('error','LEASE','message','Publisher lease taken by another session'); end if;
+   update copy_private.libraries set owner=run.owner,lease_until=now()+interval '2 minutes' where id=lib.id;return jsonb_build_object('renewed',true);
+ end if;
  if run.owner<>args->>'owner' or lib.owner<>run.owner or lib.lease_until<=now() then return jsonb_build_object('error','LEASE','message','Publisher lease expired; check changes and resume'); end if;
  if operation='ack' then
+   if (select count(*) from jsonb_array_elements(args->'mappings'))<>(select count(distinct m->>'copyId') from jsonb_array_elements(args->'mappings') m) then return jsonb_build_object('error','VALIDATION','message','Applied mappings must be unique'); end if;
    for item in select value from jsonb_array_elements(args->'mappings') loop
      if not exists(select 1 from jsonb_array_elements(run.manifest) m where m->>'copyId'=item->>'copyId' and m->>'revision'=item->>'syncedRevision' and m->>'fingerprint'=item->>'fingerprint') then return jsonb_build_object('error','VALIDATION','message','Mapping is outside the fixed manifest'); end if;
    end loop;
@@ -144,19 +152,21 @@ create function public.copy_registry_library(operation text, args jsonb) returns
  end $$;
 
 create function public.copy_registry_products() returns jsonb language sql stable security invoker set search_path='' as $$ select coalesce(jsonb_agg(record order by id),'[]'::jsonb) from copy_private.products $$;
-create function public.copy_registry_manifest(manifest jsonb) returns jsonb language sql stable security invoker set search_path='' as $$ select coalesce(jsonb_agg(r.record),'[]'::jsonb) from jsonb_array_elements(manifest) m join copy_private.copy_revisions r on r.copy_id=m->>'copyId' and r.revision=(m->>'revision')::integer $$;
+create function public.copy_registry_manifest(manifest jsonb) returns jsonb language sql stable security invoker set search_path='' as $$ select coalesce(jsonb_agg(r.record - 'legacy'),'[]'::jsonb) from jsonb_array_elements(manifest) m join copy_private.copy_revisions r on r.copy_id=m->>'copyId' and r.revision=(m->>'revision')::integer $$;
 revoke all on function public.copy_registry_products(), public.copy_registry_manifest(jsonb) from public,anon,authenticated;
 grant execute on function public.copy_registry_products(), public.copy_registry_manifest(jsonb) to service_role;
 -- Bootstrap only through an administrator's server credential, never the team API.
-create function public.copy_registry_bootstrap(records jsonb, products jsonb) returns jsonb language plpgsql security invoker set search_path='' as $$
+create function public.copy_registry_bootstrap(records jsonb, products jsonb, history jsonb default '[]') returns jsonb language plpgsql security invoker set search_path='' as $$
  declare r jsonb; p jsonb; k text; head bigint; owner_id text;
  begin
  select seq into head from copy_private.registry_head where id=true for update;
  if exists(select 1 from copy_private.copies) then raise exception 'Bootstrap requires an empty registry'; end if;
+ insert into copy_private.migration_history select ordinality::integer,value from jsonb_array_elements(history) with ordinality;
  for p in select value from jsonb_array_elements(products) loop insert into copy_private.products values(p->>'id',p); end loop;
  for r in select value from jsonb_array_elements(records) loop
    insert into copy_private.copies values(r->>'copyId',r);
    insert into copy_private.copy_revisions values(r->>'copyId',(r->>'revision')::integer,r);
+   head:=head+1;insert into copy_private.changes values(head,jsonb_build_object('type','copy','record',r - 'legacy'));
  end loop;
  for r in select value from jsonb_array_elements(records) loop
    owner_id:=coalesce(nullif(r->>'mergedInto',''),r->>'copyId');
@@ -171,7 +181,7 @@ create function public.copy_registry_bootstrap(records jsonb, products jsonb) re
 
 revoke all on schema copy_private from public;
 revoke all on all tables in schema copy_private from public;
-revoke all on function public.copy_registry_catalog(), public.copy_registry_changes(bigint), public.copy_registry_request(text), public.copy_registry_revision(text,integer), public.copy_registry_rate(text,integer), public.copy_registry_submit(jsonb,text), public.copy_registry_library(text,jsonb), public.copy_registry_bootstrap(jsonb,jsonb) from public, anon, authenticated;
+revoke all on function public.copy_registry_catalog(), public.copy_registry_changes(bigint), public.copy_registry_request(text), public.copy_registry_revision(text,integer), public.copy_registry_rate(text,integer), public.copy_registry_submit(jsonb,text), public.copy_registry_library(text,jsonb), public.copy_registry_bootstrap(jsonb,jsonb,jsonb) from public, anon, authenticated;
 grant usage on schema copy_private to service_role;
 grant all on all tables in schema copy_private to service_role;
-grant execute on function public.copy_registry_catalog(), public.copy_registry_changes(bigint), public.copy_registry_request(text), public.copy_registry_revision(text,integer), public.copy_registry_rate(text,integer), public.copy_registry_submit(jsonb,text), public.copy_registry_library(text,jsonb), public.copy_registry_bootstrap(jsonb,jsonb) to service_role;
+grant execute on function public.copy_registry_catalog(), public.copy_registry_changes(bigint), public.copy_registry_request(text), public.copy_registry_revision(text,integer), public.copy_registry_rate(text,integer), public.copy_registry_submit(jsonb,text), public.copy_registry_library(text,jsonb), public.copy_registry_bootstrap(jsonb,jsonb,jsonb) to service_role;

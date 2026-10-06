@@ -1,6 +1,6 @@
 # Copy variable rules for the Figma plugin (handoff)
 
-> **2026-10-02 update:** Search is strictly scoped to the selected product plus Shared. The user authorized exact full-locale duplicate consolidation, superseding the older reviewer-only promotion rule for this prepared migration. See [replacement import guide](../figma-copy-migration/reimport/README.md) and [concurrent authoring plan](string-registry-backend.md). Original imported variables remain in place until migration; the hosted registry and library sync workflow described there are future implementation, not deployed functionality.
+> **2026-10-02 update:** Search is strictly scoped to the selected product plus Shared. The user authorized exact full-locale duplicate consolidation, superseding the older reviewer-only promotion rule for this prepared migration. See [replacement import guide](../figma-copy-migration/reimport/README.md) and [concurrent authoring plan](string-registry-backend.md). Original imported variables remain in place until reviewed migration. The authoring/registry/sync implementation is now in this checkout; remote deployment remains pending project setup.
 
 Status: **authoritative for plugin work** as of 2026-09-29. Where this file conflicts with [copy-identity-architecture.md](copy-identity-architecture.md), this file wins. The architecture doc explains _why_; this file states _what the plugin must do today_.
 
@@ -121,7 +121,7 @@ Note: <optional, the only line humans may edit>
   3. Write the ID to sharedPluginData.
   4. Report any variable that can't be resolved. Never mint a new ID for a legacy variable.
 - Figma's own `variable.id` and `variable.key` are mappings only. They change if a variable is recreated.
-- **Duplicated variable detection:** two variables carrying the same `cp_` means one was duplicated. The newer one gets a new ID and records `forkedFrom`.
+- **Delivery mirrors:** multiple local variables can carry the same `cp_` and revision. Reconcile their bindings without minting IDs. A new identity is allocated only for an explicitly chosen variant, with `forkedFrom`.
 
 ## 5. Reuse before create [RULE]
 
@@ -146,26 +146,28 @@ Search order when a writer creates copy for a layer:
 
 ## 7. Lifecycle [RULE]
 
-| Event                          | ID                         | Key/name             | Other                                                                                                            |
-| ------------------------------ | -------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Wording edited                 | same                       | same                 | —                                                                                                                |
-| Screen renamed / feature moved | same                       | same                 | Regenerate description line 2                                                                                    |
-| Moved to another product       | same                       | same key             | Create in the target collection with the same `cp_`, rebind layers, delete the old variable, update the registry |
-| Frame duplicated               | same                       | same                 | Bindings are kept                                                                                                |
-| Duplicate becomes a new screen | **new** IDs + `forkedFrom` | new keys             | Suggest a fork when ≥50% of bindings' description screens ≠ the frame name. Never fork `shared` bindings         |
-| Deprecated                     | same                       | same                 | Warn on new bindings. Archive after 90 days with 0 bindings                                                      |
-| Deleted                        | tombstoned forever         | key reserved forever | Never reused                                                                                                     |
+| Event                          | ID                        | Key/name             | Other                                                                                                            |
+| ------------------------------ | ------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Wording edited                 | same                      | same                 | —                                                                                                                |
+| Screen renamed / feature moved | same                      | same                 | Regenerate description line 2                                                                                    |
+| Moved to another product       | same                      | same key             | Create in the target collection with the same `cp_`, rebind layers, delete the old variable, update the registry |
+| Frame duplicated               | same                      | same                 | Bindings are kept                                                                                                |
+| Explicitly create a variant    | **new** ID + `forkedFrom` | new key              | Only reviewed targets switch; duplicated frames otherwise retain identities                                      |
+| Deprecated                     | same                      | same                 | Warn on new bindings. Archive after 90 days with 0 bindings                                                      |
+| Deleted                        | tombstoned forever        | key reserved forever | Never reused                                                                                                     |
 
 ## 8. Registry and migration artifacts
 
 - `figma-copy-migration/registry/copy-registry.jsonl` holds the current truth per entity: `copyId`, `name`, `platformKey`, `legacyKeys` (aliases), `localizedValues`, `metadata.mergedInto`, `metadata.removedReason`, `status`.
 - `figma-copy-migration/registry/migration-ledger.jsonl` is **append-only**. Never edit or delete it. It holds the fingerprint → ID mapping plus `rekey` and `merge` events.
   - Reruns of `scripts/copy-migration/migrate.py` read it, so IDs and keys never regenerate.
-- The plugin needs a registry it can write to for new entities. The target is a DB table with unique constraints on `copyId` and `platformKey`, tombstones included. **[OPEN]** The backend is not chosen yet.
-  - Until one exists, the Figma variables themselves plus sharedPluginData are the source of truth for new strings.
-  - A periodic export must append them to the registry.
-- Key uniqueness is **global**: across legacy and product collections, and including tombstones and every alias in `legacyKeys`.
-- On a collision race, re-read after create. The variable whose `cp_` ID sorts later takes the next `_n`.
+- Supabase is the authoritative saved registry. All creates/edits/reuse use a token-gated Edge Function and one Postgres transaction function. Writer login and Google OAuth are not required. Publisher sync/publication acknowledgement uses a separate credential.
+- Key uniqueness is global, including every alias and tombstone. The database permanently reserves keys under the registry-head transaction lock; simultaneous collisions allocate `_2`, `_3`, etc. Do not resolve collisions by comparing Figma variable IDs after creation.
+- Exact bilingual duplicates are suggestions for new authoring. Writers explicitly choose reuse or distinct identity. Migration consolidation does not automatically merge concurrent creations.
+- Both EN/ID are required for new/edited wording. Save succeeds before Figma materialization; recover ambiguous requests using their persisted ID/payload, then retry binding independently.
+- Working-file variables deliver saved revisions immediately. Central library Push/Pull is reviewed and three-way; publication remains a separate Figma action. Developer handoff reads exact frame revisions through the official MCP extractor, including committed local copy.
+- Descriptions add `Copy-Meta` revision/fingerprint data after the readable identity/context/Note convention. Validate actual values before trusting metadata.
+- See [accepted implementation specification](string-registry-backend.md), [deployment](supabase-setup.md), and [developer handoff](developer-handoff.md).
 
 ## 9. Known leftovers (not the plugin's job to fix)
 
@@ -177,5 +179,5 @@ Search order when a writer creates copy for a layer:
 
 1. The final product list: `displayName`, `keyToken` and `legacyGroups`.
 2. Whether product collections get one group level (`<feature>/<key>`) or stay flat. The default is flat.
-3. The registry backend for new strings.
+3. Deployment project and pilot ownership; backend choice is Supabase.
 4. Whether legacy variables should eventually move into product collections. The default is no: they stay in `# Legacy …`.

@@ -5,7 +5,15 @@ the **GoPay Strings** library. A writer selects one frame, assigns a string to
 each visible text layer, and applies. Matching layers in duplicated screens on
 the same page get the same strings automatically.
 
-## How writers use it
+## Authoring and registry
+
+The plugin opens with Apply existing copies and Create new copies. Create scans a selected frame, lets writers keep or select text, enter both EN/ID, review provisional keys and occurrence targets, then save and bind local variables immediately. Editing an existing identity is global; a variant creates a separate identity. Library sync reviews Push/Pull conflicts and verifies manual Figma publication. Developers extract exact frame revisions through the official MCP script.
+
+Remote Supabase setup is pending. See the [implementation specification](docs/string-registry-backend.md), [setup and backups](docs/supabase-setup.md), and [developer handoff](docs/developer-handoff.md). `pnpm dev:ui` provides an authentication-free mock at `http://127.0.0.1:5173/src/ui/index.html`. It never writes real Figma/Supabase data. `pnpm test:ui` checks the browser journeys.
+
+The current bootstrap dry run blocks on 62 historical key ownership conflicts. Review the generated `figma-copy-migration/reports/registry-bootstrap-conflicts.json` before remote import. All old IDs remain preserved; the plugin does not invent replacements.
+
+## Applying existing copy
 
 1. Enable the GoPay Strings library in the design file (Assets › Libraries).
 2. Select one frame, component or instance. The plugin lists its visible text
@@ -30,9 +38,9 @@ the same page get the same strings automatically.
    status-bar or keyboard text start skipped. Flag (`F`) layers that need a
    string that doesn't exist yet. `U` unbinds. An open row shows before → after
    when apply would replace or remove an existing binding.
-6. Click **Apply to frame & page** (`⌘↵`). The plugin:
-   - binds the strings and renames each bound layer to the full variable name
-     (e.g. `investment/gopay_investment_…_title`);
+6. Click **Apply to frame & page** (`⌘↵`), review matching targets, then Confirm Apply. The plugin:
+   - binds saved identities and renames managed layers to their frozen developer
+     keys; legacy variables retain their existing full variable names;
    - remembers skips and flags on each layer (shared plugin data `copy/state`);
    - applies the same bindings, names and skips to matching layers on the
      current page.
@@ -45,7 +53,7 @@ search, `esc` closes it. "Select flagged layers on page" is in the `⋯` menu.
 
 ## How it works
 
-- **No backend.** The first run imports every string variable in the enabled
+- **Catalog and Figma cache.** Supabase provides current saved records and ordered revision deltas. The first Figma run also imports string variables in the enabled
   libraries to read its values. It shows progress while it does this, then
   stores a gzipped copy of the values in `figma.clientStorage`, per user. Later
   runs import only variables added since. **Reload strings from library** (`⋯`
@@ -119,14 +127,9 @@ The original migration ledger is unchanged. See
 [the import guide](figma-copy-migration/reimport/README.md) before replacing
 existing variables or bindings.
 
-The future create/edit feature will use a shared backend for versioned writes
-and a sync plugin running in the library file. On the team's non-Enterprise
-Figma plan, an editor still publishes the library. The complete concurrency,
-identity, sync-recovery and developer-export plan is in
-[docs/string-registry-backend.md](docs/string-registry-backend.md).
-
-Future authoring uses the tested `copy-identity.ts` helpers in the domain package:
-UUIDv7 Copy IDs persist across retries; normalized context determines a frozen
-developer key; permanent reservations cover current keys, aliases and tombstones.
-The backend plan specifies create-only transactions and revision conflicts so
-concurrent writers cannot overwrite an existing identity.
+The authoring implementation uses UUIDv7 Copy IDs persisted across retries,
+frozen developer keys, permanent reservations, atomic Supabase writes, and
+revision conflicts. Library changes are reviewed through Push/Pull; an editor
+publishes through Figma and the plugin verifies the exact manifest afterward.
+See [the architecture](docs/string-registry-backend.md) for recovery rules and
+[deployment setup](docs/supabase-setup.md) for the remaining pilot steps.

@@ -21,3 +21,9 @@ figma-copy-migration/reimport/collections/
 figma-copy-migration/reimport/registry.jsonl
 figma-copy-migration/reimport/merge-map.json
 figma-copy-migration/reimport/merge-events.jsonl
+
+# Generated deployments and external encrypted backups.
+supabase/functions/copy-registry/handler.js
+*.backup.enc
+
+figma-copy-migration/reports/registry-bootstrap-conflicts.json

@@ -1,9 +1,14 @@
-import type { ApplySummary, LayerDecision, LayerRef } from '@string-binder/contracts';
-import { matchDuplicateLayers, type TextNodeSnapshot } from '@string-binder/domain';
+import type { ApplySummary, LayerDecision, LayerRef, ApplyPreview } from '@string-binder/contracts';
+import {
+  canvasFingerprint,
+  matchDuplicateLayers,
+  type TextNodeSnapshot,
+} from '@string-binder/domain';
 import { boundVariableId, readLayerState, variableById, writeLayerState } from './layer-state';
 import { variableByKey } from './library-index';
 import { pageCandidates, snapshotText } from './propagate';
 import { baselineOf, bindRecord, copyIdOf, actual, sameValues } from './delivery';
+import { isDescendantOf } from './selection';
 import { catalog } from './registry-api';
 
 class ApplyFailure extends Error {}
@@ -20,16 +25,24 @@ async function loadFonts(node: TextNode): Promise<void> {
 /** Binds and names the layer after its string, e.g. `investment/gopay_investment_…_title`. */
 async function bind(node: TextNode, variable: Variable): Promise<boolean> {
   await loadFonts(node);
-  const changed=boundVariableId(node)!==variable.id;
-  const id=copyIdOf(variable);
-  const record=baselineOf(variable)??(id?(await catalog().catch(()=>null))?.records.find(r=>r.copyId===id):undefined);
-  if(record&&sameValues(await actual(variable),record)){
-    const c=await figma.variables.getVariableCollectionByIdAsync(variable.variableCollectionId);
-    const language=c?.modes.find(m=>m.modeId===node.resolvedVariableModes[variable.variableCollectionId])?.name.toUpperCase()==='EN'||node.characters===record.en?'en':'id';
-    await bindRecord(node,variable,record,language);return changed;
+  const changed = boundVariableId(node) !== variable.id;
+  const id = copyIdOf(variable);
+  const record =
+    baselineOf(variable) ??
+    (id ? (await catalog().catch(() => null))?.records.find((r) => r.copyId === id) : undefined);
+  if (record && sameValues(await actual(variable), record)) {
+    const c = await figma.variables.getVariableCollectionByIdAsync(variable.variableCollectionId);
+    const language =
+      c?.modes
+        .find((m) => m.modeId === node.resolvedVariableModes[variable.variableCollectionId])
+        ?.name.toUpperCase() === 'EN' || node.characters === record.en
+        ? 'en'
+        : 'id';
+    await bindRecord(node, variable, record, language);
+    return changed;
   }
   node.setBoundVariable('characters', variable);
-  node.name=variable.name;
+  node.name = variable.name;
   return changed;
 }
 
@@ -49,11 +62,18 @@ function reason(error: unknown): string {
 export async function applyDecisions(
   rootId: string,
   decisions: readonly LayerDecision[],
+  reviewed?: ApplyPreview,
 ): Promise<ApplySummary> {
   const root = await figma.getNodeByIdAsync(rootId);
   if (!root || root.type === 'DOCUMENT' || root.type === 'PAGE')
     throw new Error('The selected frame no longer exists.');
   const frame = root as SceneNode;
+  if (reviewed)
+    for (const source of reviewed.sources) {
+      const n = await figma.getNodeByIdAsync(source.nodeId);
+      if (!n || n.type !== 'TEXT' || (await fingerprint(n)) !== source.fingerprint)
+        throw new Error('Canvas changed since review; review Apply again');
+    }
   figma.commitUndo();
 
   const variables = new Map<string, Variable>();
@@ -88,6 +108,15 @@ export async function applyDecisions(
   for (const decision of decisions) {
     const node = await figma.getNodeByIdAsync(decision.layerId);
     if (!node || node.type !== 'TEXT') continue;
+    if (!isDescendantOf(node, rootId))
+      throw new Error('Apply source is outside the reviewed frame');
+    if (
+      reviewed &&
+      (await fingerprint(node)) !== reviewed.sources.find((s) => s.nodeId === node.id)?.fingerprint
+    ) {
+      summary.failures.push({ ...ref(node, frame.name), reason: 'Source changed during Apply' });
+      continue;
+    }
     sourceNodes.set(node.id, node);
     snapshots.set(node.id, snapshotText(node, frame));
     try {
@@ -140,6 +169,16 @@ export async function applyDecisions(
     })) {
       const node = nodesById.get(match.nodeId)!;
       const layer = ref(node, match.frameName);
+      if (reviewed) {
+        const approved = reviewed.targets.find(
+          (t) => t.nodeId === node.id && t.sourceId === match.sourceId,
+        );
+        if (!approved) continue;
+        if ((await fingerprint(node)) !== approved.fingerprint) {
+          summary.conflicts.push(layer);
+          continue;
+        }
+      }
       const currentId = boundVariableId(node);
       const variable = boundSources.get(match.sourceId);
       try {
@@ -168,4 +207,47 @@ export async function applyDecisions(
 
   figma.commitUndo();
   return summary;
+}
+
+async function fingerprint(n: TextNode) {
+  const id = boundVariableId(n);
+  const v = id ? await figma.variables.getVariableByIdAsync(id) : null;
+  return canvasFingerprint({
+    id: n.id,
+    name: n.name,
+    characters: n.characters,
+    boundKey: v?.key ?? null,
+  });
+}
+export async function previewApply(
+  rootId: string,
+  decisions: readonly LayerDecision[],
+): Promise<ApplyPreview> {
+  const root = await figma.getNodeByIdAsync(rootId);
+  if (!root || root.type === 'DOCUMENT' || root.type === 'PAGE') throw new Error('Select a frame');
+  const snapshots: TextNodeSnapshot[] = [];
+  const sources: ApplyPreview['sources'] = [];
+  for (const decision of decisions) {
+    const n = await figma.getNodeByIdAsync(decision.layerId);
+    if (!n || n.type !== 'TEXT' || !isDescendantOf(n, rootId))
+      throw new Error('Source is outside selected frame');
+    sources.push({ nodeId: n.id, fingerprint: await fingerprint(n) });
+    if (decision.action === 'bind') await loadFonts(n);
+    if (decision.action === 'bind' || decision.action === 'skip' || boundVariableId(n))
+      snapshots.push(snapshotText(n, root as SceneNode));
+  }
+  const candidates = pageCandidates(root as SceneNode);
+  const byId = new Map(candidates.map((c) => [c.node.id, c.node]));
+  const targets: ApplyPreview['targets'] = [];
+  for (const m of matchDuplicateLayers({
+    sources: snapshots,
+    candidates: candidates.map((c) => c.snapshot),
+  }))
+    targets.push({
+      nodeId: m.nodeId,
+      sourceId: m.sourceId,
+      frameName: m.frameName,
+      fingerprint: await fingerprint(byId.get(m.nodeId)!),
+    });
+  return { sources, targets };
 }
