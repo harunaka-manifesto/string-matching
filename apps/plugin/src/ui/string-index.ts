@@ -1,5 +1,6 @@
 import type { LibraryListingItem, VariableValues } from '@string-binder/contracts';
 import {
+  describeRecord,
   buildSequenceSource,
   normalizedFields,
   productOf,
@@ -176,6 +177,7 @@ export type StringIndex = {
 
 export function useStringIndex(bridge: UiBridge): StringIndex {
   const entries = useRef(new Map<string, StringEntry>());
+  const registryEntries=useRef(new Map<string,StringEntry>());
   const [version, setVersion] = useState(0);
   const [status, setStatus] = useState<IndexStatus>({ phase: 'starting' });
   const [tabs, setTabs] = useState<Record<string, string[]>>({});
@@ -205,12 +207,23 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
     () =>
       bridge.subscribe((message) => {
         switch (message.type) {
+          case 'registry:catalog': {
+            const identities=new Set(message.catalog.records.map(r=>r.copyId));
+            for(const [key,value] of entries.current)if(key.startsWith('registry:')||identities.has(value.copyId))entries.current.delete(key);
+            registryEntries.current.clear();
+            for(const r of message.catalog.records.filter(r=>r.status==='active'||r.status==='deprecated')){
+              const value=entry({key:`registry:${r.copyId}:${r.revision}`,name:r.platformKey,collection:message.catalog.products.find(p=>p.id===r.product)?.displayName??r.product,order:entries.current.size},{en:r.en,id:r.id,description:describeRecord(r)});
+              value.product=r.product;value.path=[r.context.feature,r.context.screen,r.context.context,r.context.role].filter(Boolean).join(' › ');value.aliases=r.aliases;value.fields=normalizedFields(value);registryEntries.current.set(value.key,value);entries.current.set(value.key,value);
+            }
+            bump();setListingVersion(v=>v+1);return;
+          }
           case 'index:cached': {
             const restore = message.bytes ? decodeCache(message.bytes) : Promise.resolve([]);
             restore
               .catch(() => [] as StringEntry[])
               .then((cached) => {
                 entries.current = new Map(cached.map((item) => [item.key, item]));
+                const ids=new Set([...registryEntries.current.values()].map(v=>v.copyId));for(const [key,value] of entries.current)if(ids.has(value.copyId)||key.startsWith('registry:'))entries.current.delete(key);for(const [key,value] of registryEntries.current)entries.current.set(key,value);
                 bump();
                 setListingVersion((value) => value + 1);
                 setStatus({ phase: 'listing' });
@@ -225,6 +238,7 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
               next.set(item.key, known?.loaded ? entry(item, known) : entry(item));
             }
             entries.current = next;
+            const ids=new Set([...registryEntries.current.values()].map(v=>v.copyId));for(const [key,value] of entries.current)if(ids.has(value.copyId))entries.current.delete(key);for(const [key,value] of registryEntries.current)entries.current.set(key,value);
             bump();
             setListingVersion((value) => value + 1);
             setStatus(

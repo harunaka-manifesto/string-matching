@@ -46,7 +46,8 @@ if (manifest.api !== '1.0.0')
   throw new Error('Plugin manifest must target Figma API version 1.0.0.');
 if (!manifest.permissions?.includes('teamlibrary'))
   throw new Error('Plugin manifest must request the teamlibrary permission.');
-if (JSON.stringify(manifest.networkAccess?.allowedDomains) !== '["none"]')
-  throw new Error('Plugin must not request network access.');
+const domains = manifest.networkAccess?.allowedDomains ?? [];
+if (!domains.length || domains.some(domain => domain !== 'none' && !/^https:\/\/[a-z0-9-]+\.supabase\.co$/u.test(domain)))
+  throw new Error('Plugin may request only its configured HTTPS Supabase project.');
 
 console.log('Plugin controller sandbox contract passed.');

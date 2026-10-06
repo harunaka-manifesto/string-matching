@@ -18,9 +18,13 @@
     "test:watch": "vitest",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "sandbox:check": "node scripts/check-plugin-sandbox.mjs"
+    "sandbox:check": "node scripts/check-plugin-sandbox.mjs",
+    "build:backend": "node scripts/build-backend.mjs",
+    "registry:bootstrap": "node scripts/registry-bootstrap.mjs",
+    "registry:backup": "node scripts/registry-backup.mjs"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@types/node": "^22.10.5",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

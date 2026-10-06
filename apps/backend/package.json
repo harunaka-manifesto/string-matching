@@ -1,0 +1,1 @@
+{"name":"@string-binder/backend","private":true,"type":"module","dependencies":{"@string-binder/contracts":"workspace:*","@string-binder/domain":"workspace:*"}}

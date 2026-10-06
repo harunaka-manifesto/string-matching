@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { WorkflowActionSchema, CatalogSchema } from './registry';
 import {
   ApplySummarySchema,
   LayerDecisionSchema,
@@ -10,6 +11,7 @@ import {
 const BytesSchema = z.custom<Uint8Array>((value) => value instanceof Uint8Array);
 
 export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('workflow'), operationId: z.string(), action: WorkflowActionSchema, data: z.unknown() }),
   z.object({ type: z.literal('ui:ready') }),
   /** Re-read the canvas selection, even if it is inside the current frame. */
   z.object({ type: z.literal('selection:refresh') }),
@@ -29,6 +31,9 @@ export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
 export type UiToPluginMessage = z.infer<typeof UiToPluginMessageSchema>;
 
 export const PluginToUiMessageSchema = z.discriminatedUnion('type', [
+  z.object({type:z.literal('registry:catalog'),catalog:CatalogSchema}),
+  z.object({ type: z.literal('workflow:result'), operationId: z.string(), data: z.unknown() }),
+  z.object({ type: z.literal('workflow:error'), operationId: z.string(), code: z.string(), message: z.string(), details: z.unknown().optional() }),
   z.object({ type: z.literal('index:cached'), bytes: BytesSchema.nullable() }),
   z.object({
     type: z.literal('index:listing'),

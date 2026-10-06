@@ -7,3 +7,4 @@ export * from './sequence-prefill';
 export * from './string-ranking';
 export * from './variable-search';
 export * from './visibility';
+export * from './registry';

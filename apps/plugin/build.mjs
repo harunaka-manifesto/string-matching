@@ -16,8 +16,14 @@ await build({
   platform: 'neutral',
   target: 'es2020',
   sourcemap: false,
+  define: { REGISTRY_URL: JSON.stringify(process.env.COPY_REGISTRY_URL ?? ''), REGISTRY_TOKEN: JSON.stringify(process.env.COPY_TEAM_TOKEN ?? '') },
 });
 await copyFile(resolve(root, 'dist/ui-build/src/ui/index.html'), resolve(dist, 'ui.html'));
 const manifest = JSON.parse(await readFile(resolve(root, 'manifest.base.json'), 'utf8'));
+if (process.env.COPY_REGISTRY_URL) {
+  const url = new URL(process.env.COPY_REGISTRY_URL);
+  if (url.protocol !== 'https:' || !url.hostname.endsWith('.supabase.co')) throw new Error('COPY_REGISTRY_URL must be your HTTPS Supabase function URL');
+  manifest.networkAccess.allowedDomains = [url.origin];
+}
 await writeFile(resolve(dist, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 console.log(`Plugin ready. Import: ${resolve(dist, 'manifest.json')}`);

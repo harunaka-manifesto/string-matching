@@ -3,6 +3,8 @@ import { matchDuplicateLayers, type TextNodeSnapshot } from '@string-binder/doma
 import { boundVariableId, readLayerState, variableById, writeLayerState } from './layer-state';
 import { variableByKey } from './library-index';
 import { pageCandidates, snapshotText } from './propagate';
+import { baselineOf, bindRecord, copyIdOf, actual, sameValues } from './delivery';
+import { catalog } from './registry-api';
 
 class ApplyFailure extends Error {}
 
@@ -17,11 +19,18 @@ async function loadFonts(node: TextNode): Promise<void> {
 
 /** Binds and names the layer after its string, e.g. `investment/gopay_investment_…_title`. */
 async function bind(node: TextNode, variable: Variable): Promise<boolean> {
-  if (node.name !== variable.name) node.name = variable.name;
-  if (boundVariableId(node) === variable.id) return false;
   await loadFonts(node);
+  const changed=boundVariableId(node)!==variable.id;
+  const id=copyIdOf(variable);
+  const record=baselineOf(variable)??(id?(await catalog().catch(()=>null))?.records.find(r=>r.copyId===id):undefined);
+  if(record&&sameValues(await actual(variable),record)){
+    const c=await figma.variables.getVariableCollectionByIdAsync(variable.variableCollectionId);
+    const language=c?.modes.find(m=>m.modeId===node.resolvedVariableModes[variable.variableCollectionId])?.name.toUpperCase()==='EN'||node.characters===record.en?'en':'id';
+    await bindRecord(node,variable,record,language);return changed;
+  }
   node.setBoundVariable('characters', variable);
-  return true;
+  node.name=variable.name;
+  return changed;
 }
 
 function ref(node: BaseNode, frameName: string): LayerRef {

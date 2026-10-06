@@ -4,6 +4,7 @@ import type {
   PluginToUiMessage,
   SelectionInfo,
 } from '@string-binder/contracts';
+import { mockRegistry } from './mock-registry';
 import { nonCopyReason } from '@string-binder/domain';
 import { ORDER_INDEX_GZIP_BASE64 } from '../generated/order-index';
 import type { UiBridge } from './bridge';
@@ -60,6 +61,7 @@ export function mockBridge(): UiBridge {
     layers,
   });
 
+  const registry=mockRegistry(selection,()=>emit({type:'selection',selection:selection()}));
   return {
     subscribe(listener) {
       listeners.add(listener);
@@ -67,6 +69,9 @@ export function mockBridge(): UiBridge {
     },
     async send(message) {
       switch (message.type) {
+        case 'workflow':
+          try{const data=await registry(message.action,message.data);emit({type:'workflow:result',operationId:message.operationId,data});if(message.action==='catalog')emit({type:'registry:catalog',catalog:data});if(message.action==='refresh')emit({type:'registry:catalog',catalog:data.catalog});}
+          catch(error){const e=error as Error&{code?:string;details?:unknown};emit({type:'workflow:error',operationId:message.operationId,code:e.code??'VALIDATION',message:e.message,details:e.details});}return;
         case 'ui:ready':
           emit({ type: 'index:cached', bytes: null });
           emit({ type: 'selection', selection: selection() });

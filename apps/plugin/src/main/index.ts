@@ -6,6 +6,8 @@ import {
   type UiToPluginMessage,
 } from '@string-binder/contracts';
 import { applyDecisions } from './apply';
+import { workflow } from './workflow';
+import { WorkflowError } from './registry-api';
 import { boundVariableId, forgetVariableCache, variableById } from './layer-state';
 import {
   IMPORT_BATCH_SIZE,
@@ -117,6 +119,11 @@ async function selectLayers(ids: readonly string[], zoom = true): Promise<number
 
 async function handle(message: UiToPluginMessage): Promise<void> {
   switch (message.type) {
+    case 'workflow': {
+      try { const data=await workflow(message.action,message.data);post({type:'workflow:result',operationId:message.operationId,data});if(message.action==='catalog')post({type:'registry:catalog',catalog:data as import('@string-binder/contracts').Catalog});if(message.action==='refresh')post({type:'registry:catalog',catalog:(data as {catalog:import('@string-binder/contracts').Catalog}).catalog}); }
+      catch(error) { post({type:'workflow:error',operationId:message.operationId,code:error instanceof WorkflowError?error.code:'VALIDATION',message:describe(error),details:error instanceof WorkflowError?error.details:undefined}); }
+      return;
+    }
     case 'ui:ready':
       post({
         type: 'index:cached',
@@ -162,10 +169,11 @@ async function handle(message: UiToPluginMessage): Promise<void> {
   }
 }
 
+let operationQueue:Promise<void>=Promise.resolve();
 figma.ui.onmessage = (raw: unknown) => {
   const parsed = UiToPluginMessageSchema.safeParse(raw);
   if (!parsed.success) return;
-  handle(parsed.data).catch((error) => post({ type: 'error', message: describe(error) }));
+  operationQueue=operationQueue.then(()=>handle(parsed.data)).catch((error) => post({ type: 'error', message: describe(error) }));
 };
 
 figma.on('selectionchange', () => {
