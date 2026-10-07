@@ -584,7 +584,7 @@ export function App({ bridge, active = true }: { bridge: UiBridge; active?: bool
 
       {review && (
         <div className="overlay overlay--sheet" data-state="open">
-          <section className="studio-body apply-review" role="dialog" aria-label="Review Apply">
+          <section className="studio-body sb apply-review" role="dialog" aria-label="Review Apply">
             <h2>Review Apply</h2>
             <p>
               {review.decisions.filter((d) => d.action === 'bind').length} selected bindings ·{' '}
@@ -596,17 +596,21 @@ export function App({ bridge, active = true }: { bridge: UiBridge; active?: bool
               </p>
             ))}
             <p>Different existing bindings are kept and reported as conflicts.</p>
-            <button onClick={() => setReview(null)}>Back to review</button>
-            <button
-              disabled={applying}
-              onClick={() => {
-                setApplying(true);
-                bridge.send({ type: 'apply', ...review });
-                setReview(null);
-              }}
-            >
-              Confirm Apply
-            </button>
+            <footer className="studio-footer">
+              <span />
+              <button onClick={() => setReview(null)}>Back to review</button>
+              <button
+                className="sb-primary"
+                disabled={applying}
+                onClick={() => {
+                  setApplying(true);
+                  bridge.send({ type: 'apply', ...review });
+                  setReview(null);
+                }}
+              >
+                Confirm Apply
+              </button>
+            </footer>
           </section>
         </div>
       )}

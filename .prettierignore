@@ -7,3 +7,9 @@ pnpm-lock.yaml
 coverage
 test-results
 .claude
+PLAN.md
+supabase/functions/copy-registry/handler.js
+apps/backend/dist
+playwright-report
+DESIGN.md
+supabase/.temp

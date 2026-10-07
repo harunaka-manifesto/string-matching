@@ -57,6 +57,75 @@ const roles = [
   'text',
 ];
 const empty: Catalog = { seq: 0, records: [], products: [], mappings: [] };
+type Bound = { copyId: string; remote: boolean; manual: boolean; revision?: number };
+type Scan = {
+  selection: SelectionInfo;
+  bindings: Record<string, string>;
+  variables?: Record<
+    string,
+    { en: string; id: string; baseline?: CopyRecord; manual?: boolean; remote?: boolean }
+  >;
+};
+type Preview = {
+  targets: BindingTarget[];
+  conflicts: { nodeId: string; frameName: string }[];
+  usages?: Record<string, number>;
+};
+type Tone = 'neutral' | 'brand' | 'success' | 'warning' | 'danger';
+const boundOf = (scan: Scan): Record<string, Bound> =>
+  Object.fromEntries(
+    Object.entries(scan.bindings).map(([layerId, copyId]) => [
+      layerId,
+      {
+        copyId,
+        remote: !!scan.variables?.[layerId]?.remote,
+        manual: !!scan.variables?.[layerId]?.manual,
+        revision: scan.variables?.[layerId]?.baseline?.revision,
+      },
+    ]),
+  );
+/** Working-file status of one row; deliberately never a single ambiguous "Synced". */
+function rowStatus(
+  row: DraftRow,
+  draft: AuthoringDraft,
+  bound: Bound | undefined,
+  catalog: Catalog,
+): [string, Tone] | null {
+  const saved = draft.pending?.result?.records.some((r) => r.copyId === row.copyId);
+  if (saved && row.action !== 'keep') return ['Saved, not applied', 'warning'];
+  if (row.action !== 'keep') return ['Draft', 'brand'];
+  if (!bound) return null;
+  if (bound.manual) return ['Conflict', 'danger'];
+  const latest = catalog.records.find((r) => r.copyId === bound.copyId);
+  if (latest && bound.revision && latest.revision > bound.revision)
+    return ['Update pending', 'warning'];
+  return bound.remote ? ['Using published library', 'success'] : ['Bound locally', 'neutral'];
+}
+const ACTION_LABELS: Record<DraftRow['action'], string> = {
+  keep: 'Keep',
+  create: 'Create new',
+  reuse: 'Reuse existing',
+  edit: 'Edit existing',
+  variant: 'Create variant',
+};
+function Badge({ label, tone = 'neutral' }: { label: string; tone?: Tone }) {
+  return <span className={`badge badge--${tone}`}>{label}</span>;
+}
+function Stepper({ current }: { current: number }) {
+  return (
+    <ol className="stepper" aria-label="Progress">
+      {['Select', 'Edit', 'Review', 'Results'].map((label, i) => (
+        <li
+          key={label}
+          className={i < current ? 'is-done' : ''}
+          aria-current={i === current ? 'step' : undefined}
+        >
+          {label}
+        </li>
+      ))}
+    </ol>
+  );
+}
 function message(error: unknown) {
   return error instanceof Error ? error.message : String(error);
 }
@@ -68,12 +137,16 @@ export function Studio({ bridge }: { bridge: UiBridge }) {
   const [issue, setIssue] = useState('');
   const [connected, setConnected] = useState(false);
   const checking = useRef(false);
+  const [refreshing, setRefreshing] = useState(false);
   const failures = useRef(0);
-  const refresh = async () => {
+  const refresh = async (force = false) => {
     if (checking.current) return;
     checking.current = true;
+    setRefreshing(true);
     try {
-      const result = await request<{ catalog: Catalog; result: BindingResult }>(bridge, 'refresh');
+      const result = await request<{ catalog: Catalog; result: BindingResult }>(bridge, 'refresh', {
+        force,
+      });
       setCatalog(result.catalog);
       failures.current = 0;
       setConnected(true);
@@ -94,6 +167,7 @@ export function Studio({ bridge }: { bridge: UiBridge }) {
       }
     } finally {
       checking.current = false;
+      setRefreshing(false);
     }
   };
   useEffect(
@@ -129,29 +203,41 @@ export function Studio({ bridge }: { bridge: UiBridge }) {
   }, [bridge, mode]);
   return (
     <div className="studio">
-      <nav className="studio-nav">
-        <button onClick={() => setMode('home')}>String Binder</button>
-        <div>
+      <nav className="studio-nav sb">
+        <button className="studio-brand" onClick={() => setMode('home')}>
+          String Binder
+        </button>
+        <div className="studio-tabs">
           <button aria-pressed={mode === 'apply'} onClick={() => setMode('apply')}>
             Apply existing
           </button>
           <button aria-pressed={mode === 'create'} onClick={() => setMode('create')}>
             Create new
           </button>
-          <button onClick={() => setMode('library')}>Library sync</button>
         </div>
+        <button
+          className="sb-quiet"
+          aria-pressed={mode === 'library'}
+          title="For library maintainers"
+          onClick={() => setMode('library')}
+        >
+          Library sync
+        </button>
       </nav>
-      <div className={`studio-status ${connected ? '' : 'studio-warning'}`} role="status">
-        {status}{' '}
-        <button onClick={() => void refresh()} disabled={checking.current}>
-          Retry / refresh
+      <div className={`studio-status sb ${connected ? '' : 'is-offline'}`} role="status">
+        <i className="studio-dot" />
+        <span>{connected ? status : `Offline · ${status}`}</span>
+        <button className="sb-quiet" onClick={() => void refresh(true)} disabled={refreshing}>
+          {connected ? 'Refresh' : 'Retry'}
         </button>
       </div>
-      {issue && <p className="studio-warning">{issue}</p>}
+      {issue && <p className="studio-warning sb">{issue}</p>}
       {mode === 'home' && (
-        <main className="studio-home">
-          <h1>Work with copy</h1>
-          <p>Choose a journey, then select a frame in Figma.</p>
+        <main className="studio-home sb">
+          <div>
+            <h1>Work with copy</h1>
+            <p className="sb-muted">Choose a journey, then select a frame in Figma.</p>
+          </div>
           <button className="journey" onClick={() => setMode('apply')}>
             <strong>Apply existing copies</strong>
             <span>Find saved copy and bind it to your frame.</span>
@@ -171,7 +257,7 @@ export function Studio({ bridge }: { bridge: UiBridge }) {
           selection={selection}
           catalog={catalog}
           connected={connected}
-          refresh={refresh}
+          refresh={() => refresh()}
         />
       )}
       {mode === 'library' && <Library bridge={bridge} onCatalog={setCatalog} />}
@@ -193,10 +279,8 @@ function Authoring({
 }) {
   const [draft, setDraft] = useState<AuthoringDraft | null>(null);
   const [step, setStep] = useState<'edit' | 'review' | 'results'>('edit');
-  const [preview, setPreview] = useState<{
-    targets: BindingTarget[];
-    conflicts: { nodeId: string; frameName: string }[];
-  } | null>(null);
+  const [preview, setPreview] = useState<Preview | null>(null);
+  const [bound, setBound] = useState<Record<string, Bound>>({});
   const [error, setError] = useState('');
   const [busy, setBusy] = useState('');
   const [result, setResult] = useState<BindingResult | null>(null);
@@ -225,20 +309,15 @@ function Authoring({
     setError('');
     setConflicts([]);
     setResult(null);
+    setBound({});
     if (!selection) return;
     void (async () => {
       const restored = await request<AuthoringDraft | null>(bridge, 'draft:get', {
         frameId: selection.frameId,
       });
-      const scan = await request<{
-        selection: SelectionInfo;
-        bindings: Record<string, string>;
-        variables?: Record<
-          string,
-          { en: string; id: string; baseline?: CopyRecord; manual?: boolean }
-        >;
-      }>(bridge, 'scan', { frameId: selection.frameId });
+      const scan = await request<Scan>(bridge, 'scan', { frameId: selection.frameId });
       if (cancelled) return;
+      setBound(boundOf(scan));
       const cat = catRef.current;
       const guess =
         cat.products.find((p) =>
@@ -324,7 +403,7 @@ function Authoring({
           throw new Error('Rows editing one identity must agree');
         byCopy.set(op.copyId, canonical(op));
       }
-      const next = await request<typeof preview>(bridge, 'preflight', {
+      const next = await request<Preview>(bridge, 'preflight', {
         frameId: draft.frameId,
         rows: selected,
       });
@@ -354,13 +433,8 @@ function Authoring({
       setStep('results');
     }
     if (!outcome.failures.length && !outcome.conflicts.length) {
-      const scan = await request<{
-        selection: SelectionInfo;
-        bindings: Record<string, string>;
-        variables: Record<string, { en: string; id: string; baseline?: CopyRecord }>;
-      }>(bridge, 'scan', {
-        frameId: d.frameId,
-      });
+      const scan = await request<Scan>(bridge, 'scan', { frameId: d.frameId });
+      if (active) setBound(boundOf(scan));
       const done = {
         ...d,
         pending: undefined,
@@ -515,7 +589,7 @@ function Authoring({
           ? { ...updated, canvasFingerprint: canvasFingerprint(layer) }
           : { ...updated, action: 'keep' as const };
       });
-      const next = await request<NonNullable<typeof preview>>(bridge, 'preflight', {
+      const next = await request<Preview>(bridge, 'preflight', {
         frameId: d.frameId,
         rows: rows.filter((r) => r.action !== 'keep'),
       });
@@ -538,17 +612,25 @@ function Authoring({
   };
   if (!selection)
     return (
-      <main className="studio-body">
+      <main className="studio-body sb">
         <h1>Create new copies</h1>
         <p>Select a frame, component, or instance in Figma.</p>
       </main>
     );
-  if (!draft) return <p className="studio-body">Reading frame… {error}</p>;
+  if (!draft) return <p className="studio-body sb">Reading frame… {error}</p>;
   const selected = draft.rows.filter((r) => r.action !== 'keep');
+  const unbasedProducts = [...new Set(draft.rows.filter((r) => !r.baseline).map((r) => r.product))];
+  const newRowsProduct = unbasedProducts.length === 1 ? unbasedProducts[0]! : '';
   return (
-    <main className="studio-body">
-      <h1>{draft.frameName}</h1>
-      <p>Select → Edit → Review → Results</p>
+    <main className="studio-body sb">
+      <div className="sb-line">
+        <span>
+          <h1>{draft.frameName}</h1>
+        </span>
+        <Stepper
+          current={step === 'results' ? 3 : step === 'review' ? 2 : selected.length ? 1 : 0}
+        />
+      </div>
       {error && (
         <p role="alert" className="studio-warning">
           {error}
@@ -703,7 +785,7 @@ function Authoring({
             <label>
               Product for new rows{' '}
               <select
-                value=""
+                value={newRowsProduct}
                 disabled={!!draft.pending || !!busy}
                 onChange={(e) =>
                   setDraft((d) =>
@@ -718,7 +800,7 @@ function Authoring({
                   )
                 }
               >
-                <option value="">Choose…</option>
+                <option value="">{unbasedProducts.length > 1 ? 'Mixed' : 'Choose…'}</option>
                 {catalog.products
                   .filter((p) => p.id !== 'shared')
                   .map((p) => (
@@ -740,18 +822,31 @@ function Authoring({
                   c.id === r.id,
               )
               .slice(0, 5);
+            const status = rowStatus(r, draft, bound[r.layerId], catalog);
             return (
-              <section className="copy-card" key={r.layerId}>
-                <button
-                  className="copy-title"
-                  onClick={() =>
-                    bridge.send({ type: 'layer:focus', layerId: r.layerId, zoom: true })
-                  }
-                >
-                  {layer?.name ?? r.layerId}
-                </button>
+              <section
+                className={`copy-card ${r.action === 'keep' ? '' : 'is-selected'}`}
+                key={r.layerId}
+              >
+                <div className="copy-head">
+                  <button
+                    className="copy-title"
+                    title="Show on canvas"
+                    onClick={() =>
+                      bridge.send({ type: 'layer:focus', layerId: r.layerId, zoom: true })
+                    }
+                  >
+                    {layer?.name ?? r.layerId}
+                  </button>
+                  {status && <Badge label={status[0]} tone={status[1]} />}
+                </div>
                 <p className="canvas-copy">{layer?.characters}</p>
-                {layer?.autoSkipReason && <small>{layer.autoSkipReason}</small>}
+                {r.baseline && r.action === 'keep' && (
+                  <small className="mono">{r.baseline.platformKey}</small>
+                )}
+                {layer?.autoSkipReason && (
+                  <small>Looks like non-copy: {layer.autoSkipReason}</small>
+                )}
                 {r.baseline &&
                   (r.en !== r.baseline.en || r.id !== r.baseline.id) &&
                   r.action === 'keep' && (
@@ -989,32 +1084,60 @@ function Authoring({
       {step === 'review' && (
         <>
           <h2>Review {selected.length} selected rows</h2>
-          {selected.map((r) => (
-            <section className="copy-card" key={r.layerId}>
-              <strong>
-                {r.action} ·{' '}
-                {(draft.pending?.deliveryRecords ?? draft.pending?.result?.records)?.find(
-                  (c) => c.copyId === r.copyId,
-                )?.platformKey ?? proposedKey(r, catalog.products)}
-              </strong>
-              <p>EN: {r.en}</p>
-              <p>ID: {r.id}</p>
-              <p>
-                {catalog.products.find((p) => p.id === r.product)?.displayName} · {r.context.screen}{' '}
-                · {r.context.role}
-              </p>
-              {r.action === 'edit' && (
-                <p className="studio-warning">
-                  Updates all known usages in this file; other files catch up when synchronized.
-                </p>
-              )}
-            </section>
-          ))}
-          <h2>Binding targets</h2>
+          {selected.map((r) => {
+            const committed = (
+              draft.pending?.deliveryRecords ?? draft.pending?.result?.records
+            )?.find((c) => c.copyId === r.copyId);
+            const usages = preview?.usages?.[r.copyId];
+            return (
+              <section className="copy-card" key={r.layerId}>
+                <div className="copy-head">
+                  <strong className="mono">
+                    {committed?.platformKey ?? proposedKey(r, catalog.products)}
+                  </strong>
+                  <Badge
+                    label={ACTION_LABELS[r.action]}
+                    tone={r.action === 'edit' ? 'warning' : 'brand'}
+                  />
+                </div>
+                <p>EN: {r.en}</p>
+                <p>ID: {r.id}</p>
+                <small>
+                  {[
+                    catalog.products.find((p) => p.id === r.product)?.displayName,
+                    r.context.feature,
+                    r.context.screen,
+                    r.context.context,
+                    r.context.role,
+                  ]
+                    .filter(Boolean)
+                    .join(' › ')}
+                  {!committed && r.action !== 'edit' && r.action !== 'reuse'
+                    ? ' · key is provisional'
+                    : ''}
+                </small>
+                {(r.action === 'edit' || r.restoreLocal) && (
+                  <p className="studio-warning">
+                    Changes this identity everywhere it is used.{' '}
+                    {usages === undefined
+                      ? ''
+                      : `${usages} known ${usages === 1 ? 'usage' : 'usages'} in this file. `}
+                    Usages in other files are not counted; they catch up when those files are opened
+                    with the plugin.
+                  </p>
+                )}
+              </section>
+            );
+          })}
+          <h2>Binding targets · {preview?.targets.length ?? 0}</h2>
           {preview?.targets.map((t) => (
-            <p key={t.nodeId}>
-              {t.frameName} · {t.nodeId} · {t.locale.toUpperCase()}
-              {t.duplicate ? ' · matching duplicate' : ''}
+            <p className="sb-line" key={t.nodeId}>
+              <span>
+                {t.frameName} ·{' '}
+                {selection.layers.find((l) => l.id === t.nodeId)?.name ?? `layer ${t.nodeId}`} ·{' '}
+                {t.locale.toUpperCase()}
+                {t.duplicate ? ' · matching duplicate on this page' : ''}
+              </span>
               {draft.pending?.result && (
                 <button
                   onClick={() => {
@@ -1041,10 +1164,13 @@ function Authoring({
           ))}
           {preview?.conflicts.map((c) => (
             <p className="studio-warning" key={c.nodeId}>
-              Keep conflicting binding: {c.frameName} · {c.nodeId}
+              Kept: {c.frameName} · layer {c.nodeId} is already bound to different copy.
             </p>
           ))}
-          <p>Keys are provisional until allocated by the registry.</p>
+          <p className="sb-muted">
+            Keys are provisional until the registry allocates them; a concurrent save can add a
+            numeric suffix.
+          </p>
         </>
       )}
       {step === 'results' && (
@@ -1056,27 +1182,78 @@ function Authoring({
                 ? 'Copy saved; no bindings applied'
                 : 'Copy saved and applied'}
           </h2>
-          {(
-            draft.pending?.deliveryRecords ??
-            draft.pending?.result?.records ??
-            draft.rows.flatMap((r) => (r.baseline ? [r.baseline] : []))
-          ).map((r) => (
-            <p key={r.copyId}>
-              {r.platformKey} · revision {r.revision}
-            </p>
-          ))}
-          {result && (
-            <p>
-              {result.applied.length} occurrences applied · {result.conflicts.length} canvas
-              conflicts · {result.failures.length} failures
-            </p>
-          )}
-          {result?.failures.map((f, i) => (
-            <p className="studio-warning" key={i}>
-              {f.nodeId}: {f.reason}
-            </p>
-          ))}
-          <p>Bound locally. Central library synchronization and publication are separate.</p>
+          <section className="copy-card">
+            <div className="copy-head">
+              <h2>Registry</h2>
+              <Badge label="Saved" tone="success" />
+            </div>
+            {(
+              draft.pending?.deliveryRecords ??
+              draft.pending?.result?.records ??
+              (result
+                ? draft.rows.flatMap((r) =>
+                    r.baseline && result.applied.includes(r.layerId) ? [r.baseline] : [],
+                  )
+                : [])
+            )
+              .filter((r, i, all) => all.findIndex((x) => x.copyId === r.copyId) === i)
+              .map((r) => (
+                <p className="sb-line" key={r.copyId}>
+                  <span className="mono">{r.platformKey}</span>
+                  <small>revision {r.revision}</small>
+                </p>
+              ))}
+          </section>
+          <section className="copy-card">
+            <div className="copy-head">
+              <h2>Figma</h2>
+              {result && (
+                <Badge
+                  label={
+                    result.failures.length || result.conflicts.length
+                      ? 'Not fully applied'
+                      : result.applied.length
+                        ? 'Bound locally'
+                        : 'Nothing bound'
+                  }
+                  tone={
+                    result.failures.length || result.conflicts.length
+                      ? 'warning'
+                      : result.applied.length
+                        ? 'success'
+                        : 'neutral'
+                  }
+                />
+              )}
+            </div>
+            {result ? (
+              <p>
+                {result.applied.length} occurrences applied · {result.conflicts.length} canvas
+                conflicts · {result.failures.length} failures
+              </p>
+            ) : (
+              <p>Saved earlier. Recover the operation above to finish binding.</p>
+            )}
+            {result?.conflicts.map((id) => (
+              <p className="studio-warning" key={id}>
+                {selection.layers.find((l) => l.id === id)?.name ?? `Layer ${id}`}: canvas changed
+                after review. Review remaining bindings to reconcile.
+              </p>
+            ))}
+            {result?.failures.map((f, i) => (
+              <p className="studio-warning" key={i}>
+                {selection.layers.find((l) => l.id === f.nodeId)?.name ?? f.nodeId}: {f.reason}
+              </p>
+            ))}
+            {draft.pending && (
+              <button disabled={!!busy || !connected} onClick={() => void resume()}>
+                Retry Figma operation
+              </button>
+            )}
+          </section>
+          <p className="sb-muted">
+            Central library synchronization and publication are separate steps.
+          </p>
         </>
       )}
       <footer className="studio-footer">
@@ -1085,6 +1262,7 @@ function Authoring({
         </span>
         {step === 'edit' ? (
           <button
+            className="sb-primary"
             disabled={!!busy || !connected || !!draft.pending || !selected.length}
             onClick={() => void prepare()}
           >
@@ -1097,6 +1275,7 @@ function Authoring({
             </button>
             {draft.pending?.result ? (
               <button
+                className="sb-primary"
                 disabled={!!busy}
                 onClick={() => {
                   setBusy('Applying reviewed saved copy…');
@@ -1109,7 +1288,8 @@ function Authoring({
               </button>
             ) : (
               <button
-                disabled={!!busy || !connected || !!draft.pending || !!busy}
+                className="sb-primary"
+                disabled={!!busy || !connected || !!draft.pending}
                 onClick={() => void submit()}
               >
                 Save and apply
@@ -1117,7 +1297,7 @@ function Authoring({
             )}
           </>
         ) : (
-          <button onClick={() => setStep('edit')} disabled={!!busy || !!draft.pending || !!busy}>
+          <button onClick={() => setStep('edit')} disabled={!!busy || !!draft.pending}>
             Work on this frame
           </button>
         )}
@@ -1203,6 +1383,20 @@ function ContextEditor({
   );
 }
 
+const LIBRARY_STATUS: Record<string, [string, Tone]> = {
+  current: ['Up to date', 'success'],
+  local: ['Local changes', 'brand'],
+  new: ['Local changes · new variable', 'brand'],
+  remote: ['Remote changes', 'warning'],
+  missing: ['Remote changes · not in Figma', 'warning'],
+  equal: ['Remote changes · same wording', 'warning'],
+  conflict: ['Conflict', 'danger'],
+  unbased: ['Needs initial reconciliation', 'danger'],
+  invalid: ['Invalid', 'danger'],
+  publish: ['Needs publish', 'warning'],
+};
+/** One sync run must stay well inside the registry's 4 MB request limit. */
+const ADOPT_BATCH = 5000;
 function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Catalog) => void }) {
   const [config, setConfig] = useState({
     libraryId: 'gopay-strings',
@@ -1210,6 +1404,7 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
     publisherToken: '',
   });
   const [configured, setConfigured] = useState(false);
+  const [hasToken, setHasToken] = useState(false);
   const [catalog, setCatalog] = useState<Catalog>(empty);
   const [locals, setLocals] = useState<LocalCopy[]>([]);
   const [busy, setBusy] = useState('');
@@ -1227,7 +1422,8 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
   useEffect(() => {
     void rpc<any>('settings:get')
       .then((s) => {
-        setConfigured(s.hasPublisherToken);
+        setConfigured(!!s.hasPublisherToken);
+        setHasToken(!!s.hasPublisherToken);
         setConfig((c) => ({
           ...c,
           libraryId: s.libraryId || c.libraryId,
@@ -1271,10 +1467,37 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
       ...catalog.records
         .filter((r) => r.status === 'active' && !localIds.has(r.copyId))
         .map((remote) => ({ id: remote.copyId, local: undefined, remote })),
-    ].map((row) => ({ ...row, kind: libraryDiff(row.local, row.remote) }));
-  }, [catalog.records, locals]);
-  const visible = rows.filter((r) => showCurrent || r.kind !== 'current');
+    ].map((row) => {
+      const kind = libraryDiff(row.local, row.remote);
+      // Synchronized is not delivered: designers only receive it once Figma publishes it.
+      const mapping = catalog.mappings.find(
+        (m) => m.libraryId === config.libraryId && m.copyId === row.remote?.copyId,
+      );
+      const status =
+        kind === 'current' && mapping?.publishedRevision !== row.remote?.revision
+          ? 'publish'
+          : kind;
+      return { ...row, kind, status };
+    });
+  }, [catalog.records, catalog.mappings, locals, config.libraryId]);
+  const counts = rows.reduce<Record<string, number>>((all, row) => {
+    const label = LIBRARY_STATUS[row.status]![0].split(' · ')[0]!;
+    all[label] = (all[label] ?? 0) + 1;
+    return all;
+  }, {});
+  const visible = rows.filter((r) => showCurrent || r.status !== 'current');
   const selected = rows.filter((r) => choices[r.id] && choices[r.id] !== 'defer');
+  // First reconciliation of an imported library is thousands of identical rows.
+  const adoptable = rows.filter(
+    (r) =>
+      r.local &&
+      r.remote &&
+      !r.local.error &&
+      (r.kind === 'unbased' || r.kind === 'equal') &&
+      r.local.en === r.remote.en &&
+      r.local.id === r.remote.id &&
+      !choices[r.id],
+  );
   const editFor = (row: (typeof rows)[number]) =>
     edits[row.id] ??
     ({
@@ -1501,7 +1724,7 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
     }
   };
   return (
-    <main className="studio-body">
+    <main className="studio-body sb">
       <h1>Library sync</h1>
       <p>
         Review local changes before Push. Review saved changes before Pull. Publish separately
@@ -1510,6 +1733,10 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
       {!configured && (
         <section className="copy-card">
           <h2>Publisher setup</h2>
+          <p className="sb-muted">
+            One-time setup on this device. Open the GoPay Strings library file first. The token is
+            stored privately and never written into the Figma file.
+          </p>
           <label>
             Library ID
             <input
@@ -1531,15 +1758,20 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
             Publisher token
             <input
               type="password"
+              placeholder={hasToken ? 'Saved on this device · leave blank to keep' : ''}
               value={config.publisherToken}
               onChange={(e) => setConfig((c) => ({ ...c, publisherToken: e.target.value }))}
             />
           </label>
           <button
+            className="sb-primary"
+            disabled={!config.publisherToken.trim() && !hasToken}
             onClick={() =>
               void rpc('settings:save', config)
                 .then(() => {
                   setConfigured(true);
+                  setHasToken(true);
+                  setError('');
                   setConfig((c) => ({ ...c, publisherToken: '' }));
                 })
                 .catch((e) => setError(message(e)))
@@ -1560,7 +1792,7 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
           <button disabled={!!busy || !!pending} onClick={() => void check()}>
             Check changes
           </button>
-          <label>
+          <label className="sb-check">
             <input
               type="checkbox"
               checked={showCurrent}
@@ -1575,11 +1807,52 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
             disabled={!!busy}
             onClick={() =>
               void rpc('library:publish')
-                .then(() => setResult({ published: true }))
+                .then(() => {
+                  setResult((r: any) => ({ ...r, published: true }));
+                  setError('');
+                })
                 .catch((e) => setError(message(e)))
             }
           >
             Verify publication
+          </button>
+          <button className="sb-quiet" disabled={!!busy} onClick={() => setConfigured(false)}>
+            Change setup
+          </button>
+        </div>
+      )}
+      {configured && rows.length > 0 && (
+        <div className="badges" aria-label="Library status">
+          {Object.entries(LIBRARY_STATUS)
+            .map(([, [label, tone]]) => [label.split(' · ')[0]!, tone] as const)
+            .filter(([label], i, all) => all.findIndex(([l]) => l === label) === i)
+            .filter(([label]) => counts[label])
+            .map(([label, tone]) => (
+              <Badge key={label} label={`${label} · ${counts[label]}`} tone={tone} />
+            ))}
+        </div>
+      )}
+      {configured && !review && adoptable.length > 0 && (
+        <div className="studio-warning">
+          <span>
+            {adoptable.length} variables already match their saved wording exactly and only need a
+            baseline.
+            {adoptable.length > ADOPT_BATCH
+              ? ` Adopt, publish and verify ${ADOPT_BATCH} at a time.`
+              : ''}
+          </span>
+          <button
+            disabled={!!busy || !!pending}
+            onClick={() =>
+              setChoices((c) => ({
+                ...c,
+                ...Object.fromEntries(adoptable.slice(0, ADOPT_BATCH).map((r) => [r.id, 'adopt'])),
+              }))
+            }
+          >
+            {adoptable.length > ADOPT_BATCH
+              ? `Select Adopt for the next ${ADOPT_BATCH}`
+              : `Select Adopt for all ${adoptable.length}`}
           </button>
         </div>
       )}
@@ -1682,13 +1955,26 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
       {review ? (
         <>
           <h2>Review {selected.length} changes</h2>
-          {selected.map((row) => {
+          {selected.length > 50 && (
+            <p className="sb-muted">Showing the first 50. All {selected.length} are applied.</p>
+          )}
+          {selected.slice(0, 50).map((row) => {
             const r = edits[row.id] ?? editFor(row);
             return (
               <section className="copy-card" key={row.id}>
-                <strong>
-                  {choices[row.id]} · {row.remote?.platformKey ?? row.local?.name}
-                </strong>
+                <div className="copy-head">
+                  <strong className="mono">{row.remote?.platformKey ?? row.local?.name}</strong>
+                  <Badge
+                    label={
+                      choices[row.id]?.startsWith('reuse:')
+                        ? 'Reuse'
+                        : ({ pull: 'Pull', adopt: 'Adopt', push: 'Push', combine: 'Combine' }[
+                            choices[row.id]!
+                          ] ?? choices[row.id]!)
+                    }
+                    tone="brand"
+                  />
+                </div>
                 <p>EN: {choices[row.id] === 'pull' ? row.remote?.en : r.en}</p>
                 <p>ID: {choices[row.id] === 'pull' ? row.remote?.id : r.id}</p>
               </section>
@@ -1701,10 +1987,21 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
             const r = edits[row.id] ?? editFor(row);
             const choice = choices[row.id] ?? 'defer';
             return (
-              <section className="copy-card" key={row.id}>
-                <strong>{row.remote?.platformKey ?? row.local?.name}</strong>
+              <section
+                className={`copy-card ${choice === 'defer' ? '' : 'is-selected'}`}
+                key={row.id}
+              >
+                <div className="copy-head">
+                  <strong className="mono">{row.remote?.platformKey ?? row.local?.name}</strong>
+                  <Badge
+                    label={LIBRARY_STATUS[row.status]![0]}
+                    tone={LIBRARY_STATUS[row.status]![1]}
+                  />
+                </div>
                 <small>
-                  {row.kind} · {row.local?.collection}
+                  {row.local?.collection ??
+                    catalog.products.find((p) => p.id === row.remote?.product)?.displayName}
+                  {row.status === 'publish' ? ' · publish through Figma, then verify' : ''}
                 </small>
                 {row.local?.error && <p className="studio-warning">{row.local.error}</p>}
                 {['conflict', 'unbased'].includes(row.kind) && (
@@ -1830,12 +2127,17 @@ function Library({ bridge, onCatalog }: { bridge: UiBridge; onCatalog: (cat: Cat
             <button disabled={!!busy || !!pending} onClick={() => setReview(false)}>
               Back
             </button>
-            <button disabled={!!busy || !!pending} onClick={() => void sync()}>
+            <button
+              className="sb-primary"
+              disabled={!!busy || !!pending}
+              onClick={() => void sync()}
+            >
               Confirm Push / Pull
             </button>
           </>
         ) : (
           <button
+            className="sb-primary"
             disabled={!!busy || !!pending || !selected.length}
             onClick={() => setReview(true)}
           >

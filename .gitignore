@@ -27,3 +27,6 @@ supabase/functions/copy-registry/handler.js
 *.backup.enc
 
 figma-copy-migration/reports/registry-bootstrap-conflicts.json
+
+# Supabase CLI link state.
+supabase/.temp/

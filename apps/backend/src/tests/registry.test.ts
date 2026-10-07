@@ -410,6 +410,182 @@ describe('registry transactions and access', () => {
     expect(JSON.stringify(logs)).not.toContain('writer-test');
   });
 });
+it('bootstraps resolved key ownership: one owner per key, ambiguous keys reserved without an alias', async () => {
+  const { applyResolutions, keyClaims } = await import(
+    // @ts-expect-error Plain administrator script without type declarations.
+    '../../../../scripts/registry-records.mjs'
+  );
+  const record = (copyId: string, platformKey: string, aliases: string[]) => ({
+    copyId,
+    platformKey,
+    revision: 1,
+    en: 'Text',
+    id: 'Teks',
+    product: 'investment',
+    context: ctx,
+    status: 'active',
+    aliases,
+    mergedInto: null,
+  });
+  const [holder, claimant, first, second] = [copyId(), copyId(), copyId(), copyId()];
+  const records = [
+    record(holder, 'gopay_investment_fee_title', []),
+    record(claimant, 'gopay_investment_amount_title', ['gopay_investment_fee_title']),
+    record(first, 'gopay_investment_push_pushtitle', ['gopay_investment_push_text']),
+    record(second, 'gopay_investment_push_pushbody', ['gopay_investment_push_text']),
+  ];
+  const byId = new Map(records.map((r) => [r.copyId, r]));
+  const products = [
+    { id: 'investment', displayName: 'Investment', keyToken: 'investment', legacyGroups: [] },
+  ];
+  const fresh = async () => {
+    const other = new PGlite();
+    await other.exec('create role anon; create role authenticated; create role service_role;');
+    await other.exec(await readFile('supabase/migrations/202610060001_registry.sql', 'utf8'));
+    return other;
+  };
+  const bootstrap = (target: PGlite, reservations: unknown[]) =>
+    target.query(
+      'select public.copy_registry_bootstrap(records=>$1,products=>$2,reservations=>$3)',
+      [JSON.stringify(records), JSON.stringify(products), JSON.stringify(reservations)],
+    );
+  const unresolved = await fresh();
+  await expect(bootstrap(unresolved, [])).rejects.toThrow('Unresolved key ownership');
+  await unresolved.close();
+
+  applyResolutions(records, byId, [
+    { key: 'gopay_investment_fee_title', owner: holder, released: [claimant] },
+    { key: 'gopay_investment_push_text', owner: null, released: [first, second] },
+  ]);
+  expect(
+    [...keyClaims(records, (id: string) => id).values()].every((c: any) => c.owners.size === 1),
+  ).toBe(true);
+  expect(() =>
+    applyResolutions(records, byId, [
+      { key: 'gopay_investment_fee_title', owner: holder, released: [claimant] },
+    ]),
+  ).toThrow('no longer matches');
+
+  const resolved = await fresh();
+  await bootstrap(resolved, [{ key: 'gopay_investment_push_text', copyId: first }]);
+  const owners = await resolved.query<{ key: string; copy_id: string }>(
+    'select key,copy_id from copy_private.key_reservations order by key',
+  );
+  expect(Object.fromEntries(owners.rows.map((r) => [r.key, r.copy_id]))).toMatchObject({
+    gopay_investment_fee_title: holder,
+    gopay_investment_push_text: first,
+  });
+  const saved = await resolved.query<{ aliases: string[] }>(
+    "select record->'aliases' as aliases from copy_private.copies",
+  );
+  expect(saved.rows.flatMap((r) => r.aliases)).toEqual([]);
+  await resolved.close();
+}, 30000);
+it('imports in small staged chunks, resumes a crashed import, and never wipes a live registry', async () => {
+  const { stagedBootstrap } = await import(
+    // @ts-expect-error Plain administrator script without type declarations.
+    '../../../../scripts/registry-records.mjs'
+  );
+  const other = new PGlite();
+  await other.exec('create role anon; create role authenticated; create role service_role;');
+  for (const file of [
+    '202610060001_registry.sql',
+    '202610070001_bootstrap_staging.sql',
+    '202610070002_bootstrap_apply.sql',
+  ])
+    await other.exec(await readFile('supabase/migrations/' + file, 'utf8'));
+  const sizes: number[] = [];
+  let applies = 0;
+  let crashAfter = 3;
+  const rpc = async (name: string, args: Record<string, unknown> = {}) => {
+    if (name === 'copy_registry_bootstrap_apply' && ++applies > crashAfter)
+      throw new Error('Connection lost');
+    sizes.push(JSON.stringify(args).length);
+    const keys = Object.keys(args);
+    const result = await other.query<{ value: any }>(
+      `select public.${name}(${keys.map((k, i) => `${k} => $${i + 1}`).join(',')}) as value`,
+      keys.map((k) => (typeof args[k] === 'object' ? JSON.stringify(args[k]) : args[k])),
+    );
+    return result.rows[0]!.value;
+  };
+  const records = Array.from({ length: 40 }, (_, i) => ({
+    copyId: copyId(),
+    platformKey: `gopay_investment_staged${i}_title`,
+    revision: 1,
+    en: 'Text '.repeat(40),
+    id: 'Teks',
+    product: 'investment',
+    context: ctx,
+    status: 'active',
+    aliases: [],
+    mergedInto: null,
+  }));
+  const payload = {
+    records,
+    products: [
+      { id: 'investment', displayName: 'Investment', keyToken: 'investment', legacyGroups: [] },
+    ],
+    history: records.map((r, i) => ({ event: 'ID_ASSIGNED', copyId: r.copyId, order: i })),
+    reservations: [{ key: 'gopay_investment_ambiguous_text', copyId: records[0]!.copyId }],
+  };
+  const options = { maxBytes: 2000, reservedKeys: 41 };
+  await expect(stagedBootstrap(rpc, payload, options)).rejects.toThrow('Connection lost');
+  const partial = await rpc('copy_registry_bootstrap_status');
+  expect(partial.copies).toBeGreaterThan(0);
+  expect(partial.copies).toBeLessThan(40);
+  expect(partial.stagedChunks).toBeGreaterThan(0);
+
+  // The rerun removes the partial import and completes.
+  crashAfter = Infinity;
+  expect(await stagedBootstrap(rpc, payload, options)).toEqual({
+    imported: 40,
+    reservedKeys: 41,
+    history: 40,
+  });
+  expect(Math.max(...sizes)).toBeLessThan(4000);
+  const counts = await other.query<any>(
+    `select (select count(*) from copy_private.copies)::int as copies,
+            (select seq from copy_private.registry_head)::int as seq,
+            (select count(*) from copy_private.bootstrap_stage)::int as staged,
+            (select array_agg((event->>'order')::int order by event_index) from copy_private.migration_history) as history`,
+  );
+  expect(counts.rows[0]).toMatchObject({ copies: 40, seq: 40, staged: 0 });
+  expect(counts.rows[0].history).toEqual(records.map((_, i) => i));
+  // Applying a chunk twice does nothing; a finished registry cannot be staged into or wiped.
+  expect(
+    await rpc('copy_registry_bootstrap_apply', { stage_kind: 'records', stage_chunk: 0 }),
+  ).toEqual({ applied: 0 });
+  expect(await stagedBootstrap(rpc, payload, options)).toMatchObject({ alreadyImported: true });
+  await expect(rpc('copy_registry_bootstrap_abort')).rejects.toThrow('No import is in progress');
+  await expect(
+    rpc('copy_registry_bootstrap_stage', { kind: 'records', chunk: 0, items: [] }),
+  ).rejects.toThrow('empty registry');
+  await expect(
+    stagedBootstrap(rpc, { ...payload, records: records.slice(1) }, options),
+  ).rejects.toThrow('different data');
+  await other.close();
+}, 60000);
+it('reports outages as retryable so clients never discard a pending save', async () => {
+  // Driver errors routinely contain words like "ID" or "ENOTFOUND"; none are validation.
+  for (const failure of ['getaddrinfo ENOTFOUND db', 'Invalid ID in connection string']) {
+    const handler = registryHandler({
+      rpc: async (name) => {
+        if (name === 'copy_registry_rate') return true;
+        throw new Error(failure);
+      },
+      tokens: [{ hash: sha256('writer-test'), role: 'writer' }],
+    });
+    const response = await handler(
+      new Request('https://example.test/submit', {
+        method: 'POST',
+        headers: { 'x-copy-token': 'writer-test' },
+        body: JSON.stringify(batch([create()])),
+      }),
+    );
+    expect(response.status).toBe(503);
+    expect((await response.json()).error).toBe('UNAVAILABLE');
+  }
+});
 it('handles preflight without database access and protects all subsequent data requests', async () => {
   let calls = 0;
   const handler = registryHandler({

@@ -22,6 +22,8 @@ export type BackendDependencies = {
     error?: string;
   }) => void;
 };
+/** Definite rejections. Anything else is reported as retryable so clients keep pending work. */
+class ValidationError extends Error {}
 const statuses: Record<string, number> = {
   VALIDATION: 422,
   REQUEST_REUSED: 409,
@@ -122,14 +124,18 @@ export function registryHandler(deps: BackendDependencies) {
             keyToken: string;
           }[];
           const operations = batch.operations.map((op) => {
-            if (!isCopyId(op.copyId)) throw new Error('Invalid Copy ID');
+            if (!isCopyId(op.copyId)) throw new ValidationError('Invalid Copy ID');
             if (op.action === 'reuse') return op;
             const errors = bilingualErrors(op.en, op.id);
-            if (errors.length) throw new Error(errors.join('; '));
+            if (errors.length) throw new ValidationError(errors.join('; '));
             if (op.action === 'edit') return op;
             const p = products.find((p) => p.id === op.product);
-            if (!p) throw new Error('Choose a configured product');
-            return { ...op, stem: copyKeyStem({ product: p.keyToken, ...op.context }) };
+            if (!p) throw new ValidationError('Choose a configured product');
+            try {
+              return { ...op, stem: copyKeyStem({ product: p.keyToken, ...op.context }) };
+            } catch (error) {
+              throw new ValidationError(error instanceof Error ? error.message : 'Invalid key');
+            }
           });
           result = await deps.rpc('copy_registry_submit', {
             batch: { ...batch, operations },
@@ -153,9 +159,9 @@ export function registryHandler(deps: BackendDependencies) {
             );
             for (const entry of parsed.args.manifest) {
               const r = byId.get(entry.copyId + ':' + entry.revision);
-              if (!r) throw new Error('Manifest revision is missing');
+              if (!r) throw new ValidationError('Manifest revision is missing');
               if (entry.fingerprint !== recordFingerprint(r))
-                throw new Error('Manifest fingerprint does not match saved revision');
+                throw new ValidationError('Manifest fingerprint does not match saved revision');
             }
           }
           result = await deps.rpc('copy_registry_library', parsed);
@@ -168,12 +174,13 @@ export function registryHandler(deps: BackendDependencies) {
         return respond(result, statuses[String(result.error)] ?? 422);
       return respond(result);
     } catch (error) {
-      if (
-        error instanceof Error &&
-        (error.name === 'ZodError' ||
-          /Invalid|Choose|Shorten|EN|ID|placeholder|Manifest/u.test(error.message))
-      )
+      if (error instanceof ValidationError)
         return respond({ error: 'VALIDATION', message: error.message }, 422);
+      if (error instanceof Error && error.name === 'ZodError')
+        return respond(
+          { error: 'VALIDATION', message: 'Request does not match the contract' },
+          422,
+        );
       return respond(
         {
           error: 'UNAVAILABLE',

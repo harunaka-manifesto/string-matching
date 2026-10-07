@@ -9,9 +9,9 @@ the same page get the same strings automatically.
 
 The plugin opens with Apply existing copies and Create new copies. Create scans a selected frame, lets writers keep or select text, enter both EN/ID, review provisional keys and occurrence targets, then save and bind local variables immediately. Editing an existing identity is global; a variant creates a separate identity. Library sync reviews Push/Pull conflicts and verifies manual Figma publication. Developers extract exact frame revisions through the official MCP script.
 
-Remote Supabase setup is pending. See the [implementation specification](docs/string-registry-backend.md), [setup and backups](docs/supabase-setup.md), and [developer handoff](docs/developer-handoff.md). `pnpm dev:ui` provides an authentication-free mock at `http://127.0.0.1:5173/src/ui/index.html`. It never writes real Figma/Supabase data. `pnpm test:ui` checks the browser journeys.
+Remote Supabase setup is pending; follow the step-by-step [setup guide](docs/supabase-setup.md). See also the [implementation specification](docs/string-registry-backend.md) and [developer handoff](docs/developer-handoff.md). `pnpm dev:ui` provides an authentication-free mock at `http://127.0.0.1:5173/src/ui/index.html`. It never writes real Figma/Supabase data. `pnpm test:ui` checks the browser journeys.
 
-The current bootstrap dry run blocks on 62 historical key ownership conflicts. Review the generated `figma-copy-migration/reports/registry-bootstrap-conflicts.json` before remote import. All old IDs remain preserved; the plugin does not invent replacements.
+The bootstrap dry run is clean: 62 historical keys claimed by more than one identity are resolved in `figma-copy-migration/registry/key-ownership-resolutions.json` (rules and counts in the [setup guide](docs/supabase-setup.md#key-ownership)). No IDs were created or removed.
 
 ## Applying existing copy
 

@@ -90,7 +90,9 @@ export function copyKeyStem(input: {
     .map(segment)
     .filter((value) => value && !['general', 'shared', 'main'].includes(value))
     .filter((value, index, all) => value !== segment(input.product) && value !== all[index - 1]);
-  const parts = ['gopay', segment(input.product), ...optional, role, input.qualifier].filter(Boolean) as string[];
+  const parts = ['gopay', segment(input.product), ...optional, role, input.qualifier].filter(
+    Boolean,
+  ) as string[];
   // Shorten context, then screen, while retaining product/role and qualifiers.
   const ending = 1 + (input.qualifier ? 1 : 0);
   for (let index = parts.length - ending - 1; index >= 2 && parts.join('_').length > 100; index--) {

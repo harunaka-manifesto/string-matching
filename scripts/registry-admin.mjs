@@ -39,9 +39,15 @@ export async function adminRpc(name, args = {}) {
     },
     body: JSON.stringify(args),
   });
-  if (!r.ok)
+  if (!r.ok) {
+    // PostgREST explains database refusals in JSON; gateways (5xx) answer with a page.
+    const detail = await r
+      .json()
+      .then((body) => (typeof body?.message === 'string' ? `: ${body.message}` : ''))
+      .catch(() => '');
     throw new Error(
-      `Administrator operation failed (${r.status}); inspect the private database logs`,
+      `Administrator operation ${name} failed (${r.status})${detail}; inspect the private database logs`,
     );
+  }
   return r.json();
 }

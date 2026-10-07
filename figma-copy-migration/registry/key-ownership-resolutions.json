@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 1,
+  "rules": {
+    "current-key": "An identity uses this as its current developer key. It (or the identity it was merged into) owns the key; other identities stop listing it as an alias.",
+    "ledger-former-key": "No identity uses it as a current key. The migration ledger shows one claimant once had it as its own key; that identity keeps it.",
+    "ambiguous": "The legacy sheet used this key for several different strings (for example a push title and its body) and no claimant ever had it as its own key. The key stays reserved forever but is no identity's alias, so the plugin asks instead of guessing."
+  },
+  "resolutions": [
+    {
+      "key": "gopay_accountsafety_gopayaman_home_dataprotection_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX21NWFAYTP14XH2YNBM45",
+      "released": [
+        "cp_01M3NX21NYE6STNHB77Q72YT12"
+      ]
+    },
+    {
+      "key": "gopay_generic_error_dialoguecard_noconnection_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20V3ECX9TZ9NB1CT7PYF",
+      "released": [
+        "cp_01M3NX204VFAYV2SAAH5Y1QTH2",
+        "cp_01M3NX20J9EC4AS44N8G4E7TG9"
+      ]
+    },
+    {
+      "key": "gopay_generic_error_dialoguecard_servererror_cta",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20KZFSH9SE0HJWA8C8AC",
+      "released": [
+        "cp_01M3NX2028EB1AJF4R3ZAKF3EB",
+        "cp_01M3NX204MEPW8RYQ3PGRDFRKS",
+        "cp_01M3NX20KYF5JTYAA1BDGZN33A",
+        "cp_01M3NX20THFK18QV3S9B225H8H"
+      ]
+    },
+    {
+      "key": "gopay_generic_error_dialoguecard_servererror_description",
+      "rule": "ledger-former-key",
+      "owner": "cp_01M3NX20V2EM8BY0GMZC39GSH1",
+      "released": [
+        "cp_01M3NX204TEH3RPWMYN01FRCGF",
+        "cp_01M3NX20JAEVC9S26VG7DBJV8C",
+        "cp_01M3NX20KYFQ59RV75RVGAZEVP"
+      ]
+    },
+    {
+      "key": "gopay_generic_error_dialoguecard_servererror_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20V3FWJV1MWRS7SB8M0C",
+      "released": [
+        "cp_01M3NX20V2FB2RHN1KS4QRNN6E"
+      ]
+    },
+    {
+      "key": "gopay_gopaynext_copyandsharelink_cta",
+      "rule": "current-key",
+      "owner": "cp_01M3NX21CQFT5VGFZJ297BFBYF",
+      "released": [
+        "cp_01M3NX21D2FEETX9BNKC34Y19W"
+      ]
+    },
+    {
+      "key": "gopay_mergedpayments_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX2117EX8V8YM3YNGY54EQ",
+      "released": [
+        "cp_01M3NX2118FTQ8YBGQ1EWV56Q9"
+      ]
+    },
+    {
+      "key": "gopay_mpmscreen_qrisunlimitednudge_inactive1",
+      "rule": "current-key",
+      "owner": "cp_01M3NX2125FSKVNZHYRT4KCGQ2",
+      "released": [
+        "cp_01M3NX212GEMZTFNZT5RYW0KMH"
+      ]
+    },
+    {
+      "key": "gopay_parking_dialoguecard_vendorerror_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX210CE21VKXWSMQANW84D",
+      "released": [
+        "cp_01M3NX210VFHNBNXVHFH1RQRV0"
+      ]
+    },
+    {
+      "key": "gopay_parking_dialoguecard_vendorerror_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20V3FWJV1MWRS7SB8M0C",
+      "released": [
+        "cp_01M3NX210VF0Y9NZQJRFSFQW1P"
+      ]
+    },
+    {
+      "key": "gopay_parking_entrytime_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX2103FGJAFYNP5S3TV1A6",
+      "released": [
+        "cp_01M3NX210WE9G9VYJM3XCG726Y"
+      ]
+    },
+    {
+      "key": "gopay_parking_landing_nonearbyarea_cta",
+      "rule": "current-key",
+      "owner": "cp_01M3NX2101FA2VB464MPSRTGCZ",
+      "released": [
+        "cp_01M3NX2102FZ99QHYQ9S1A0VDA"
+      ]
+    },
+    {
+      "key": "gopay_payment_successscreen_redirectiondescription",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20H6FTF9MN229W2X9VE3",
+      "released": [
+        "cp_01M3NX20HJE1JTM6A43XDHWS6K"
+      ]
+    },
+    {
+      "key": "gopay_paymentwidget_paymentdetails_paywithmethod",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20KQFSKT61RRZ7KN88QG",
+      "released": [
+        "cp_01M3NX20KQF5ZTE8GK2V7R9TQC"
+      ]
+    },
+    {
+      "key": "gopay_promo_reminder_cta",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20WEF4TTKJR5XFX0G3PR",
+      "released": [
+        "cp_01M3NX20WSFBDAATS56HXH31D1"
+      ]
+    },
+    {
+      "key": "gopay_promotion_merchantdistance",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20V1E1RBS1GWS5HGMCX2",
+      "released": [
+        "cp_01M3NX20ZZFCKS4XSZR3R3JBHS"
+      ]
+    },
+    {
+      "key": "gopay_promotion_promo_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20V1F6A9B2NWPJG5X1TJ",
+      "released": [
+        "cp_01M3NX20T9FCJTZ92AQF88PVKY"
+      ]
+    },
+    {
+      "key": "gopay_promotion_promodescription_minspending_info",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20V1FHSS00WYKKQ20615",
+      "released": [
+        "cp_01M3NX20T9EZTTN0DDGB5HTZH5"
+      ]
+    },
+    {
+      "key": "gopay_promotion_promolisting_availability_daysleft",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20T9F1QBMBRGW2Z71P60",
+      "released": [
+        "cp_01M3NX20V1FXV9WA9SMKQEW3WD"
+      ]
+    },
+    {
+      "key": "gopay_promotion_widget_paymentscreen_availablepromo_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20WTENJTHW0GF8VR6P1H",
+      "released": [
+        "cp_01M3NX20WXF1YTNXPM6DGSPZVY"
+      ]
+    },
+    {
+      "key": "gopay_promotion_widget_paymentscreen_refresh",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20WXF0HRY0VSBTWN4ZRD",
+      "released": [
+        "cp_01M3NX20J9E3J8WDE483XYH2ZR",
+        "cp_01M3NX20WWFMFRWNRPA4DJXMCF"
+      ]
+    },
+    {
+      "key": "gopay_promotion_widget_promolisting_actualsaving_coins",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20HGF7GSP66WTM6D235T",
+      "released": [
+        "cp_01M3NX20WZE628XJXP4YTMXHBH"
+      ]
+    },
+    {
+      "key": "gopay_promotion_widget_promolisting_inapplicablepromo_missedminspending",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20X2F2RVD75T8VEZSB2V",
+      "released": [
+        "cp_01M3NX20X4ES9TF599XHSEX59T"
+      ]
+    },
+    {
+      "key": "gopay_regionallaunch_success_title",
+      "rule": "ambiguous",
+      "owner": null,
+      "reservedFor": "cp_01M3NX21M7EGQ9TKFPZ1TVT750",
+      "released": [
+        "cp_01M3NX21M7EGQ9TKFPZ1TVT750",
+        "cp_01M3NX21M7F8D9T55VFTM7WTSX"
+      ]
+    },
+    {
+      "key": "gopay_regionallaunch_waitlist_drawer_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX21M0EZYSX2Q120D71HD2",
+      "released": [
+        "cp_01M3NX21M5F12A53CQC6XP1JTR"
+      ]
+    },
+    {
+      "key": "gopay_regionallaunch_waitlist_drawer_invitefriends_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20JQFJ18RYA8GCYJKGMC",
+      "released": [
+        "cp_01M3NX21M6FQR89PQMS5HT75DF"
+      ]
+    },
+    {
+      "key": "gopay_regionallaunch_waitlist_drawer_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX21M0FVYR3MYZGXRSGT1M",
+      "released": [
+        "cp_01M3NX21M4FA1B9PQY2MW573S1"
+      ]
+    },
+    {
+      "key": "gopay_regionallaunch_waitlist_locationaccess_drawer_card_descripton",
+      "rule": "current-key",
+      "owner": "cp_01M3NX21M1FJBTQJJT007YWPDT",
+      "released": [
+        "cp_01M3NX21KZFENR893E94662NQG",
+        "cp_01M3NX21M5FYJR38NXGZDEYXYJ"
+      ]
+    },
+    {
+      "key": "gopay_regionallaunch_waitlist_locationaccess_drawer_card_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX21M0FXGSN3HW885YXHKA",
+      "released": [
+        "cp_01M3NX21KZEMAS4E6QSJCZ94RS",
+        "cp_01M3NX21M5F85S1Y0K1AQ0AXRN"
+      ]
+    },
+    {
+      "key": "gopay_regionallaunch_waitlist_notificationaccess_drawer_card_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX21M1E6A85FCMK5F4GAHN",
+      "released": [
+        "cp_01M3NX21M6F6AAVANS318AZXRQ"
+      ]
+    },
+    {
+      "key": "gopay_regionallaunch_waitlist_notificationaccess_drawer_card_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX21M1E229TR2VS3FJT27K",
+      "released": [
+        "cp_01M3NX21M5FYBVHG983E3NT59W"
+      ]
+    },
+    {
+      "key": "gopay_skyparking_date",
+      "rule": "current-key",
+      "owner": "cp_01M3NX210FF5CA15YR84HHVH5Z",
+      "released": [
+        "cp_01M3NX210XECMRD7E0F02FJ66E"
+      ]
+    },
+    {
+      "key": "gopay_skyparking_fee",
+      "rule": "current-key",
+      "owner": "cp_01M3NX210EEMC84FXH19T86NVX",
+      "released": [
+        "cp_01M3NX2029EEERVFM7ZVNBWCX3",
+        "cp_01M3NX210WEBS8RDANHGJ0S8TS"
+      ]
+    },
+    {
+      "key": "gopay_skyparking_graceperiod_info",
+      "rule": "current-key",
+      "owner": "cp_01M3NX210GEGESJHCTYF7KD5YA",
+      "released": [
+        "cp_01M3NX210YFVVBFD9CKZ100VKY"
+      ]
+    },
+    {
+      "key": "gopay_skyparking_parkingduration",
+      "rule": "current-key",
+      "owner": "cp_01M3NX210FEP69J8MNBTVWGAEP",
+      "released": [
+        "cp_01M3NX210XFJA9AEKBBR3Q6R3N"
+      ]
+    },
+    {
+      "key": "gopay_skyparking_parkingduration_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX210EF9XBP2C0HKX4ZQFJ",
+      "released": [
+        "cp_01M3NX210WF1TTQGYBR94PWH85"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_addimage_placeholder",
+      "rule": "ambiguous",
+      "owner": null,
+      "reservedFor": "cp_01M3NX213QESABEG6M4CPNQ2C3",
+      "released": [
+        "cp_01M3NX213QESABEG6M4CPNQ2C3",
+        "cp_01M3NX213SF1DTCT8ZZXAPJW40"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_details_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX214MF0D9KSDA83FK9N3K",
+      "released": [
+        "cp_01M3NX2145FN4BWQH85W6QHH23"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_emptytobepaid_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX214YFVSTVYWBGH5WAHAB",
+      "released": [
+        "cp_01M3NX214YEPR855BVQEH7NKRV"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_norequestsplitbillhistory_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX213MFY0S0NGE4Y0BFECJ",
+      "released": [
+        "cp_01M3NX22PBE6TVGM3RER1DKC1K"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_norequestsplitbillhistory_title",
+      "rule": "ambiguous",
+      "owner": null,
+      "reservedFor": "cp_01M3NX22PBEY79D0HM5WZ790A0",
+      "released": [
+        "cp_01M3NX213MEV18S16VMMXDFKK9",
+        "cp_01M3NX22PBEY79D0HM5WZ790A0"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_pushnotif_splitbillrequest_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX214QEX0R6KJ820DZWWZF",
+      "released": [
+        "cp_01M3NX216EFTPTJCWR91NW3G36"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_pushnotif_splitbillrequest_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX214QEQNVQJNGBKAKCAZR",
+      "released": [
+        "cp_01M3NX216EEBZTAC87QP82BBSJ"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_rejectdialogue_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX216CEFFV97B96F01E3SQ",
+      "released": [
+        "cp_01M3NX2174FV5VRV459A6TMEP6"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_rejectdialogue_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX216CFNCT18FJJBNNTY7B",
+      "released": [
+        "cp_01M3NX2174ENJAB8JQ6N4W2V67"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_requestandsplitbillhistory_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX213JFXNARFEWQHNGZ8FC",
+      "released": [
+        "cp_01M3NX22PBF0ES0B3MZ5X1FB9H"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_weeklylimitdialogue_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX217AF18AY6ENFPTEFR9E",
+      "released": [
+        "cp_01M3NX217AEYJS0X5SV1AR2DSX"
+      ]
+    },
+    {
+      "key": "gopay_splitbill_you_identifier",
+      "rule": "ledger-former-key",
+      "owner": "cp_01M3NX213PF7TRSH2ECYYWR8GB",
+      "released": [
+        "cp_01M3NX214NE9Z9SPGZ0FVQW9MG"
+      ]
+    },
+    {
+      "key": "gopay_topup_revamp_home_instant_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX218VEQHAZP884K797S2P",
+      "released": [
+        "cp_01M3NX22RJF6BS9KVN16AWS77J"
+      ]
+    },
+    {
+      "key": "gopay_topup_revamp_home_instant_title",
+      "rule": "ledger-former-key",
+      "owner": "cp_01M3NX22QPFJ8VB7B3YYSB9ZBE",
+      "released": [
+        "cp_01M3NX22RHEWNSJM8Q8ZEYCA0F"
+      ]
+    },
+    {
+      "key": "gopay_topup_revamp_home_saving_banktransfer_description",
+      "rule": "current-key",
+      "owner": "cp_01M3NX22R5F9HSF34CAQ6Z7TVT",
+      "released": [
+        "cp_01M3NX22RJF559PMANVYDA8FVV"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_accountlinking_error_failedtosave_dialoguecard_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX22YYEXTT9YGZFG6WYBY7",
+      "released": [
+        "cp_01M3NX22YYEK9SMZVD64HK5S0F"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_generic_details_shareenvelope_assigned_group_predefinedtext",
+      "rule": "ambiguous",
+      "owner": null,
+      "reservedFor": "cp_01M3NX2330EGABFW7PAKDCXQMC",
+      "released": [
+        "cp_01M3NX2330EGABFW7PAKDCXQMC",
+        "cp_01M3NX2331FPHTQNZRHYVZTMMS"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_generic_details_shareenvelope_predefinedtext",
+      "rule": "ambiguous",
+      "owner": null,
+      "reservedFor": "cp_01M3NX231JERGR6EZ1206D4G5P",
+      "released": [
+        "cp_01M3NX231JERGR6EZ1206D4G5P",
+        "cp_01M3NX231JEY7V9CKCV95CJCSD"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_generic_details_shareenvelope_vialink_singleandgroup_predefinedtext",
+      "rule": "ambiguous",
+      "owner": null,
+      "reservedFor": "cp_01M3NX2330E8AS9GME6YPS30PA",
+      "released": [
+        "cp_01M3NX2330E8AS9GME6YPS30PA",
+        "cp_01M3NX2330ETJT384GMYHYK02N"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_nonassigned_success_details_envelopecreated_header",
+      "rule": "current-key",
+      "owner": "cp_01M3NX2327FRNBQCWKE3PDAZRS",
+      "released": [
+        "cp_01M3NX2335EWWR1FA3TDE3RWWS"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_nonassigned_success_details_link",
+      "rule": "current-key",
+      "owner": "cp_01M3NX2328EC7AG9W2NAVA6DCA",
+      "released": [
+        "cp_01M3NX2336F37ABZRJYVX5B648"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_nonassigned_success_details_recipientlist_status_claimed",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20A7FARAKDFP08TWB056",
+      "released": [
+        "cp_01M3NX2339EZBSDTEJB6J1P4FM"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_nonassigned_success_share_cta",
+      "rule": "current-key",
+      "owner": "cp_01M3NX2317FHMB67RW0D566BSZ",
+      "released": [
+        "cp_01M3NX2337FG5BZ0VZAZS0SEJ5"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_note_dialoguecard_title",
+      "rule": "current-key",
+      "owner": "cp_01M3NX22ZBFZKRS8T5XQR42927",
+      "released": [
+        "cp_01M3NX2326E28AV6RQKY1XFM0M"
+      ]
+    },
+    {
+      "key": "gopay_unifiedtransfer_envelope_sentreceipt_cancel_cta",
+      "rule": "current-key",
+      "owner": "cp_01M3NX22ZRE8QV9094F4GAVY49",
+      "released": [
+        "cp_01M3NX2336FDD8CZ3FYXT86RCM"
+      ]
+    },
+    {
+      "key": "gopay_withdrawal_reviewpayment_withdrawalamount",
+      "rule": "current-key",
+      "owner": "cp_01M3NX20MCFEWV5D9T6F9SCRK0",
+      "released": [
+        "cp_01M3NX20MEFPTV4VZT0VE3DKD0"
+      ]
+    }
+  ]
+}

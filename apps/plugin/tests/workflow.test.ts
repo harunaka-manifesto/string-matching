@@ -2,7 +2,7 @@ import { beforeEach, expect, it, vi } from 'vitest';
 import { figmaFixture } from './figma-fixture';
 import type { CopyRecord } from '@string-binder/contracts';
 import { localFingerprint } from '@string-binder/domain';
-import { materialize, scanLocal } from '../src/main/delivery';
+import { materialize, scanLocal, usageCounts } from '../src/main/delivery';
 import { readPrivate } from '../src/main/private-storage';
 const mocks = vi.hoisted(() => ({ api: vi.fn(), catalog: vi.fn(), settings: vi.fn() }));
 vi.mock('../src/main/registry-api', () => ({ ...mocks, WorkflowError: Error }));
@@ -192,4 +192,52 @@ it('preflights every affected font before shared library values change', async (
     ((await workflow('library:apply', { runId: 'test-run' })) as any).failures[0].reason,
   ).toContain('Missing font');
   expect(v.valuesByMode.id).toBe(r.id);
+});
+
+it('rejects a wrong library setup without locking the device onto it', async () => {
+  mocks.settings.mockResolvedValue({});
+  await expect(
+    workflow('settings:save', {
+      libraryId: 'test-library',
+      fileKey: 'another-file',
+      publisherToken: 'secret',
+    }),
+  ).rejects.toThrow('registered as another library');
+  expect(await f.figma.clientStorage.getAsync('registry:settings')).toBeUndefined();
+  await expect(
+    workflow('settings:save', { libraryId: 'test-library', fileKey: 'test-file' }),
+  ).rejects.toThrow('publisher token');
+  await workflow('settings:save', {
+    libraryId: 'test-library',
+    fileKey: 'test-file',
+    publisherToken: ' secret ',
+  });
+  expect(await f.figma.clientStorage.getAsync('registry:settings')).toEqual({
+    libraryId: 'test-library',
+    fileKey: 'test-file',
+    publisherToken: 'secret',
+  });
+});
+it('rescans a working file only when the registry moved or a refresh is forced', async () => {
+  (f.figma.root as any).setPluginData('registry:library', '');
+  const loads = vi.spyOn(f.figma, 'loadAllPagesAsync');
+  await workflow('refresh', {});
+  expect(loads).toHaveBeenCalledTimes(1);
+  await workflow('refresh', {});
+  expect(loads).toHaveBeenCalledTimes(1);
+  await workflow('refresh', { force: true });
+  expect(loads).toHaveBeenCalledTimes(2);
+  mocks.catalog.mockResolvedValue({ seq: 1, records: [r], products: [], mappings: [] });
+  await workflow('refresh', {});
+  expect(loads).toHaveBeenCalledTimes(3);
+});
+it('counts current-file usages of an identity, including duplicate mirrors', async () => {
+  const v = await materialize(r, 'Test', true);
+  const mirror = f.createVariable('mirror', f.collections[0]);
+  mirror.setSharedPluginData('copy', 'id', r.copyId);
+  f.text('A').setBoundVariable('characters', v);
+  f.text('B').setBoundVariable('characters', mirror);
+  f.text('Unbound');
+  expect(await usageCounts(new Set([r.copyId]))).toEqual({ [r.copyId]: 2 });
+  expect(await usageCounts(new Set(['cp_other']))).toEqual({});
 });

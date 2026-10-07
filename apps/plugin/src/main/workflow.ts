@@ -7,9 +7,10 @@ import {
   type CopyRecord,
   type WorkflowAction,
   type AuthoringDraft,
+  type BindingResult,
 } from '@string-binder/contracts';
 import { recordFingerprint, canonical } from '@string-binder/domain';
-import { api, catalog, latestCatalog, settings, WorkflowError } from './registry-api';
+import { api, catalog, settings, type Settings } from './registry-api';
 import {
   actual,
   editableContext,
@@ -25,7 +26,7 @@ import {
   refreshUsed,
   scanLocal,
   sameValues,
-  stamp,
+  usageCounts,
 } from './delivery';
 import { boundVariableId } from './layer-state';
 import { readPrivate, writePrivate } from './private-storage';
@@ -44,8 +45,8 @@ async function draftKey(): Promise<string> {
 async function drafts(): Promise<Record<string, AuthoringDraft>> {
   return (await readPrivate<Record<string, AuthoringDraft>>(await draftKey())) ?? {};
 }
-async function checkDestination(): Promise<void> {
-  const s = await settings();
+async function checkDestination(candidate?: Settings): Promise<void> {
+  const s = candidate ?? (await settings());
   if (!s.libraryId || !s.fileKey) throw new Error('Register the library URL first');
   const registered = figma.root.getPluginData('registry:library');
   if (registered && registered !== s.fileKey)
@@ -59,6 +60,8 @@ async function checkDestination(): Promise<void> {
     throw new Error('Open the registered GoPay Strings file before configuring library sync');
   figma.root.setPluginData('registry:library', s.fileKey);
 }
+let refreshedSeq: number | null = null;
+let lastRefresh: BindingResult = { applied: [], failures: [], conflicts: [] };
 export async function workflow(action: WorkflowAction, raw: unknown): Promise<unknown> {
   const data = (raw ?? {}) as Record<string, any>;
   switch (action) {
@@ -85,14 +88,16 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       };
     }
     case 'settings:save': {
-      const s = await settings();
-      await figma.clientStorage.setAsync('registry:settings', {
-        ...s,
-        libraryId: data.libraryId,
-        fileKey: data.fileKey,
-        ...(data.publisherToken ? { publisherToken: data.publisherToken } : {}),
-      });
-      await checkDestination();
+      const next: Settings = {
+        ...(await settings()),
+        libraryId: String(data.libraryId ?? '').trim(),
+        fileKey: String(data.fileKey ?? '').trim(),
+        ...(data.publisherToken ? { publisherToken: String(data.publisherToken).trim() } : {}),
+      };
+      if (!next.publisherToken) throw new Error('Enter the publisher token');
+      // Validate first: a rejected setup must not leave this device locked onto wrong values.
+      await checkDestination(next);
+      await figma.clientStorage.setAsync('registry:settings', next);
       return { saved: true };
     }
     case 'draft:get':
@@ -123,7 +128,7 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       const bindings: Record<string, string> = {};
       const variables: Record<
         string,
-        { en: string; id: string; baseline?: CopyRecord; manual: boolean }
+        { en: string; id: string; baseline?: CopyRecord; manual: boolean; remote: boolean }
       > = {};
       for (const l of selection.layers) {
         const node = await figma.getNodeByIdAsync(l.id);
@@ -140,6 +145,7 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
                 ...pair,
                 baseline: base ?? undefined,
                 manual: !!base && !sameValues(pair, base),
+                remote: v!.remote,
               };
             } catch {
               /* Scanning still exposes the affected row. */
@@ -151,9 +157,19 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
     }
     case 'apply:preview':
       return previewApply(data.frameId, data.decisions);
-    case 'preflight':
-      return preview(data.frameId, data.rows);
+    case 'preflight': {
+      const reviewed = await preview(data.frameId, data.rows);
+      // Global edits reach every usage in this file; count them so review states the impact.
+      const globalIds = new Set<string>(
+        data.rows
+          .filter((r: any) => r.action === 'edit' || r.restoreLocal)
+          .map((r: any) => r.copyId),
+      );
+      const usages = globalIds.size ? await usageCounts(globalIds) : {};
+      return { ...reviewed, usages };
+    }
     case 'deliver':
+      refreshedSeq = null;
       return deliver(
         data.records.map((r: unknown) => CopyRecordSchema.parse(r)),
         data.targets.map((t: unknown) => TargetSchema.parse(t)),
@@ -163,15 +179,15 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       );
     case 'refresh': {
       const cat = await catalog(true);
-      if (figma.root.getPluginData('registry:library'))
-        return { catalog: cat, result: { applied: [], failures: [], conflicts: [] } };
+      // Loading every page is expensive; polls only rescan the file when the registry moved.
+      if (figma.root.getPluginData('registry:library') || (!data.force && refreshedSeq === cat.seq))
+        return { catalog: cat, result: lastRefresh };
       const protectedIds = Object.values(await drafts()).flatMap((d) =>
         d.rows.filter((r) => r.action !== 'keep' && r.baseline).map((r) => r.baseline!.copyId),
       );
-      return {
-        catalog: cat,
-        result: await refreshUsed(cat.records, cat.products, cat.mappings, protectedIds),
-      };
+      lastRefresh = await refreshUsed(cat.records, cat.products, cat.mappings, protectedIds);
+      refreshedSeq = cat.seq;
+      return { catalog: cat, result: lastRefresh };
     }
     case 'library:scan': {
       await checkDestination();

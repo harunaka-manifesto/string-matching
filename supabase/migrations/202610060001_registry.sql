@@ -156,7 +156,7 @@ create function public.copy_registry_manifest(manifest jsonb) returns jsonb lang
 revoke all on function public.copy_registry_products(), public.copy_registry_manifest(jsonb) from public,anon,authenticated;
 grant execute on function public.copy_registry_products(), public.copy_registry_manifest(jsonb) to service_role;
 -- Bootstrap only through an administrator's server credential, never the team API.
-create function public.copy_registry_bootstrap(records jsonb, products jsonb, history jsonb default '[]') returns jsonb language plpgsql security invoker set search_path='' as $$
+create function public.copy_registry_bootstrap(records jsonb, products jsonb, history jsonb default '[]', reservations jsonb default '[]') returns jsonb language plpgsql security invoker set search_path='' as $$
  declare r jsonb; p jsonb; k text; head bigint; owner_id text;
  begin
  select seq into head from copy_private.registry_head where id=true for update;
@@ -175,13 +175,19 @@ create function public.copy_registry_bootstrap(records jsonb, products jsonb, hi
      insert into copy_private.key_reservations values(k,owner_id) on conflict(key) do nothing;
    end loop;
  end loop;
+ -- Historically ambiguous keys: reserved forever, yet deliberately no identity's alias.
+ for r in select value from jsonb_array_elements(reservations) loop
+   if not exists(select 1 from copy_private.copies where copy_id=r->>'copyId') then raise exception 'Unknown reservation owner: %',r->>'key'; end if;
+   if exists(select 1 from copy_private.key_reservations where key=r->>'key') then raise exception 'Unresolved key ownership: %',r->>'key'; end if;
+   insert into copy_private.key_reservations values(r->>'key',r->>'copyId');
+ end loop;
  update copy_private.registry_head set seq=head where id=true;
  return jsonb_build_object('imported',jsonb_array_length(records));
  end $$;
 
 revoke all on schema copy_private from public;
 revoke all on all tables in schema copy_private from public;
-revoke all on function public.copy_registry_catalog(), public.copy_registry_changes(bigint), public.copy_registry_request(text), public.copy_registry_revision(text,integer), public.copy_registry_rate(text,integer), public.copy_registry_submit(jsonb,text), public.copy_registry_library(text,jsonb), public.copy_registry_bootstrap(jsonb,jsonb,jsonb) from public, anon, authenticated;
+revoke all on function public.copy_registry_catalog(), public.copy_registry_changes(bigint), public.copy_registry_request(text), public.copy_registry_revision(text,integer), public.copy_registry_rate(text,integer), public.copy_registry_submit(jsonb,text), public.copy_registry_library(text,jsonb), public.copy_registry_bootstrap(jsonb,jsonb,jsonb,jsonb) from public, anon, authenticated;
 grant usage on schema copy_private to service_role;
 grant all on all tables in schema copy_private to service_role;
-grant execute on function public.copy_registry_catalog(), public.copy_registry_changes(bigint), public.copy_registry_request(text), public.copy_registry_revision(text,integer), public.copy_registry_rate(text,integer), public.copy_registry_submit(jsonb,text), public.copy_registry_library(text,jsonb), public.copy_registry_bootstrap(jsonb,jsonb,jsonb) to service_role;
+grant execute on function public.copy_registry_catalog(), public.copy_registry_changes(bigint), public.copy_registry_request(text), public.copy_registry_revision(text,integer), public.copy_registry_rate(text,integer), public.copy_registry_submit(jsonb,text), public.copy_registry_library(text,jsonb), public.copy_registry_bootstrap(jsonb,jsonb,jsonb,jsonb) to service_role;

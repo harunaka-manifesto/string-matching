@@ -179,6 +179,22 @@ export async function allTexts(): Promise<TextNode[]> {
   await figma.loadAllPagesAsync();
   return figma.root.children.flatMap((p) => p.findAllWithCriteria({ types: ['TEXT'] }));
 }
+/** Text layers in this file bound to each identity. Other files are never counted. */
+export async function usageCounts(copyIds: ReadonlySet<string>): Promise<Record<string, number>> {
+  const counts: Record<string, number> = {};
+  const identities = new Map<string, string | null>();
+  for (const n of await allTexts()) {
+    const id = boundVariableId(n);
+    if (!id) continue;
+    if (!identities.has(id)) {
+      const v = await figma.variables.getVariableByIdAsync(id);
+      identities.set(id, v ? copyIdOf(v) : null);
+    }
+    const copy = identities.get(id);
+    if (copy && copyIds.has(copy)) counts[copy] = (counts[copy] ?? 0) + 1;
+  }
+  return counts;
+}
 export async function preview(
   frameId: string,
   rows: { layerId: string; copyId: string; locale: 'en' | 'id'; canvasFingerprint: string }[],

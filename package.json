@@ -20,6 +20,7 @@
     "format:check": "prettier --check .",
     "sandbox:check": "node scripts/check-plugin-sandbox.mjs",
     "build:backend": "node scripts/build-backend.mjs",
+    "registry:resolve-keys": "node scripts/registry-resolve-keys.mjs",
     "registry:bootstrap": "node scripts/registry-bootstrap.mjs",
     "registry:backup": "node scripts/registry-backup.mjs",
     "test:ui": "playwright test",

@@ -21,3 +21,6 @@ jobs:
       - run: pnpm test:library
       - run: pnpm build
       - run: pnpm sandbox:check
+      - run: pnpm build:backend
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:ui

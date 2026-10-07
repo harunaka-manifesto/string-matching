@@ -86,7 +86,7 @@ export function mockRegistry(selection: () => SelectionInfo, changed: () => void
           variables: Object.fromEntries(
             Object.entries(state.bindings).map(([id, cp]) => [
               id,
-              catalog.records.find((r) => r.copyId === cp),
+              { ...catalog.records.find((r) => r.copyId === cp), remote: false, manual: false },
             ]),
           ),
         };
@@ -112,6 +112,14 @@ export function mockRegistry(selection: () => SelectionInfo, changed: () => void
             duplicate: false,
           })),
           conflicts: [],
+          usages: Object.fromEntries(
+            data.rows
+              .filter((r: any) => r.action === 'edit')
+              .map((r: any) => [
+                r.copyId,
+                Object.values(state.bindings).filter((cp) => cp === r.copyId).length,
+              ]),
+          ),
         };
       case 'submit': {
         const batch = data.batch as MutationBatch;

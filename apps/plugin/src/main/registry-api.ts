@@ -42,7 +42,16 @@ export async function api(action: string, data?: unknown, publisher = false): Pr
       'Registry unavailable. Your draft and request ID are preserved.',
     );
   }
-  const body = await response.json();
+  let body;
+  try {
+    body = await response.json();
+  } catch {
+    // Gateways answer outages with non-JSON pages; never report those as a definite rejection.
+    throw new WorkflowError(
+      'UNAVAILABLE',
+      'Registry unavailable. Your draft and request ID are preserved.',
+    );
+  }
   if (!response.ok)
     throw new WorkflowError(
       body?.error ?? 'UNAVAILABLE',
