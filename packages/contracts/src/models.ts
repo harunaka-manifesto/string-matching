@@ -14,6 +14,8 @@ export const LibraryListingItemSchema = z.object({
   collection: z.string(),
   /** Position inside the library collection listing. */
   order: z.number().int(),
+  /** Defined in this file rather than imported from a published library. */
+  local: z.boolean().optional(),
 });
 export type LibraryListingItem = z.infer<typeof LibraryListingItemSchema>;
 
@@ -47,6 +49,14 @@ export const SelectionInfoSchema = z.object({
   /** Frame, ancestor, and section names, used to rank search results. */
   contextNames: z.array(z.string()),
   layers: z.array(LayerInfoSchema),
+  /** Page holding the frame, with the product writers chose (or the plugin guessed) for it. */
+  page: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+      scope: z.object({ product: z.string(), confirmed: z.boolean() }).nullable(),
+    })
+    .optional(),
 });
 export type SelectionInfo = z.infer<typeof SelectionInfoSchema>;
 

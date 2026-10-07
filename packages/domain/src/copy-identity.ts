@@ -32,7 +32,8 @@ export function isCopyId(id: string): boolean {
   return ((value >> 76n) & 15n) === 7n && ((value >> 62n) & 3n) === 2n;
 }
 
-const ROLES = new Set([
+/** Roles a new key may end with, in the order writers pick them. */
+export const ROLE_LIST = [
   'title',
   'subtitle',
   'description',
@@ -58,7 +59,26 @@ const ROLES = new Set([
   'emailsubject',
   'emailbody',
   'a11y',
-]);
+] as const;
+const ROLES = new Set<string>(ROLE_LIST);
+const QUALIFIERS = ['primary', 'secondary', 'tertiary'] as const;
+type Qualifier = (typeof QUALIFIERS)[number];
+
+/**
+ * Maps legacy roles (`push-title`, `cta-primary`, `cta-gotit`) onto a supported
+ * role and optional qualifier. Unknown roles come back unchanged so callers can
+ * reject them.
+ */
+export function normalizeRole(role: string): { role: string; qualifier?: Qualifier } {
+  const flat = role.toLowerCase().replaceAll('-', '');
+  if (ROLES.has(flat)) return { role: flat };
+  const [head, ...rest] = role.toLowerCase().split('-');
+  if (head && ROLES.has(head)) {
+    const qualifier = QUALIFIERS.find((q) => q === rest.join('-'));
+    return qualifier ? { role: head, qualifier } : { role: head };
+  }
+  return { role: flat };
+}
 const segment = (value: string) =>
   value
     .replaceAll('&', ' and ')
@@ -81,20 +101,21 @@ export function copyKeyStem(input: {
 }): string {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(input.product))
     throw new Error('Choose a valid product stream');
-  const role = input.role.replaceAll('-', '');
+  const normalized = normalizeRole(input.role);
+  const role = normalized.role;
   if (!ROLES.has(role)) throw new Error('Choose a supported copy role');
-  if (input.qualifier && !['primary', 'secondary', 'tertiary'].includes(input.qualifier))
-    throw new Error('Invalid copy qualifier');
+  const qualifier = input.qualifier ?? normalized.qualifier;
+  if (qualifier && !QUALIFIERS.includes(qualifier)) throw new Error('Invalid copy qualifier');
   const optional = [input.feature, input.screen, input.context]
     .filter((value): value is string => !!value)
     .map(segment)
     .filter((value) => value && !['general', 'shared', 'main'].includes(value))
     .filter((value, index, all) => value !== segment(input.product) && value !== all[index - 1]);
-  const parts = ['gopay', segment(input.product), ...optional, role, input.qualifier].filter(
+  const parts = ['gopay', segment(input.product), ...optional, role, qualifier].filter(
     Boolean,
   ) as string[];
   // Shorten context, then screen, while retaining product/role and qualifiers.
-  const ending = 1 + (input.qualifier ? 1 : 0);
+  const ending = 1 + (qualifier ? 1 : 0);
   for (let index = parts.length - ending - 1; index >= 2 && parts.join('_').length > 100; index--) {
     const remove = parts.join('_').length - 100;
     parts[index] = parts[index]!.slice(0, Math.max(0, parts[index]!.length - remove));

@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { buildSequenceSource, filterSequenceSource } from '../src/sequence-prefill';
 import {
+  featureVocabulary,
+  guessFeature,
   guessProduct,
   normalizedFields,
   productLabel,
@@ -82,14 +84,38 @@ describe('guessProduct', () => {
     { name: 'shared/a', section: 'Shared' },
   ]);
 
-  it('trusts strings already bound in the frame', () => {
+  it('trusts strings already bound in the frame when names say nothing', () => {
     expect(
       guessProduct({
         boundNames: ['shared/x', 'transfer/y', 'transfer/z', 'savings/q'],
-        contextNames: ['Mutual fund'],
+        contextNames: ['Frame 12'],
         vocabulary,
       }),
     ).toBe('transfer');
+  });
+
+  it('lets clear names outvote a few borrowed bindings, but not many', () => {
+    const names = ['Mutual fund'];
+    expect(
+      guessProduct({ boundNames: ['transfer/y', 'transfer/z'], contextNames: names, vocabulary }),
+    ).toBe('investment');
+    expect(
+      guessProduct({
+        boundNames: Array.from({ length: 8 }, (_, i) => `transfer/${i}`),
+        contextNames: names,
+        vocabulary,
+      }),
+    ).toBe('transfer');
+  });
+
+  it('ignores a minority product among bound strings', () => {
+    expect(
+      guessProduct({
+        boundNames: ['savings/a', 'savings/b', 'savings/c', 'savings/d', 'savings/e', 'transfer/x'],
+        contextNames: [],
+        vocabulary,
+      }),
+    ).toBe('savings');
   });
 
   it('matches frame and page names against product vocabulary', () => {
@@ -237,4 +263,37 @@ it('prefers concise corrected copy over a long disclaimer mentioning the keyword
     context: ['Deposit confirmation'],
   });
   expect(keys(result.inScope)).toEqual(['exact', 'short', 'long']);
+});
+
+describe('feature', () => {
+  it('reorders equally good matches by feature but never lifts a weaker match', () => {
+    const items = [
+      { ...s('other', 'investment/a_cta', 'Buy now', 'Beli', 0), feature: 'gold' },
+      { ...s('same', 'investment/b_cta', 'Buy now', 'Beli', 5), feature: 'mutual-fund' },
+      { ...s('weak', 'investment/c_cta', 'Buy now and save', 'Beli', 1), feature: 'mutual-fund' },
+      { ...s('exact-other', 'investment/d_cta', 'Buy', 'Beli', 2), feature: 'gold' },
+    ];
+    const result = rankStrings(items, 'buy now', {
+      fields: normalizedFields,
+      scope: 'investment',
+      feature: 'mutual-fund',
+    });
+    expect(keys(result.inScope)).toEqual(['same', 'other', 'weak']);
+    expect(result.details.get('same')?.reasons).toContain('Same feature');
+  });
+
+  it('guesses the feature from frame and page names', () => {
+    const vocabulary = featureVocabulary(
+      [
+        { product: 'investment', feature: 'mutual-fund', section: 'Mutual Fund Asset Details' },
+        { product: 'investment', feature: 'gold-sip', section: 'Gold SIP' },
+        { product: 'investment', feature: 'stock', section: 'US Stocks' },
+        { product: 'transfer', feature: 'bank', section: 'Bank transfer' },
+      ],
+      'investment',
+    );
+    expect(guessFeature(['Gold SIP – setup', 'Investment flows'], vocabulary)).toBe('gold-sip');
+    expect(guessFeature(['Frame 1'], vocabulary)).toBeNull();
+    expect(vocabulary.has('bank')).toBe(false);
+  });
 });

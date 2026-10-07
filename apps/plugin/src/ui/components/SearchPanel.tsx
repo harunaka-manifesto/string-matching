@@ -7,6 +7,7 @@ import {
   queryTokens,
   rankStrings,
   SHARED_PRODUCT,
+  type RankFields,
   type SequenceSource,
 } from '@string-binder/domain';
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
@@ -17,8 +18,11 @@ import { Menu } from './Menu';
 
 const PAGE = 20;
 
-/** `null`: not chosen yet. `'all'`: the writer chose every product. */
-export type Scope = string | 'all' | null;
+/** Product a page belongs to; `null` until guessed or chosen. */
+export type Scope = string | null;
+
+/** Leaf of a variable name: the developer key. */
+export const keyOf = (name: string) => name.slice(name.lastIndexOf('/') + 1);
 
 type Section = { id: string; title: string; count: number; items: StringEntry[]; more: boolean };
 
@@ -78,9 +82,13 @@ export function SearchPanel(props: {
   sequences: SequenceSource;
   used: ReadonlySet<string>;
   scope: Scope;
+  /** Feature (stream inside the product) guessed for this frame; boosts its strings. */
+  feature: string | null;
   products: readonly Product[];
-  onScope: (scope: Exclude<Scope, null>) => void;
+  onScope: (scope: string) => void;
   onPick: (key: string) => void;
+  /** Starts new copy for this layer, prefilled from the canvas. */
+  onCreateNew?: () => void;
   onClose: () => void;
 }) {
   const [query, setQuery] = useState('');
@@ -90,11 +98,14 @@ export function SearchPanel(props: {
   const [showRelated, setShowRelated] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const product = props.scope && props.scope !== 'all' ? props.scope : null;
+  // Other products stay out unless the writer asks; it resets each time search opens.
+  const [wide, setWide] = useState(false);
+  const product = wide ? null : props.scope;
+  const blocked = props.scope === null && !wide;
 
   useEffect(() => {
     input.current?.focus();
-  }, [props.scope]);
+  }, [props.scope, wide]);
   useEffect(() => {
     setLimit(PAGE);
     setShowRelated(false);
@@ -105,25 +116,32 @@ export function SearchPanel(props: {
     const near = neighbours(props.currentKey ?? props.anchorHint, props.sequences, props.entries);
     return {
       ...near,
-      items: props.scope === null ? [] : near.items.filter((item) => inProduct(item, product)),
+      items: blocked ? [] : near.items.filter((item) => inProduct(item, product)),
     };
-  }, [props.currentKey, props.anchorHint, props.sequences, props.entries, props.scope, product]);
+  }, [props.currentKey, props.anchorHint, props.sequences, props.entries, blocked, product]);
+  // Per-product fields depend only on the entry and product, not the query: normalize once.
+  const productFields = useMemo(() => new WeakMap<StringEntry, RankFields>(), [product]);
   const ranked = useMemo(
     () =>
-      rankStrings(props.scope === null ? [] : props.list, deferred, {
+      rankStrings(blocked ? [] : props.list, deferred, {
         fields: (item) => {
+          const cached = productFields.get(item);
+          if (cached) return cached;
           const contexts = item.contexts.filter(
             (context) => !product || context.product === product,
           );
-          return contexts.length
+          const fields = contexts.length
             ? normalizedFields({
                 ...item,
                 path: contexts.map((context) => context.path).join(' '),
                 role: contexts.find((context) => context.role !== 'text')?.role ?? item.fields.role,
               })
             : item.fields;
+          productFields.set(item, fields);
+          return fields;
         },
         scope: product,
+        feature: product ? props.feature : null,
         used: props.used,
         context: [props.layerName, ...props.contextNames],
         layerText: isPlaceholder(props.canvasText) ? '' : props.canvasText,
@@ -131,14 +149,16 @@ export function SearchPanel(props: {
         nearby: new Set(near.items.map((item) => item.key)),
         currentKey: props.currentKey,
         identity: (item) =>
-          item.loaded && item.en && item.id ? JSON.stringify([item.en, item.id]) : null,
+          item.loaded && item.en && item.id ? `value\u0000${item.en}\u0000${item.id}` : null,
       }),
     [
       props.list,
       deferred,
       product,
+      productFields,
+      blocked,
+      props.feature,
       props.used,
-      props.scope,
       props.contextNames,
       props.layerName,
       props.canvasText,
@@ -257,7 +277,7 @@ export function SearchPanel(props: {
 
       <div className="search__bar">
         <div className="search__scope">
-          <span className="eyebrow">Product stream</span>
+          <span className="eyebrow">Product</span>
           <Menu
             triggerClassName={`scope ${props.scope === null ? 'scope--unset' : ''}`}
             triggerLabel="Change search product stream"
@@ -270,24 +290,20 @@ export function SearchPanel(props: {
                   id: item.id,
                   label: productLabel(item.id),
                   checked: item.id === props.scope,
-                  onSelect: () => props.onScope(item.id),
+                  onSelect: () => {
+                    setWide(false);
+                    props.onScope(item.id);
+                  },
                 })),
-              {
-                id: 'all',
-                label: 'All products',
-                checked: props.scope === 'all',
-                separatorBefore: true,
-                onSelect: () => props.onScope('all'),
-              },
             ]}
             trigger={() => (
               <>
                 <span className="scope__label">
-                  {props.scope === null
-                    ? 'Choose product'
-                    : product
-                      ? `${productLabel(product)} + shared`
-                      : 'All products'}
+                  {wide
+                    ? 'All products'
+                    : props.scope === null
+                      ? 'Choose product'
+                      : `${productLabel(props.scope)} + shared`}
                 </span>
                 <Icon name="chevron" />
               </>
@@ -326,12 +342,12 @@ export function SearchPanel(props: {
       </div>
 
       <div className="search__results" id="search-results" role="listbox" ref={listRef}>
-        {props.scope === null && (
+        {blocked && (
           <div className="prompt">
-            <p className="prompt__title">Which product is this frame?</p>
+            <p className="prompt__title">Which product is this page?</p>
             <p className="prompt__text">
-              Search and suggestions show only this product and shared copy. Change the product
-              stream above any time.
+              Search shows only this product and shared copy. Every frame on this page uses your
+              choice, and you can change it any time.
             </p>
             <div className="chips">
               {props.products
@@ -346,27 +362,55 @@ export function SearchPanel(props: {
                     {productLabel(item.id)}
                   </button>
                 ))}
-              <button
-                type="button"
-                className="chip chip--ghost"
-                onClick={() => props.onScope('all')}
-              >
-                All products
+              <button type="button" className="chip chip--ghost" onClick={() => setWide(true)}>
+                Search all products
               </button>
             </div>
           </div>
         )}
 
-        {!tokens.length && !sections.length && props.scope !== null && (
-          <p className="empty">Type to search copy, keys, IDs or screen context.</p>
+        {!tokens.length && !sections.length && !blocked && (
+          <div className="empty">
+            <p>Type to search copy, keys, IDs or screen context.</p>
+            {props.onCreateNew && (
+              <div className="empty__actions">
+                <button
+                  type="button"
+                  className="button button--secondary"
+                  onClick={props.onCreateNew}
+                >
+                  Write new copy
+                </button>
+              </div>
+            )}
+          </div>
         )}
-        {props.scope !== null && tokens.length > 0 && ranked.total === 0 && (
+        {!blocked && tokens.length > 0 && ranked.total === 0 && (
           <div className="empty">
             <p>
               No string matches “{deferred}”
               {product ? ` in ${productLabel(product)} or shared copy` : ''}.
             </p>
-            <p className="empty__hint">If this copy is new, go back and flag the layer (F).</p>
+            <div className="empty__actions">
+              {product && (
+                <button
+                  type="button"
+                  className="button button--secondary"
+                  onClick={() => setWide(true)}
+                >
+                  Search all products
+                </button>
+              )}
+              {props.onCreateNew && (
+                <button
+                  type="button"
+                  className="button button--primary"
+                  onClick={props.onCreateNew}
+                >
+                  Write new copy
+                </button>
+              )}
+            </div>
           </div>
         )}
 
@@ -404,8 +448,16 @@ export function SearchPanel(props: {
                       {isCurrent && <span className="tag tag--picked">Current</span>}
                       {isNext && <span className="tag tag--suggested">Next</span>}
                       {!isCurrent && props.used.has(item.key) && (
-                        <span className="tag">On page</span>
+                        <span className="tag">On this page</span>
                       )}
+                      {!isNext &&
+                        near.items.some((n) => n.key === item.key) &&
+                        tokens.length > 0 && <span className="tag">Same flow</span>}
+                      {product &&
+                        props.feature &&
+                        ranked.details.get(item.key)?.reasons.includes('Same feature') && (
+                          <span className="tag tag--feature">Same feature</span>
+                        )}
                     </span>
                   </div>
                   <span className="result__en">
@@ -428,11 +480,20 @@ export function SearchPanel(props: {
                     </span>
                   </span>
                   <span className="result__key mono" title={item.name}>
-                    <Highlight text={item.name} tokens={tokens} />
+                    <Highlight text={keyOf(item.name)} tokens={tokens} />
                   </span>
                   {tokens.length > 0 && (
                     <span className="result__hints">
-                      {ranked.details.get(item.key)?.reasons.slice(0, 3).join(' · ')}
+                      {ranked.details
+                        .get(item.key)
+                        ?.reasons.filter(
+                          (reason) =>
+                            !['Same feature', 'Same flow', 'On this page', 'Current'].includes(
+                              reason,
+                            ),
+                        )
+                        .slice(0, 2)
+                        .join(' · ')}
                       {(ranked.details.get(item.key)?.duplicates ?? 0) > 1 &&
                         ` · ${ranked.details.get(item.key)!.duplicates} identical copies`}
                     </span>
@@ -456,14 +517,34 @@ export function SearchPanel(props: {
             Show {related.length} more keyword matches
           </button>
         )}
+        {tokens.length > 0 && ranked.total > 0 && (
+          <div className="search__widen">
+            {product ? (
+              <button type="button" className="link-button" onClick={() => setWide(true)}>
+                Not here? Search all products
+              </button>
+            ) : (
+              props.scope && (
+                <button type="button" className="link-button" onClick={() => setWide(false)}>
+                  Back to {productLabel(props.scope)} + shared
+                </button>
+              )
+            )}
+            {props.onCreateNew && (
+              <button type="button" className="link-button" onClick={props.onCreateNew}>
+                Write new copy instead
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <footer className="search__foot">
         {activeItem ? (
           <span className="search__selection">
-            <span className="eyebrow">Selected string</span>
+            <span className="eyebrow">Selected key</span>
             <span className="search__key mono" title={activeItem.copyId || activeItem.name}>
-              {activeItem.copyId || activeItem.name}
+              {keyOf(activeItem.name)}
             </span>
           </span>
         ) : (

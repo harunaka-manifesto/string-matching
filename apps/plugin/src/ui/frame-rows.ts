@@ -1,6 +1,5 @@
-import type { LayerDecision, LayerInfo, SelectionInfo } from '@string-binder/contracts';
+import type { DraftRow, LayerDecision, LayerInfo } from '@string-binder/contracts';
 import { prefillSequence, type PrefillResult, type SequenceSource } from '@string-binder/domain';
-import { useCallback, useMemo, useState } from 'react';
 
 export type RowStatus = 'include' | 'skip' | 'flag';
 
@@ -11,6 +10,8 @@ export type RowState = {
   /** Writer asked to remove the existing binding. */
   unbind: boolean;
   shift: number;
+  /** New, edited or variant copy the writer is drafting for this layer; saved on apply. */
+  compose?: DraftRow | null;
 };
 
 export type RowSource = 'existing' | 'picked' | 'sequence' | 'none';
@@ -31,7 +32,7 @@ export function initialRowState(layer: LayerInfo): RowState {
         : layer.stored === 'include' || layer.boundKey || !layer.autoSkipReason
           ? 'include'
           : 'skip';
-  return { status, pick: null, unbind: false, shift: 0 };
+  return { status, pick: null, unbind: false, shift: 0, compose: null };
 }
 
 function anchorOf(layer: LayerInfo, state: RowState): string | null {
@@ -48,7 +49,8 @@ export function resolveRows(
       const state = states.get(layer.id) ?? initialRowState(layer);
       return {
         id: layer.id,
-        excluded: state.status !== 'include',
+        // Drafted copy is new to the legacy order, so it takes no slot in the sequence.
+        excluded: state.status !== 'include' || !!state.compose,
         anchorKey: anchorOf(layer, state),
         shift: state.shift,
       };
@@ -69,10 +71,20 @@ export function resolveRows(
   });
 }
 
-export function decisionsFor(rows: readonly ResolvedRow[]): LayerDecision[] {
+/**
+ * Decisions for rows that use existing copy. Drafted rows are saved and bound
+ * separately. `bindKey` maps a picked key to the key Apply should bind; a row
+ * whose pick is the same identity as its current binding keeps that binding.
+ */
+export function decisionsFor(
+  rows: readonly ResolvedRow[],
+  bindKey: (key: string, boundKey: string | null) => string = (key) => key,
+): LayerDecision[] {
   const decisions: LayerDecision[] = [];
-  for (const { layer, state, key } of rows) {
+  for (const { layer, state, key: picked } of rows) {
+    if (state.compose && state.status === 'include') continue;
     const layerId = layer.id;
+    const key = picked ? bindKey(picked, layer.boundKey) : null;
     // Skips are always sent: they also get copied to matching layers on the page.
     if (state.status === 'skip') decisions.push({ layerId, action: 'skip' });
     else if (state.status === 'flag') decisions.push({ layerId, action: 'flag' });
@@ -87,63 +99,4 @@ export function decisionsFor(rows: readonly ResolvedRow[]): LayerDecision[] {
     }
   }
   return decisions;
-}
-
-export function useFrameRows(selection: SelectionInfo | null, sequences: SequenceSource) {
-  const [states, setStates] = useState(() => new Map<string, RowState>());
-
-  // A different frame (or a re-read after apply) starts from what is stored on the layers.
-  const layersKey = selection
-    ? `${selection.frameId}:${selection.layers.map((layer) => `${layer.id}=${layer.boundKey ?? ''}/${layer.stored ?? ''}`).join(',')}`
-    : '';
-  const [seenKey, setSeenKey] = useState(layersKey);
-  if (seenKey !== layersKey) {
-    setSeenKey(layersKey);
-    setStates(new Map());
-  }
-
-  const rows = useMemo(
-    () => (selection ? resolveRows(selection.layers, states, sequences) : []),
-    [selection, states, sequences],
-  );
-
-  const update = useCallback(
-    (layerId: string, change: (state: RowState) => RowState) => {
-      setStates((current) => {
-        const layer = selection?.layers.find((item) => item.id === layerId);
-        if (!layer) return current;
-        const next = new Map(current);
-        next.set(layerId, change(current.get(layerId) ?? initialRowState(layer)));
-        return next;
-      });
-    },
-    [selection],
-  );
-
-  /** Picking restarts the sequence here, so nudges further down no longer apply. */
-  const pick = useCallback(
-    (layerId: string, key: string) => {
-      setStates((current) => {
-        if (!selection) return current;
-        const next = new Map(current);
-        const index = selection.layers.findIndex((layer) => layer.id === layerId);
-        for (let i = index; i >= 0 && i < selection.layers.length; i += 1) {
-          const layer = selection.layers[i]!;
-          const state = next.get(layer.id) ?? initialRowState(layer);
-          if (i === index) {
-            next.set(layer.id, { ...state, status: 'include', pick: key, unbind: false, shift: 0 });
-            continue;
-          }
-          if (anchorOf(layer, state)) break;
-          if (state.shift) next.set(layer.id, { ...state, shift: 0 });
-        }
-        return next;
-      });
-    },
-    [selection],
-  );
-
-  const reset = useCallback(() => setStates(new Map()), []);
-
-  return { rows, update, pick, reset, dirty: states.size > 0 };
 }

@@ -1,10 +1,11 @@
 import type {
+  CopyRecord,
   LayerInfo,
   LibraryListingItem,
   PluginToUiMessage,
   SelectionInfo,
 } from '@string-binder/contracts';
-import { mockRegistry } from './mock-registry';
+import { MOCK_SCOPES, mockRegistry } from './mock-registry';
 import { nonCopyReason } from '@string-binder/domain';
 import { ORDER_INDEX_GZIP_BASE64 } from '../generated/order-index';
 import type { UiBridge } from './bridge';
@@ -54,15 +55,44 @@ export function mockBridge(): UiBridge {
     stored: null,
     autoSkipReason: nonCopyReason({ characters: characters!, layerName: name!, ancestorNames: [] }),
   }));
+  const pageId = '0:1';
+  const pageName = params.get('page') ?? 'Investment flows';
   const selection = (): SelectionInfo => ({
     frameId: '1:0',
     frameName,
-    contextNames: [frameName, 'Flows'],
-    layers,
+    contextNames: [frameName, pageName],
+    layers: layers.map((layer) => ({ ...layer })),
+    page: {
+      id: pageId,
+      name: pageName,
+      scope: JSON.parse(localStorage.getItem(MOCK_SCOPES) ?? '{}')[pageId] ?? null,
+    },
   });
 
-  const registry = mockRegistry(selection, () =>
-    emit({ type: 'selection', selection: selection() }),
+  // Saved copy the mock "materialized" as local variables, like Save and apply does in Figma.
+  const locals = new Map<string, CopyRecord>();
+  const registry = mockRegistry(
+    () => ({ ...selection(), layers }),
+    () => emit({ type: 'selection', selection: selection() }),
+    (records) => {
+      for (const r of records) locals.set(r.copyId, r);
+      emit({
+        type: 'index:local',
+        listing: [...locals.values()].map((r, order) => ({
+          key: `local:${r.copyId}`,
+          name: r.platformKey,
+          collection: r.product,
+          order,
+          local: true,
+        })),
+        values: [...locals.values()].map((r) => ({
+          key: `local:${r.copyId}`,
+          en: r.en,
+          id: r.id,
+          description: r.copyId,
+        })),
+      });
+    },
   );
   return {
     subscribe(listener) {
@@ -74,7 +104,12 @@ export function mockBridge(): UiBridge {
         case 'workflow':
           try {
             const data = await registry(message.action, message.data);
-            emit({ type: 'workflow:result', operationId: message.operationId, data });
+            // Mirrors the plugin: refresh results carry no catalog; it arrives as `registry:catalog`.
+            emit({
+              type: 'workflow:result',
+              operationId: message.operationId,
+              data: message.action === 'refresh' ? { result: data.result } : data,
+            });
             if (message.action === 'catalog') emit({ type: 'registry:catalog', catalog: data });
             if (message.action === 'refresh')
               emit({ type: 'registry:catalog', catalog: data.catalog });
@@ -156,6 +191,10 @@ export function mockBridge(): UiBridge {
               ],
             },
           });
+          return;
+        case 'frame:reread':
+        case 'selection:refresh':
+          emit({ type: 'selection', selection: selection() });
           return;
         case 'flags:select':
           emit({ type: 'flags:selected', count: 0 });

@@ -8,6 +8,7 @@ import {
   canonical,
   copyKeyStem,
   isCopyId,
+  normalizeRole,
   recordFingerprint,
   sha256,
 } from '@string-binder/domain';
@@ -24,6 +25,27 @@ export type BackendDependencies = {
 };
 /** Definite rejections. Anything else is reported as retryable so clients keep pending work. */
 class ValidationError extends Error {}
+/** A database error with its SQLSTATE, so definite failures are not reported as outages. */
+export class DatabaseError extends Error {
+  constructor(
+    public code: string,
+    message: string,
+  ) {
+    super(message);
+  }
+}
+/** SQLSTATEs that will fail the same way on retry. */
+const DEFINITE: Record<string, [number, string]> = {
+  '23505': [409, 'CONFLICT'],
+  '23503': [409, 'CONFLICT'],
+  '23514': [422, 'VALIDATION'],
+  '22P02': [422, 'VALIDATION'],
+  P0001: [422, 'VALIDATION'],
+};
+/** Per device, so one team token shared by every writer doesn't throttle the whole team. */
+const DEVICE_LIMIT = 180;
+/** Ceiling for the token as a whole, against a client inventing device IDs. */
+const TOKEN_LIMIT = 6000;
 const statuses: Record<string, number> = {
   VALIDATION: 422,
   REQUEST_REUSED: 409,
@@ -35,7 +57,7 @@ const statuses: Record<string, number> = {
 const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'content-type, x-copy-token',
+  'Access-Control-Allow-Headers': 'content-type, x-copy-token, x-copy-device',
 };
 export function registryHandler(deps: BackendDependencies) {
   return async (request: Request): Promise<Response> => {
@@ -69,7 +91,13 @@ export function registryHandler(deps: BackendDependencies) {
         401,
       );
     try {
-      if (!(await deps.rpc('copy_registry_rate', { credential: hash, allowed: 180 })))
+      const device = (request.headers.get('x-copy-device') ?? '').slice(0, 128);
+      const limited =
+        !(await deps.rpc('copy_registry_rate', {
+          credential: sha256(`${hash}:${device}`),
+          allowed: DEVICE_LIMIT,
+        })) || !(await deps.rpc('copy_registry_rate', { credential: hash, allowed: TOKEN_LIMIT }));
+      if (limited)
         return respond({ error: 'RATE_LIMIT', message: 'Too many requests; retry shortly' }, 429);
       const url = new URL(request.url);
       const action = url.pathname.split('/').at(-1);
@@ -131,8 +159,17 @@ export function registryHandler(deps: BackendDependencies) {
             if (op.action === 'edit') return op;
             const p = products.find((p) => p.id === op.product);
             if (!p) throw new ValidationError('Choose a configured product');
+            // Legacy roles (`push-title`, `cta-primary`) become a supported role + qualifier, so the
+            // key ending the database derives from the context matches the stem built here.
+            const { role, qualifier } = normalizeRole(op.context.role);
+            const context = { ...op.context, role, qualifier: op.context.qualifier ?? qualifier };
+            if (!context.qualifier) delete context.qualifier;
             try {
-              return { ...op, stem: copyKeyStem({ product: p.keyToken, ...op.context }) };
+              return {
+                ...op,
+                context,
+                stem: copyKeyStem({ product: p.keyToken, ...context }),
+              };
             } catch (error) {
               throw new ValidationError(error instanceof Error ? error.message : 'Invalid key');
             }
@@ -181,6 +218,10 @@ export function registryHandler(deps: BackendDependencies) {
           { error: 'VALIDATION', message: 'Request does not match the contract' },
           422,
         );
+      if (error instanceof DatabaseError && DEFINITE[error.code]) {
+        const [status, code] = DEFINITE[error.code]!;
+        return respond({ error: code, message: error.message }, status);
+      }
       return respond(
         {
           error: 'UNAVAILABLE',

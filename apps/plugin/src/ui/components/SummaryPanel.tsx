@@ -1,4 +1,4 @@
-import type { ApplySummary, LayerRef } from '@string-binder/contracts';
+import type { ApplySummary, CopyRecord, LayerRef } from '@string-binder/contracts';
 import { useEffect, useRef, useState } from 'react';
 import { Icon } from './Icon';
 
@@ -60,6 +60,8 @@ function Stat({ value, label }: { value: number; label: string }) {
 export function SummaryPanel(props: {
   summary: ApplySummary;
   frameName: string;
+  /** Copy saved to the registry in this run. */
+  saved?: readonly CopyRecord[];
   onSelect: (ids: string[]) => void;
   onClose: () => void;
 }) {
@@ -100,7 +102,13 @@ export function SummaryPanel(props: {
             </svg>
           </span>
           <div>
-            <h2 id="sheet-title">{clean ? 'Strings applied' : 'Applied, with exceptions'}</h2>
+            <h2 id="sheet-title">
+              {!clean
+                ? 'Applied, with exceptions'
+                : props.saved?.length
+                  ? 'Copy saved and applied'
+                  : 'Strings applied'}
+            </h2>
             <p className="sheet__sub" title={props.frameName}>
               {props.frameName}
             </p>
@@ -113,6 +121,20 @@ export function SummaryPanel(props: {
           <Stat value={summary.skipsCopied} label="skips copied" />
           <Stat value={summary.framesTouched} label="other frames" />
         </div>
+
+        {!!props.saved?.length && (
+          <div className="saved">
+            <span className="eyebrow">Saved to the registry</span>
+            <ul>
+              {props.saved.map((record) => (
+                <li key={record.copyId}>
+                  <span className="mono">{record.platformKey}</span>
+                  <span className="saved__value">{record.en}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         <div className="sheet__lists">
           <LayerList

@@ -257,25 +257,26 @@ If selected frames contain conflicting revisions of one identity, it reports the
 
 ### UI structure
 
-Keep the existing Apply workflow and add a separate authoring draft model.
+> Revised 2026-10-08: Apply and Create are one writer flow. This section supersedes the earlier two-journey layout; journeys A–G above describe what writers achieve, not separate screens.
 
-Use a 640 × 760 authoring/sync window with a scrolling body and persistent bottom action bar; retain the existing compact Apply layout.
+One row list per selected frame, in reading order, in a single 400 × 720 window the writer can resize (size remembered per device). Library sync is a separate maintainer screen reached from the overflow menu.
 
-Authoring proceeds through **Select → Edit → Review → Results**.
+Each row binds existing copy or drafts copy:
 
-Row actions are:
+- **Pick existing:** search (Enter) within the page's product plus Shared; legacy order suggests the next rows.
+- **Write new copy (N):** inline EN/ID editor with role and one editable screen path; qualifier and developer note under *More details*; the provisional key is always visible.
+- **Edit wording everywhere** and **Make a variant for this screen** for rows bound to saved copy.
+- **Skip (S)**, **Flag (F)**, **Unbind (U)**, **[ ]** to nudge suggestions.
 
-- Keep as is.
-- Create new.
-- Reuse existing.
-- Edit existing.
-- Create variant.
+**Product scope is per page.** Guessed once from frame/page names and bound strings (a product needs a quarter of the bound strings to count), stored on the page for every writer, and changed from the header chip. Search shows only that product and Shared; *Search all products* is an explicit, per-search choice. Within a match tier, strings from the guessed feature rank first.
 
-Display both languages together. Preserve exact whitespace and line breaks; use trimming only to detect blank values, not to rewrite stored copy.
+**One Apply.** Pure binds with no page duplicates to change apply immediately (⌘Z undoes). Anything that saves copy or changes matching layers elsewhere on the page opens one *Review and apply* sheet listing layer names, EN/ID, keys and page duplicates (each can be kept as is), then saves and binds in one step.
 
-Product selection uses one configurable list. Context fields are editable; identity and frozen keys are system-managed. Proposed keys are labeled provisional because concurrent submissions can allocate a suffix.
+Display both languages together. Preserve exact whitespace and line breaks; use trimming only to detect blank values, not to rewrite stored copy. Lorem ipsum canvas text is never copied into a draft.
 
-Persist drafts and incomplete operations in private local storage. Keep canvas fingerprints, baseline records, translations, selected actions, context, proposed Copy IDs, and request IDs.
+Persist drafts, picks and incomplete operations per frame in private local storage. An interrupted save offers Retry (same request ID) or Discard/Leave unapplied.
+
+Background refresh only updates the values of this file's local copy variables; it never renames, rebinds or changes language modes. Hand-edited variables are left alone and reported.
 
 ### Status model
 

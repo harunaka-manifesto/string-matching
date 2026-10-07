@@ -125,8 +125,13 @@ export async function stagedBootstrap(
     throw new Error(
       `Registry already holds ${before.copies} records that do not match the ${expected.copies} prepared. It was imported from different data; do not import over it.`,
     );
-  if (before.copies) {
-    log(`removing an unfinished import (${before.copies} records)`);
+  // Any imported data short of a finished import (products or history applied before the
+  // first record, say) is an unfinished import: wipe it, or re-applying products collides.
+  const partial = ['copies', 'products', 'history', 'reservations'].some((k) => before[k]);
+  if (partial) {
+    log(
+      `removing an unfinished import (${before.copies ?? 0} records, ${before.products ?? 0} products)`,
+    );
     await retry(() => rpc('copy_registry_bootstrap_abort'));
   } else await retry(() => rpc('copy_registry_bootstrap_reset'));
 

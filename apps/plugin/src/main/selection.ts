@@ -6,6 +6,7 @@ import {
   type VisibilityNode,
 } from '@string-binder/domain';
 import { boundVariableId, readLayerState, variableById } from './layer-state';
+import { pageOf, readPageScope } from './page-scope';
 
 const SUPPORTED_ROOTS = new Set<NodeType>(['FRAME', 'COMPONENT', 'INSTANCE']);
 
@@ -94,5 +95,12 @@ async function layerInfo(node: TextNode, root: SceneNode): Promise<LayerInfo> {
 
 export async function selectionInfo(root: SceneNode): Promise<SelectionInfo> {
   const layers = await Promise.all(visibleTextLayers(root).map((node) => layerInfo(node, root)));
-  return { frameId: root.id, frameName: root.name, contextNames: contextNames(root), layers };
+  const page = pageOf(root);
+  return {
+    frameId: root.id,
+    frameName: root.name,
+    contextNames: contextNames(root),
+    layers,
+    ...(page ? { page: { id: page.id, name: page.name, scope: await readPageScope(page) } } : {}),
+  };
 }

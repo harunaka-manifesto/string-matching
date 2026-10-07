@@ -4,8 +4,38 @@
     {
       "name": "plugin-ui",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "@string-binder/plugin", "exec", "vite", "--config", "vite.config.ts", "--host", "127.0.0.1", "--port", "5173", "--strictPort"],
+      "runtimeArgs": [
+        "--filter",
+        "@string-binder/plugin",
+        "exec",
+        "vite",
+        "--config",
+        "vite.config.ts",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5173",
+        "--strictPort"
+      ],
       "port": 5173
+    },
+    {
+      "name": "plugin-ui-5181",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@string-binder/plugin",
+        "exec",
+        "vite",
+        "--config",
+        "vite.config.ts",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5181",
+        "--strictPort"
+      ],
+      "port": 5181
     }
   ]
 }

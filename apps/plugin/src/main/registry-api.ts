@@ -17,6 +17,10 @@ export class WorkflowError extends Error {
 export type Settings = { publisherToken?: string; libraryId?: string; fileKey?: string };
 export const settings = async (): Promise<Settings> =>
   ((await figma.clientStorage.getAsync('registry:settings')) ?? {}) as Settings;
+/** Per-install ID the registry rate-limits by; not a credential or a verified identity. */
+async function deviceId(): Promise<string> {
+  return String((await figma.clientStorage.getAsync('registry:device').catch(() => '')) ?? '');
+}
 export async function api(action: string, data?: unknown, publisher = false): Promise<unknown> {
   if (!configuredUrl)
     throw new WorkflowError(
@@ -33,7 +37,11 @@ export async function api(action: string, data?: unknown, publisher = false): Pr
   try {
     response = await fetch(`${configuredUrl}/${action}`, {
       method: data === undefined ? 'GET' : 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-copy-token': token },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-copy-token': token,
+        'x-copy-device': await deviceId(),
+      },
       ...(data === undefined ? {} : { body: JSON.stringify(data) }),
     });
   } catch {
@@ -62,7 +70,17 @@ export async function api(action: string, data?: unknown, publisher = false): Pr
 }
 const catalogKey = `registry:catalog:${configuredUrl}`;
 let cached: Catalog | null = null;
-export async function catalog(force = false): Promise<Catalog> {
+let inFlight: Promise<Catalog> | null = null;
+/** Overlapping callers share one fetch, so delta pages are never applied twice at once. */
+export function catalog(force = false): Promise<Catalog> {
+  if (inFlight) return inFlight;
+  if (!force && cached) return Promise.resolve(cached);
+  inFlight = loadCatalog(force).finally(() => {
+    inFlight = null;
+  });
+  return inFlight;
+}
+async function loadCatalog(force: boolean): Promise<Catalog> {
   if (!cached) cached = (await readPrivate<Catalog>(catalogKey).catch(() => undefined)) ?? null;
   if (force || !cached) {
     let changed = false;

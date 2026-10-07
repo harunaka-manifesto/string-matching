@@ -8,6 +8,7 @@ import {
   type WorkflowAction,
   type AuthoringDraft,
   type BindingResult,
+  LayerDecisionSchema,
 } from '@string-binder/contracts';
 import { recordFingerprint, canonical } from '@string-binder/domain';
 import { api, catalog, settings, type Settings } from './registry-api';
@@ -23,14 +24,16 @@ import {
   localFingerprint as localHash,
   materialize,
   preview,
-  refreshUsed,
+  refreshValues,
   scanLocal,
   sameValues,
   usageCounts,
 } from './delivery';
 import { boundVariableId } from './layer-state';
+import { textsByVariable } from './perf';
 import { readPrivate, writePrivate } from './private-storage';
-import { previewApply } from './apply';
+import { applyDecisions, previewApply } from './apply';
+import { writePageScope } from './page-scope';
 import { selectionInfo, isSupportedRoot } from './selection';
 
 // Private per-device drafts: document marker is routing metadata, not proof of identity.
@@ -45,12 +48,15 @@ async function draftKey(): Promise<string> {
 async function drafts(): Promise<Record<string, AuthoringDraft>> {
   return (await readPrivate<Record<string, AuthoringDraft>>(await draftKey())) ?? {};
 }
-async function checkDestination(candidate?: Settings): Promise<void> {
+/** `replace`: the maintainer is saving a corrected setup, so the old stamp may change. */
+async function checkDestination(candidate?: Settings, replace = false): Promise<void> {
   const s = candidate ?? (await settings());
   if (!s.libraryId || !s.fileKey) throw new Error('Register the library URL first');
   const registered = figma.root.getPluginData('registry:library');
-  if (registered && registered !== s.fileKey)
-    throw new Error('This document is registered as another library');
+  if (registered && registered !== s.fileKey && !replace)
+    throw new Error(
+      'This document is set up as another library. Use Change setup with this file’s URL.',
+    );
   const vars = await figma.variables.getLocalVariablesAsync('STRING');
   if (
     s.fileKey === 'azS9vExUzw1IRrrGm3NEfD' &&
@@ -60,14 +66,30 @@ async function checkDestination(candidate?: Settings): Promise<void> {
     throw new Error('Open the registered GoPay Strings file before configuring library sync');
   figma.root.setPluginData('registry:library', s.fileKey);
 }
+function groupBy<T>(items: readonly T[], keys: (item: T) => readonly string[]): Map<string, T[]> {
+  const groups = new Map<string, T[]>();
+  for (const item of items)
+    for (const key of keys(item)) {
+      const group = groups.get(key);
+      if (group) group.push(item);
+      else groups.set(key, [item]);
+    }
+  return groups;
+}
+/** Earlier mappings, minus identities this run re-applied, followed by this run's mappings. */
+function mergeMappings<M extends { copyId: string }>(
+  previous: readonly M[],
+  next: readonly M[],
+): M[] {
+  const replaced = new Set(next.map((m) => m.copyId));
+  return [...previous.filter((m) => !replaced.has(m.copyId)), ...next];
+}
 let refreshedSeq: number | null = null;
+let draftWrites: Promise<void> = Promise.resolve();
 let lastRefresh: BindingResult = { applied: [], failures: [], conflicts: [] };
 export async function workflow(action: WorkflowAction, raw: unknown): Promise<unknown> {
   const data = (raw ?? {}) as Record<string, any>;
   switch (action) {
-    case 'window':
-      figma.ui.resize(data.wide ? 640 : 440, data.wide ? 760 : 680);
-      return null;
     case 'device': {
       let device = await figma.clientStorage.getAsync('registry:device');
       if (!device) {
@@ -96,7 +118,7 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       };
       if (!next.publisherToken) throw new Error('Enter the publisher token');
       // Validate first: a rejected setup must not leave this device locked onto wrong values.
-      await checkDestination(next);
+      await checkDestination(next, true);
       await figma.clientStorage.setAsync('registry:settings', next);
       return { saved: true };
     }
@@ -104,10 +126,41 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       return (await drafts())[data.frameId] ?? null;
     case 'draft:save': {
       const draft = AuthoringDraftSchema.parse(data.draft);
-      const all = await drafts();
-      all[draft.frameId] = draft;
-      await writePrivate(await draftKey(), all);
+      // Read-modify-write of one map: chain saves so a quick second save cannot drop the first.
+      draftWrites = draftWrites.then(async () => {
+        const all = await drafts();
+        const empty =
+          !draft.rows.length && !Object.keys(draft.picks ?? {}).length && !draft.pending;
+        if (empty) delete all[draft.frameId];
+        else all[draft.frameId] = draft;
+        await writePrivate(await draftKey(), all);
+      });
+      await draftWrites;
       return null;
+    }
+    case 'scope:set':
+      return writePageScope(String(data.pageId), {
+        product: String(data.product ?? ''),
+        confirmed: !!data.confirmed,
+      });
+    case 'writer:commit': {
+      // Saved copy first (it may create the variables bindings use), then existing-copy bindings.
+      const records = (data.records ?? []).map((r: unknown) => CopyRecordSchema.parse(r));
+      const binding: BindingResult = records.length
+        ? await deliver(
+            records,
+            (data.targets ?? []).map((t: unknown) => TargetSchema.parse(t)),
+            (await catalog()).products,
+            data.globalIds ?? [],
+            data.restoreIds ?? [],
+          )
+        : { applied: [], failures: [], conflicts: [] };
+      refreshedSeq = null;
+      const decisions = LayerDecisionSchema.array().parse(data.decisions ?? []);
+      const summary = decisions.length
+        ? await applyDecisions(data.frameId, decisions, data.preview)
+        : null;
+      return { binding, summary };
     }
     case 'catalog':
       return catalog(!data.cached);
@@ -179,13 +232,13 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       );
     case 'refresh': {
       const cat = await catalog(true);
-      // Loading every page is expensive; polls only rescan the file when the registry moved.
+      // Only local mirror values change in the background; bindings change on explicit Apply.
       if (figma.root.getPluginData('registry:library') || (!data.force && refreshedSeq === cat.seq))
         return { catalog: cat, result: lastRefresh };
       const protectedIds = Object.values(await drafts()).flatMap((d) =>
         d.rows.filter((r) => r.action !== 'keep' && r.baseline).map((r) => r.baseline!.copyId),
       );
-      lastRefresh = await refreshUsed(cat.records, cat.products, cat.mappings, protectedIds);
+      lastRefresh = await refreshValues(cat.records, protectedIds);
       refreshedSeq = cat.seq;
       return { catalog: cat, result: lastRefresh };
     }
@@ -194,14 +247,15 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       const cat = await catalog(true);
       const locals = await scanLocal();
       const byId = new Map(cat.records.map((r) => [r.copyId, r]));
+      // Indexed once: matching each local by scanning every record was quadratic.
+      const byKey = groupBy(cat.records, (r) => [r.platformKey]);
+      const byAlias = groupBy(cat.records, (r) => r.aliases);
       for (const local of locals) {
         if (local.copyId) continue;
         const key = local.name.slice(local.name.lastIndexOf('/') + 1);
-        let matches = cat.records.filter((r) => r.platformKey === key);
+        let matches = byKey.get(key) ?? [];
         if (!matches.length)
-          matches = cat.records.filter(
-            (r) => r.aliases.includes(key) || r.aliases.includes(local.name),
-          );
+          matches = [...new Set([...(byAlias.get(key) ?? []), ...(byAlias.get(local.name) ?? [])])];
         const canonical = [...new Set(matches.map((r) => r.mergedInto ?? r.copyId))];
         if (canonical.length === 1 && byId.has(canonical[0]!)) local.copyId = canonical[0]!;
         else if (local.collection.startsWith('# Legacy'))
@@ -255,10 +309,22 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       );
       const current = await scanLocal();
       const texts = await allTexts();
+      // Every lookup below used to scan all locals, texts or entries once per record.
+      const localById = new Map(current.map((l) => [l.variableId, l]));
+      const localsByCopy = groupBy(current, (l) => (l.copyId ? [l.copyId] : []));
+      const entriesByCopy = groupBy<any>(run.entries ?? [], (e) => [e.copyId]);
+      const appliedByCopy = new Map<string, any>();
+      for (const m of [...(run.applied ?? [])].reverse()) appliedByCopy.set(m.copyId, m);
+      const byVariable = textsByVariable(texts);
+      const position = new Map(texts.map((n, i) => [n, i]));
+      /** Layers bound to a variable right now; bindings move as records are applied. */
+      const boundTo = (variableId: string) =>
+        (byVariable.get(variableId) ?? []).filter((n) => boundVariableId(n) === variableId);
       const mappings: import('@string-binder/contracts').LibraryMapping[] = [];
       const failures: { copyId: string; reason: string }[] = [];
       let chunk = 0,
-        lastRenewed = Date.now();
+        lastRenewed = Date.now(),
+        lastCheckpoint = Date.now();
       for (const rawRecord of run.records) {
         if (chunk++ % 100 === 0 || Date.now() - lastRenewed > 20000) {
           await api(
@@ -269,18 +335,15 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
           lastRenewed = Date.now();
         }
         const r = CopyRecordSchema.parse(rawRecord);
-        const entries = (run.entries ?? []).filter((e: any) => e.copyId === r.copyId);
+        const entries = entriesByCopy.get(r.copyId) ?? [];
+        const sameCopy = localsByCopy.get(r.copyId) ?? [];
         try {
           const locals = entries.map((entry: any) => {
-            const acknowledged = run.applied?.find((m: any) => m.copyId === r.copyId);
+            const acknowledged = appliedByCopy.get(r.copyId);
             const local =
-              (entry.variableId
-                ? current.find((l) => l.variableId === entry.variableId)
-                : current.find((l) => l.copyId === r.copyId)) ??
-              (acknowledged
-                ? current.find((l) => l.variableId === acknowledged.variableId)
-                : undefined) ??
-              (entry.reuse ? current.find((l) => l.copyId === r.copyId) : undefined);
+              (entry.variableId ? localById.get(entry.variableId) : sameCopy[0]) ??
+              (acknowledged ? localById.get(acknowledged.variableId) : undefined) ??
+              (entry.reuse ? sameCopy[0] : undefined);
             const complete =
               local?.baseline?.revision === r.revision &&
               sameValues(local, r) &&
@@ -300,27 +363,23 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
           );
           const reuse = entries.some((e: any) => e.reuse);
           const canonicalLocal =
-            (reuse
-              ? current.find((l) => l.copyId === r.copyId && !sourceIds.has(l.variableId))
-              : undefined) ??
+            (reuse ? sameCopy.find((l) => !sourceIds.has(l.variableId)) : undefined) ??
             locals.find(({ local }: any) => local?.copyId === r.copyId)?.local ??
             (reuse ? undefined : locals[0]?.local) ??
-            current.find((l) => l.copyId === r.copyId);
+            sameCopy[0];
           const mirrorIds = new Set(
-            current
+            sameCopy
               .filter(
                 (l) =>
-                  l.copyId === r.copyId &&
                   l.baseline &&
                   sameValues(l, l.baseline) &&
                   canonical(l.context) === canonical(l.baseline.context),
               )
               .map((l) => l.variableId),
           );
-          const affected = texts.filter(
-            (n) =>
-              sourceIds.has(boundVariableId(n) ?? '') || mirrorIds.has(boundVariableId(n) ?? ''),
-          );
+          const affected = [...new Set([...sourceIds, ...mirrorIds])]
+            .flatMap(boundTo)
+            .sort((a, b) => position.get(a)! - position.get(b)!);
           await Promise.all(affected.map(fonts));
           if (Date.now() - lastRenewed > 20000) {
             await api(
@@ -362,9 +421,12 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
             if (!mode || !['EN', 'ID'].includes(mode.name.toUpperCase()))
               throw new Error('Resolve occurrence locale before consolidating variables');
             await bindRecord(n, v, r, mode.name.toUpperCase() === 'EN' ? 'en' : 'id');
+            const moved = byVariable.get(v.id);
+            if (moved) moved.push(n);
+            else byVariable.set(v.id, [n]);
           }
           for (const id of new Set([...sourceIds, ...mirrorIds]))
-            if (id !== v.id && !texts.some((n) => boundVariableId(n) === id)) {
+            if (id !== v.id && !boundTo(id).length) {
               const peer = await figma.variables.getVariableByIdAsync(id);
               if (peer && !peer.remote) peer.remove();
             }
@@ -377,23 +439,18 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
             publishedRevision: null,
             fingerprint: recordFingerprint(r),
           });
-          if (chunk % 100 === 0) {
-            const prior = run.applied ?? [];
-            run.applied = [
-              ...prior.filter((m: any) => !mappings.some((n) => n.copyId === m.copyId)),
-              ...mappings,
-            ];
+          // Checkpoint for resume. The run holds every record, so compressing and storing it
+          // is costly; doing it by time instead of every 100 records keeps large syncs moving.
+          if (Date.now() - lastCheckpoint > 10000) {
+            run.applied = mergeMappings(run.applied ?? [], mappings);
             await writePrivate('registry:run', run);
+            lastCheckpoint = Date.now();
           }
         } catch (e) {
           failures.push({ copyId: r.copyId, reason: e instanceof Error ? e.message : String(e) });
         }
       }
-      const previous = run.applied ?? [];
-      const allMappings = [
-        ...previous.filter((m: any) => !mappings.some((n) => n.copyId === m.copyId)),
-        ...mappings,
-      ];
+      const allMappings = mergeMappings(run.applied ?? [], mappings);
       await writePrivate('registry:run', { ...run, applied: allMappings });
       await api(
         'library',
@@ -436,16 +493,18 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       );
       if (run.applied?.length !== run.records.length)
         throw new Error('Finish all outstanding entries before publication');
-      const scanned = await scanLocal();
+      const scanned = new Map((await scanLocal()).map((l) => [l.variableId, l]));
+      const appliedByCopy = new Map<string, any>();
+      for (const m of [...run.applied].reverse()) appliedByCopy.set(m.copyId, m);
       for (const r of run.records) {
-        const m = run.applied.find((m: any) => m.copyId === r.copyId);
+        const m = appliedByCopy.get(r.copyId);
         const v = await figma.variables.getVariableByIdAsync(m.variableId);
         if (
           !v ||
           v.key !== m.variableKey ||
           copyIdOf(v) !== r.copyId ||
           v.name.slice(v.name.lastIndexOf('/') + 1) !== r.platformKey ||
-          canonical(scanned.find((l) => l.variableId === v.id)?.context) !== canonical(r.context) ||
+          canonical(scanned.get(v.id)?.context) !== canonical(r.context) ||
           (await v.getPublishStatusAsync()) !== 'CURRENT' ||
           !sameValues(await actual(v), r) ||
           recordFingerprint(baselineOf(v) ?? r) !== recordFingerprint(r) ||

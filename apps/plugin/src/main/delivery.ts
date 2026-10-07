@@ -20,6 +20,7 @@ import { boundVariableId } from './layer-state';
 import { readVariableValues } from './library-index';
 import { pageCandidates, snapshotText } from './propagate';
 import { isDescendantOf } from './selection';
+import { loadFont, textsByVariable } from './perf';
 export function copyIdOf(variable: Variable): string | null {
   return (
     variable.getSharedPluginData('copy', 'id') ||
@@ -86,11 +87,11 @@ export async function verifiesSaved(v: Variable, r: CopyRecord): Promise<boolean
   }
 }
 export async function fonts(node: TextNode): Promise<void> {
-  if (node.hasMissingFont) throw new Error('Missing font');
+  if (node.hasMissingFont) throw new Error(`Missing font in “${node.name}”`);
   const names = node.characters.length
     ? node.getRangeAllFontNames(0, node.characters.length)
     : [node.fontName as FontName];
-  await Promise.all(names.map((f) => figma.loadFontAsync(f)));
+  await Promise.all(names.map(loadFont));
 }
 export async function actual(variable: Variable): Promise<{ en: string; id: string }> {
   const collection = await figma.variables.getVariableCollectionByIdAsync(
@@ -141,12 +142,21 @@ export async function variableFingerprint(v: Variable): Promise<string> {
 }
 export async function scanLocal(): Promise<LocalCopy[]> {
   const rows: LocalCopy[] = [];
+  // One collection lookup for the whole scan instead of two per variable.
+  const collections = new Map(
+    (await figma.variables.getLocalVariableCollectionsAsync()).map((c) => [c.id, c]),
+  );
   for (const v of await figma.variables.getLocalVariablesAsync('STRING')) {
-    const c = await figma.variables.getVariableCollectionByIdAsync(v.variableCollectionId);
+    const c = collections.get(v.variableCollectionId);
     const base = baselineOf(v);
     const context = editableContext(v, base);
     try {
-      const values = await actual(v);
+      if (
+        !c?.modes.some((m) => m.name.toUpperCase() === 'EN') ||
+        !c.modes.some((m) => m.name.toUpperCase() === 'ID')
+      )
+        throw new Error('EN and ID modes are required');
+      const values = await readVariableValues(v);
       rows.push({
         variableId: v.id,
         variableKey: v.key,
@@ -179,19 +189,38 @@ export async function allTexts(): Promise<TextNode[]> {
   await figma.loadAllPagesAsync();
   return figma.root.children.flatMap((p) => p.findAllWithCriteria({ types: ['TEXT'] }));
 }
+/**
+ * Text layers grouped by the identity of their bound variable, in one pass:
+ * each distinct variable is looked up once, not once per layer.
+ */
+export async function textsByCopyId(texts: readonly TextNode[]): Promise<{
+  byVariable: Map<string, TextNode[]>;
+  byCopy: Map<string, TextNode[]>;
+  copyOf: Map<string, string | null>;
+}> {
+  const byVariable = textsByVariable(texts);
+  const ids = [...byVariable.keys()];
+  const variables = await Promise.all(ids.map((id) => figma.variables.getVariableByIdAsync(id)));
+  const copyOf = new Map<string, string | null>();
+  const byCopy = new Map<string, TextNode[]>();
+  ids.forEach((id, i) => {
+    const v = variables[i];
+    const copy = v ? copyIdOf(v) : null;
+    copyOf.set(id, copy);
+    if (!copy) return;
+    const group = byCopy.get(copy);
+    if (group) group.push(...byVariable.get(id)!);
+    else byCopy.set(copy, [...byVariable.get(id)!]);
+  });
+  return { byVariable, byCopy, copyOf };
+}
 /** Text layers in this file bound to each identity. Other files are never counted. */
 export async function usageCounts(copyIds: ReadonlySet<string>): Promise<Record<string, number>> {
   const counts: Record<string, number> = {};
-  const identities = new Map<string, string | null>();
-  for (const n of await allTexts()) {
-    const id = boundVariableId(n);
-    if (!id) continue;
-    if (!identities.has(id)) {
-      const v = await figma.variables.getVariableByIdAsync(id);
-      identities.set(id, v ? copyIdOf(v) : null);
-    }
-    const copy = identities.get(id);
-    if (copy && copyIds.has(copy)) counts[copy] = (counts[copy] ?? 0) + 1;
+  const { byCopy } = await textsByCopyId(await allTexts());
+  for (const copy of copyIds) {
+    const count = byCopy.get(copy)?.length ?? 0;
+    if (count) counts[copy] = count;
   }
   return counts;
 }
@@ -217,7 +246,7 @@ export async function preview(
         boundKey: (await bound(n))?.key ?? null,
       }) !== row.canvasFingerprint
     )
-      throw new Error('Canvas changed. Refresh this row before review.');
+      throw new Error(`“${n.name}” changed on canvas. Check its new copy before applying.`);
     await fonts(n);
     sources.push(snapshotText(n, root as SceneNode));
     targets.push({
@@ -230,6 +259,7 @@ export async function preview(
         ? await variableFingerprint((await bound(n))!)
         : undefined,
       frameName: root.name,
+      layerName: n.name,
       duplicate: false,
     });
   }
@@ -264,6 +294,7 @@ export async function preview(
       }),
       variableFingerprint: v ? await variableFingerprint(v) : undefined,
       frameName: match.frameName,
+      layerName: node.name,
       duplicate: true,
     });
   }
@@ -273,7 +304,23 @@ async function bound(n: TextNode): Promise<Variable | null> {
   const id = boundVariableId(n);
   return id ? figma.variables.getVariableByIdAsync(id) : null;
 }
-async function productCollection(
+const creating = new Map<string, Promise<VariableCollection>>();
+
+/** Concurrent callers share one lookup, so a product never gets two new collections. */
+function productCollection(
+  product: string,
+  display: string,
+  library: boolean,
+): Promise<VariableCollection> {
+  const key = `${product}:${library}`;
+  const pending =
+    creating.get(key) ??
+    findOrCreateCollection(product, display, library).finally(() => creating.delete(key));
+  creating.set(key, pending);
+  return pending;
+}
+
+async function findOrCreateCollection(
   product: string,
   display: string,
   library: boolean,
@@ -411,14 +458,15 @@ export async function deliver(
     }
   }
   const all = await allTexts();
+  // Grouped once; earlier records rebind layers, so each group is re-checked against live bindings.
+  const { byCopy, copyOf } = await textsByCopyId(all);
   figma.commitUndo();
   for (const r of records) {
     try {
-      const usages: TextNode[] = [];
-      for (const n of all) {
-        const v = await bound(n);
-        if (v && copyIdOf(v) === r.copyId) usages.push(n);
-      }
+      const usages = (byCopy.get(r.copyId) ?? []).filter((n) => {
+        const id = boundVariableId(n);
+        return !!id && copyOf.get(id) === r.copyId;
+      });
       // Updating a variable changes every bound occurrence, so preflight fonts first.
       await Promise.all(usages.map(fonts));
       if (targets.some((t) => t.copyId === r.copyId && result.conflicts.includes(t.nodeId)))
@@ -477,6 +525,57 @@ export async function deliver(
   figma.commitUndo();
   return result;
 }
+/**
+ * Background refresh: brings local delivery variables up to their latest saved
+ * wording. It only sets variable values, so layers keep their names, bindings
+ * and language modes, and no pages load. Variables edited by hand, or whose
+ * identity a draft is changing, are reported as conflicts and left alone.
+ */
+export async function refreshValues(
+  records: CopyRecord[],
+  protectedIds: readonly string[],
+): Promise<BindingResult> {
+  const result: BindingResult = { applied: [], failures: [], conflicts: [] };
+  const byId = new Map(records.map((r) => [r.copyId, r]));
+  const updates: { v: Variable; r: CopyRecord }[] = [];
+  for (const v of await figma.variables.getLocalVariablesAsync('STRING')) {
+    if (v.remote || v.getSharedPluginData('copy', 'delivery') !== '1') continue;
+    const id = copyIdOf(v);
+    const r = id ? byId.get(id) : undefined;
+    const base = baselineOf(v);
+    if (!id || !r || !base || base.revision >= r.revision || protectedIds.includes(id)) continue;
+    try {
+      const values = await actual(v);
+      if (
+        !sameValues(values, base) ||
+        canonical(editableContext(v, base)) !== canonical(base.context)
+      ) {
+        result.conflicts.push(v.id);
+        continue;
+      }
+      updates.push({ v, r });
+    } catch (e) {
+      result.failures.push({ nodeId: v.id, reason: String(e) });
+    }
+  }
+  if (!updates.length) return result;
+  figma.commitUndo();
+  for (const { v, r } of updates)
+    try {
+      const c = await figma.variables.getVariableCollectionByIdAsync(v.variableCollectionId);
+      const en = c?.modes.find((m) => m.name.toUpperCase() === 'EN');
+      const id = c?.modes.find((m) => m.name.toUpperCase() === 'ID');
+      if (!en || !id) throw new Error('Collection must contain EN and ID modes');
+      v.setValueForMode(en.modeId, r.en);
+      v.setValueForMode(id.modeId, r.id);
+      stamp(v, r, true);
+      result.applied.push(v.id);
+    } catch (e) {
+      result.failures.push({ nodeId: v.id, reason: String(e) });
+    }
+  figma.commitUndo();
+  return result;
+}
 export async function refreshUsed(
   records: CopyRecord[],
   products: { id: string; displayName: string }[],
@@ -493,15 +592,25 @@ export async function refreshUsed(
       .map((l) => l.variableId),
   );
   const texts = await allTexts();
+  const byVariable = textsByVariable(texts);
+  const position = new Map(texts.map((n, i) => [n, i]));
+  const protectedSet = new Set(protectedIds);
   const used = new Map<string, Variable[]>();
-  for (const n of texts) {
-    const v = await bound(n);
+  // Variables in first-usage order, each looked up once.
+  const variableIds = [...byVariable.keys()];
+  const variables = await Promise.all(
+    variableIds.map((id) => figma.variables.getVariableByIdAsync(id)),
+  );
+  for (const v of variables) {
     const id = v ? copyIdOf(v) : null;
-    if (!v || !id || protectedIds.includes(id)) continue;
+    if (!v || !id || protectedSet.has(id)) continue;
     const group = used.get(id) ?? [];
-    if (!group.some((p) => p.id === v.id)) group.push(v);
+    group.push(v);
     used.set(id, group);
   }
+  /** Layers still bound to a variable; bindings move as groups are processed. */
+  const boundTo = (variableId: string) =>
+    (byVariable.get(variableId) ?? []).filter((n) => boundVariableId(n) === variableId);
   for (const [id, variables] of used) {
     const r = byId.get(id);
     if (!r) continue;
@@ -513,7 +622,7 @@ export async function refreshUsed(
         if (!base && v.remote) {
           const revision = descriptionRevision(v);
           if (revision) {
-            const n = texts.find((n) => boundVariableId(n) === v.id);
+            const n = boundTo(v.id)[0];
             try {
               const snapshot = JSON.parse(n?.getSharedPluginData('copy', 'snapshot') ?? '');
               if (snapshot.copyId === id && snapshot.revision === revision)
@@ -540,7 +649,9 @@ export async function refreshUsed(
         safe.push(v);
       }
       if (!safe.length) continue;
-      const usages = texts.filter((n) => safe.some((v) => boundVariableId(n) === v.id));
+      const usages = safe
+        .flatMap((v) => boundTo(v.id))
+        .sort((a, b) => position.get(a)! - position.get(b)!);
       await Promise.all(usages.map(fonts));
       const mapping = mappings.find(
         (m) =>
@@ -590,7 +701,7 @@ export async function refreshUsed(
           v.id !== destination.id &&
           !v.remote &&
           v.getSharedPluginData('copy', 'delivery') === '1' &&
-          !texts.some((n) => boundVariableId(n) === v.id)
+          !boundTo(v.id).length
         )
           v.remove();
     } catch (e) {

@@ -22,6 +22,7 @@
     "build:backend": "node scripts/build-backend.mjs",
     "registry:resolve-keys": "node scripts/registry-resolve-keys.mjs",
     "registry:bootstrap": "node scripts/registry-bootstrap.mjs",
+    "registry:library-reset": "node scripts/registry-library-reset.mjs",
     "registry:backup": "node scripts/registry-backup.mjs",
     "test:ui": "playwright test",
     "test:staging": "node scripts/registry-load-test.mjs --staging",

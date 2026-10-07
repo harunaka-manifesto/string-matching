@@ -1,4 +1,9 @@
-import type { LibraryListingItem, VariableValues } from '@string-binder/contracts';
+import type {
+  Catalog,
+  CopyRecord,
+  LibraryListingItem,
+  VariableValues,
+} from '@string-binder/contracts';
 import {
   describeRecord,
   buildSequenceSource,
@@ -14,6 +19,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ORDER_INDEX_GZIP_BASE64 } from '../generated/order-index';
 import type { UiBridge } from './bridge';
 import { base64ToBytes, gunzipText, gzipText } from './codec';
+import { mergeIndex, registryCopyId } from './index-merge';
 
 export type StringEntry = SearchableVariable & {
   loaded: boolean;
@@ -25,6 +31,16 @@ export type StringEntry = SearchableVariable & {
   copyId: string;
   aliases: readonly string[];
   contexts: readonly { product: string; path: string; role: string }[];
+  /** Feature id or legacy section, for feature boosting and guessing. */
+  feature: string;
+  /** Legacy section name (sheet block), when known. */
+  section: string;
+  /** Defined in this file, not imported from a library. */
+  local: boolean;
+  /** Saved registry record behind this entry, when the registry knows it. */
+  record?: CopyRecord;
+  /** Key Apply binds; differs from `key` when the variable lags the saved wording. */
+  bindKey?: string;
 };
 
 /** Legacy section and screen per variable name, from the generated order index. */
@@ -49,10 +65,17 @@ const legacyPaths = new Map<string, LegacyPath>();
 
 const words = (value: string) => value.replace(/[-_]+/gu, ' ').trim();
 
+const keyPrefixes = new Map<string, RegExp>();
+
 /** Fallback for strings the legacy sheets never had: the key without `gopay_<product>_`. */
 function keyPath(name: string, product: string): string {
   const leaf = name.slice(name.lastIndexOf('/') + 1);
-  return words(leaf.replace(new RegExp(`^gopay_(${product.replace(/-/gu, '')}_)?`, 'u'), ''));
+  let prefix = keyPrefixes.get(product);
+  if (!prefix) {
+    prefix = new RegExp(`^gopay_(${product.replace(/-/gu, '')}_)?`, 'u');
+    keyPrefixes.set(product, prefix);
+  }
+  return words(leaf.replace(prefix, ''));
 }
 
 export function readablePath(name: string): string {
@@ -83,10 +106,16 @@ type CacheFile = { v: 1; rows: CacheRow[] };
 
 /** Save progress every N imported values so a closed plugin resumes where it stopped. */
 const SAVE_EVERY = 2000;
+/** Streaming values re-merge the whole index; coalesce them to at most one merge per interval. */
+const MERGE_INTERVAL_MS = 250;
 
 const baseProduct = (item: LibraryListingItem) => productOf(item.name, item.collection);
 
-function entry(item: LibraryListingItem, values?: Omit<VariableValues, 'key'>): StringEntry {
+function entry(
+  item: LibraryListingItem,
+  values?: Omit<VariableValues, 'key'>,
+  withFields = true,
+): StringEntry {
   const metadata = searchMetadata.get(item.name);
   const copyId =
     values?.description.match(/^cp_[0-7][0-9A-HJKMNP-TV-Z]{25}/u)?.[0] ?? metadata?.copyId ?? '';
@@ -112,8 +141,77 @@ function entry(item: LibraryListingItem, values?: Omit<VariableValues, 'key'>): 
     ],
     contexts: metadata?.contexts ?? [],
     role: metadata?.role ?? roleOf([item.name.split('_').at(-1) ?? '']),
+    section: legacyPaths.get(item.name)?.section ?? '',
+    feature: legacyPaths.get(item.name)?.section ?? '',
+    local: !!item.local,
   };
-  return { ...base, fields: normalizedFields(base) };
+  // Normalizing is the costly part; callers that overwrite the fields skip it here.
+  return { ...base, fields: withFields ? normalizedFields(base) : EMPTY_FIELDS };
+}
+
+const EMPTY_FIELDS = normalizedFields({ en: '', id: '', name: '', path: '' });
+
+type RecordEntryCache = {
+  key: string;
+  base: StringEntry | undefined;
+  products: Catalog['products'];
+  value: StringEntry;
+};
+/**
+ * Record entries only change when their record, key, base variable or the product
+ * list changes. Records keep their identity until a new catalog arrives, so a
+ * merge triggered by streaming values reuses almost every entry.
+ */
+let recordEntries = new WeakMap<CopyRecord, RecordEntryCache>();
+
+function cachedRecordEntry(
+  record: CopyRecord,
+  key: string,
+  products: Catalog['products'],
+  base?: StringEntry,
+): StringEntry {
+  const hit = recordEntries.get(record);
+  if (hit && hit.key === key && hit.base === base && hit.products === products) return hit.value;
+  const value = recordEntry(record, key, products, base);
+  recordEntries.set(record, { key, base, products, value });
+  return value;
+}
+
+/** Search entry for a saved record, keeping the Figma variable it binds through. */
+function recordEntry(
+  record: CopyRecord,
+  key: string,
+  products: Catalog['products'],
+  base?: StringEntry,
+): StringEntry {
+  const value = entry(
+    {
+      key,
+      name: base?.name ?? record.platformKey,
+      collection:
+        base?.collection ??
+        products.find((p) => p.id === record.product)?.displayName ??
+        record.product,
+      order: base?.order ?? Number.MAX_SAFE_INTEGER,
+      local: base?.local,
+    },
+    { en: record.en, id: record.id, description: describeRecord(record) },
+    false,
+  );
+  value.product = record.product;
+  value.copyId = record.copyId;
+  value.record = record;
+  const path = [record.context.feature, record.context.screen, record.context.context]
+    .filter(Boolean)
+    .map(words)
+    .join(' › ');
+  value.path = record.context.role ? `${path} · ${record.context.role}` : path;
+  if (record.product === 'shared' && value.contexts.length > 1)
+    value.path = `Shared copy · ${value.contexts.length} contexts`;
+  value.aliases = [...new Set([...value.aliases, record.platformKey, ...record.aliases])];
+  value.feature = record.context.feature || value.feature;
+  value.fields = normalizedFields({ ...value, role: record.context.role || undefined });
+  return value;
 }
 
 async function encodeCache(entries: Iterable<StringEntry>): Promise<Uint8Array> {
@@ -162,9 +260,13 @@ function loadOrderIndex(): Promise<OrderIndex> {
 
 export type Product = { id: string; count: number };
 
+const NO_PRODUCTS: Catalog['products'] = [];
+
 export type StringIndex = {
   status: IndexStatus;
+  /** Every known key, aliases included, → its canonical entry. */
   entries: ReadonlyMap<string, StringEntry>;
+  /** Canonical searchable entries. */
   list: readonly StringEntry[];
   collections: readonly string[];
   sequences: SequenceSource;
@@ -176,8 +278,9 @@ export type StringIndex = {
 };
 
 export function useStringIndex(bridge: UiBridge): StringIndex {
-  const entries = useRef(new Map<string, StringEntry>());
-  const registryEntries = useRef(new Map<string, StringEntry>());
+  // Figma variables (library + local), keyed by variable key. Registry data is joined on read.
+  const figmaEntries = useRef(new Map<string, StringEntry>());
+  const catalog = useRef<Catalog | null>(null);
   const [version, setVersion] = useState(0);
   const [status, setStatus] = useState<IndexStatus>({ phase: 'starting' });
   const [tabs, setTabs] = useState<Record<string, string[]>>({});
@@ -186,17 +289,26 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
   const [listingVersion, setListingVersion] = useState(0);
 
   const bump = () => setVersion((value) => value + 1);
+  const bumpTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const bumpSoon = () => {
+    bumpTimer.current ??= setTimeout(() => {
+      bumpTimer.current = null;
+      bump();
+    }, MERGE_INTERVAL_MS);
+  };
+  useEffect(() => () => clearTimeout(bumpTimer.current ?? undefined), []);
   const save = useCallback(async () => {
     sinceSave.current = 0;
-    bridge.send({ type: 'index:save', bytes: await encodeCache(entries.current.values()) });
+    bridge.send({ type: 'index:save', bytes: await encodeCache(figmaEntries.current.values()) });
   }, [bridge]);
 
   useEffect(() => {
     loadOrderIndex()
       .then((index) => {
         // Entries made before the paths arrived get their readable path now.
-        for (const [key, item] of entries.current)
-          entries.current.set(key, entry(item, item.loaded ? item : undefined));
+        recordEntries = new WeakMap();
+        for (const [key, item] of figmaEntries.current)
+          figmaEntries.current.set(key, entry(item, item.loaded ? item : undefined));
         bump();
         setTabs(index.tabs);
       })
@@ -207,50 +319,17 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
     () =>
       bridge.subscribe((message) => {
         switch (message.type) {
-          case 'registry:catalog': {
-            const identities = new Set(message.catalog.records.map((r) => r.copyId));
-            for (const [key, value] of entries.current)
-              if (key.startsWith('registry:') || identities.has(value.copyId))
-                entries.current.delete(key);
-            registryEntries.current.clear();
-            for (const r of message.catalog.records.filter(
-              (r) => r.status === 'active' || r.status === 'deprecated',
-            )) {
-              const value = entry(
-                {
-                  key: `registry:${r.copyId}:${r.revision}`,
-                  name: r.platformKey,
-                  collection:
-                    message.catalog.products.find((p) => p.id === r.product)?.displayName ??
-                    r.product,
-                  order: entries.current.size,
-                },
-                { en: r.en, id: r.id, description: describeRecord(r) },
-              );
-              value.product = r.product;
-              value.path = [r.context.feature, r.context.screen, r.context.context, r.context.role]
-                .filter(Boolean)
-                .join(' › ');
-              value.aliases = r.aliases;
-              value.fields = normalizedFields(value);
-              registryEntries.current.set(value.key, value);
-              entries.current.set(value.key, value);
-            }
+          case 'registry:catalog':
+            catalog.current = message.catalog;
             bump();
             setListingVersion((v) => v + 1);
             return;
-          }
           case 'index:cached': {
             const restore = message.bytes ? decodeCache(message.bytes) : Promise.resolve([]);
             restore
               .catch(() => [] as StringEntry[])
               .then((cached) => {
-                entries.current = new Map(cached.map((item) => [item.key, item]));
-                const ids = new Set([...registryEntries.current.values()].map((v) => v.copyId));
-                for (const [key, value] of entries.current)
-                  if (ids.has(value.copyId) || key.startsWith('registry:'))
-                    entries.current.delete(key);
-                for (const [key, value] of registryEntries.current) entries.current.set(key, value);
+                figmaEntries.current = new Map(cached.map((item) => [item.key, item]));
                 bump();
                 setListingVersion((value) => value + 1);
                 setStatus({ phase: 'listing' });
@@ -261,14 +340,10 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
           case 'index:listing': {
             const next = new Map<string, StringEntry>();
             for (const item of message.listing) {
-              const known = entries.current.get(item.key);
+              const known = figmaEntries.current.get(item.key);
               next.set(item.key, known?.loaded ? entry(item, known) : entry(item));
             }
-            entries.current = next;
-            const ids = new Set([...registryEntries.current.values()].map((v) => v.copyId));
-            for (const [key, value] of entries.current)
-              if (ids.has(value.copyId)) entries.current.delete(key);
-            for (const [key, value] of registryEntries.current) entries.current.set(key, value);
+            figmaEntries.current = next;
             bump();
             setListingVersion((value) => value + 1);
             setStatus(
@@ -280,13 +355,25 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
             );
             return;
           }
+          case 'index:local': {
+            // Local variables changed (e.g. after Save and apply): replace only those.
+            for (const [key, item] of figmaEntries.current)
+              if (item.local) figmaEntries.current.delete(key);
+            const values = new Map(message.values.map((value) => [value.key, value]));
+            for (const item of message.listing)
+              figmaEntries.current.set(item.key, entry(item, values.get(item.key)));
+            bump();
+            setListingVersion((value) => value + 1);
+            return;
+          }
           case 'index:values': {
             for (const values of message.values) {
-              const known = entries.current.get(values.key);
-              if (known) entries.current.set(values.key, entry(known, values));
+              const known = figmaEntries.current.get(values.key);
+              if (known) figmaEntries.current.set(values.key, entry(known, values));
             }
-            bump();
-            setStatus({ phase: 'importing', done: message.done, total: message.total });
+            bumpSoon();
+            if (message.total)
+              setStatus({ phase: 'importing', done: message.done, total: message.total });
             sinceSave.current += message.values.length;
             if (sinceSave.current >= SAVE_EVERY) void save();
             return;
@@ -309,42 +396,61 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
     bridge.send({ type: 'index:sync', knownKeys: [] });
   }, [bridge]);
 
-  const list = useMemo(() => [...entries.current.values()], [version]);
-  const collections = useMemo(() => [...new Set(list.map((item) => item.collection))], [list]);
-  const sequences = useMemo(
+  const merged = useMemo(
     () =>
-      buildSequenceSource({
-        orderedNames: tabs,
-        variables: [...entries.current.values()].map((item) => ({
-          ...item,
-          aliases: item.aliases.filter((alias) => alias.includes('/')),
-        })),
-      }),
-    [tabs, listingVersion],
+      mergeIndex(figmaEntries.current.values(), catalog.current, (record, key, base) =>
+        cachedRecordEntry(record, key, catalog.current?.products ?? NO_PRODUCTS, base),
+      ),
+    [version],
   );
+  // Keys are stable while values stream in, so ordering structures rebuild only on listing changes.
+  const latest = useRef(merged);
+  latest.current = merged;
+  const listed = useMemo(() => latest.current, [listingVersion, tabs]);
+  const collections = useMemo(
+    () => [...new Set(merged.list.map((item) => item.collection))],
+    [merged],
+  );
+  const sequences = useMemo(() => {
+    const source = buildSequenceSource({
+      orderedNames: tabs,
+      variables: listed.list.map((item) => ({
+        ...item,
+        aliases: item.aliases.filter((alias) => alias.includes('/')),
+      })),
+    });
+    // Layers bound through an alias (an older or mirrored variable) anchor like the canonical key.
+    const positions = new Map(source.positions);
+    for (const [key, item] of listed.entries)
+      if (key !== item.key && !positions.has(key)) {
+        const at = source.positions.get(item.key);
+        if (at) positions.set(key, at);
+      }
+    return { sequences: source.sequences, positions };
+  }, [tabs, listed]);
   const products = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const item of entries.current.values())
+    for (const item of listed.list)
       if (item.product) counts.set(item.product, (counts.get(item.product) ?? 0) + 1);
     return [...counts]
       .map(([id, count]) => ({ id, count }))
       .sort((a, b) => a.id.localeCompare(b.id));
-  }, [tabs, listingVersion]);
+  }, [listed]);
   const vocabulary = useMemo(
     () =>
       productVocabulary(
-        [...entries.current.values()].map((item) => ({
-          name: `${item.product}/${item.name}`,
-          section: legacyPaths.get(item.name)?.section,
+        listed.list.map((item) => ({
+          name: `${item.product}/${item.name.slice(item.name.lastIndexOf('/') + 1)}`,
+          section: item.section,
         })),
       ),
-    [tabs, listingVersion],
+    [listed],
   );
 
   return {
     status,
-    entries: entries.current,
-    list,
+    entries: merged.entries,
+    list: merged.list,
     collections,
     sequences,
     products,
@@ -353,3 +459,6 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
     refresh,
   };
 }
+
+/** Copy ID a pick or binding key refers to, for keys that never reached the index. */
+export { registryCopyId };

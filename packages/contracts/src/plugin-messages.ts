@@ -20,6 +20,15 @@ export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('ui:ready') }),
   /** Re-read the canvas selection, even if it is inside the current frame. */
   z.object({ type: z.literal('selection:refresh') }),
+  /** Re-read the working frame (text edits, renames) without changing which frame it is. */
+  z.object({ type: z.literal('frame:reread') }),
+  /** Resize the plugin window; `persist` remembers the size for next launch. */
+  z.object({
+    type: z.literal('window:resize'),
+    width: z.number(),
+    height: z.number(),
+    persist: z.boolean().optional(),
+  }),
   /** Import values for every library variable whose key is not in `knownKeys`. */
   z.object({ type: z.literal('index:sync'), knownKeys: z.array(z.string()) }),
   z.object({ type: z.literal('index:save'), bytes: BytesSchema }),
@@ -59,6 +68,14 @@ export const PluginToUiMessageSchema = z.discriminatedUnion('type', [
     total: z.number().int(),
   }),
   z.object({ type: z.literal('index:synced'), failed: z.number().int() }),
+  /** Local string variables were created or changed; replaces every local entry. */
+  z.object({
+    type: z.literal('index:local'),
+    listing: z.array(LibraryListingItemSchema),
+    values: z.array(VariableValuesSchema),
+  }),
+  /** Text inside the working frame changed on canvas. */
+  z.object({ type: z.literal('canvas:changed'), frameId: z.string() }),
   z.object({ type: z.literal('selection'), selection: SelectionInfoSchema.nullable() }),
   z.object({ type: z.literal('apply:done'), summary: ApplySummarySchema }),
   z.object({ type: z.literal('flags:selected'), count: z.number().int() }),

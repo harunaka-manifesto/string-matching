@@ -43,36 +43,48 @@ export async function listLocalStrings(): Promise<{
 }> {
   localByKey.clear();
   const listing: LibraryListingItem[] = [];
-  const values: VariableValues[] = [];
+  const values: Promise<VariableValues>[] = [];
+  // One bulk read instead of one lookup per variable; collections still give panel order.
+  const strings = new Map(
+    (await figma.variables.getLocalVariablesAsync('STRING')).map((v) => [v.id, v]),
+  );
   for (const collection of await figma.variables.getLocalVariableCollectionsAsync()) {
     let order = 0;
     for (const id of collection.variableIds) {
-      const variable = await figma.variables.getVariableByIdAsync(id);
+      const variable = strings.get(id);
       if (!variable || variable.resolvedType !== 'STRING') continue;
       localByKey.set(variable.key, variable);
-      listing.push({ key: variable.key, name: variable.name, collection: collection.name, order });
-      values.push(await readVariableValues(variable));
+      listing.push({
+        key: variable.key,
+        name: variable.name,
+        collection: collection.name,
+        order,
+        local: true,
+      });
+      values.push(readVariableValues(variable));
       order += 1;
     }
   }
-  return { listing, values };
+  return { listing, values: await Promise.all(values) };
 }
 
 /** Local variables resolve directly; library variables are imported by key. */
 export async function variableByKey(key: string): Promise<Variable> {
   if (key.startsWith('registry:')) {
-    const [, id, rev] = key.split(':');
+    // `registry:<copyId>`; older picks also carry `:<revision>`. Either binds the latest wording.
+    const [, id] = key.split(':');
     let online = true;
     const cat = await catalog(true).catch(async () => {
       online = false;
       return catalog();
     });
-    const record = cat.records.find((r) => r.copyId === id);
-    if (!record || record.revision !== Number(rev))
-      throw new WorkflowError(
-        'REVISION_CONFLICT',
-        'Copy changed since selection; refresh the catalog and review again',
-      );
+    let record = cat.records.find((r) => r.copyId === id);
+    for (let hops = 0; record?.status === 'merged' && record.mergedInto && hops < 5; hops += 1) {
+      const into = record.mergedInto;
+      record = cat.records.find((r) => r.copyId === into);
+    }
+    if (!record || !['active', 'deprecated'].includes(record.status))
+      throw new WorkflowError('VALIDATION', 'This saved copy is no longer available');
     const mapping = cat.mappings.find(
       (m) =>
         m.copyId === record.copyId &&

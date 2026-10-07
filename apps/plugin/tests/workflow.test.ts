@@ -194,19 +194,14 @@ it('preflights every affected font before shared library values change', async (
   expect(v.valuesByMode.id).toBe(r.id);
 });
 
-it('rejects a wrong library setup without locking the device onto it', async () => {
+it('requires a publisher token, and lets Change setup correct a wrongly stamped file', async () => {
   mocks.settings.mockResolvedValue({});
-  await expect(
-    workflow('settings:save', {
-      libraryId: 'test-library',
-      fileKey: 'another-file',
-      publisherToken: 'secret',
-    }),
-  ).rejects.toThrow('registered as another library');
-  expect(await f.figma.clientStorage.getAsync('registry:settings')).toBeUndefined();
   await expect(
     workflow('settings:save', { libraryId: 'test-library', fileKey: 'test-file' }),
   ).rejects.toThrow('publisher token');
+  expect(await f.figma.clientStorage.getAsync('registry:settings')).toBeUndefined();
+  // The document was stamped with a wrong key; saving a corrected setup replaces it.
+  (f.figma.root as any).setPluginData('registry:library', 'wrong-file');
   await workflow('settings:save', {
     libraryId: 'test-library',
     fileKey: 'test-file',
@@ -217,19 +212,42 @@ it('rejects a wrong library setup without locking the device onto it', async () 
     fileKey: 'test-file',
     publisherToken: 'secret',
   });
+  expect((f.figma.root as any).getPluginData('registry:library')).toBe('test-file');
+  // Sync itself still refuses a document stamped for another library.
+  mocks.settings.mockResolvedValue({
+    libraryId: 'test-library',
+    fileKey: 'other-file',
+    publisherToken: 's',
+  });
+  await expect(workflow('library:scan', {})).rejects.toThrow('set up as another library');
 });
-it('rescans a working file only when the registry moved or a refresh is forced', async () => {
+it('background refresh only updates local values: no page loads, renames or rebinding', async () => {
   (f.figma.root as any).setPluginData('registry:library', '');
   const loads = vi.spyOn(f.figma, 'loadAllPagesAsync');
-  await workflow('refresh', {});
-  expect(loads).toHaveBeenCalledTimes(1);
-  await workflow('refresh', {});
-  expect(loads).toHaveBeenCalledTimes(1);
-  await workflow('refresh', { force: true });
-  expect(loads).toHaveBeenCalledTimes(2);
-  mocks.catalog.mockResolvedValue({ seq: 1, records: [r], products: [], mappings: [] });
-  await workflow('refresh', {});
-  expect(loads).toHaveBeenCalledTimes(3);
+  const v = await materialize(r, 'Test');
+  const text = f.text('Hello');
+  text.setBoundVariable('characters', v);
+  text.name = 'Writer named this';
+  const next = { ...r, revision: 2, en: 'Hello there', id: 'Halo semua' };
+  mocks.catalog.mockResolvedValue({ seq: 1, records: [next], products: [], mappings: [] });
+  const { result } = (await workflow('refresh', { force: true })) as any;
+  expect(result.applied).toEqual([v.id]);
+  expect(loads).not.toHaveBeenCalled();
+  expect(text.name).toBe('Writer named this');
+  expect(text.boundVariables.characters.id).toBe(v.id);
+  const c = await figma.variables.getVariableCollectionByIdAsync(v.variableCollectionId);
+  expect(v.valuesByMode[c!.modes.find((m) => m.name === 'EN')!.modeId]).toBe('Hello there');
+  // Hand edits are protected and reported instead of overwritten.
+  v.setValueForMode(c!.modes.find((m) => m.name === 'EN')!.modeId, 'Hand edit');
+  mocks.catalog.mockResolvedValue({
+    seq: 2,
+    records: [{ ...next, revision: 3, en: 'Third' }],
+    products: [],
+    mappings: [],
+  });
+  const second = (await workflow('refresh', {})) as any;
+  expect(second.result.conflicts).toEqual([v.id]);
+  expect(v.valuesByMode[c!.modes.find((m) => m.name === 'EN')!.modeId]).toBe('Hand edit');
 });
 it('counts current-file usages of an identity, including duplicate mirrors', async () => {
   const v = await materialize(r, 'Test', true);

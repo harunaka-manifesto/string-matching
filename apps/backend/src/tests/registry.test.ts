@@ -55,6 +55,7 @@ beforeAll(async () => {
   await db.exec('create role anon; create role authenticated; create role service_role;');
   await db.exec(await readFile('supabase/migrations/202610060001_registry.sql', 'utf8'));
   await db.exec(await readFile('supabase/migrations/202610060002_operations.sql', 'utf8'));
+  await db.exec(await readFile('supabase/migrations/202610080001_library_fixes.sql', 'utf8'));
   await call('copy_registry_bootstrap', {
     history: [{ copyId: 'legacy', event: 'ID_ASSIGNED' }],
     records: [],
@@ -212,6 +213,135 @@ describe('registry transactions and access', () => {
     expect(catalog.records.find((x: any) => x.copyId === r.copyId).revision).toBe(2);
     expect(catalog.mappings[0].publishedRevision).toBe(1);
   });
+  it('registers a library only once a start succeeds, and lets an administrator correct it', async () => {
+    const r = (await request('submit', batch([create()]))).body.records[0];
+    const { recordFingerprint } = await import('@string-binder/domain');
+    const entry = { copyId: r.copyId, revision: 1, fingerprint: recordFingerprint(r) };
+    const start = (args: Record<string, unknown>) =>
+      request(
+        'library',
+        {
+          operation: 'start',
+          args: {
+            libraryId: 'reg',
+            fileKey: 'wrong',
+            runId: crypto.randomUUID(),
+            owner: 'o',
+            manifest: [entry],
+            ...args,
+          },
+        },
+        'publisher-test',
+      );
+    // A rejected first attempt (unknown revision) must not register the wrong file.
+    expect((await start({ manifest: [{ ...entry, revision: 99 }] })).status).toBe(422);
+    expect((await start({ fileKey: 'right' })).status).toBe(200);
+    expect((await start({ fileKey: 'wrong' })).body.error).toBe('DESTINATION');
+    // Another library ID cannot claim an already registered file: a clear 409, not an outage.
+    const other = await start({ libraryId: 'reg-2', fileKey: 'right' });
+    expect(other.status).toBe(409);
+    expect(other.body.error).toBe('DESTINATION');
+    expect(
+      await call('copy_registry_library_reset', { library_id: 'reg', file_key: 'moved' }),
+    ).toMatchObject({
+      previousFileKey: 'right',
+    });
+    expect((await start({ fileKey: 'moved' })).status).toBe(200);
+  });
+  it('publishes a run whose identity a newer sync took over, and repeating publish is a no-op', async () => {
+    const r = (await request('submit', batch([create()]))).body.records[0];
+    const { recordFingerprint } = await import('@string-binder/domain');
+    const entry = { copyId: r.copyId, revision: 1, fingerprint: recordFingerprint(r) };
+    const lib = { libraryId: 'super', fileKey: 'super-key', owner: 'o' };
+    const library = (operation: string, args: Record<string, unknown>) =>
+      request('library', { operation, args: { ...args } }, 'publisher-test');
+    const mapping = (revision: number, fingerprint: string) => ({
+      libraryId: 'super',
+      copyId: r.copyId,
+      variableId: 'v',
+      variableKey: 'k',
+      syncedRevision: revision,
+      publishedRevision: null,
+      fingerprint,
+    });
+    expect((await library('start', { ...lib, runId: 'old', manifest: [entry] })).status).toBe(200);
+    expect(
+      (
+        await library('ack', {
+          runId: 'old',
+          owner: 'o',
+          mappings: [mapping(1, entry.fingerprint)],
+        })
+      ).status,
+    ).toBe(200);
+    const edited = (
+      await request(
+        'submit',
+        batch([
+          {
+            action: 'edit',
+            copyId: r.copyId,
+            expectedRevision: 1,
+            context: ctx,
+            en: 'Two',
+            id: 'Dua',
+          },
+        ]),
+      )
+    ).body.records[0];
+    const newer = { copyId: r.copyId, revision: 2, fingerprint: recordFingerprint(edited) };
+    expect((await library('start', { ...lib, runId: 'new', manifest: [newer] })).status).toBe(200);
+    expect(
+      (
+        await library('ack', {
+          runId: 'new',
+          owner: 'o',
+          mappings: [mapping(2, newer.fingerprint)],
+        })
+      ).status,
+    ).toBe(200);
+    // The old run's only entry now belongs to the newer sync: nothing to publish, no conflict.
+    expect((await library('publish', { runId: 'old', owner: 'o' })).status).toBe(200);
+    expect((await library('publish', { runId: 'new', owner: 'o' })).status).toBe(200);
+    const events = (await request('changes?after=0')).body.seq;
+    expect((await library('publish', { runId: 'new', owner: 'o' })).status).toBe(200);
+    expect((await request('changes?after=0')).body.seq).toBe(events);
+    const catalog = (await request('catalog')).body;
+    expect(catalog.mappings.find((m: any) => m.copyId === r.copyId)).toMatchObject({
+      syncedRevision: 2,
+      publishedRevision: 2,
+    });
+  });
+  it('keys variants of legacy roles with a supported role and qualifier', async () => {
+    const legacy = { ...ctx, role: 'cta-primary' };
+    const first = await request('submit', batch([{ ...create(), context: legacy }]));
+    const second = await request('submit', batch([{ ...create(), context: legacy }]));
+    expect(first.status).toBe(200);
+    expect(first.body.records[0].platformKey).toBe(
+      'gopay_investment_checkout_confirmation_cta_primary',
+    );
+    expect(second.body.records[0].platformKey).toBe(
+      'gopay_investment_checkout_confirmation_cta_primary_2',
+    );
+    const push = await request(
+      'submit',
+      batch([{ ...create(), context: { ...ctx, role: 'push-title' } }]),
+    );
+    expect(push.body.records[0].platformKey).toMatch(/_pushtitle$/);
+  });
+  it('rate-limits per device so one shared team token does not throttle everyone', async () => {
+    const hit = (device: string) =>
+      api(
+        new Request('https://example.test/catalog', {
+          headers: { 'x-copy-token': 'writer-test', 'x-copy-device': device },
+        }),
+      );
+    const key = (device: string) => sha256(`${sha256('writer-test')}:${device}`);
+    for (let i = 0; i < 180; i += 1)
+      await call('copy_registry_rate', { credential: key('busy'), allowed: 1000 });
+    expect((await hit('busy')).status).toBe(429);
+    expect((await hit('quiet')).status).toBe(200);
+  });
   it('returns complete bounded delta pages and enforces rate counters', async () => {
     const many = batch(Array.from({ length: 510 }, () => create()));
     expect((await request('submit', many)).status).toBe(200);
@@ -337,6 +467,66 @@ describe('registry transactions and access', () => {
       await restored.close();
     }
   }, 30000);
+
+  it('backs up and restores in pages that each fit one request, and reruns a stopped restore', async () => {
+    const { pagedBackup, pagedRestore } = await import(
+      // @ts-expect-error Plain administrator script without type declarations.
+      '../../../../scripts/registry-snapshot.mjs'
+    );
+    await db.exec(await readFile('supabase/migrations/202610080003_backup_pages.sql', 'utf8'));
+    const sizes: number[] = [];
+    const snapshot = await pagedBackup(
+      async (name: string, args: Record<string, unknown>) => {
+        const value = await call(name, args);
+        sizes.push(JSON.stringify(value).length);
+        return value;
+      },
+      { pageSize: 2000 },
+    );
+    // Same rows as the one-shot backup; pages come in primary-key order.
+    const whole = await call('copy_registry_backup');
+    const sorted = (rows: unknown[]) => rows.map((r) => JSON.stringify(r)).sort();
+    for (const table of Object.keys(whole.tables))
+      expect(sorted(snapshot.tables[table])).toEqual(sorted(whole.tables[table]));
+    expect(Math.max(...sizes)).toBeLessThan(JSON.stringify(whole).length);
+    const target = new PGlite();
+    try {
+      await target.exec('create role anon;create role authenticated;create role service_role;');
+      for (const file of [
+        '202610060001_registry.sql',
+        '202610060002_operations.sql',
+        '202610080003_backup_pages.sql',
+      ])
+        await target.exec(await readFile('supabase/migrations/' + file, 'utf8'));
+      let pages = 0;
+      let stopAfter = 3;
+      const rpc = async (name: string, args: Record<string, unknown> = {}) => {
+        if (name === 'copy_registry_restore_page' && ++pages > stopAfter)
+          throw new Error('Connection lost');
+        const keys = Object.keys(args);
+        const result = await target.query<{ value: any }>(
+          `select public.${name}(${keys.map((k, i) => `${k} => $${i + 1}`).join(',')}) as value`,
+          keys.map((k) => (typeof args[k] === 'object' ? JSON.stringify(args[k]) : args[k])),
+        );
+        return result.rows[0]!.value;
+      };
+      await expect(pagedRestore(rpc, snapshot, { maxBytes: 1_000_000 })).rejects.toThrow(
+        'Connection lost',
+      );
+      stopAfter = Infinity;
+      expect(await pagedRestore(rpc, snapshot, { maxBytes: 1_000_000 })).toMatchObject({
+        restored: true,
+        seq: snapshot.tables.registry_head[0].seq,
+      });
+      const catalog = await target.query<{ value: any }>(
+        'select public.copy_registry_catalog() as value',
+      );
+      expect(catalog.rows[0].value.records).toHaveLength(snapshot.tables.copies.length);
+      await expect(rpc('copy_registry_restore_begin')).rejects.toThrow('fresh empty');
+    } finally {
+      await target.close();
+    }
+  }, 60000);
 
   it('renews a paused publisher lease and prevents takeover while another publisher owns it', async () => {
     const r = (await request('submit', batch([create()]))).body.records[0];
@@ -492,6 +682,7 @@ it('imports in small staged chunks, resumes a crashed import, and never wipes a 
     '202610060001_registry.sql',
     '202610070001_bootstrap_staging.sql',
     '202610070002_bootstrap_apply.sql',
+    '202610080002_bootstrap_recovery.sql',
   ])
     await other.exec(await readFile('supabase/migrations/' + file, 'utf8'));
   const sizes: number[] = [];
@@ -557,6 +748,39 @@ it('imports in small staged chunks, resumes a crashed import, and never wipes a 
   ).toEqual({ applied: 0 });
   expect(await stagedBootstrap(rpc, payload, options)).toMatchObject({ alreadyImported: true });
   await expect(rpc('copy_registry_bootstrap_abort')).rejects.toThrow('No import is in progress');
+
+  // A run that stopped after products, before any record, is recoverable too.
+  const fresh = new PGlite();
+  await fresh.exec('create role anon; create role authenticated; create role service_role;');
+  for (const file of [
+    '202610060001_registry.sql',
+    '202610070001_bootstrap_staging.sql',
+    '202610070002_bootstrap_apply.sql',
+    '202610080002_bootstrap_recovery.sql',
+  ])
+    await fresh.exec(await readFile('supabase/migrations/' + file, 'utf8'));
+  let freshApplies = 0;
+  let stopAfter = 1;
+  const freshRpc = async (name: string, args: Record<string, unknown> = {}) => {
+    if (name === 'copy_registry_bootstrap_apply' && ++freshApplies > stopAfter)
+      throw new Error('Connection lost');
+    const keys = Object.keys(args);
+    const result = await fresh.query<{ value: any }>(
+      `select public.${name}(${keys.map((k, i) => `${k} => $${i + 1}`).join(',')}) as value`,
+      keys.map((k) => (typeof args[k] === 'object' ? JSON.stringify(args[k]) : args[k])),
+    );
+    return result.rows[0]!.value;
+  };
+  await expect(stagedBootstrap(freshRpc, payload, options)).rejects.toThrow('Connection lost');
+  expect(await freshRpc('copy_registry_bootstrap_status')).toMatchObject({
+    copies: 0,
+    products: 1,
+  });
+  // Even with the stage already cleared by an older script, abort still recovers.
+  await freshRpc('copy_registry_bootstrap_reset');
+  stopAfter = Infinity;
+  expect(await stagedBootstrap(freshRpc, payload, options)).toMatchObject({ imported: 40 });
+  await fresh.close();
   await expect(
     rpc('copy_registry_bootstrap_stage', { kind: 'records', chunk: 0, items: [] }),
   ).rejects.toThrow('empty registry');

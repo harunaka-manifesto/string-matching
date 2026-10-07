@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { LayerDecisionSchema } from './models';
 
 export const LocaleSchema = z.enum(['en', 'id']);
 export type Locale = z.infer<typeof LocaleSchema>;
@@ -95,6 +96,7 @@ export const TargetSchema = z.object({
   fingerprint: z.string(),
   variableFingerprint: z.string().optional(),
   frameName: z.string(),
+  layerName: z.string().optional(),
   duplicate: z.boolean(),
 });
 export type BindingTarget = z.infer<typeof TargetSchema>;
@@ -104,8 +106,26 @@ export const BindingResultSchema = z.object({
   conflicts: z.array(z.string()),
 });
 export type BindingResult = z.infer<typeof BindingResultSchema>;
+export const ApplyPreviewSchema = z.object({
+  sources: z.array(z.object({ nodeId: z.string(), fingerprint: z.string() })),
+  targets: z.array(
+    z.object({
+      nodeId: z.string(),
+      sourceId: z.string(),
+      fingerprint: z.string(),
+      frameName: z.string(),
+      layerName: z.string().optional(),
+      /** Whether applying changes this target, or it already matches its source. */
+      change: z.enum(['bind', 'skip', 'none']).optional(),
+    }),
+  ),
+});
+export type ApplyPreview = z.infer<typeof ApplyPreviewSchema>;
+
 export const DraftRowSchema = z.object({
   layerId: z.string(),
+  /** Canvas text when the row was drafted; a rename alone is not a canvas change. */
+  canvasText: z.string().optional(),
   action: z.enum(['keep', 'create', 'reuse', 'edit', 'variant']),
   restoreLocal: z.boolean().optional(),
   locale: LocaleSchema,
@@ -123,12 +143,26 @@ export const AuthoringDraftSchema = z.object({
   frameName: z.string(),
   locale: LocaleSchema,
   rows: z.array(DraftRowSchema),
+  /** Writer choices for rows that bind existing copy, so they survive frame switches. */
+  picks: z
+    .record(
+      z.object({
+        status: z.enum(['include', 'skip', 'flag']),
+        pick: z.string().nullable(),
+        unbind: z.boolean(),
+        shift: z.number().int(),
+      }),
+    )
+    .optional(),
   pending: z
     .object({
       batch: MutationBatchSchema,
       targets: z.array(TargetSchema),
       result: MutationResultSchema.optional(),
       deliveryRecords: z.array(CopyRecordSchema).optional(),
+      /** Bindings of existing copy committed together with the saved copy. */
+      decisions: z.array(LayerDecisionSchema).optional(),
+      applyPreview: ApplyPreviewSchema.optional(),
     })
     .optional(),
 });
@@ -168,7 +202,8 @@ export const WorkflowActionSchema = z.enum([
   'library:manifest',
   'library:pending',
   'apply:preview',
-  'window',
+  'scope:set',
+  'writer:commit',
 ]);
 export type WorkflowAction = z.infer<typeof WorkflowActionSchema>;
 
@@ -209,19 +244,6 @@ export const LibraryRequestSchema = z.discriminatedUnion('operation', [
     args: z.object({ runId: z.string().min(1).max(128) }),
   }),
 ]);
-
-export const ApplyPreviewSchema = z.object({
-  sources: z.array(z.object({ nodeId: z.string(), fingerprint: z.string() })),
-  targets: z.array(
-    z.object({
-      nodeId: z.string(),
-      sourceId: z.string(),
-      fingerprint: z.string(),
-      frameName: z.string(),
-    }),
-  ),
-});
-export type ApplyPreview = z.infer<typeof ApplyPreviewSchema>;
 
 export const FrameOccurrenceSchema = z.object({
   frameId: z.string(),

@@ -1824,17 +1824,10 @@ h3 {
 .row__actions .spacer {
   display: none;
 }
-
 /*
  * Authoring and library sync. Everything is scoped to `.sb` containers so none of it
  * reaches the Apply workspace rendered inside the same shell.
  */
-.studio {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
 
 .sb button,
 .sb select,
@@ -1914,97 +1907,6 @@ h3 {
   text-decoration: underline;
 }
 
-/* ─── Shell ───────────────────────────────────────────── */
-
-.studio-nav {
-  display: flex;
-  flex: none;
-  gap: 8px;
-  align-items: center;
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.studio-nav .studio-brand {
-  padding: 0 4px;
-  box-shadow: none;
-  font-weight: 600;
-}
-
-.studio-tabs {
-  display: flex;
-  gap: 2px;
-  padding: 2px;
-  margin-left: auto;
-  border-radius: 8px;
-  background: var(--bg-2);
-}
-
-.studio-tabs button {
-  min-height: 28px;
-  border-radius: 6px;
-  background: none;
-  box-shadow: none;
-  color: var(--text-2);
-}
-
-.studio-tabs button[aria-pressed='true'] {
-  background: var(--bg);
-  box-shadow: var(--shadow-panel);
-  color: var(--text);
-}
-
-.studio-status {
-  display: flex;
-  flex: none;
-  gap: 6px;
-  align-items: center;
-  min-height: 28px;
-  padding: 0 12px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text-2);
-}
-
-.studio-status > span:first-of-type {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.studio-dot {
-  flex: none;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--success-text);
-}
-
-.studio-status.is-offline .studio-dot {
-  background: var(--warning-text);
-}
-
-.studio-status.is-offline {
-  background: var(--warning-soft);
-  color: var(--text);
-}
-
-.studio-body,
-.studio-home {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 0;
-  padding: 16px 16px 0;
-  overflow: auto;
-}
-
-.studio-home {
-  padding-bottom: 16px;
-}
-
 .sb h1 {
   font-size: 15px;
   font-weight: 600;
@@ -2024,61 +1926,6 @@ h3 {
 }
 
 .sb-muted {
-  color: var(--text-2);
-}
-
-.studio-home .journey {
-  flex-direction: column;
-  gap: 4px;
-  align-items: flex-start;
-  width: 100%;
-  padding: 16px;
-  border-radius: 12px;
-  text-align: left;
-}
-
-.journey strong {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.journey span {
-  color: var(--text-2);
-  font-weight: 400;
-}
-
-/* ─── Stepper ─────────────────────────────────────────── */
-
-.stepper {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  color: var(--text-3);
-  font-weight: 500;
-}
-
-.stepper li {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-
-.stepper li + li::before {
-  width: 12px;
-  height: 1px;
-  margin-right: 2px;
-  background: var(--border-strong);
-  content: '';
-}
-
-.stepper li[aria-current='step'] {
-  color: var(--brand-text);
-}
-
-.stepper li.is-done {
   color: var(--text-2);
 }
 
@@ -2234,30 +2081,6 @@ h3 {
   text-transform: capitalize;
 }
 
-.studio-controls {
-  display: flex;
-  flex: none;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: flex-end;
-}
-
-.studio-controls label {
-  flex: 1 1 120px;
-}
-
-.studio-warning {
-  display: flex;
-  flex: none;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  padding: 8px;
-  border-radius: 6px;
-  background: var(--warning-soft);
-  color: var(--text);
-}
-
 small.studio-warning {
   display: block;
   padding: 4px 8px;
@@ -2283,12 +2106,49 @@ small.studio-warning {
   overflow-wrap: anywhere;
 }
 
-.three-way {
-  display: grid;
+/* Library sync is the only remaining `.studio-*` surface: it owns its scroll container. */
+.studio-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  padding: 12px 12px 0;
+  overflow-y: auto;
+}
+
+.studio-controls {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.studio-warning {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--warning-soft);
+  color: var(--text);
+}
+
+.studio-hint {
+  display: flex;
+  flex: none;
+  flex-direction: column;
   gap: 4px;
   padding: 8px;
   border-radius: 6px;
   background: var(--bg-2);
+}
+
+.studio-hint > button {
+  align-self: flex-start;
 }
 
 .studio-footer {
@@ -2299,8 +2159,8 @@ small.studio-warning {
   flex: none;
   gap: 8px;
   align-items: center;
-  padding: 12px 16px;
-  margin: auto -16px 0;
+  padding: 8px 12px;
+  margin: auto -12px 0;
   border-top: 1px solid var(--border);
   background: var(--bg);
 }
@@ -2310,9 +2170,567 @@ small.studio-warning {
   color: var(--text-2);
 }
 
+.sync-filters {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.sb button.sync-filter {
+  min-height: 24px;
+  padding: 0 8px;
+  box-shadow: none;
+  background: none;
+  color: var(--text-2);
+  font-size: 11px;
+}
+
+.sb button.sync-filter[aria-pressed='true'] {
+  background: var(--bg-2);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  color: var(--text);
+}
+
+.copy-head strong.mono {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.three-way {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--bg-2);
+}
+
 .apply-review {
   width: 100%;
   height: 100%;
   padding-bottom: 16px;
   background: var(--bg);
+}
+
+/* ─── Shell ───────────────────────────────────────────── */
+
+.shell {
+  position: relative;
+  height: 100%;
+}
+
+.shell__pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.shell__pane[hidden] {
+  display: none;
+}
+
+.library-head {
+  display: flex;
+  flex: none;
+  gap: 4px;
+  align-items: center;
+  padding: 8px 12px 8px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.library-head h1 {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.library-head .eyebrow {
+  margin-left: auto;
+}
+
+.resize-grip {
+  position: absolute;
+  z-index: 50;
+  right: 0;
+  bottom: 0;
+  display: grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  color: var(--icon-2);
+  opacity: 0.6;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+.resize-grip:hover {
+  opacity: 1;
+}
+
+.resize-grip .icon {
+  width: 12px;
+  height: 12px;
+}
+
+/* ─── Connection status ───────────────────────────────── */
+
+.status {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 2px;
+  color: var(--text-3);
+}
+
+.status__dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success-text);
+}
+
+.status.is-offline {
+  color: var(--warning-text);
+}
+
+.status.is-offline .status__dot {
+  background: var(--warning-text);
+}
+
+.status__text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pending {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pending__actions {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.pending .button {
+  height: 28px;
+}
+
+/* ─── Compact row actions (400 px window) ─────────────── */
+
+.row__actions {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
+.row__actions .button {
+  height: 28px;
+  padding: 0 8px;
+}
+
+.row__actions .icon-button {
+  width: 28px;
+  height: 28px;
+}
+
+.row__layer-name .mono {
+  color: var(--text-3);
+}
+
+/* Drafted rows: new copy, global edits and variants. */
+.tag--create,
+.tag--variant {
+  background: var(--success-soft);
+  color: var(--success-text);
+}
+
+.tag--edit {
+  background: var(--warning-soft);
+  color: var(--warning-text);
+}
+
+.tag--feature {
+  background: var(--success-soft);
+  color: var(--success-text);
+}
+
+.lead--create,
+.lead--variant {
+  color: var(--success-text);
+}
+
+.lead--edit {
+  color: var(--warning-text);
+}
+
+/* ─── Compose (inline EN/ID editor) ───────────────────── */
+
+.compose {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--bg-2);
+  animation: fade-in var(--t) var(--ease) both;
+}
+
+.compose__head {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.compose__field {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 6px;
+  align-items: start;
+}
+
+.compose__field .locale-label {
+  margin-top: 7px;
+}
+
+.compose textarea,
+.compose input,
+.compose select {
+  width: 100%;
+  min-height: 28px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text);
+  font: inherit;
+  transition: box-shadow var(--t-fast) var(--ease);
+}
+
+.compose textarea {
+  resize: vertical;
+  line-height: 16px;
+}
+
+.compose textarea:focus,
+.compose input:focus,
+.compose select:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--brand);
+}
+
+.compose__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 8px;
+}
+
+.compose__grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.compose__label {
+  color: var(--text-2);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.compose__more summary {
+  color: var(--text-2);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.compose__more[open] summary {
+  margin-bottom: 6px;
+}
+
+.compose__key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+  overflow-wrap: anywhere;
+}
+
+.compose__hint {
+  color: var(--text-3);
+}
+
+.compose__warning {
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: var(--warning-soft);
+}
+
+.compose__errors {
+  margin: 0;
+  padding-left: 16px;
+  color: var(--danger-text);
+}
+
+.compose__duplicates {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.duplicate {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: var(--bg);
+}
+
+.duplicate__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.duplicate__path {
+  color: var(--text-3);
+}
+
+.duplicate .button,
+.empty__actions .button {
+  height: 28px;
+}
+
+.compose__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chip--static {
+  display: inline-flex;
+  align-items: center;
+  min-height: 0;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  cursor: default;
+}
+
+.chip--static:hover {
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: inherit;
+}
+
+.segmented--text {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.segmented--text .segmented__label {
+  margin-right: 4px;
+  color: var(--text-3);
+}
+
+.segmented--text button {
+  height: 20px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--text-2);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.segmented--text button[aria-pressed='true'] {
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  color: var(--text);
+}
+
+/* ─── Search additions ────────────────────────────────── */
+
+.search__widen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 12px 16px 16px;
+}
+
+.empty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* ─── Review sheet ────────────────────────────────────── */
+
+.review {
+  max-height: calc(100% - 24px);
+}
+
+.review__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  padding: 0 16px 8px;
+  overflow-y: auto;
+}
+
+.review__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.review__group h3 {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.review__group.tone--danger h3 {
+  color: var(--danger-text);
+}
+
+.review__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--bg-2);
+  overflow-wrap: anywhere;
+}
+
+.review__item--compact {
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.review__line {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review__layer {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.review__item--compact .review__layer {
+  flex: 0 1 35%;
+}
+
+.review__arrow {
+  color: var(--icon-2);
+}
+
+.review__value {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.review__en {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.review__id,
+.review__meta,
+.review__key {
+  color: var(--text-2);
+}
+
+.review__warning {
+  color: var(--warning-text);
+}
+
+.review__note {
+  color: var(--text-3);
+}
+
+.review__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.review__choices .button {
+  height: 28px;
+}
+
+.review__check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 24px;
+  cursor: pointer;
+}
+
+.review__frame {
+  flex: none;
+  max-width: 45%;
+  overflow: hidden;
+  color: var(--text-3);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.saved {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 16px 12px;
+}
+
+.saved ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.saved li {
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: anywhere;
+}
+
+.saved__value {
+  color: var(--text-2);
+}
+
+.tally--brand {
+  color: var(--success-text);
 }

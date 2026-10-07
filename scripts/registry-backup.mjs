@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { randomBytes, createCipheriv, createDecipheriv, createHash } from 'node:crypto';
 import { gzipSync, gunzipSync } from 'node:zlib';
 import { adminRpc } from './registry-admin.mjs';
+import { pagedBackup, pagedRestore } from './registry-snapshot.mjs';
 const args = process.argv.slice(2),
   restore = args.includes('--restore'),
   apply = args.includes('--apply');
@@ -29,9 +30,9 @@ if (restore) {
       revisions: snapshot.tables.copy_revisions.length,
     }),
   );
-  if (apply) console.log(await adminRpc('copy_registry_restore', { snapshot }));
+  if (apply) console.log(await pagedRestore(adminRpc, snapshot));
 } else {
-  const raw = Buffer.from(JSON.stringify(await adminRpc('copy_registry_backup')));
+  const raw = Buffer.from(JSON.stringify(await pagedBackup(adminRpc)));
   const iv = randomBytes(12),
     cipher = createCipheriv('aes-256-gcm', key, iv);
   const payload = Buffer.concat([cipher.update(gzipSync(raw)), cipher.final()]);

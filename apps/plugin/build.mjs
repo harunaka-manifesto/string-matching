@@ -4,6 +4,11 @@ import { resolve } from 'node:path';
 import { build as viteBuild } from 'vite';
 
 const root = resolve(new URL('.', import.meta.url).pathname);
+// A registry URL without the team token builds a plugin that fails every request at runtime.
+if (process.env.COPY_REGISTRY_URL && !process.env.COPY_TEAM_TOKEN)
+  throw new Error(
+    'COPY_REGISTRY_URL is set but COPY_TEAM_TOKEN is missing; load .env.plugin.local',
+  );
 const dist = resolve(root, 'dist');
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });

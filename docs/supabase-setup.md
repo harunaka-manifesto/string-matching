@@ -57,6 +57,12 @@ COPY_TEAM_TOKEN_HASHES=<TEAM hash>
 COPY_PUBLISHER_TOKEN_HASHES=<PUBLISHER hash>
 ```
 
+Both values are the 64-character **hashes** from step 2, never the tokens themselves. The function ignores anything else and logs `ignored 1 entry that are not 64-character SHA-256 hex`. A pasted publisher token shows up later as `401` in Library sync. Check before uploading:
+
+```sh
+awk -F= '/_TOKEN_HASHES=/ { n = split($2, h, ","); for (i = 1; i <= n; i++) print $1, (h[i] ~ /^[0-9a-f]{64}$/ ? "ok" : "NOT A HASH") }' .env.edge.local
+```
+
 `.env.admin.local` holds administrator credentials, used by the import and backups:
 
 ```sh
@@ -85,7 +91,7 @@ supabase secrets set --env-file .env.edge.local
 supabase functions deploy copy-registry
 ```
 
-`supabase link` and `supabase db push` ask for the database password from step 1. `supabase db push` lists the pending migrations and asks you to confirm.
+`supabase link` and `supabase db push` ask for the database password from step 1. `supabase db push` lists the pending migrations and asks you to confirm. Run `supabase migration list` first if you pushed before: every file in `supabase/migrations` must show on the remote side afterwards.
 
 **Check.** Both commands must behave as described.
 
@@ -96,7 +102,7 @@ curl -s -H "x-copy-token: $COPY_TEAM_TOKEN" "$COPY_REGISTRY_URL/catalog"
 ```
 
 - The first prints `401`: no token, no access.
-- The second prints `{"seq":0,"records":[],"products":[],"mappings":[]}`: the token works and the registry is empty.
+- The second prints an empty catalog, for example `{"seq":0,"records":[],"mappings":[],"products":[]}`: the token works and the registry is empty. Postgres may order the keys differently; compare the values, not the text.
 
 If the second also returns 401, the hash in `.env.edge.local` does not match the token. Redo step 2 and run `supabase secrets set` again.
 
@@ -133,7 +139,7 @@ set -a; source .env.plugin.local; set +a
 curl -s -H "x-copy-token: $COPY_TEAM_TOKEN" "$COPY_REGISTRY_URL/changes?after=0" | head -c 200
 ```
 
-The response starts with `{"seq":500,"events":[{"type":"copy",`.
+The response is the first page of changes: `seq` is 500, `more` is `true`, and `events` holds `"type":"copy"` entries. Key order may differ.
 
 The import is about 73 MB, more than one API request or one database statement may carry. So it uploads roughly 80 small chunks, then applies them one at a time, printing a line for each. Expect a few minutes.
 
@@ -176,6 +182,13 @@ A legacy variable flagged **Resolve this legacy variable against the registry** 
 
 To replace a rotated publisher token or a wrong URL later, use **Change setup** in Library sync.
 
+The registry remembers which Figma file a library ID belongs to after the first successful **Check changes**. If that was the wrong file, correct it with the administrator key, then use **Change setup** in the right file:
+
+```sh
+set -a; source .env.admin.local; set +a
+pnpm registry:library-reset gopay-strings https://www.figma.com/design/<file-key>/GoPay-Strings
+```
+
 ## Step 8 — Run the pilot
 
 Do each of these once with real people and a real file before rolling out:
@@ -210,7 +223,7 @@ Verify a backup without touching any database:
 pnpm registry:backup /private/external/path/registry-2026-10-07.backup.enc --restore
 ```
 
-Test a real restore once during the pilot: create a second, empty Supabase project, repeat step 4 on it, point `.env.admin.local` at it, and add `--apply`. Compare record and revision counts. Never restore onto the live registry. Restoring clears publisher leases.
+Test a real restore once during the pilot: create a second, empty Supabase project, repeat step 4 on it, point `.env.admin.local` at it, and add `--apply`. Backup and restore move the data in pages, so they fit request limits; if a restore stops partway, run it again and it starts over. Compare record and revision counts. Never restore onto the live registry. Restoring clears publisher leases.
 
 ## Maintenance
 
@@ -243,7 +256,8 @@ To change a decision before importing, edit that file: set `owner`, and list und
 | `401` with a token                                     | Hash does not match the token, or secrets were not set. Redo steps 2–4.                                  |
 | `403 Publisher credential required`                    | The team token was pasted into publisher setup. Use the publisher token.                                 |
 | `503 Registry operation unavailable`                   | Database unreachable or project paused. Resume the project in the dashboard; pending saves retry safely. |
-| `429`                                                  | More than 180 requests a minute on one token. Wait a minute.                                             |
+| `429`                                                  | More than 180 requests a minute from one device (or 6,000 on one token). Wait a minute.                  |
+| Sync: `Library URL does not match registration`        | The library was first synced from another file. See `pnpm registry:library-reset` in step 7.             |
 | Import: `…copy_registry_bootstrap_status failed (404)` | The staging migration is missing. Run `supabase db push`, then the import again.                         |
 | Build: `COPY_REGISTRY_URL must be your HTTPS…`         | URL is not exactly `https://<project-ref>.supabase.co/functions/v1/copy-registry`.                       |
 | Setup: `Open the registered GoPay Strings file…`       | Publisher setup was attempted in a file that is not the library.                                         |

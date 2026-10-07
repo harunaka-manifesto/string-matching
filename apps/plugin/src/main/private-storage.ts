@@ -9,6 +9,12 @@ const size = (key: string, value: unknown) =>
     ? value.byteLength
     : strToU8(JSON.stringify(value) ?? 'null').byteLength);
 let writes: Promise<void> = Promise.resolve();
+/**
+ * Sizes of values this module wrote. Measuring meant reading every stored value
+ * (catalog and string cache are megabytes) on each write, which stalled every
+ * draft save. Keys written elsewhere are small and still measured on demand.
+ */
+const knownSizes = new Map<string, number>();
 export async function readPrivate<T>(key: string): Promise<T | undefined> {
   const stored = await figma.clientStorage.getAsync(key);
   return stored instanceof Uint8Array
@@ -18,15 +24,21 @@ export async function readPrivate<T>(key: string): Promise<T | undefined> {
 export function writeStorage(key: string, value: unknown, durable = true): Promise<void> {
   const task = async () => {
     const keys = await figma.clientStorage.keysAsync();
+    const present = new Set(keys);
+    for (const k of knownSizes.keys()) if (!present.has(k)) knownSizes.delete(k);
     const entries = await Promise.all(
       keys
         .filter((k) => k !== key)
-        .map(async (k) => ({ key: k, bytes: size(k, await figma.clientStorage.getAsync(k)) })),
+        .map(async (k) => ({
+          key: k,
+          bytes: knownSizes.get(k) ?? size(k, await figma.clientStorage.getAsync(k)),
+        })),
     );
     let used = entries.reduce((n, e) => n + e.bytes, 0) + size(key, value);
     for (const e of entries.filter((e) => disposable(e.key)))
       if (used > BUDGET) {
         await figma.clientStorage.deleteAsync(e.key);
+        knownSizes.delete(e.key);
         used -= e.bytes;
       }
     if (used > BUDGET) {
@@ -36,7 +48,9 @@ export function writeStorage(key: string, value: unknown, durable = true): Promi
       );
     }
     try {
+      knownSizes.delete(key);
       await figma.clientStorage.setAsync(key, value);
+      knownSizes.set(key, size(key, value));
     } catch (error) {
       if (durable) throw error;
     }

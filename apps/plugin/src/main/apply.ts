@@ -10,26 +10,29 @@ import { pageCandidates, snapshotText } from './propagate';
 import { baselineOf, bindRecord, copyIdOf, actual, sameValues } from './delivery';
 import { isDescendantOf } from './selection';
 import { catalog } from './registry-api';
+import { loadFont } from './perf';
 
 class ApplyFailure extends Error {}
 
 async function loadFonts(node: TextNode): Promise<void> {
-  if (node.hasMissingFont) throw new ApplyFailure('Missing font');
+  if (node.hasMissingFont) throw new ApplyFailure(`Missing font in “${node.name}”`);
   const fonts =
     node.characters.length > 0
       ? node.getRangeAllFontNames(0, node.characters.length)
       : [node.fontName as FontName];
-  await Promise.all(fonts.map((font) => figma.loadFontAsync(font)));
+  await Promise.all(fonts.map(loadFont));
 }
 
 /** Binds and names the layer after its string, e.g. `investment/gopay_investment_…_title`. */
 async function bind(node: TextNode, variable: Variable): Promise<boolean> {
-  await loadFonts(node);
   const changed = boundVariableId(node) !== variable.id;
   const id = copyIdOf(variable);
   const record =
     baselineOf(variable) ??
     (id ? (await catalog().catch(() => null))?.records.find((r) => r.copyId === id) : undefined);
+  // Already bound and named: nothing to write, so a missing font elsewhere cannot block it.
+  if (!changed && node.name === (record?.platformKey ?? variable.name)) return false;
+  await loadFonts(node);
   if (record && sameValues(await actual(variable), record)) {
     const c = await figma.variables.getVariableCollectionByIdAsync(variable.variableCollectionId);
     const language =
@@ -80,15 +83,13 @@ export async function applyDecisions(
   const keys = [
     ...new Set(decisions.flatMap((item) => (item.action === 'bind' ? [item.key] : []))),
   ];
-  await Promise.all(
-    keys.map(async (key) => {
-      try {
-        variables.set(key, await variableByKey(key));
-      } catch {
-        // Reported per layer below.
-      }
-    }),
-  );
+  // One at a time: two new strings of one product must not each create its collection.
+  for (const key of keys)
+    try {
+      variables.set(key, await variableByKey(key));
+    } catch {
+      // Reported per layer below.
+    }
 
   const summary: ApplySummary = {
     boundInFrame: 0,
@@ -227,14 +228,21 @@ export async function previewApply(
   if (!root || root.type === 'DOCUMENT' || root.type === 'PAGE') throw new Error('Select a frame');
   const snapshots: TextNodeSnapshot[] = [];
   const sources: ApplyPreview['sources'] = [];
+  const sourceAction = new Map<string, { action: LayerDecision['action']; key: string | null }>();
   for (const decision of decisions) {
     const n = await figma.getNodeByIdAsync(decision.layerId);
     if (!n || n.type !== 'TEXT' || !isDescendantOf(n, rootId))
       throw new Error('Source is outside selected frame');
     sources.push({ nodeId: n.id, fingerprint: await fingerprint(n) });
-    if (decision.action === 'bind') await loadFonts(n);
-    if (decision.action === 'bind' || decision.action === 'skip' || boundVariableId(n))
+    const boundKey = await boundKeyOf(n);
+    // Fonts only matter for layers this Apply rewrites.
+    if (decision.action === 'bind' && boundKey !== decision.key) await loadFonts(n);
+    if (decision.action === 'bind' || decision.action === 'skip' || boundKey)
       snapshots.push(snapshotText(n, root as SceneNode));
+    sourceAction.set(n.id, {
+      action: decision.action,
+      key: decision.action === 'bind' ? decision.key : boundKey,
+    });
   }
   const candidates = pageCandidates(root as SceneNode);
   const byId = new Map(candidates.map((c) => [c.node.id, c.node]));
@@ -242,12 +250,33 @@ export async function previewApply(
   for (const m of matchDuplicateLayers({
     sources: snapshots,
     candidates: candidates.map((c) => c.snapshot),
-  }))
+  })) {
+    const node = byId.get(m.nodeId)!;
+    const source = sourceAction.get(m.sourceId);
+    const current = await boundKeyOf(node);
+    const change: 'bind' | 'skip' | 'none' =
+      source?.action === 'skip'
+        ? current || readLayerState(node) !== null
+          ? 'none'
+          : 'skip'
+        : current
+          ? 'none'
+          : source?.key
+            ? 'bind'
+            : 'none';
     targets.push({
       nodeId: m.nodeId,
       sourceId: m.sourceId,
       frameName: m.frameName,
-      fingerprint: await fingerprint(byId.get(m.nodeId)!),
+      layerName: node.name,
+      change,
+      fingerprint: await fingerprint(node),
     });
+  }
   return { sources, targets };
+}
+
+async function boundKeyOf(n: TextNode): Promise<string | null> {
+  const id = boundVariableId(n);
+  return id ? ((await figma.variables.getVariableByIdAsync(id))?.key ?? null) : null;
 }

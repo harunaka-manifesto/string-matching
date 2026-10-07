@@ -19,6 +19,10 @@ const PATHS = {
   swap: 'M3.5 5.5h9m0 0-2.5-2.5m2.5 2.5L10 8M12.5 10.5h-9m0 0L6 8m-2.5 2.5L6 13',
   sparkle: 'M8 2.5 9.2 6.8 13.5 8 9.2 9.2 8 13.5 6.8 9.2 2.5 8 6.8 6.8 8 2.5Z',
   frame: 'M5.5 2.5v11m5-11v11m-8-8h11m-11 5h11',
+  plus: 'M8 3.5v9M3.5 8h9',
+  pencil: 'M10.5 3.5 12.5 5.5 6 12H4v-2l6.5-6.5Z',
+  fork: 'M5 3.5v3a2 2 0 0 0 2 2h2a2 2 0 0 1 2 2v2M5 6.5v6M5 3.5h.01M11 12.5h.01M5 12.5h.01',
+  grip: 'M10.5 13.5l3-3M7 13.5l6.5-6.5',
 } as const;
 
 export type IconName = keyof typeof PATHS;

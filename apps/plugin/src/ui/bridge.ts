@@ -9,16 +9,40 @@ export type UiBridge = {
   subscribe: (listener: (message: PluginToUiMessage) => void) => () => void;
 };
 
+/**
+ * Bulk payloads (whole catalog, every library string) come from our own plugin
+ * code, which already validated them. Deep-parsing them again in the iframe
+ * cost hundreds of milliseconds per message, so only their type is checked.
+ */
+const TRUSTED = new Set<PluginToUiMessage['type']>([
+  'registry:catalog',
+  'index:listing',
+  'index:values',
+  'index:local',
+  'index:cached',
+  'workflow:result',
+]);
+
 export function productionBridge(): UiBridge {
+  const listeners = new Set<(message: PluginToUiMessage) => void>();
+  // One window listener parses each message once and fans it out.
+  window.addEventListener('message', (event: MessageEvent) => {
+    const raw = event.data?.pluginMessage;
+    if (!raw || typeof raw.type !== 'string' || !listeners.size) return;
+    let message: PluginToUiMessage;
+    if (TRUSTED.has(raw.type)) message = raw as PluginToUiMessage;
+    else {
+      const parsed = PluginToUiMessageSchema.safeParse(raw);
+      if (!parsed.success) return;
+      message = parsed.data;
+    }
+    for (const listener of [...listeners]) listener(message);
+  });
   return {
     send: (message) => parent.postMessage({ pluginMessage: message }, '*'),
     subscribe: (listener) => {
-      const handler = (event: MessageEvent) => {
-        const parsed = PluginToUiMessageSchema.safeParse(event.data?.pluginMessage);
-        if (parsed.success) listener(parsed.data);
-      };
-      window.addEventListener('message', handler);
-      return () => window.removeEventListener('message', handler);
+      listeners.add(listener);
+      return () => listeners.delete(listener);
     },
   };
 }

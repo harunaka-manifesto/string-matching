@@ -84,10 +84,32 @@ function lcsLength(a: readonly string[], b: readonly string[]): number {
 }
 
 export function pathSimilarity(a: readonly string[], b: readonly string[]): number {
-  const left = a.map(normalizeDuplicateName);
-  const right = b.map(normalizeDuplicateName);
+  return normalizedPathSimilarity(a.map(normalizeDuplicateName), b.map(normalizeDuplicateName));
+}
+
+function normalizedPathSimilarity(left: readonly string[], right: readonly string[]): number {
   if (!left.length && !right.length) return 1;
   return (2 * lcsLength(left, right)) / (left.length + right.length);
+}
+
+type Normalized = { path: string[]; name: string; text: string; frameTokens: Set<string> };
+/**
+ * Scoring compares every source with every candidate on the page (thousands of
+ * layers), so each snapshot's strings are normalized once, not once per pair.
+ */
+const normalizedSnapshots = new WeakMap<TextNodeSnapshot, Normalized>();
+function normalized(snapshot: TextNodeSnapshot): Normalized {
+  let value = normalizedSnapshots.get(snapshot);
+  if (!value) {
+    value = {
+      path: snapshot.path.map(normalizeDuplicateName),
+      name: normalizeDuplicateName(snapshot.name),
+      text: normalizeText(snapshot.characters),
+      frameTokens: tokens(snapshot.frameName),
+    };
+    normalizedSnapshots.set(snapshot, value);
+  }
+  return value;
 }
 
 function positionSimilarity(source: TextNodeSnapshot, candidate: TextNodeSnapshot): number {
@@ -112,7 +134,9 @@ export function scoreCandidate(
   candidate: TextNodeSnapshot,
 ): { score: number; reasons: string[] } {
   const reasons: string[] = [];
-  let path = pathSimilarity(source.path, candidate.path);
+  const a = normalized(source);
+  const b = normalized(candidate);
+  let path = normalizedPathSimilarity(a.path, b.path);
   // Same slot of the same component (e.g. a list item title) is structurally identical.
   if (source.instanceKey && source.instanceKey === candidate.instanceKey) path = Math.max(path, 1);
   if (path === 1) reasons.push('Same layer path');
@@ -122,13 +146,12 @@ export function scoreCandidate(
   else if (position >= 0.6) reasons.push('Nearby position');
   const style = styleSimilarity(source, candidate);
   if (style === 1) reasons.push('Same text style');
-  const name =
-    normalizeDuplicateName(source.name) === normalizeDuplicateName(candidate.name) ? 1 : 0;
+  const name = a.name === b.name ? 1 : 0;
   if (name) reasons.push('Same layer name');
-  const text = normalizeText(source.characters) === normalizeText(candidate.characters) ? 1 : 0;
+  const text = a.text === b.text ? 1 : 0;
   if (text) reasons.push('Same text');
   const frame =
-    0.7 * jaccard(tokens(source.frameName), tokens(candidate.frameName)) +
+    0.7 * jaccard(a.frameTokens, b.frameTokens) +
     0.3 * (Math.abs(source.frameWidth - candidate.frameWidth) < 1 ? 1 : 0);
   if (frame >= 0.8) reasons.push('Similar frame');
   const score =

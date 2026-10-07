@@ -16,7 +16,13 @@ import {
 } from '@string-binder/domain';
 
 /** Deterministic local simulator; never used by the Figma production build. */
-export function mockRegistry(selection: () => SelectionInfo, changed: () => void) {
+export const MOCK_SCOPES = 'mock:scopes';
+
+export function mockRegistry(
+  selection: () => SelectionInfo,
+  changed: () => void,
+  localsChanged: (records: CopyRecord[]) => void,
+) {
   const context = { feature: 'onboarding', screen: 'landing', context: '', role: 'cta', note: '' };
   const seed: CopyRecord = {
     copyId: createCopyId(1791244800000, new Uint8Array(10).fill(1)),
@@ -59,8 +65,97 @@ export function mockRegistry(selection: () => SelectionInfo, changed: () => void
   return async (action: WorkflowAction, data: any): Promise<any> => {
     const catalog: Catalog = state.catalog;
     switch (action) {
-      case 'window':
-        return null;
+      case 'scope:set': {
+        const scopes = JSON.parse(localStorage.getItem(MOCK_SCOPES) ?? '{}');
+        if (!(scopes[data.pageId]?.confirmed && !data.confirmed))
+          scopes[data.pageId] = { product: data.product, confirmed: !!data.confirmed };
+        localStorage.setItem(MOCK_SCOPES, JSON.stringify(scopes));
+        changed();
+        return scopes[data.pageId];
+      }
+      case 'writer:commit': {
+        const records: CopyRecord[] = data.records ?? [];
+        const binding = {
+          applied: [] as string[],
+          conflicts: [] as string[],
+          failures: [] as any[],
+        };
+        if (records.length) {
+          if (failOnce && !state.bindingFailureSent) {
+            state.bindingFailureSent = true;
+            save();
+            return {
+              binding: {
+                applied: [],
+                conflicts: [],
+                failures: data.targets.map((t: any) => ({
+                  nodeId: t.nodeId,
+                  reason: 'Simulated interruption after save',
+                })),
+              },
+              summary: null,
+            };
+          }
+          for (const t of data.targets) {
+            const layer = selection().layers.find((l) => l.id === t.nodeId);
+            const r = records.find((r) => r.copyId === t.copyId);
+            if (!layer || !r) continue;
+            if (
+              canvasFingerprint(layer) !== t.fingerprint &&
+              state.bindings[layer.id] !== r.copyId
+            ) {
+              binding.conflicts.push(layer.id);
+              continue;
+            }
+            Object.assign(layer, {
+              name: r.platformKey,
+              characters: r[t.locale as 'en' | 'id'],
+              boundKey: `local:${r.copyId}`,
+              boundName: r.platformKey,
+            });
+            state.bindings[layer.id] = r.copyId;
+            binding.applied.push(layer.id);
+          }
+        }
+        let bound = 0;
+        for (const decision of data.decisions ?? []) {
+          const layer = selection().layers.find((l) => l.id === decision.layerId);
+          if (!layer) continue;
+          if (decision.action === 'bind') {
+            const copyId = decision.key.startsWith('registry:') ? decision.key.split(':')[1] : null;
+            const record = copyId && catalog.records.find((r) => r.copyId === copyId);
+            const key = record ? `local:${record.copyId}` : decision.key;
+            if (record) records.push(record);
+            if (layer.boundKey !== key) bound += 1;
+            Object.assign(layer, { boundKey: key, stored: null });
+            if (record)
+              Object.assign(layer, { name: record.platformKey, boundName: record.platformKey });
+          } else if (decision.action === 'unbind')
+            Object.assign(layer, { boundKey: null, boundName: null, stored: null });
+          else
+            layer.stored =
+              decision.action === 'skip'
+                ? 'skip'
+                : decision.action === 'flag'
+                  ? 'needs-new'
+                  : 'include';
+        }
+        save();
+        if (records.length) localsChanged(records);
+        changed();
+        return {
+          binding,
+          summary: {
+            boundInFrame: bound,
+            boundAcrossPage: 0,
+            framesTouched: 0,
+            skipsCopied: 0,
+            conflicts: [],
+            failures: [],
+            propagated: [],
+          },
+        };
+      }
       case 'catalog':
         return catalog;
       case 'refresh':
@@ -101,6 +196,12 @@ export function mockRegistry(selection: () => SelectionInfo, changed: () => void
           targets: [],
         };
       case 'preflight':
+        for (const r of data.rows)
+          if (
+            canvasFingerprint(selection().layers.find((l) => l.id === r.layerId)!) !==
+            r.canvasFingerprint
+          )
+            fail('VALIDATION', 'Layer changed on canvas. Check its new copy before applying.');
         return {
           targets: data.rows.map((r: any) => ({
             nodeId: r.layerId,
@@ -187,7 +288,7 @@ export function mockRegistry(selection: () => SelectionInfo, changed: () => void
           Object.assign(layer, {
             name: r.platformKey,
             characters: r[t.locale],
-            boundKey: `registry:${r.copyId}:${r.revision}`,
+            boundKey: `local:${r.copyId}`,
             boundName: r.platformKey,
           });
           state.bindings[layer.id] = r.copyId;

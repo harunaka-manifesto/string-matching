@@ -1,5 +1,6 @@
 import type { WorkflowAction } from '@string-binder/contracts';
 import type { UiBridge } from './bridge';
+import { uuid } from './uuid';
 
 export class ClientError extends Error {
   constructor(
@@ -26,7 +27,7 @@ export function request<T>(
   action: WorkflowAction,
   data: unknown = {},
 ): Promise<T> {
-  const operationId = crypto.randomUUID();
+  const operationId = uuid();
   return new Promise((resolve, reject) => {
     const timer = setTimeout(
       () => {

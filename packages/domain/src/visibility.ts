@@ -81,6 +81,8 @@ export function isVisuallyPresentText(node: VisibilityNode, root: VisibilityNode
 export function collectVisuallyPresentText(root: VisibilityNode): VisibilityNode[] {
   const result: VisibilityNode[] = [];
   const visit = (node: VisibilityNode) => {
+    // Nothing under a hidden layer can be visible; skip reading its subtree.
+    if (node.visible === false) return;
     if (node.id !== root.id && node.type === 'TEXT' && isVisuallyPresentText(node, root))
       result.push(node);
     for (const child of node.children ?? []) visit(child);

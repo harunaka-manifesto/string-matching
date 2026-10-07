@@ -2,6 +2,7 @@ import {
   PLUGIN_DATA_NAMESPACE,
   PLUGIN_DATA_STATE_KEY,
   UiToPluginMessageSchema,
+  type Catalog,
   type PluginToUiMessage,
   type UiToPluginMessage,
 } from '@string-binder/contracts';
@@ -19,11 +20,41 @@ import {
 import { isDescendantOf, isSupportedRoot, selectionInfo } from './selection';
 
 const CACHE_KEY = 'string-index:v1';
+const SIZE_KEY = 'ui:size';
+const DEFAULT_SIZE = { width: 400, height: 720 };
 
-figma.showUI(__html__, { width: 440, height: 680, themeColors: true });
+function clampSize(width: number, height: number) {
+  return {
+    width: Math.round(Math.min(900, Math.max(360, width))),
+    height: Math.round(Math.min(1200, Math.max(520, height))),
+  };
+}
+
+figma.showUI(__html__, { ...DEFAULT_SIZE, themeColors: true });
+void figma.clientStorage
+  .getAsync(SIZE_KEY)
+  .then((saved: { width?: number; height?: number } | undefined) => {
+    if (saved?.width && saved?.height) {
+      const size = clampSize(saved.width, saved.height);
+      figma.ui.resize(size.width, size.height);
+    }
+  })
+  .catch(() => {});
 
 function post(message: PluginToUiMessage): void {
   figma.ui.postMessage(message);
+}
+
+let postedCatalog = '';
+/**
+ * The catalog holds every saved record (tens of thousands). Cloning it to the
+ * UI and re-indexing it there is expensive, so unchanged catalogs are not resent.
+ */
+function postCatalog(catalog: Catalog): void {
+  const signature = `${catalog.seq}:${catalog.records.length}:${catalog.mappings.length}:${catalog.products.length}`;
+  if (signature === postedCatalog) return;
+  postedCatalog = signature;
+  post({ type: 'registry:catalog', catalog });
 }
 
 function describe(error: unknown): string {
@@ -39,11 +70,49 @@ async function activeRoot(): Promise<SceneNode | null> {
   return isSupportedRoot(node) && !node.removed ? node : null;
 }
 
+/** Set while the plugin writes, so its own edits don't look like canvas changes. */
+let writing = 0;
+/** One `canvas:changed` per dirty period; cleared when the frame is read again. */
+let changePosted = false;
+
 async function sendSelection(): Promise<void> {
   const root = await activeRoot();
   activeRootId = root?.id ?? null;
+  changePosted = false;
   post({ type: 'selection', selection: root ? await selectionInfo(root) : null });
 }
+
+/** Local string variables, re-read after the plugin creates or updates them. */
+async function sendLocalIndex(): Promise<void> {
+  const local = await listLocalStrings();
+  post({ type: 'index:local', listing: local.listing, values: local.values });
+}
+
+function onNodeChange(event: NodeChangeEvent): void {
+  if (writing || changePosted || !activeRootId) return;
+  const rootId = activeRootId;
+  const inside = event.nodeChanges.some(
+    (change) =>
+      !change.node.removed &&
+      (change.node.id === rootId || isDescendantOf(change.node as BaseNode, rootId)),
+  );
+  if (!inside) return;
+  changePosted = true;
+  post({ type: 'canvas:changed', frameId: rootId });
+}
+
+let watchedPage: PageNode | null = null;
+/** Canvas-change watching is a convenience: if Figma refuses it, the plugin still works. */
+function watchPage(): void {
+  try {
+    watchedPage?.off('nodechange', onNodeChange);
+    watchedPage = figma.currentPage;
+    watchedPage.on('nodechange', onNodeChange);
+  } catch {
+    watchedPage = null;
+  }
+}
+watchPage();
 
 /**
  * Only selecting another frame switches the working frame. Picking layers (from
@@ -118,22 +187,51 @@ async function selectLayers(ids: readonly string[], zoom = true): Promise<number
   return nodes.length;
 }
 
+/** Workflow actions that write to the canvas or variables. They run one at a time. */
+const WRITES = new Set([
+  'deliver',
+  'refresh',
+  'writer:commit',
+  'scope:set',
+  'settings:save',
+  'library:start',
+  'library:apply',
+  'library:ack',
+  'library:publish',
+]);
+/** Writes that change variables or layers, after which the UI re-reads frame and index. */
+const CANVAS_WRITES = new Set(['deliver', 'writer:commit', 'refresh', 'library:apply']);
+
 async function handle(message: UiToPluginMessage): Promise<void> {
   switch (message.type) {
     case 'workflow': {
+      const canvas = CANVAS_WRITES.has(message.action);
+      if (canvas) writing += 1;
       try {
         const data = await workflow(message.action, message.data);
-        post({ type: 'workflow:result', operationId: message.operationId, data });
-        if (message.action === 'catalog')
-          post({
-            type: 'registry:catalog',
-            catalog: data as import('@string-binder/contracts').Catalog,
-          });
-        if (message.action === 'refresh')
-          post({
-            type: 'registry:catalog',
-            catalog: (data as { catalog: import('@string-binder/contracts').Catalog }).catalog,
-          });
+        if (message.action === 'refresh') {
+          // The catalog travels once, in `registry:catalog`, and only when it changed.
+          const { catalog, result } = data as { catalog: Catalog; result: unknown };
+          post({ type: 'workflow:result', operationId: message.operationId, data: { result } });
+          postCatalog(catalog);
+        } else {
+          post({ type: 'workflow:result', operationId: message.operationId, data });
+          if (message.action === 'catalog') postCatalog(data as Catalog);
+        }
+        if (message.action === 'scope:set') await sendSelection();
+        if (canvas) {
+          const applied =
+            message.action !== 'refresh' ||
+            ((data as { result?: { applied: unknown[] } }).result?.applied.length ?? 0) > 0;
+          if (applied) {
+            forgetVariableCache();
+            await sendLocalIndex();
+            if (message.action !== 'refresh') {
+              await sendSelection();
+              await sendUsage(true);
+            }
+          }
+        }
       } catch (error) {
         post({
           type: 'workflow:error',
@@ -142,10 +240,14 @@ async function handle(message: UiToPluginMessage): Promise<void> {
           message: describe(error),
           details: error instanceof WorkflowError ? error.details : undefined,
         });
+      } finally {
+        if (canvas) writing -= 1;
       }
       return;
     }
     case 'ui:ready':
+      // A reloaded UI starts empty, so it needs the catalog again.
+      postedCatalog = '';
       post({
         type: 'index:cached',
         bytes: ((await figma.clientStorage.getAsync(CACHE_KEY)) as Uint8Array | undefined) ?? null,
@@ -156,6 +258,15 @@ async function handle(message: UiToPluginMessage): Promise<void> {
     case 'selection:refresh':
       await onSelectionChange(true);
       return;
+    case 'frame:reread':
+      await sendSelection();
+      return;
+    case 'window:resize': {
+      const size = clampSize(message.width, message.height);
+      figma.ui.resize(size.width, size.height);
+      if (message.persist) await figma.clientStorage.setAsync(SIZE_KEY, size);
+      return;
+    }
     case 'index:sync':
       await syncIndex(message.knownKeys);
       return;
@@ -180,24 +291,33 @@ async function handle(message: UiToPluginMessage): Promise<void> {
       return;
     }
     case 'apply': {
-      const summary = await applyDecisions(message.frameId, message.decisions, message.preview);
-      forgetVariableCache();
-      post({ type: 'apply:done', summary });
-      await sendSelection();
-      await sendUsage(true);
+      writing += 1;
+      try {
+        const summary = await applyDecisions(message.frameId, message.decisions, message.preview);
+        forgetVariableCache();
+        post({ type: 'apply:done', summary });
+        await sendLocalIndex();
+        await sendSelection();
+        await sendUsage(true);
+      } finally {
+        writing -= 1;
+      }
       return;
     }
   }
 }
 
-let operationQueue: Promise<void> = Promise.resolve();
+// Reads (catalog, drafts, scans, previews) answer right away; writes queue behind each other,
+// so a background refresh never makes a writer's request wait or time out.
+let writeQueue: Promise<void> = Promise.resolve();
 figma.ui.onmessage = (raw: unknown) => {
   const parsed = UiToPluginMessageSchema.safeParse(raw);
   if (!parsed.success) return;
   const task = () =>
     handle(parsed.data).catch((error) => post({ type: 'error', message: describe(error) }));
-  if (parsed.data.type === 'workflow' || parsed.data.type === 'apply')
-    operationQueue = operationQueue.then(task);
+  const message = parsed.data;
+  if (message.type === 'apply' || (message.type === 'workflow' && WRITES.has(message.action)))
+    writeQueue = writeQueue.then(task);
   else void task();
 };
 
@@ -206,6 +326,7 @@ figma.on('selectionchange', () => {
 });
 figma.on('currentpagechange', () => {
   activeRootId = null;
+  watchPage();
   onSelectionChange(true)
     .then(() => sendUsage())
     .catch((error) => post({ type: 'error', message: describe(error) }));
