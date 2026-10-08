@@ -43,20 +43,24 @@ export function mergeIndex(
   const list: StringEntry[] = [];
   const byCopyId = new Map<string, StringEntry[]>();
   const loose: StringEntry[] = [];
-  for (const item of figma) {
-    if (item.copyId) {
-      const group = byCopyId.get(item.copyId) ?? [];
-      group.push(item);
-      byCopyId.set(item.copyId, group);
-    } else loose.push(item);
-  }
   const records = new Map((catalog?.records ?? []).map((record) => [record.copyId, record]));
   const mappedKeys = new Map<string, string[]>();
+  const mappedCopyId = new Map<string, string>();
   const keysOf = new Map<StringEntry, string[]>();
   for (const mapping of catalog?.mappings ?? []) {
     const keys = mappedKeys.get(mapping.copyId) ?? [];
     keys.push(mapping.variableKey);
     mappedKeys.set(mapping.copyId, keys);
+    mappedCopyId.set(mapping.variableKey, mapping.copyId);
+  }
+  for (const item of figma) {
+    // Library values load lazily, so a published variable is matched to its record by mapping.
+    const copyId = item.copyId || mappedCopyId.get(item.key);
+    if (copyId) {
+      const group = byCopyId.get(copyId) ?? [];
+      group.push(item);
+      byCopyId.set(copyId, group);
+    } else loose.push(item);
   }
 
   for (const record of records.values()) {

@@ -86,6 +86,8 @@ export function figmaFixture() {
     return n;
   };
   const figma: any = {
+    // Progress (`activity`) messages to the UI.
+    ui: { postMessage: () => {} },
     variables: {
       getLocalVariablesAsync: async () => vars.filter((v) => !v.remote),
       getLocalVariableCollectionsAsync: async () => collections,

@@ -1,6 +1,6 @@
-import { readPrivate, writePrivate } from './private-storage';
-import type { Catalog } from '@string-binder/contracts';
-import { CatalogSchema, MappingSchema } from '@string-binder/contracts';
+import { strFromU8 } from 'fflate';
+import type { Catalog, UiToPluginMessage } from '@string-binder/contracts';
+import { post } from './channel';
 declare const REGISTRY_URL: string;
 declare const REGISTRY_TOKEN: string;
 const configuredUrl = typeof REGISTRY_URL === 'string' ? REGISTRY_URL : '';
@@ -21,7 +21,7 @@ export const settings = async (): Promise<Settings> =>
 async function deviceId(): Promise<string> {
   return String((await figma.clientStorage.getAsync('registry:device').catch(() => '')) ?? '');
 }
-export async function api(action: string, data?: unknown, publisher = false): Promise<unknown> {
+async function send(action: string, data?: unknown, publisher = false) {
   if (!configuredUrl)
     throw new WorkflowError(
       'NOT_CONFIGURED',
@@ -33,9 +33,8 @@ export async function api(action: string, data?: unknown, publisher = false): Pr
       'NOT_CONFIGURED',
       publisher ? 'Enter a publisher credential in Library sync.' : 'Team token is not configured.',
     );
-  let response;
   try {
-    response = await fetch(`${configuredUrl}/${action}`, {
+    return await fetch(`${configuredUrl}/${action}`, {
       method: data === undefined ? 'GET' : 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,6 +49,17 @@ export async function api(action: string, data?: unknown, publisher = false): Pr
       'Registry unavailable. Your draft and request ID are preserved.',
     );
   }
+}
+function rejected(ok: boolean, body: any): void {
+  if (!ok)
+    throw new WorkflowError(
+      body?.error ?? 'UNAVAILABLE',
+      body?.message ?? 'Registry request failed',
+      body,
+    );
+}
+export async function api(action: string, data?: unknown, publisher = false): Promise<unknown> {
+  const response = await send(action, data, publisher);
   let body;
   try {
     body = await response.json();
@@ -60,66 +70,69 @@ export async function api(action: string, data?: unknown, publisher = false): Pr
       'Registry unavailable. Your draft and request ID are preserved.',
     );
   }
-  if (!response.ok)
-    throw new WorkflowError(
-      body?.error ?? 'UNAVAILABLE',
-      body?.message ?? 'Registry request failed',
-      body,
-    );
+  rejected(response.ok, body);
   return body;
 }
-const catalogKey = `registry:catalog:${configuredUrl}`;
-let cached: Catalog | null = null;
-let inFlight: Promise<Catalog> | null = null;
-/** Overlapping callers share one fetch, so delta pages are never applied twice at once. */
-export function catalog(force = false): Promise<Catalog> {
-  if (inFlight) return inFlight;
-  if (!force && cached) return Promise.resolve(cached);
-  inFlight = loadCatalog(force).finally(() => {
-    inFlight = null;
-  });
-  return inFlight;
-}
-async function loadCatalog(force: boolean): Promise<Catalog> {
-  if (!cached) cached = (await readPrivate<Catalog>(catalogKey).catch(() => undefined)) ?? null;
-  if (force || !cached) {
-    let changed = false;
-    if (!cached) {
-      cached = CatalogSchema.parse(await api('catalog'));
-      changed = true;
-    } else {
-      let more = true;
-      while (more) {
-        const delta = (await api(`changes?after=${cached.seq}`)) as {
-          seq: number;
-          events: { type: string; record: unknown }[];
-          more: boolean;
-        };
-        if (delta.events.length) changed = true;
-        const records = new Map(cached.records.map((r) => [r.copyId, r]));
-        const mappings = new Map(cached.mappings.map((m) => [m.libraryId + ':' + m.copyId, m]));
-        for (const event of delta.events) {
-          if (event.type === 'copy') {
-            const r = CatalogSchema.shape.records.element.parse(event.record);
-            records.set(r.copyId, r);
-          }
-          if (event.type === 'mapping') {
-            const m = MappingSchema.parse(event.record);
-            mappings.set(m.libraryId + ':' + m.copyId, m);
-          }
-        }
-        cached.records = [...records.values()];
-        cached.mappings = [...mappings.values()];
-        cached.seq = delta.seq;
-        more = delta.more;
-      }
-    }
-    if (changed) await writePrivate(catalogKey, cached, false);
+/**
+ * A registry GET as raw bytes. The catalog is about 10 MB of JSON: parsing it
+ * here, on Figma's main thread, froze Figma, so the UI parses it instead.
+ */
+export async function apiBytes(action: string): Promise<Uint8Array> {
+  const response = await send(action);
+  let bytes: Uint8Array;
+  try {
+    bytes = new Uint8Array(await response.arrayBuffer());
+  } catch {
+    throw new WorkflowError(
+      'UNAVAILABLE',
+      'Registry unavailable. Your draft and request ID are preserved.',
+    );
   }
-  return cached;
+  if (!response.ok) {
+    let body;
+    try {
+      body = JSON.parse(strFromU8(bytes));
+    } catch {
+      /* Non-JSON outage page. */
+    }
+    rejected(false, body);
+  }
+  return bytes;
 }
-export async function latestCatalog(): Promise<Catalog> {
-  cached = CatalogSchema.parse(await api('catalog'));
-  await writePrivate(catalogKey, cached, false);
-  return cached;
+/** Where the UI keeps the gzipped catalog. Older builds stored the same format here. */
+export const CATALOG_KEY = `registry:catalog:${configuredUrl}`;
+export type CatalogSlice = Catalog & { online: boolean };
+const waiting = new Map<
+  string,
+  { resolve: (slice: CatalogSlice) => void; reject: (e: Error) => void }
+>();
+let queries = 0;
+/**
+ * Saved records for `copyIds` (plus the records they were merged into), their
+ * mappings, and every product. The UI holds the catalog; the controller only
+ * ever sees the records it asks for. `fresh` pulls registry changes first;
+ * offline, the UI answers from what it has with `online: false`.
+ */
+export function catalog(copyIds: readonly string[] = [], fresh = false): Promise<CatalogSlice> {
+  const queryId = String((queries += 1));
+  return new Promise((resolve, reject) => {
+    waiting.set(queryId, { resolve, reject });
+    post({ type: 'catalog:query', queryId, copyIds: [...new Set(copyIds)], fresh });
+  });
+}
+export function answerCatalog(
+  answer: Extract<UiToPluginMessage, { type: 'catalog:answer' }>,
+): void {
+  const query = waiting.get(answer.queryId);
+  if (!query) return;
+  waiting.delete(answer.queryId);
+  if (answer.error) query.reject(new WorkflowError('UNAVAILABLE', answer.error));
+  else
+    query.resolve({
+      seq: answer.seq,
+      records: answer.records,
+      mappings: answer.mappings,
+      products: answer.products,
+      online: answer.online,
+    });
 }

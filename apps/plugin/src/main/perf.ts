@@ -28,3 +28,14 @@ export function textsByVariable(texts: readonly TextNode[]): Map<string, TextNod
   }
   return byVariable;
 }
+
+/**
+ * Lets Figma handle input and repaint before the next chunk of file-wide work.
+ * Plugin code runs on Figma's main thread: a long loop without this freezes the app.
+ */
+export function breathe(): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, 0));
+}
+
+/** How many variables or layers to process between `breathe()`s. */
+export const CHUNK = 400;

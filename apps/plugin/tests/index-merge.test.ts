@@ -28,7 +28,6 @@ const variable = (key: string, patch: Partial<StringEntry> = {}): StringEntry =>
     loaded: true,
     product: 'investment',
     path: '',
-    fields: {} as StringEntry['fields'],
     copyId,
     aliases: [],
     contexts: [],
@@ -109,6 +108,33 @@ describe('mergeIndex', () => {
     expect(merged.entries.get('published-key')?.record?.copyId).toBe(copyId);
     expect(merged.entries.get('loose')?.record).toBeUndefined();
     expect(merged.list).toHaveLength(2);
+  });
+
+  it('joins a published variable whose values never loaded to its record by mapping', () => {
+    const unloaded = variable('published-key', { copyId: '', loaded: false, en: '', id: '' });
+    const merged = mergeIndex(
+      [unloaded],
+      catalog(
+        [record()],
+        [
+          {
+            libraryId: 'lib',
+            copyId,
+            variableKey: 'published-key',
+            variableId: 'v',
+            syncedRevision: 2,
+            publishedRevision: 2,
+            fingerprint: 'x',
+          },
+        ],
+      ),
+      fromRecord,
+    );
+    expect(merged.list).toHaveLength(1);
+    expect(merged.list[0]?.key).toBe('published-key');
+    expect(merged.entries.get('published-key')?.en).toBe('Buy');
+    // Not known to carry the latest wording, so Apply binds through the registry record.
+    expect(merged.entries.get('published-key')?.bindKey).toBe(registryKey(copyId));
   });
 
   it('reads copy IDs from old revision-suffixed registry keys', () => {

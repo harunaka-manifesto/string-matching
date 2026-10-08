@@ -11,7 +11,7 @@ import {
   LayerDecisionSchema,
 } from '@string-binder/contracts';
 import { recordFingerprint, canonical } from '@string-binder/domain';
-import { api, catalog, settings, type Settings } from './registry-api';
+import { api, apiBytes, catalog, settings, type Settings } from './registry-api';
 import {
   actual,
   editableContext,
@@ -30,7 +30,8 @@ import {
   usageCounts,
 } from './delivery';
 import { boundVariableId } from './layer-state';
-import { textsByVariable } from './perf';
+import { breathe, textsByVariable } from './perf';
+import { activity } from './channel';
 import { readPrivate, writePrivate } from './private-storage';
 import { applyDecisions, previewApply } from './apply';
 import { writePageScope } from './page-scope';
@@ -162,17 +163,19 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
         : null;
       return { binding, summary };
     }
-    case 'catalog':
-      return catalog(!data.cached);
+    case 'registry:fetch': {
+      const path = String(data.path ?? '');
+      if (!/^(?:catalog|changes\?after=\d+)$/u.test(path)) throw new Error('Unknown registry read');
+      return apiBytes(path);
+    }
     case 'changes':
       return api(`changes?after=${data.after ?? 0}`);
     case 'request':
       return api(`request?id=${encodeURIComponent(data.requestId)}`);
     case 'submit': {
       const batch = MutationBatchSchema.parse(data.batch);
-      const response = MutationResultSchema.parse(await api('submit', batch));
-      await catalog(true).catch(() => null);
-      return response;
+      // The UI pulls the new revisions into its catalog after a submit.
+      return MutationResultSchema.parse(await api('submit', batch));
     }
     case 'scan': {
       const root = await figma.getNodeByIdAsync(data.frameId);
@@ -231,40 +234,26 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
         data.restoreIds ?? [],
       );
     case 'refresh': {
-      const cat = await catalog(true);
       // Only local mirror values change in the background; bindings change on explicit Apply.
-      if (figma.root.getPluginData('registry:library') || (!data.force && refreshedSeq === cat.seq))
-        return { catalog: cat, result: lastRefresh };
+      if (figma.root.getPluginData('registry:library')) return { result: lastRefresh };
+      // Only the records behind this file's delivered copy are needed, not the whole catalog.
+      const delivered = (await figma.variables.getLocalVariablesAsync('STRING')).flatMap((v) => {
+        const id = !v.remote && v.getSharedPluginData('copy', 'delivery') === '1' && copyIdOf(v);
+        return id ? [id] : [];
+      });
+      const cat = await catalog(delivered);
+      if (!data.force && refreshedSeq === cat.seq) return { result: lastRefresh };
       const protectedIds = Object.values(await drafts()).flatMap((d) =>
         d.rows.filter((r) => r.action !== 'keep' && r.baseline).map((r) => r.baseline!.copyId),
       );
       lastRefresh = await refreshValues(cat.records, protectedIds);
       refreshedSeq = cat.seq;
-      return { catalog: cat, result: lastRefresh };
+      return { result: lastRefresh };
     }
-    case 'library:scan': {
+    case 'library:scan':
+      // Matching against the registry happens in the UI, which holds the catalog.
       await checkDestination();
-      const cat = await catalog(true);
-      const locals = await scanLocal();
-      const byId = new Map(cat.records.map((r) => [r.copyId, r]));
-      // Indexed once: matching each local by scanning every record was quadratic.
-      const byKey = groupBy(cat.records, (r) => [r.platformKey]);
-      const byAlias = groupBy(cat.records, (r) => r.aliases);
-      for (const local of locals) {
-        if (local.copyId) continue;
-        const key = local.name.slice(local.name.lastIndexOf('/') + 1);
-        let matches = byKey.get(key) ?? [];
-        if (!matches.length)
-          matches = [...new Set([...(byAlias.get(key) ?? []), ...(byAlias.get(local.name) ?? [])])];
-        const canonical = [...new Set(matches.map((r) => r.mergedInto ?? r.copyId))];
-        if (canonical.length === 1 && byId.has(canonical[0]!)) local.copyId = canonical[0]!;
-        else if (local.collection.startsWith('# Legacy'))
-          local.error = canonical.length
-            ? 'Legacy key ownership is ambiguous; resolve registry aliases'
-            : 'Resolve this legacy variable against the registry. Never create another identity.';
-      }
-      return { catalog: cat, locals };
-    }
+      return { locals: await scanLocal() };
 
     case 'library:start': {
       await checkDestination();
@@ -299,7 +288,7 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
     case 'library:apply': {
       await checkDestination();
       const s = await settings();
-      const cat = await catalog();
+      const { products } = await catalog();
       const run = await readPrivate<any>('registry:run');
       if (!run || run.runId !== data.runId) throw new Error('Resume the correct sync manifest');
       await api(
@@ -325,7 +314,13 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
       let chunk = 0,
         lastRenewed = Date.now(),
         lastCheckpoint = Date.now();
+      const total = run.records.length;
       for (const rawRecord of run.records) {
+        // Let Figma repaint between records and show where the sync is.
+        if (chunk % 10 === 0) {
+          activity('library:apply', 'Applying library sync', chunk, total);
+          await breathe();
+        }
         if (chunk++ % 100 === 0 || Date.now() - lastRenewed > 20000) {
           await api(
             'library',
@@ -407,7 +402,7 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
             : undefined;
           const v = await materialize(
             r,
-            cat.products.find((p) => p.id === r.product)?.displayName ?? r.product,
+            products.find((p) => p.id === r.product)?.displayName ?? r.product,
             true,
             explicit ?? undefined,
             entries.some((e: any) => e.overwrite),
@@ -450,8 +445,10 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
           failures.push({ copyId: r.copyId, reason: e instanceof Error ? e.message : String(e) });
         }
       }
+      activity('library:apply', 'Saving sync progress');
       const allMappings = mergeMappings(run.applied ?? [], mappings);
       await writePrivate('registry:run', { ...run, applied: allMappings });
+      activity('library:apply', null);
       await api(
         'library',
         { operation: 'ack', args: { runId: run.runId, owner: run.owner, mappings: allMappings } },
@@ -520,7 +517,6 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
         true,
       );
       await writePrivate('registry:run', { ...run, published: true });
-      await catalog(true);
       return result;
     }
   }

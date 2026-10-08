@@ -156,10 +156,27 @@ export function mockRegistry(
           },
         };
       }
-      case 'catalog':
-        return catalog;
+      case 'registry:fetch': {
+        // Raw response bytes, like the plugin controller returns them.
+        const after = /^changes\?after=(\d+)$/u.exec(data.path)?.[1];
+        const body =
+          after === undefined
+            ? catalog
+            : {
+                seq: catalog.seq,
+                more: false,
+                events:
+                  Number(after) < catalog.seq
+                    ? [
+                        ...catalog.records.map((record) => ({ type: 'copy', record })),
+                        ...catalog.mappings.map((record) => ({ type: 'mapping', record })),
+                      ]
+                    : [],
+              };
+        return new TextEncoder().encode(JSON.stringify(body));
+      }
       case 'refresh':
-        return { catalog, result: { applied: [], failures: [], conflicts: [] } };
+        return { result: { applied: [], failures: [], conflicts: [] } };
       case 'device':
         return 'mock-device';
       case 'settings:get':
@@ -299,7 +316,7 @@ export function mockRegistry(
         return { applied, conflicts, failures: [] };
       }
       case 'library:scan':
-        return { catalog, locals: state.locals };
+        return { locals: state.locals };
       case 'library:pending':
         if ('value' in data) {
           state.pending = data.value;
@@ -344,6 +361,8 @@ export function mockRegistry(
         });
         state.run.applied = mappings;
         catalog.mappings = mappings;
+        // Like the registry, a mapping change is a change event the UI's catalog pulls.
+        catalog.seq++;
         save();
         return { mappings, failures: [] };
       }

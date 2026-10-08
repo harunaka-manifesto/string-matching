@@ -6,7 +6,8 @@ const forbidden = [
   /\bAbortController\b/u,
   /\bDOMException\b/u,
   /\bURLSearchParams\b/u,
-  /\b(?:setTimeout|setInterval)\s*\(/u,
+  // Timers are allowed only as `setTimeout(resolve, 0)`: `breathe()` yielding to Figma mid-loop.
+  /\bsetInterval\s*\(|\bsetTimeout\s*\((?![A-Za-z_$][\w$]*,\s*0\))/u,
   /\b(?:window|document)\s*\./u,
   /\bnew\s+(?:Request|Response)\s*\(/u,
 ];

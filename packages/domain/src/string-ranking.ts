@@ -29,7 +29,7 @@ export function productLabel(product: string): string {
     .join(' ');
 }
 
-const ROLE_ALIASES: Record<string, string> = {
+export const ROLE_ALIASES: Record<string, string> = {
   button: 'cta',
   action: 'cta',
   cta: 'cta',
@@ -61,7 +61,7 @@ export function roleOf(names: readonly string[]): string {
   return '';
 }
 
-function searchText(value: string): string {
+export function searchText(value: string): string {
   return normalizeForSearch(value.replace(/([a-z])([A-Z])/gu, '$1 $2'))
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim()
@@ -92,7 +92,7 @@ const WEIGHTS = {
 const FIELDS = Object.keys(WEIGHTS) as (keyof typeof WEIGHTS)[];
 
 /** One insertion, deletion, substitution, or adjacent transposition. */
-function oneTypo(a: string, b: string): boolean {
+export function oneTypo(a: string, b: string): boolean {
   if (a.length < 4 || Math.abs(a.length - b.length) > 1) return false;
   let i = 0;
   while (i < a.length && a[i] === b[i]) i += 1;
@@ -104,7 +104,7 @@ function oneTypo(a: string, b: string): boolean {
   return a.length > b.length ? a.slice(i + 1) === b.slice(i) : a.slice(i) === b.slice(i + 1);
 }
 
-function tokenScore(text: string, token: string): number {
+export function tokenScore(text: string, token: string): number {
   const words = text.split(/\s+/u);
   if (words.includes(token)) return 60;
   if (words.some((word) => word.startsWith(token))) return 40;
@@ -127,11 +127,11 @@ export const TIER = {
   exactKey: 6,
 } as const;
 
-type Lexical = { score: number; tier: number; reason: string };
+export type Lexical = { score: number; tier: number; reason: string };
 
-type PreparedQuery = { phrase: string; tokens: string[] };
+export type PreparedQuery = { phrase: string; tokens: string[] };
 
-function prepareQuery(query: string): PreparedQuery {
+export function prepareQuery(query: string): PreparedQuery {
   const phrase = searchText(query);
   return { phrase, tokens: phrase.split(' ').filter(Boolean) };
 }
@@ -142,7 +142,7 @@ function isExactIdentifier(value: string, phrase: string): boolean {
   return value.includes(phrase) && value.split('\n').includes(phrase);
 }
 
-function lexicalMatch(fields: RankFields, query: string | PreparedQuery): Lexical {
+export function lexicalMatch(fields: RankFields, query: string | PreparedQuery): Lexical {
   const none = { score: 0, tier: -1, reason: '' };
   // Ranking calls this per entry; the query is normalized once by the caller.
   const { phrase, tokens } = typeof query === 'string' ? prepareQuery(query) : query;

@@ -27,6 +27,7 @@ import {
   type Tone,
 } from '../shared';
 import { uuid } from '../uuid';
+import { catalogStore } from '../catalog-store';
 
 const LIBRARY_STATUS: Record<string, [string, Tone]> = {
   current: ['Up to date', 'success'],
@@ -46,13 +47,44 @@ const PUBLISH = 'Needs publish';
 const groupOf = (status: string) => LIBRARY_STATUS[status]![0].split(' · ')[0]!;
 /** One sync run must stay well inside the registry's 4 MB request limit. */
 const ADOPT_BATCH = 5000;
-export function LibrarySync({
-  bridge,
-  onCatalog,
-}: {
-  bridge: UiBridge;
-  onCatalog: (cat: Catalog) => void;
-}) {
+/**
+ * Links unlinked local variables to saved records by platform key, then alias.
+ * Runs here, where the catalog is, instead of in the plugin controller.
+ */
+function matchLocals(locals: LocalCopy[], cat: Catalog): LocalCopy[] {
+  const byId = new Map(cat.records.map((r) => [r.copyId, r]));
+  // Indexed once: matching each local by scanning every record was quadratic.
+  const byKey = new Map<string, CopyRecord[]>();
+  const byAlias = new Map<string, CopyRecord[]>();
+  const add = (map: Map<string, CopyRecord[]>, key: string, r: CopyRecord) => {
+    const group = map.get(key);
+    if (group) group.push(r);
+    else map.set(key, [r]);
+  };
+  for (const r of cat.records) {
+    add(byKey, r.platformKey, r);
+    for (const alias of r.aliases) add(byAlias, alias, r);
+  }
+  return locals.map((local) => {
+    if (local.copyId) return local;
+    const key = local.name.slice(local.name.lastIndexOf('/') + 1);
+    let matches = byKey.get(key) ?? [];
+    if (!matches.length)
+      matches = [...new Set([...(byAlias.get(key) ?? []), ...(byAlias.get(local.name) ?? [])])];
+    const ids = [...new Set(matches.map((r) => r.mergedInto ?? r.copyId))];
+    if (ids.length === 1 && byId.has(ids[0]!)) return { ...local, copyId: ids[0]! };
+    if (local.collection.startsWith('# Legacy'))
+      return {
+        ...local,
+        error: ids.length
+          ? 'Legacy key ownership is ambiguous; resolve registry aliases'
+          : 'Resolve this legacy variable against the registry. Never create another identity.',
+      };
+    return local;
+  });
+}
+
+export function LibrarySync({ bridge }: { bridge: UiBridge }) {
   const [config, setConfig] = useState({
     libraryId: 'gopay-strings',
     fileKey: 'azS9vExUzw1IRrrGm3NEfD',
@@ -78,6 +110,16 @@ export function LibrarySync({
   const [pendingReview, setPendingReview] = useState<LocalCopy[] | null>(null);
   const owner = useRef(uuid());
   const rpc = <T,>(action: WorkflowAction, data: unknown = {}) => request<T>(bridge, action, data);
+  /** This file's strings, matched against a catalog fresh from the registry. */
+  const scan = async () => {
+    const store = catalogStore(bridge);
+    const [cat, { locals }] = await Promise.all([
+      store.sync(),
+      rpc<{ locals: LocalCopy[] }>('library:scan'),
+    ]);
+    if (!store.online()) throw new Error('Library sync needs the registry. Retry when online.');
+    return { catalog: cat, locals: matchLocals(locals, cat) };
+  };
   useEffect(() => {
     void rpc<any>('settings:get')
       .then((s) => {
@@ -102,10 +144,9 @@ export function LibrarySync({
     setError('');
     setReview(false);
     try {
-      const scan = await rpc<{ catalog: Catalog; locals: LocalCopy[] }>('library:scan');
-      setCatalog(scan.catalog);
-      onCatalog(scan.catalog);
-      setLocals(scan.locals);
+      const scanned = await scan();
+      setCatalog(scanned.catalog);
+      setLocals(scanned.locals);
       setChoices({});
       setEdits({});
       setPage(0);
@@ -322,9 +363,9 @@ export function LibrarySync({
         await rpc('library:pending', { value: recovered });
         setPending(recovered);
       }
-      const scan = await rpc<{ catalog: Catalog; locals: LocalCopy[] }>('library:scan');
-      setCatalog(scan.catalog);
-      setPendingReview(scan.locals);
+      const scanned = await scan();
+      setCatalog(scanned.catalog);
+      setPendingReview(scanned.locals);
     } catch (e) {
       setError(message(e));
     } finally {

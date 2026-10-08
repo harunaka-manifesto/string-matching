@@ -1,5 +1,7 @@
 import type { LibraryListingItem, VariableValues } from '@string-binder/contracts';
 import { catalog, WorkflowError } from './registry-api';
+import { activity } from './channel';
+import { breathe, CHUNK } from './perf';
 import { recordFingerprint } from '@string-binder/domain';
 import {
   materialize,
@@ -11,9 +13,6 @@ import {
   fonts,
   verifiesSaved,
 } from './delivery';
-
-/** Parallel imports per batch; one batch is also one progress message to the UI. */
-export const IMPORT_BATCH_SIZE = 40;
 
 /** Lists every string variable in the libraries enabled for this file. No values yet. */
 export async function listLibraryStrings(): Promise<LibraryListingItem[]> {
@@ -43,7 +42,7 @@ export async function listLocalStrings(): Promise<{
 }> {
   localByKey.clear();
   const listing: LibraryListingItem[] = [];
-  const values: Promise<VariableValues>[] = [];
+  const pending: Variable[] = [];
   // One bulk read instead of one lookup per variable; collections still give panel order.
   const strings = new Map(
     (await figma.variables.getLocalVariablesAsync('STRING')).map((v) => [v.id, v]),
@@ -61,11 +60,22 @@ export async function listLocalStrings(): Promise<{
         order,
         local: true,
       });
-      values.push(readVariableValues(variable));
+      pending.push(variable);
       order += 1;
     }
   }
-  return { listing, values: await Promise.all(values) };
+  // A library file holds ~20,000 strings: read them in chunks so Figma stays responsive.
+  const values: VariableValues[] = [];
+  for (let start = 0; start < pending.length; start += CHUNK) {
+    if (pending.length > CHUNK)
+      activity('local', 'Reading this file’s strings', start, pending.length);
+    values.push(
+      ...(await Promise.all(pending.slice(start, start + CHUNK).map(readVariableValues))),
+    );
+    if (start + CHUNK < pending.length) await breathe();
+  }
+  if (pending.length > CHUNK) activity('local', null);
+  return { listing, values };
 }
 
 /** Local variables resolve directly; library variables are imported by key. */
@@ -73,11 +83,8 @@ export async function variableByKey(key: string): Promise<Variable> {
   if (key.startsWith('registry:')) {
     // `registry:<copyId>`; older picks also carry `:<revision>`. Either binds the latest wording.
     const [, id] = key.split(':');
-    let online = true;
-    const cat = await catalog(true).catch(async () => {
-      online = false;
-      return catalog();
-    });
+    const cat = await catalog([id!], true);
+    const online = cat.online;
     let record = cat.records.find((r) => r.copyId === id);
     for (let hops = 0; record?.status === 'merged' && record.mergedInto && hops < 5; hops += 1) {
       const into = record.mergedInto;
@@ -213,6 +220,7 @@ export async function readVariableValues(variable: Variable): Promise<VariableVa
   return { key: variable.key, ...values, description: variable.description ?? '' };
 }
 
+/** Imports a few library variables (never the whole library) and reads their values. */
 export async function importValues(
   keys: readonly string[],
 ): Promise<{ values: VariableValues[]; failed: number }> {

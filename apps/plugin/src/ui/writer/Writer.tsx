@@ -22,7 +22,7 @@ import {
   productLabel,
   SHARED_PRODUCT,
 } from '@string-binder/domain';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { UiBridge } from '../bridge';
 import { Icon } from '../components/Icon';
 import { LayerRow, rowKind, type RowKind } from '../components/LayerRow';
@@ -54,6 +54,7 @@ import {
 } from './model';
 import { ReviewSheet, withoutTargets, type CommitPlan, type RevisionConflict } from './ReviewSheet';
 import { uuid } from '../uuid';
+import { searchClient } from '../search/search-client';
 
 export type Registry = {
   catalog: Catalog;
@@ -108,13 +109,6 @@ function IndexNotice({ status, onRefresh }: { status: IndexStatus; onRefresh: ()
     case 'starting':
     case 'listing':
       return <p className="notice">Checking the library for new strings…</p>;
-    case 'importing':
-      return (
-        <p className="notice">
-          Loading strings {status.done.toLocaleString()} / {status.total.toLocaleString()}
-          <span className="notice__hint"> · you can start while this runs</span>
-        </p>
-      );
     case 'empty':
       return (
         <p className="notice notice--warning">
@@ -126,14 +120,7 @@ function IndexNotice({ status, onRefresh }: { status: IndexStatus; onRefresh: ()
         </p>
       );
     case 'ready':
-      return status.failed ? (
-        <p className="notice notice--warning">
-          {status.failed.toLocaleString()} strings could not load.{' '}
-          <button type="button" className="link-button" onClick={onRefresh}>
-            Retry
-          </button>
-        </p>
-      ) : null;
+      return null;
   }
 }
 
@@ -350,7 +337,7 @@ export function Writer({
   const guessed = useRef(new Set<string>());
   useEffect(() => {
     if (!page || stored || !guess || guessed.current.has(page.id)) return;
-    if (index.status.phase !== 'ready' && index.status.phase !== 'importing') return;
+    if (index.status.phase !== 'ready') return;
     guessed.current.add(page.id);
     void request(bridge, 'scope:set', { pageId: page.id, product: guess, confirmed: false }).catch(
       () => {},
@@ -402,6 +389,13 @@ export function Writer({
   );
   const kinds = useMemo(() => rows.map((row) => rowKind(row, same)), [rows, same]);
   const cascade = useMemo(() => cascadeOf(rows), [rows]);
+  // The search worker indexes the list as it changes, before any search reads it.
+  useLayoutEffect(() => searchClient().sync(index.list), [index.list]);
+  // Strings on screen load their values; the rest of the library never does.
+  const { resolve } = index;
+  useEffect(() => {
+    resolve(rows.flatMap((row) => [row.key ?? '', row.layer.boundKey ?? '']));
+  }, [rows, resolve, index.entries]);
   const usedCanonical = useMemo(
     () => new Set([...used].map((key) => index.entries.get(key)?.key ?? key)),
     [used, index.entries],
@@ -922,10 +916,7 @@ export function Writer({
       checked: scope === product.id,
       onSelect: () => setScope(product.id),
     }));
-  const loading =
-    index.status.phase === 'starting' ||
-    index.status.phase === 'listing' ||
-    index.status.phase === 'importing';
+  const loading = index.status.phase === 'starting' || index.status.phase === 'listing';
   const overflowItems: MenuItem[] = [
     {
       id: 'reread',
@@ -962,12 +953,7 @@ export function Writer({
       onSelect: onLibrary,
     },
   ];
-  const progress =
-    index.status.phase === 'importing' && index.status.total
-      ? index.status.done / index.status.total
-      : index.status.phase === 'ready' || index.status.phase === 'empty'
-        ? null
-        : 0.08;
+  const progress = loading ? 0.08 : null;
   const scopeAuto = !!scope && !(page && chosenScope[page.id]) && !stored?.confirmed;
 
   const duplicatesFor = (row: DraftRow) =>
@@ -1236,6 +1222,7 @@ export function Writer({
               pick(searchRow.layer.id, key);
               closeSearch();
             }}
+            onResolve={resolve}
             onCreateNew={() => startCreate(searchRow.layer.id)}
             onClose={closeSearch}
           />

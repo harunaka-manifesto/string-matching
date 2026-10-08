@@ -1,16 +1,16 @@
 import {
   normalizeForSearch,
-  normalizedFields,
   inProduct,
   roleOf,
   productLabel,
   queryTokens,
-  rankStrings,
   SHARED_PRODUCT,
-  type RankFields,
+  type MatchDetail,
+  type SearchResult,
   type SequenceSource,
 } from '@string-binder/domain';
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { displayRole, searchClient } from '../search/search-client';
 import type { Product, StringEntry } from '../string-index';
 import { Icon } from './Icon';
 import { isPlaceholder } from './LayerRow';
@@ -87,12 +87,13 @@ export function SearchPanel(props: {
   products: readonly Product[];
   onScope: (scope: string) => void;
   onPick: (key: string) => void;
+  /** Loads values of library strings shown before their values arrived. */
+  onResolve: (keys: readonly string[]) => void;
   /** Starts new copy for this layer, prefilled from the canvas. */
   onCreateNew?: () => void;
   onClose: () => void;
 }) {
   const [query, setQuery] = useState('');
-  const deferred = useDeferredValue(query);
   const [active, setActive] = useState(0);
   const [limit, setLimit] = useState(PAGE);
   const [showRelated, setShowRelated] = useState(false);
@@ -109,9 +110,8 @@ export function SearchPanel(props: {
   useEffect(() => {
     setLimit(PAGE);
     setShowRelated(false);
-  }, [deferred, product]);
+  }, [query, product]);
 
-  const tokens = useMemo(() => queryTokens(deferred), [deferred]);
   const near = useMemo(() => {
     const near = neighbours(props.currentKey ?? props.anchorHint, props.sequences, props.entries);
     return {
@@ -119,86 +119,90 @@ export function SearchPanel(props: {
       items: blocked ? [] : near.items.filter((item) => inProduct(item, product)),
     };
   }, [props.currentKey, props.anchorHint, props.sequences, props.entries, blocked, product]);
-  // Per-product fields depend only on the entry and product, not the query: normalize once.
-  const productFields = useMemo(() => new WeakMap<StringEntry, RankFields>(), [product]);
-  const ranked = useMemo(
-    () =>
-      rankStrings(blocked ? [] : props.list, deferred, {
-        fields: (item) => {
-          const cached = productFields.get(item);
-          if (cached) return cached;
-          const contexts = item.contexts.filter(
-            (context) => !product || context.product === product,
-          );
-          const fields = contexts.length
-            ? normalizedFields({
-                ...item,
-                path: contexts.map((context) => context.path).join(' '),
-                role: contexts.find((context) => context.role !== 'text')?.role ?? item.fields.role,
-              })
-            : item.fields;
-          productFields.set(item, fields);
-          return fields;
-        },
+
+  // Ranking runs in a worker; the panel keeps showing the last answer until the next arrives.
+  const [answer, setAnswer] = useState<{ query: string; result: SearchResult } | null>(null);
+  const searched = queryTokens(query).length > 0 && !blocked;
+  useEffect(() => {
+    if (!searched) return setAnswer(null);
+    let live = true;
+    void searchClient()
+      .search({
+        query,
         scope: product,
         feature: product ? props.feature : null,
-        used: props.used,
+        used: [...props.used],
         context: [props.layerName, ...props.contextNames],
         layerText: isPlaceholder(props.canvasText) ? '' : props.canvasText,
         role: roleOf([props.layerName, ...props.contextNames]),
-        nearby: new Set(near.items.map((item) => item.key)),
+        nearby: near.items.map((item) => item.key),
         currentKey: props.currentKey,
-        identity: (item) =>
-          item.loaded && item.en && item.id ? `value\u0000${item.en}\u0000${item.id}` : null,
-      }),
-    [
-      props.list,
-      deferred,
-      product,
-      productFields,
-      blocked,
-      props.feature,
-      props.used,
-      props.contextNames,
-      props.layerName,
-      props.canvasText,
-      props.currentKey,
-      near.items,
-    ],
+        limit,
+        related: showRelated,
+      })
+      .then((result) => {
+        if (live && result) setAnswer({ query, result });
+      });
+    return () => {
+      live = false;
+    };
+  }, [
+    searched,
+    query,
+    product,
+    props.feature,
+    props.used,
+    props.contextNames,
+    props.layerName,
+    props.canvasText,
+    props.currentKey,
+    near.items,
+    limit,
+    showRelated,
+    // A new list (values arrived, catalog synced) can change the answer.
+    props.list,
+  ]);
+  const shown = searched ? answer : null;
+  const result = shown?.result;
+  const deferred = shown?.query ?? query;
+  const caughtUp = !searched || answer?.query === query;
+  const tokens = useMemo(() => queryTokens(deferred), [deferred]);
+  const details = useMemo(
+    () =>
+      new Map<string, MatchDetail>(
+        [...(result?.best ?? []), ...(result?.related ?? [])].map((hit) => [hit.key, hit]),
+      ),
+    [result],
   );
+  const entriesOf = (hits: readonly { key: string }[]) =>
+    hits.flatMap((hit) => props.entries.get(hit.key) ?? []);
+  const strong = !!result?.strong;
+  const relatedCount = result?.relatedCount ?? 0;
 
-  const strong = useMemo(
-    () => ranked.inScope.filter((item) => (ranked.details.get(item.key)?.score ?? 0) >= 1200),
-    [ranked],
-  );
-  const related = strong.length
-    ? ranked.inScope.filter((item) => (ranked.details.get(item.key)?.score ?? 0) < 1200)
-    : [];
   const sections: Section[] = useMemo(() => {
     if (!tokens.length)
       return near.items.length
         ? [{ id: 'near', title: 'In legacy order', count: 0, items: near.items, more: false }]
         : [];
-    const result: Section[] = [];
-    const best = strong.length ? strong : ranked.inScope;
-    if (best.length)
-      result.push({
+    const out: Section[] = [];
+    if (result?.bestCount)
+      out.push({
         id: 'scope',
         title: product ? `${productLabel(product)} + shared` : 'All products',
-        count: best.length,
-        items: best.slice(0, limit),
-        more: best.length > limit,
+        count: result.bestCount,
+        items: entriesOf(result.best),
+        more: result.bestCount > result.best.length,
       });
-    if (showRelated && related.length)
-      result.push({
+    if (showRelated && result?.relatedCount)
+      out.push({
         id: 'related',
         title: 'More keyword matches',
-        count: related.length,
-        items: related.slice(0, limit),
-        more: related.length > limit,
+        count: result.relatedCount,
+        items: entriesOf(result.related),
+        more: result.relatedCount > result.related.length,
       });
-    return result;
-  }, [tokens, near, ranked, product, limit, strong, related, showRelated]);
+    return out;
+  }, [tokens, near, result, product, showRelated, props.entries]);
 
   const flat = useMemo(() => sections.flatMap((section) => section.items), [sections]);
   const initialActive = useMemo(() => {
@@ -207,6 +211,13 @@ export function SearchPanel(props: {
     return index === -1 ? 0 : index;
   }, [flat, props.currentKey, tokens.length, near.next]);
   useEffect(() => setActive(initialActive), [initialActive, deferred, product]);
+
+  // Library strings outside the registry load their values once someone sees them.
+  const { onResolve } = props;
+  useEffect(() => {
+    const missing = flat.filter((item) => !item.loaded).map((item) => item.key);
+    if (missing.length) onResolve(missing);
+  }, [flat, onResolve]);
   useEffect(() => {
     listRef.current
       ?.querySelector<HTMLElement>(`[data-index="${active}"]`)
@@ -216,9 +227,9 @@ export function SearchPanel(props: {
   // Enter pressed before results caught up with typing picks once they do.
   const pendingPick = useRef(false);
   useEffect(() => {
-    if (!pendingPick.current || deferred !== query) return;
+    if (!pendingPick.current || !caughtUp) return;
     pendingPick.current = false;
-    if (flat[initialActive]?.loaded) props.onPick(flat[initialActive]!.key);
+    if (flat[initialActive]) props.onPick(flat[initialActive]!.key);
   });
 
   const onKeyDown = (event: React.KeyboardEvent) => {
@@ -226,8 +237,8 @@ export function SearchPanel(props: {
     if (event.key === 'ArrowDown')
       setActive((value) => Math.max(0, Math.min(flat.length - 1, value + 1)));
     else if (event.key === 'ArrowUp') setActive((value) => Math.max(0, value - 1));
-    else if (event.key === 'Enter' && deferred !== query) pendingPick.current = true;
-    else if (event.key === 'Enter' && flat[active]?.loaded) props.onPick(flat[active]!.key);
+    else if (event.key === 'Enter' && !caughtUp) pendingPick.current = true;
+    else if (event.key === 'Enter' && flat[active]) props.onPick(flat[active]!.key);
     else if (event.key === 'Escape') {
       if (query) setQuery('');
       else props.onClose();
@@ -385,7 +396,7 @@ export function SearchPanel(props: {
             )}
           </div>
         )}
-        {!blocked && tokens.length > 0 && ranked.total === 0 && (
+        {!blocked && tokens.length > 0 && result?.total === 0 && (
           <div className="empty">
             <p>
               No string matches “{deferred}”
@@ -434,15 +445,14 @@ export function SearchPanel(props: {
                   aria-selected={i === active}
                   className={`result ${i === active ? 'is-active' : ''} ${isCurrent ? 'is-current' : ''}`}
                   onPointerMove={() => i !== active && setActive(i)}
-                  aria-disabled={!item.loaded}
-                  onClick={() => item.loaded && props.onPick(item.key)}
+                  onClick={() => props.onPick(item.key)}
                 >
                   <div className="result__header">
                     <span className="result__product">
-                      {productLabel(item.product)} · {item.fields.role || 'text'}
+                      {productLabel(item.product)} · {displayRole(item) || 'text'}
                     </span>
                     <span className="result__badges">
-                      {tokens.length > 0 && i === 0 && strong.length > 0 && (
+                      {tokens.length > 0 && i === 0 && strong && (
                         <span className="tag tag--suggested">Top match</span>
                       )}
                       {isCurrent && <span className="tag tag--picked">Current</span>}
@@ -455,7 +465,7 @@ export function SearchPanel(props: {
                         tokens.length > 0 && <span className="tag">Same flow</span>}
                       {product &&
                         props.feature &&
-                        ranked.details.get(item.key)?.reasons.includes('Same feature') && (
+                        details.get(item.key)?.reasons.includes('Same feature') && (
                           <span className="tag tag--feature">Same feature</span>
                         )}
                     </span>
@@ -484,7 +494,7 @@ export function SearchPanel(props: {
                   </span>
                   {tokens.length > 0 && (
                     <span className="result__hints">
-                      {ranked.details
+                      {details
                         .get(item.key)
                         ?.reasons.filter(
                           (reason) =>
@@ -494,8 +504,8 @@ export function SearchPanel(props: {
                         )
                         .slice(0, 2)
                         .join(' · ')}
-                      {(ranked.details.get(item.key)?.duplicates ?? 0) > 1 &&
-                        ` · ${ranked.details.get(item.key)!.duplicates} identical copies`}
+                      {(details.get(item.key)?.duplicates ?? 0) > 1 &&
+                        ` · ${details.get(item.key)!.duplicates} identical copies`}
                     </span>
                   )}
                 </div>
@@ -512,12 +522,12 @@ export function SearchPanel(props: {
             )}
           </div>
         ))}
-        {tokens.length > 0 && related.length > 0 && !showRelated && (
+        {tokens.length > 0 && strong && relatedCount > 0 && !showRelated && (
           <button type="button" className="search__more" onClick={() => setShowRelated(true)}>
-            Show {related.length} more keyword matches
+            Show {relatedCount} more keyword matches
           </button>
         )}
-        {tokens.length > 0 && ranked.total > 0 && (
+        {tokens.length > 0 && !!result?.total && (
           <div className="search__widen">
             {product ? (
               <button type="button" className="link-button" onClick={() => setWide(true)}>
@@ -553,8 +563,8 @@ export function SearchPanel(props: {
         <button
           type="button"
           className="button button--primary"
-          disabled={!activeItem?.loaded}
-          onClick={() => activeItem?.loaded && props.onPick(activeItem.key)}
+          disabled={!activeItem}
+          onClick={() => activeItem && props.onPick(activeItem.key)}
         >
           Choose string <kbd>↵</kbd>
         </button>

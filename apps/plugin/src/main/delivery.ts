@@ -20,7 +20,8 @@ import { boundVariableId } from './layer-state';
 import { readVariableValues } from './library-index';
 import { pageCandidates, snapshotText } from './propagate';
 import { isDescendantOf } from './selection';
-import { loadFont, textsByVariable } from './perf';
+import { breathe, CHUNK, loadFont, textsByVariable } from './perf';
+import { activity } from './channel';
 export function copyIdOf(variable: Variable): string | null {
   return (
     variable.getSharedPluginData('copy', 'id') ||
@@ -146,7 +147,14 @@ export async function scanLocal(): Promise<LocalCopy[]> {
   const collections = new Map(
     (await figma.variables.getLocalVariableCollectionsAsync()).map((c) => [c.id, c]),
   );
-  for (const v of await figma.variables.getLocalVariablesAsync('STRING')) {
+  const variables = await figma.variables.getLocalVariablesAsync('STRING');
+  let done = 0;
+  for (const v of variables) {
+    // A library file holds tens of thousands of strings; yield so Figma stays responsive.
+    if (done++ % CHUNK === 0 && variables.length > CHUNK) {
+      activity('scan', 'Reading this file’s strings', done - 1, variables.length);
+      await breathe();
+    }
     const c = collections.get(v.variableCollectionId);
     const base = baselineOf(v);
     const context = editableContext(v, base);
@@ -183,6 +191,7 @@ export async function scanLocal(): Promise<LocalCopy[]> {
       });
     }
   }
+  activity('scan', null);
   return rows;
 }
 export async function allTexts(): Promise<TextNode[]> {

@@ -29,7 +29,9 @@ async function bind(node: TextNode, variable: Variable): Promise<boolean> {
   const id = copyIdOf(variable);
   const record =
     baselineOf(variable) ??
-    (id ? (await catalog().catch(() => null))?.records.find((r) => r.copyId === id) : undefined);
+    (id
+      ? (await catalog([id]).catch(() => null))?.records.find((r) => r.copyId === id)
+      : undefined);
   // Already bound and named: nothing to write, so a missing font elsewhere cannot block it.
   if (!changed && node.name === (record?.platformKey ?? variable.name)) return false;
   await loadFonts(node);

@@ -2,24 +2,19 @@ import {
   PLUGIN_DATA_NAMESPACE,
   PLUGIN_DATA_STATE_KEY,
   UiToPluginMessageSchema,
-  type Catalog,
-  type PluginToUiMessage,
   type UiToPluginMessage,
 } from '@string-binder/contracts';
 import { applyDecisions } from './apply';
 import { workflow } from './workflow';
 import { writeStorage } from './private-storage';
-import { WorkflowError } from './registry-api';
+import { answerCatalog, CATALOG_KEY, WorkflowError } from './registry-api';
+import { post } from './channel';
 import { boundVariableId, forgetVariableCache, variableById } from './layer-state';
-import {
-  IMPORT_BATCH_SIZE,
-  importValues,
-  listLibraryStrings,
-  listLocalStrings,
-} from './library-index';
+import { importValues, listLibraryStrings, listLocalStrings } from './library-index';
 import { isDescendantOf, isSupportedRoot, selectionInfo } from './selection';
 
-const CACHE_KEY = 'string-index:v1';
+/** Values of every library string, imported upfront by older versions. Never read now. */
+const LEGACY_CACHE_KEY = 'string-index:v1';
 const SIZE_KEY = 'ui:size';
 const DEFAULT_SIZE = { width: 400, height: 720 };
 
@@ -40,22 +35,6 @@ void figma.clientStorage
     }
   })
   .catch(() => {});
-
-function post(message: PluginToUiMessage): void {
-  figma.ui.postMessage(message);
-}
-
-let postedCatalog = '';
-/**
- * The catalog holds every saved record (tens of thousands). Cloning it to the
- * UI and re-indexing it there is expensive, so unchanged catalogs are not resent.
- */
-function postCatalog(catalog: Catalog): void {
-  const signature = `${catalog.seq}:${catalog.records.length}:${catalog.mappings.length}:${catalog.products.length}`;
-  if (signature === postedCatalog) return;
-  postedCatalog = signature;
-  post({ type: 'registry:catalog', catalog });
-}
 
 function describe(error: unknown): string {
   return error instanceof Error && error.message ? error.message : 'Something went wrong.';
@@ -130,31 +109,20 @@ async function onSelectionChange(force = false): Promise<void> {
   await sendSelection();
 }
 
-async function syncIndex(knownKeys: readonly string[]): Promise<void> {
+/**
+ * Lists library strings (names only) and local strings (with values). Library values
+ * are not imported: importing ~20k variables ran on Figma's main thread and froze it.
+ * Search uses the registry's copy; binding imports the one variable it needs.
+ */
+async function syncIndex(): Promise<void> {
   if (syncing) return;
   syncing = true;
   try {
     const local = await listLocalStrings();
-    const library = await listLibraryStrings();
-    const listing = [...local.listing, ...library];
-    const known = new Set(knownKeys);
-    const missing = library.filter((item) => !known.has(item.key)).map((item) => item.key);
-    post({ type: 'index:listing', listing, toImport: missing.length });
-    // Local values are re-read every sync, so edits in this file show up on reopen.
-    if (local.values.length)
-      post({ type: 'index:values', values: local.values, done: 0, total: missing.length });
-    let failed = 0;
-    for (let start = 0; start < missing.length; start += IMPORT_BATCH_SIZE) {
-      const batch = await importValues(missing.slice(start, start + IMPORT_BATCH_SIZE));
-      failed += batch.failed;
-      post({
-        type: 'index:values',
-        values: batch.values,
-        done: Math.min(start + IMPORT_BATCH_SIZE, missing.length),
-        total: missing.length,
-      });
-    }
-    post({ type: 'index:synced', failed });
+    // A library file can list its own published strings; those are already read as local.
+    const localKeys = new Set(local.listing.map((item) => item.key));
+    const library = (await listLibraryStrings()).filter((item) => !localKeys.has(item.key));
+    post({ type: 'index:listing', listing: [...local.listing, ...library], values: local.values });
   } finally {
     syncing = false;
   }
@@ -209,15 +177,7 @@ async function handle(message: UiToPluginMessage): Promise<void> {
       if (canvas) writing += 1;
       try {
         const data = await workflow(message.action, message.data);
-        if (message.action === 'refresh') {
-          // The catalog travels once, in `registry:catalog`, and only when it changed.
-          const { catalog, result } = data as { catalog: Catalog; result: unknown };
-          post({ type: 'workflow:result', operationId: message.operationId, data: { result } });
-          postCatalog(catalog);
-        } else {
-          post({ type: 'workflow:result', operationId: message.operationId, data });
-          if (message.action === 'catalog') postCatalog(data as Catalog);
-        }
+        post({ type: 'workflow:result', operationId: message.operationId, data });
         if (message.action === 'scope:set') await sendSelection();
         if (canvas) {
           const applied =
@@ -246,14 +206,16 @@ async function handle(message: UiToPluginMessage): Promise<void> {
       return;
     }
     case 'ui:ready':
-      // A reloaded UI starts empty, so it needs the catalog again.
-      postedCatalog = '';
+      // Saved caches go to the UI as stored bytes; it decodes them off Figma's main thread.
       post({
-        type: 'index:cached',
-        bytes: ((await figma.clientStorage.getAsync(CACHE_KEY)) as Uint8Array | undefined) ?? null,
+        type: 'catalog:cached',
+        bytes:
+          ((await figma.clientStorage.getAsync(CATALOG_KEY)) as Uint8Array | undefined) ?? null,
       });
       await onSelectionChange(true);
       await sendUsage();
+      // Frees the megabytes the old upfront import cached, so the catalog cache fits.
+      await figma.clientStorage.deleteAsync(LEGACY_CACHE_KEY).catch(() => {});
       return;
     case 'selection:refresh':
       await onSelectionChange(true);
@@ -268,10 +230,16 @@ async function handle(message: UiToPluginMessage): Promise<void> {
       return;
     }
     case 'index:sync':
-      await syncIndex(message.knownKeys);
+      await syncIndex();
       return;
-    case 'index:save':
-      await writeStorage(CACHE_KEY, message.bytes, false);
+    case 'index:resolve':
+      post({ type: 'index:values', values: (await importValues(message.keys)).values });
+      return;
+    case 'catalog:save':
+      await writeStorage(CATALOG_KEY, message.bytes, false);
+      return;
+    case 'catalog:answer':
+      answerCatalog(message);
       return;
     case 'layer:focus':
       await selectLayers([message.layerId], message.zoom ?? true);
@@ -307,8 +275,9 @@ async function handle(message: UiToPluginMessage): Promise<void> {
   }
 }
 
-// Reads (catalog, drafts, scans, previews) answer right away; writes queue behind each other,
-// so a background refresh never makes a writer's request wait or time out.
+// Reads (drafts, scans, previews) and catalog answers run right away; writes queue behind each
+// other, so a background refresh never makes a writer's request wait or time out. A queued
+// write may be waiting on a `catalog:answer`, so answers must never queue.
 let writeQueue: Promise<void> = Promise.resolve();
 figma.ui.onmessage = (raw: unknown) => {
   const parsed = UiToPluginMessageSchema.safeParse(raw);

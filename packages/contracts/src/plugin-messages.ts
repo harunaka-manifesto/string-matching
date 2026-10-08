@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { WorkflowActionSchema, CatalogSchema, ApplyPreviewSchema } from './registry';
+import {
+  WorkflowActionSchema,
+  ApplyPreviewSchema,
+  CopyRecordSchema,
+  MappingSchema,
+  ProductConfigSchema,
+} from './registry';
 import {
   ApplySummarySchema,
   LayerDecisionSchema,
@@ -29,9 +35,24 @@ export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
     height: z.number(),
     persist: z.boolean().optional(),
   }),
-  /** Import values for every library variable whose key is not in `knownKeys`. */
-  z.object({ type: z.literal('index:sync'), knownKeys: z.array(z.string()) }),
-  z.object({ type: z.literal('index:save'), bytes: BytesSchema }),
+  /** List library and local strings. Library values are never bulk-imported. */
+  z.object({ type: z.literal('index:sync') }),
+  /** Values for a few library strings the registry does not know (shown in search or bound). */
+  z.object({ type: z.literal('index:resolve'), keys: z.array(z.string()).max(100) }),
+  /** Gzipped catalog JSON for private storage; the UI compresses it natively. */
+  z.object({ type: z.literal('catalog:save'), bytes: BytesSchema }),
+  /** The UI's answer to `catalog:query`: only the records the controller asked for. */
+  z.object({
+    type: z.literal('catalog:answer'),
+    queryId: z.string(),
+    seq: z.number().int(),
+    records: z.array(CopyRecordSchema),
+    mappings: z.array(MappingSchema),
+    products: z.array(ProductConfigSchema),
+    /** False when a fresh catalog was asked for but the registry could not be reached. */
+    online: z.boolean(),
+    error: z.string().optional(),
+  }),
   /** Selects the layer on canvas; `zoom` also scrolls and zooms to it. */
   z.object({ type: z.literal('layer:focus'), layerId: z.string(), zoom: z.boolean().optional() }),
   z.object({ type: z.literal('layers:select'), layerIds: z.array(z.string()) }),
@@ -46,7 +67,30 @@ export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
 export type UiToPluginMessage = z.infer<typeof UiToPluginMessageSchema>;
 
 export const PluginToUiMessageSchema = z.discriminatedUnion('type', [
-  z.object({ type: z.literal('registry:catalog'), catalog: CatalogSchema }),
+  /** Stored catalog (gzipped JSON) for the UI to decode; null on first run. */
+  z.object({ type: z.literal('catalog:cached'), bytes: BytesSchema.nullable() }),
+  /**
+   * The controller needs a few saved records. The UI holds the catalog and answers with
+   * `catalog:answer`: records for `copyIds` (following merges), their mappings and products.
+   * `fresh` pulls registry changes first.
+   */
+  z.object({
+    type: z.literal('catalog:query'),
+    queryId: z.string(),
+    copyIds: z.array(z.string()),
+    fresh: z.boolean(),
+  }),
+  /**
+   * Long controller work, shown in the plugin instead of a silent freeze. `label: null`
+   * ends the activity.
+   */
+  z.object({
+    type: z.literal('activity'),
+    key: z.string(),
+    label: z.string().nullable(),
+    done: z.number().int().optional(),
+    total: z.number().int().optional(),
+  }),
   z.object({ type: z.literal('workflow:result'), operationId: z.string(), data: z.unknown() }),
   z.object({
     type: z.literal('workflow:error'),
@@ -55,19 +99,14 @@ export const PluginToUiMessageSchema = z.discriminatedUnion('type', [
     message: z.string(),
     details: z.unknown().optional(),
   }),
-  z.object({ type: z.literal('index:cached'), bytes: BytesSchema.nullable() }),
+  /** Every library and local string (metadata only), plus values of the local ones. */
   z.object({
     type: z.literal('index:listing'),
     listing: z.array(LibraryListingItemSchema),
-    toImport: z.number().int(),
-  }),
-  z.object({
-    type: z.literal('index:values'),
     values: z.array(VariableValuesSchema),
-    done: z.number().int(),
-    total: z.number().int(),
   }),
-  z.object({ type: z.literal('index:synced'), failed: z.number().int() }),
+  /** Values answering `index:resolve`. */
+  z.object({ type: z.literal('index:values'), values: z.array(VariableValuesSchema) }),
   /** Local string variables were created or changed; replaces every local entry. */
   z.object({
     type: z.literal('index:local'),

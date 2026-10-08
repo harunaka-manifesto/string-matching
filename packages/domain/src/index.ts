@@ -8,3 +8,4 @@ export * from './string-ranking';
 export * from './variable-search';
 export * from './visibility';
 export * from './registry';
+export * from './string-search-index';

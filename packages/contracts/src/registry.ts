@@ -181,7 +181,8 @@ export const LocalCopySchema = z.object({
 });
 export type LocalCopy = z.infer<typeof LocalCopySchema>;
 export const WorkflowActionSchema = z.enum([
-  'catalog',
+  /** Raw registry response bytes; the UI parses them so the Figma main thread never does. */
+  'registry:fetch',
   'changes',
   'submit',
   'request',

@@ -104,15 +104,7 @@ export function mockBridge(): UiBridge {
         case 'workflow':
           try {
             const data = await registry(message.action, message.data);
-            // Mirrors the plugin: refresh results carry no catalog; it arrives as `registry:catalog`.
-            emit({
-              type: 'workflow:result',
-              operationId: message.operationId,
-              data: message.action === 'refresh' ? { result: data.result } : data,
-            });
-            if (message.action === 'catalog') emit({ type: 'registry:catalog', catalog: data });
-            if (message.action === 'refresh')
-              emit({ type: 'registry:catalog', catalog: data.catalog });
+            emit({ type: 'workflow:result', operationId: message.operationId, data });
           } catch (error) {
             const e = error as Error & { code?: string; details?: unknown };
             emit({
@@ -125,7 +117,7 @@ export function mockBridge(): UiBridge {
           }
           return;
         case 'ui:ready':
-          emit({ type: 'index:cached', bytes: null });
+          emit({ type: 'catalog:cached', bytes: null });
           emit({ type: 'selection', selection: selection() });
           return;
         case 'index:sync': {
@@ -147,22 +139,15 @@ export function mockBridge(): UiBridge {
             collection: '# Legacy 5',
             order,
           }));
-          emit({ type: 'index:listing', listing, toImport: listing.length });
-          const loaded = listing.map((item) => ({
-            key: item.key,
-            en: values.get(item.name)?.en ?? humanize(item.name),
-            id: values.get(item.name)?.id ?? `ID: ${humanize(item.name)}`,
-            description: '',
-          }));
-          // Arrive in batches like the real import, so progress UI shows.
-          for (let start = 0; start < loaded.length; start += 150)
-            emit({
-              type: 'index:values',
-              values: loaded.slice(start, start + 150),
-              done: Math.min(start + 150, loaded.length),
-              total: loaded.length,
-            });
-          emit({ type: 'index:synced', failed: 0 });
+          // Library values are never bulk-loaded; the UI resolves the few it shows. The
+          // hand-written extras stand in for strings the real registry catalog carries.
+          emit({
+            type: 'index:listing',
+            listing,
+            values: listing
+              .filter((item) => values.has(item.name))
+              .map((item) => ({ key: item.key, ...values.get(item.name)!, description: '' })),
+          });
           // The Caption layer starts bound, so "Replaces" and "Unbinds" can be tried.
           const caption = listing.find(
             (item) => item.name === 'investment/gopay_investment_onboarding_gotit_cta',
@@ -172,6 +157,21 @@ export function mockBridge(): UiBridge {
             emit({ type: 'selection', selection: selection() });
           }
           emit({ type: 'usage', keys: listing.slice(0, 40).map((item) => item.key) });
+          return;
+        }
+        case 'index:resolve': {
+          const wanted = new Set(message.keys);
+          emit({
+            type: 'index:values',
+            values: listing
+              .filter((item) => wanted.has(item.key))
+              .map((item) => ({
+                key: item.key,
+                en: values.get(item.name)?.en ?? humanize(item.name),
+                id: values.get(item.name)?.id ?? `ID: ${humanize(item.name)}`,
+                description: '',
+              })),
+          });
           return;
         }
         case 'apply':

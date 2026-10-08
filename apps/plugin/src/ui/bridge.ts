@@ -15,11 +15,10 @@ export type UiBridge = {
  * cost hundreds of milliseconds per message, so only their type is checked.
  */
 const TRUSTED = new Set<PluginToUiMessage['type']>([
-  'registry:catalog',
+  'catalog:cached',
   'index:listing',
   'index:values',
   'index:local',
-  'index:cached',
   'workflow:result',
 ]);
 
