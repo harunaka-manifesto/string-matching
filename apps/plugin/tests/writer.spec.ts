@@ -219,7 +219,7 @@ test('pulls saved copy into the library and verifies publication', async ({ page
   await expect(page.getByRole('heading', { name: 'Investment – Landing page' })).toBeVisible();
 });
 
-test('initial library reconciliation adopts every matching variable in one choice', async ({
+test('initial library reconciliation links every matching variable in one click', async ({
   page,
 }) => {
   await openLibrary(page);
@@ -248,15 +248,62 @@ test('initial library reconciliation adopts every matching variable in one choic
   await page.reload();
   await openLibrary(page);
   await page.getByRole('button', { name: 'Check changes' }).click();
-  await expect(page.getByText('Needs initial reconciliation', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Select Adopt for all 1' }).click();
-  await page.getByRole('button', { name: 'Review changes' }).click();
-  await expect(page.getByRole('heading', { name: 'Review 1 changes' })).toBeVisible();
-  await page.getByRole('button', { name: 'Confirm Push / Pull' }).click();
+  // Matching wording needs no decision: no per-row list, one action in the next-step card.
+  const next = page.getByRole('status', { name: 'Next step' });
+  await expect(next.getByText('Link 1 string that already matches')).toBeVisible();
+  await expect(page.getByText('Needs initial reconciliation', { exact: true })).toHaveCount(0);
+  await next.getByRole('button', { name: 'Link 1' }).click();
   await expect(
     page.getByRole('heading', { name: 'Library draft updated · needs publish' }),
   ).toBeVisible();
   const state = await registry(page);
   expect(state.locals).toHaveLength(1);
   expect(state.locals[0].baseline.revision).toBe(1);
+});
+
+test('a held publisher lock is explained and the sync resumes once it frees', async ({ page }) => {
+  await openLibrary(page);
+  await page.getByLabel('Publisher token').fill('local-demo');
+  await page.getByRole('button', { name: 'Save on this device' }).click();
+  await expect(page.getByRole('button', { name: 'Check changes' })).toBeVisible();
+  await page.evaluate(() => {
+    const state = JSON.parse(localStorage.getItem('mock:registry')!);
+    const r = state.catalog.records[0];
+    state.locals = [
+      {
+        variableId: 'v:1',
+        variableKey: 'k:1',
+        name: r.platformKey,
+        collection: 'Investment',
+        copyId: r.copyId,
+        baseline: null,
+        context: null,
+        en: r.en,
+        id: r.id,
+      },
+    ];
+    state.leaseHeld = true;
+    localStorage.setItem('mock:registry', JSON.stringify(state));
+  });
+  await page.reload();
+  await openLibrary(page);
+  await page.getByRole('button', { name: 'Check changes' }).click();
+  const next = page.getByRole('status', { name: 'Next step' });
+  await next.getByRole('button', { name: 'Link 1' }).click();
+  await expect(next.getByText('Waiting for the library lock')).toBeVisible();
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  // The lock frees; reopening the plugin offers to finish the saved sync.
+  await page.evaluate(() => {
+    const state = JSON.parse(localStorage.getItem('mock:registry')!);
+    state.leaseHeld = false;
+    localStorage.setItem('mock:registry', JSON.stringify(state));
+  });
+  await page.reload();
+  await openLibrary(page);
+  await expect(next.getByText('Finish the interrupted sync')).toBeVisible();
+  await next.getByRole('button', { name: 'Resume sync' }).click();
+  await expect(
+    page.getByRole('heading', { name: 'Library draft updated · needs publish' }),
+  ).toBeVisible();
+  await expect(next.getByText(/Publish the library, then verify/)).toBeVisible();
 });

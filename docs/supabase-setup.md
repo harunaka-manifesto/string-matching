@@ -170,11 +170,12 @@ The maintainer does this once, on their own device. The import in step 5 deliber
 1. Open the **GoPay Strings** library file in Figma. Setup is refused in any other file.
 2. Run the plugin and choose **Library sync**.
 3. Leave Library ID as `gopay-strings`, check the Figma library URL is the file you have open, paste the **publisher token**, and choose **Save on this device**.
-4. Choose **Check changes**. Existing variables show **Needs initial reconciliation**.
-5. Choose **Select Adopt for the next 5000** (the last round reads **Select Adopt for all N**). This picks variables whose EN and ID already match the saved record exactly; adopting changes no wording.
-6. Choose **Review changes**, then **Confirm Push / Pull**. The result reads **Library draft updated · needs publish**.
-7. Publish the library through Figma as usual, then choose **Verify publication**.
-8. Repeat 4–7 until the adopt button no longer appears. With about 20,000 variables that is four or five rounds. Verify each round before starting the next: verification covers only the most recent round.
+4. Choose **Check changes**. The **Next step** card at the top always says what to do now.
+5. While variables already match their saved record, the card reads **Link N strings that already match**. Choose **Link the next 5,000** (the last round reads **Link N**). Linking only records which saved revision each variable holds; no wording changes. The result reads **Library draft updated · needs publish**.
+6. Publish the library through Figma as usual, then choose **Verify publication** in the card.
+7. Repeat 5–6 until the card stops offering to link. With about 20,000 variables that is four rounds. Verify each round before starting the next: verification covers only the most recent round.
+
+If the plugin closes mid-sync, the card reads **Finish the interrupted sync**: choose **Resume sync**; it repeats nothing already done. **Waiting for the library lock** means another session (usually this plugin before it was reopened) still holds the publisher lock. It frees itself about 2 minutes after that session stops.
 
 What remains are variables whose wording differs from the saved record. Each shows the Figma and Supabase values. Pick **Use Supabase / Pull** or **Use Figma / Push** one at a time, then review, confirm, publish and verify as above.
 

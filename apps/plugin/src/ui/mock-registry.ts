@@ -327,6 +327,8 @@ export function mockRegistry(
       case 'library:manifest':
         return state.run;
       case 'library:start':
+        // Tests set this to stand in for another session holding the publisher lock.
+        if (state.leaseHeld) fail('LEASE', 'Another publisher is syncing');
         state.run = { ...state.run, ...data };
         save();
         return { runId: data.runId };

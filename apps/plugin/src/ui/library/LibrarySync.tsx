@@ -108,6 +108,15 @@ export function LibrarySync({ bridge }: { bridge: UiBridge }) {
   const [run, setRun] = useState<any>(null);
   const openRun = run && !run.published && run.applied?.length ? run : null;
   const [pendingReview, setPendingReview] = useState<LocalCopy[] | null>(null);
+  // The registry's publisher lock is held by another session (often this plugin before a reopen).
+  const [locked, setLocked] = useState(false);
+  /** Shows a failure; a held publisher lock gets its own explanation instead of a raw error. */
+  const fail = (e: unknown) => {
+    if (e instanceof ClientError && e.code === 'LEASE') {
+      setLocked(true);
+      setError('');
+    } else setError(message(e));
+  };
   const owner = useRef(uuid());
   const rpc = <T,>(action: WorkflowAction, data: unknown = {}) => request<T>(bridge, action, data);
   /** This file's strings, matched against a catalog fresh from the registry. */
@@ -197,31 +206,8 @@ export function LibrarySync({ bridge }: { bridge: UiBridge }) {
       return { ...row, kind, status };
     });
   }, [catalog.records, catalog.mappings, locals, config.libraryId, openRun]);
-  // Derived lists are memoized: typing in a row's textarea must not re-walk every row.
-  const counts = useMemo(
-    () =>
-      rows.reduce<Record<string, number>>((all, row) => {
-        const label = groupOf(row.status);
-        all[label] = (all[label] ?? 0) + 1;
-        if (row.status !== 'current') all[ALL] = (all[ALL] ?? 0) + 1;
-        return all;
-      }, {}),
-    [rows],
-  );
-  const view = filter ?? (counts[PUBLISH] ? PUBLISH : ALL);
-  const visible = useMemo(
-    () => rows.filter((r) => (view === ALL ? r.status !== 'current' : groupOf(r.status) === view)),
-    [rows, view],
-  );
-  const pick = (next: string) => {
-    setFilter(next);
-    setPage(0);
-  };
-  const selected = useMemo(
-    () => rows.filter((r) => choices[r.id] && choices[r.id] !== 'defer'),
-    [rows, choices],
-  );
-  // First reconciliation of an imported library is thousands of identical rows.
+  // First reconciliation of an imported library is thousands of identical rows. Their
+  // wording already matches, so there is nothing to decide: one action links them in batches.
   const adoptable = useMemo(
     () =>
       rows.filter(
@@ -231,10 +217,40 @@ export function LibrarySync({ bridge }: { bridge: UiBridge }) {
           !r.local.error &&
           (r.kind === 'unbased' || r.kind === 'equal' || r.status === 'unlinked') &&
           r.local.en === r.remote.en &&
-          r.local.id === r.remote.id &&
-          !choices[r.id],
+          r.local.id === r.remote.id,
       ),
-    [rows, choices],
+    [rows],
+  );
+  const matching = useMemo(() => new Set(adoptable.map((r) => r.id)), [adoptable]);
+  // Derived lists are memoized: typing in a row's textarea must not re-walk every row.
+  const counts = useMemo(
+    () =>
+      rows.reduce<Record<string, number>>((all, row) => {
+        if (matching.has(row.id)) return all;
+        const label = groupOf(row.status);
+        all[label] = (all[label] ?? 0) + 1;
+        if (row.status !== 'current') all[ALL] = (all[ALL] ?? 0) + 1;
+        return all;
+      }, {}),
+    [rows, matching],
+  );
+  const view = filter ?? (counts[PUBLISH] ? PUBLISH : ALL);
+  const visible = useMemo(
+    () =>
+      rows.filter(
+        (r) =>
+          !matching.has(r.id) &&
+          (view === ALL ? r.status !== 'current' : groupOf(r.status) === view),
+      ),
+    [rows, view, matching],
+  );
+  const pick = (next: string) => {
+    setFilter(next);
+    setPage(0);
+  };
+  const selected = useMemo(
+    () => rows.filter((r) => !matching.has(r.id) && choices[r.id] && choices[r.id] !== 'defer'),
+    [rows, choices, matching],
   );
   /** Active records by exact bilingual value, for the per-row Reuse options. */
   const activeByValue = useMemo(() => {
@@ -395,20 +411,21 @@ export function LibrarySync({ bridge }: { bridge: UiBridge }) {
       setPendingReview(null);
       await finish(state);
     } catch (e) {
-      setError(message(e));
+      fail(e);
     } finally {
       setBusy('');
     }
   };
-  const sync = async () => {
+  const sync = async (chosenRows = selected, chosen = choices) => {
     setBusy('Preparing sync…');
     setError('');
+    setLocked(false);
     try {
       const operations = [];
       const pullRecords: CopyRecord[] = [];
       const entries: any[] = [];
-      for (const row of selected) {
-        const action = choices[row.id];
+      for (const row of chosenRows) {
+        const action = chosen[row.id];
         let edit = edits[row.id] ?? editFor(row);
         if (action === 'pull' || action === 'adopt') {
           if (!row.remote) throw new Error('Saved identity is missing');
@@ -481,11 +498,128 @@ export function LibrarySync({ bridge }: { bridge: UiBridge }) {
       setPending(state);
       await finish(state);
     } catch (e) {
-      setError(message(e));
+      fail(e);
     } finally {
       setBusy('');
     }
   };
+  /** Links the next batch of variables whose wording already matches; nothing on canvas changes. */
+  const linkMatching = () => {
+    const batch = adoptable.slice(0, ADOPT_BATCH);
+    void sync(batch, Object.fromEntries(batch.map((r) => [r.id, 'adopt'])));
+  };
+  const resume = () => {
+    if (!pending) return;
+    setBusy('Resuming…');
+    setError('');
+    setLocked(false);
+    void finish(pending)
+      .catch(fail)
+      .finally(() => setBusy(''));
+  };
+  const verify = () => {
+    setBusy('Verifying publication…');
+    setError('');
+    void rpc('library:publish')
+      .then(() => {
+        setResult((r: any) => ({ ...r, published: true }));
+        setRun((r: any) => ({ ...r, published: true }));
+      })
+      .then(() => check())
+      .catch(fail)
+      .finally(() => setBusy(''));
+  };
+  const discardRejected = () =>
+    void rpc('library:pending', { value: null })
+      .then(() => {
+        setPending(null);
+        setReview(false);
+        setLocked(false);
+      })
+      .catch(fail);
+  const decisions = visible.length;
+  const batches = Math.ceil(adoptable.length / ADOPT_BATCH);
+  /** The one thing to do now, in the order the flow needs it. */
+  const next: {
+    title: string;
+    body: string[];
+    action?: [string, () => void];
+    secondary?: [string, () => void];
+  } | null = !configured
+    ? null
+    : pending
+      ? pending.definiteRejection
+        ? {
+            title: 'The registry rejected this sync',
+            body: [
+              'Someone changed the same strings since you checked. Nothing was applied to this file.',
+              'Discard it, then check changes again to see the latest copy.',
+            ],
+            action: ['Discard and check again', () => void discardRejected()],
+          }
+        : locked
+          ? {
+              title: 'Waiting for the library lock',
+              body: [
+                'Only one session can sync the library at a time, and another one holds it. That is usually this plugin before it was closed or reopened mid-sync.',
+                'The lock frees itself about 2 minutes after that session stops. Then resume: the sync picks up where it stopped and repeats nothing.',
+              ],
+              action: ['Try resuming again', resume],
+            }
+          : {
+              title: 'Finish the interrupted sync',
+              body: [
+                `A sync of ${pending.entries?.length ?? 0} strings was saved but not fully applied to this file, for example because the plugin closed mid-way.`,
+                'Resume it before anything else; it repeats nothing already done.',
+              ],
+              action: ['Resume sync', resume],
+              secondary: ['Review changed variables first', () => void reviewRemaining()],
+            }
+      : openRun
+        ? {
+            title: `Publish the library, then verify (${openRun.applied.length} ${openRun.applied.length === 1 ? 'string' : 'strings'})`,
+            body: [
+              'Open Assets › Publish in this file and publish the library. Designers only receive the strings after this.',
+              'Then come back here and verify.',
+            ],
+            action: ['Verify publication', verify],
+          }
+        : review
+          ? {
+              title: `Confirm ${selected.length} ${selected.length === 1 ? 'change' : 'changes'}`,
+              body: ['Check the changes below, then confirm at the bottom.'],
+            }
+          : selected.length > 0
+            ? {
+                title: `Review ${selected.length} selected ${selected.length === 1 ? 'change' : 'changes'}`,
+                body: ['Click Review changes at the bottom when you have chosen everything.'],
+              }
+            : adoptable.length > 0
+              ? {
+                  title: `Link ${adoptable.length.toLocaleString()} ${adoptable.length === 1 ? 'string that already matches' : 'strings that already match'}`,
+                  body: [
+                    'Their EN and ID already equal the saved copy, so there is nothing to decide: linking only records which saved revision each variable holds. Nothing on the canvas changes.',
+                    batches > 1
+                      ? `This goes ${ADOPT_BATCH.toLocaleString()} at a time (${batches} rounds). Each round ends with publishing the library and verifying.`
+                      : 'Afterwards, publish the library and verify.',
+                  ],
+                  action: [
+                    batches > 1
+                      ? `Link the next ${ADOPT_BATCH.toLocaleString()}`
+                      : `Link ${adoptable.length.toLocaleString()}`,
+                    linkMatching,
+                  ],
+                }
+              : decisions > 0
+                ? {
+                    title: `Decide ${decisions.toLocaleString()} ${decisions === 1 ? 'string' : 'strings'} below`,
+                    body: [
+                      'These differ between Figma and the registry, or need fixing. Pick an action for each, or leave it on Defer for later.',
+                    ],
+                  }
+                : rows.length > 0
+                  ? { title: 'Library is in sync', body: ['Nothing to do.'] }
+                  : null;
   return (
     <main className="studio-body sb">
       {!configured && (
@@ -575,120 +709,25 @@ export function LibrarySync({ bridge }: { bridge: UiBridge }) {
             ))}
         </div>
       )}
-      {configured && !review && openRun && (
-        <div className="studio-hint" role="status">
-          <strong>
-            Next: publish this file in Figma, then verify ({openRun.applied.length}{' '}
-            {openRun.applied.length === 1 ? 'string' : 'strings'})
-          </strong>
-          <ol className="sb-muted">
-            <li>Open Assets › Publish in this file and publish the library.</li>
-            <li>Come back here and click Verify publication.</li>
-          </ol>
-          <span className="sb-muted">Designers only receive the strings after this.</span>
-          <button
-            disabled={!!busy}
-            onClick={() => {
-              setBusy('Verifying publication…');
-              void rpc('library:publish')
-                .then(() => {
-                  setResult((r: any) => ({ ...r, published: true }));
-                  setRun((r: any) => ({ ...r, published: true }));
-                  setError('');
-                })
-                .then(() => check())
-                .catch((e) => setError(message(e)))
-                .finally(() => setBusy(''));
-            }}
-          >
-            Verify publication
-          </button>
-        </div>
-      )}
-      {configured && !review && selected.length > 0 && (
-        <p className="studio-hint" role="status">
-          <strong>
-            Next: click Review changes at the bottom to check the {selected.length} selected{' '}
-            {selected.length === 1 ? 'change' : 'changes'}.
-          </strong>
-        </p>
-      )}
-      {configured && !review && !openRun && adoptable.length > 0 && (
-        <div className="studio-hint" role="status">
-          <strong>
-            Next: link {adoptable.length} {adoptable.length === 1 ? 'variable' : 'variables'} to
-            saved copy
-          </strong>
-          <ol className="sb-muted">
-            <li>
-              Click{' '}
-              {adoptable.length > ADOPT_BATCH
-                ? `Select Adopt for the next ${ADOPT_BATCH}`
-                : 'Select Adopt for all'}{' '}
-              below. Their wording already matches, so nothing on the canvas changes.
-            </li>
-            <li>Click Review changes at the bottom, then Confirm Push / Pull.</li>
-            <li>
-              Publish this file in Figma (Assets › Publish), then click Verify publication here.
-            </li>
-          </ol>
-          {adoptable.length > ADOPT_BATCH && (
-            <span className="sb-muted">
-              Large libraries go {ADOPT_BATCH} at a time; repeat until this message is gone.
+      {next && (
+        <div className="studio-hint" role="status" aria-label="Next step">
+          <strong>{next.title}</strong>
+          {next.body.map((line) => (
+            <span className="sb-muted" key={line}>
+              {line}
             </span>
-          )}
-          <button
-            disabled={!!busy || !!pending}
-            onClick={() =>
-              setChoices((c) => ({
-                ...c,
-                ...Object.fromEntries(adoptable.slice(0, ADOPT_BATCH).map((r) => [r.id, 'adopt'])),
-              }))
-            }
-          >
-            {adoptable.length > ADOPT_BATCH
-              ? `Select Adopt for the next ${ADOPT_BATCH}`
-              : `Select Adopt for all ${adoptable.length}`}
-          </button>
-        </div>
-      )}
-      {pending && (
-        <section className="studio-warning">
-          A library operation is pending.
-          <button
-            disabled={!!busy}
-            onClick={() => {
-              setBusy('Resuming…');
-              void finish(pending)
-                .catch((e) => setError(message(e)))
-                .finally(() => setBusy(''));
-            }}
-          >
-            Recover / resume manifest
-          </button>
-          <button disabled={!!busy} onClick={() => void reviewRemaining()}>
-            Review changed outstanding variables
-          </button>
-          <small>
-            If it is a definite revision conflict, check changes again after resolving the saved
-            baseline.
-          </small>
-          {pending.definiteRejection && (
-            <button
-              disabled={!!busy}
-              onClick={() =>
-                void rpc('library:pending', { value: null })
-                  .then(() => {
-                    setPending(null);
-                    setReview(false);
-                  })
-                  .catch((e) => setError(message(e)))
-              }
-            >
-              Resolve rejected batch and check again
+          ))}
+          {next.action && (
+            <button disabled={!!busy} onClick={next.action[1]}>
+              {next.action[0]}
             </button>
           )}
-        </section>
+          {next.secondary && (
+            <button className="sb-quiet" disabled={!!busy} onClick={next.secondary[1]}>
+              {next.secondary[0]}
+            </button>
+          )}
+        </div>
       )}
       {pendingReview && pending && (
         <section className="copy-card">
@@ -938,13 +977,20 @@ export function LibrarySync({ bridge }: { bridge: UiBridge }) {
               </button>
             </>
           ) : (
-            <button
-              className="sb-primary"
-              disabled={!!busy || !!pending || !selected.length}
-              onClick={() => setReview(true)}
-            >
-              Review changes
-            </button>
+            <>
+              {selected.length > ADOPT_BATCH && (
+                <span className="sb-muted">
+                  One sync takes at most {ADOPT_BATCH.toLocaleString()}; defer some.
+                </span>
+              )}
+              <button
+                className="sb-primary"
+                disabled={!!busy || !!pending || !selected.length || selected.length > ADOPT_BATCH}
+                onClick={() => setReview(true)}
+              >
+                Review changes
+              </button>
+            </>
           )}
         </footer>
       )}
