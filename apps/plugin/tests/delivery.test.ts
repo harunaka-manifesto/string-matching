@@ -2,7 +2,9 @@ import { beforeEach, it, expect, vi } from 'vitest';
 import { figmaFixture } from './figma-fixture';
 import { canvasFingerprint } from '@string-binder/domain';
 import {
+  bindRecord,
   deliver,
+  followFrameModes,
   materialize,
   refreshUsed,
   stamp,
@@ -117,9 +119,26 @@ it('refuses older materialization and preflights missing fonts before changing s
   await expect(materialize(r, 'Test')).rejects.toThrow('newer');
   const a = fixture.text();
   a.setBoundVariable('characters', v);
+  // Neither the layer's font nor the Rupa Sans fallback is installed.
+  fixture.missingFonts.add('Inter').add('Rupa Sans');
   a.hasMissingFont = true;
   await deliver([{ ...r, revision: 3, id: 'Changed' }], [], products, [r.copyId]);
   expect(v.valuesByMode.id).toBe(r.id);
+});
+
+it('replaces a missing font with Rupa Sans Regular at the same size, then updates shared copy', async () => {
+  const v = await materialize({ ...r, revision: 2 }, 'Test');
+  const a = fixture.text();
+  a.setBoundVariable('characters', v);
+  a.fontName = { family: 'GoPay Display', style: 'Bold' };
+  a.fontSize = 18;
+  fixture.missingFonts.add('GoPay Display');
+  a.hasMissingFont = true;
+  await deliver([{ ...r, revision: 3, id: 'Changed' }], [], products, [r.copyId]);
+  expect(a.fontName).toEqual({ family: 'Rupa Sans', style: 'Regular' });
+  expect(a.fontSize).toBe(18);
+  expect(a.hasMissingFont).toBe(false);
+  expect(v.valuesByMode.id).toBe('Changed');
 });
 
 it('protects a translation changed after review even when the displayed locale is unchanged', async () => {
@@ -162,4 +181,48 @@ it('validates imported publication metadata when shared variable records are una
   expect(result.failures).toEqual([]);
   expect(JSON.parse(n.getSharedPluginData('copy', 'snapshot')).revision).toBe(r.revision);
   expect(fixture.vars).toHaveLength(1);
+});
+
+it('lets a bound layer follow its frame’s language, giving a frame without one the layer’s', async () => {
+  const v = await materialize(r, 'Test');
+  const c = fixture.collections[0];
+  const en = c.modes.find((m: any) => m.name === 'EN').modeId;
+  const frame = fixture.frame();
+  const n = fixture.text();
+  n.parent = frame;
+  await bindRecord(n, v, r, 'en');
+  expect(n.explicitVariableModes).toEqual({});
+  expect(frame.explicitVariableModes[c.id]).toBe(en);
+  expect(n.characters).toBe(r.en);
+  // Switching the frame switches the layer.
+  frame.setExplicitVariableModeForCollection(c, 'id');
+  expect(n.characters).toBe(r.id);
+  // A later layer showing the other language follows the frame too.
+  const other = fixture.text();
+  other.parent = frame;
+  await bindRecord(other, v, r, 'en');
+  expect(other.explicitVariableModes).toEqual({});
+  expect(other.characters).toBe(r.id);
+});
+
+it('unpins layers bound by older versions so the frame decides, keeping the majority language', async () => {
+  const v = await materialize(r, 'Test');
+  const c = fixture.collections[0];
+  const en = c.modes.find((m: any) => m.name === 'EN').modeId;
+  const frame = fixture.frame();
+  const layers = ['en', 'en', 'id'].map((locale) => {
+    const n = fixture.text();
+    n.parent = frame;
+    n.setBoundVariable('characters', v);
+    n.setExplicitVariableModeForCollection(c, locale === 'en' ? en : 'id');
+    return n;
+  });
+  expect(await followFrameModes(frame)).toBe(3);
+  expect(frame.explicitVariableModes[c.id]).toBe(en);
+  for (const n of layers) {
+    expect(n.explicitVariableModes).toEqual({});
+    expect(n.characters).toBe(r.en);
+  }
+  frame.setExplicitVariableModeForCollection(c, 'id');
+  for (const n of layers) expect(n.characters).toBe(r.id);
 });

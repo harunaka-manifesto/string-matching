@@ -119,6 +119,16 @@ function IndexNotice({ status, onRefresh }: { status: IndexStatus; onRefresh: ()
           .
         </p>
       );
+    case 'failed':
+      return (
+        <p className="notice notice--warning">
+          {status.message}{' '}
+          <button type="button" className="link-button" onClick={onRefresh}>
+            Check again
+          </button>
+          .
+        </p>
+      );
     case 'ready':
       return null;
   }
@@ -816,15 +826,15 @@ export function Writer({
     setPlan(null);
   };
 
-  // ── Canvas follows the keyboard ──
+  // ── Canvas selection follows the active row; the viewport stays put ──
   const revealTimer = useRef<ReturnType<typeof setTimeout>>();
   const activate = useCallback(
-    (layerId: string, zoom: boolean) => {
+    (layerId: string, immediate: boolean) => {
       setActiveId(layerId);
       clearTimeout(revealTimer.current);
       revealTimer.current = setTimeout(
-        () => bridge.send({ type: 'layer:focus', layerId, zoom }),
-        zoom ? 0 : 140,
+        () => bridge.send({ type: 'layer:focus', layerId, zoom: false }),
+        immediate ? 0 : 140,
       );
     },
     [bridge],

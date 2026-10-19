@@ -105,6 +105,8 @@ export const PluginToUiMessageSchema = z.discriminatedUnion('type', [
     listing: z.array(LibraryListingItemSchema),
     values: z.array(VariableValuesSchema),
   }),
+  /** Listing the strings failed; the UI offers to try again. */
+  z.object({ type: z.literal('index:failed'), message: z.string() }),
   /** Values answering `index:resolve`. */
   z.object({ type: z.literal('index:values'), values: z.array(VariableValuesSchema) }),
   /** Local string variables were created or changed; replaces every local entry. */

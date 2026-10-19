@@ -10,22 +10,54 @@ import {
   actual,
   sameValues,
   allTexts,
-  fonts,
   verifiesSaved,
 } from './delivery';
+import { loadTextFonts } from './fonts';
 
-/** Lists every string variable in the libraries enabled for this file. No values yet. */
-export async function listLibraryStrings(): Promise<LibraryListingItem[]> {
+/** Library collections read at once: enough to overlap Figma's round trips, few enough not to be refused. */
+const LIBRARY_READS = 3;
+
+/**
+ * Lists every string variable in the libraries enabled for this file. No values yet.
+ * A collection Figma refuses is retried once, then skipped and named with Figma's
+ * reason instead of failing the rest. The UI gives up waiting if Figma never answers.
+ */
+export async function listLibraryStrings(): Promise<{
+  items: LibraryListingItem[];
+  collections: number;
+  skipped: string[];
+  reason: string;
+}> {
   const collections = await figma.teamLibrary.getAvailableLibraryVariableCollectionsAsync();
+  const listed: (LibraryVariable[] | undefined)[] = [];
+  const skipped: string[] = [];
+  let reason = '';
+  let next = 0;
+  const read = async () => {
+    while (next < collections.length) {
+      const index = next++;
+      const collection = collections[index]!;
+      for (let attempt = 0; attempt < 2 && !listed[index]; attempt += 1) {
+        try {
+          listed[index] = await figma.teamLibrary.getVariablesInLibraryCollectionAsync(
+            collection.key,
+          );
+        } catch (error) {
+          reason = error instanceof Error ? error.message : String(error);
+        }
+      }
+      if (!listed[index]) skipped.push(`${collection.libraryName} › ${collection.name}`);
+    }
+  };
+  await Promise.all(Array.from({ length: LIBRARY_READS }, read));
   const items: LibraryListingItem[] = [];
-  for (const collection of collections) {
-    const variables = await figma.teamLibrary.getVariablesInLibraryCollectionAsync(collection.key);
-    variables.forEach((variable, order) => {
+  collections.forEach((collection, index) => {
+    listed[index]?.forEach((variable, order) => {
       if (variable.resolvedType !== 'STRING') return;
       items.push({ key: variable.key, name: variable.name, collection: collection.name, order });
     });
-  }
-  return items;
+  });
+  return { items, collections: collections.length, skipped, reason };
 }
 
 /** Local (unpublished) string variables in this file, keyed by variable key. */
@@ -69,9 +101,11 @@ export async function listLocalStrings(): Promise<{
   for (let start = 0; start < pending.length; start += CHUNK) {
     if (pending.length > CHUNK)
       activity('local', 'Reading this file’s strings', start, pending.length);
-    values.push(
-      ...(await Promise.all(pending.slice(start, start + CHUNK).map(readVariableValues))),
+    // A broken alias leaves that one string unloaded rather than failing the whole listing.
+    const read = await Promise.allSettled(
+      pending.slice(start, start + CHUNK).map(readVariableValues),
     );
+    for (const result of read) if (result.status === 'fulfilled') values.push(result.value);
     if (start + CHUNK < pending.length) await breathe();
   }
   if (pending.length > CHUNK) activity('local', null);
@@ -131,7 +165,7 @@ export async function variableByKey(key: string): Promise<Variable> {
         const b = n.boundVariables?.characters;
         return b && !Array.isArray(b) && changing.has(b.id);
       });
-      await Promise.all(usages.map(fonts));
+      await Promise.all(usages.map((node) => loadTextFonts(node)));
     }
     return materialize(
       record,

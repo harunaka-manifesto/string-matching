@@ -3,6 +3,8 @@ export function figmaFixture() {
   const collections: any[] = [];
   const vars: any[] = [];
   const nodes: any[] = [];
+  /** Font families `loadFontAsync` refuses, as if not installed. */
+  const missingFonts = new Set<string>();
   const shared = () => {
     const data = new Map<string, string>();
     return {
@@ -50,6 +52,31 @@ export function figmaFixture() {
     c.variableIds.push(v.id);
     return v;
   };
+  /** Explicit EN/ID modes, as Figma keeps them: a node's own, else the nearest ancestor's. */
+  const modes = (n: any) => {
+    n.explicitVariableModes = {};
+    n.setExplicitVariableModeForCollection = (c: any, mode: string) =>
+      (n.explicitVariableModes[c.id] = mode);
+    n.clearExplicitVariableModeForCollection = (c: any) => delete n.explicitVariableModes[c.id];
+    Object.defineProperty(n, 'resolvedVariableModes', {
+      get: () => ({ ...(n.parent?.resolvedVariableModes ?? {}), ...n.explicitVariableModes }),
+    });
+  };
+  const frame = (name = 'Frame') => {
+    const f: any = {
+      id: 'f' + next++,
+      type: 'FRAME',
+      name,
+      parent: { type: 'PAGE' },
+      findAllWithCriteria: () =>
+        nodes.filter((n) => {
+          for (let p = n.parent; p; p = p.parent) if (p === f) return true;
+          return false;
+        }),
+    };
+    modes(f);
+    return f;
+  };
   const text = (name = 'Title', characters = 'Canvas') => {
     const n: any = {
       id: 'n' + next++,
@@ -59,10 +86,15 @@ export function figmaFixture() {
       parent: null,
       hasMissingFont: false,
       fontName: { family: 'Inter', style: 'Regular' },
+      fontSize: 14,
       boundVariables: {},
-      resolvedVariableModes: {},
       ...shared(),
-      getRangeAllFontNames: () => [{ family: 'Inter', style: 'Regular' }],
+      getRangeAllFontNames: () => [n.fontName],
+      getStyledTextSegments: () => [{ start: 0, end: n.characters.length, fontName: n.fontName }],
+      setRangeFontName: (_start: number, _end: number, font: any) => {
+        n.fontName = font;
+        n.hasMissingFont = missingFonts.has(font.family);
+      },
       setBoundVariable: (property: string, v: any) => {
         if (n.failBinding) {
           n.failBinding = false;
@@ -70,9 +102,8 @@ export function figmaFixture() {
         }
         n.boundVariables[property] = v ? { id: v.id, type: 'VARIABLE_ALIAS' } : undefined;
       },
-      setExplicitVariableModeForCollection: (c: any, mode: string) =>
-        (n.resolvedVariableModes[c.id] = mode),
     };
+    modes(n);
     Object.defineProperty(n, 'characters', {
       get: () => {
         const v = vars.find((v) => v.id === n.boundVariables.characters?.id);
@@ -99,10 +130,22 @@ export function figmaFixture() {
       importVariableByKeyAsync: async (key: string) => vars.find((v) => v.key === key),
     },
     getNodeByIdAsync: async (id: string) => nodes.find((n) => n.id === id) ?? null,
-    loadFontAsync: async () => {},
+    loadFontAsync: async (font: any) => {
+      if (missingFonts.has(font.family)) throw new Error(`${font.family} is not available`);
+    },
     loadAllPagesAsync: async () => {},
     commitUndo: () => {},
     root: { children: [{ findAllWithCriteria: () => nodes.filter((n) => n.type === 'TEXT') }] },
   };
-  return { figma, collections, vars, nodes, text, createCollection, createVariable };
+  return {
+    figma,
+    collections,
+    vars,
+    nodes,
+    text,
+    frame,
+    createCollection,
+    createVariable,
+    missingFonts,
+  };
 }

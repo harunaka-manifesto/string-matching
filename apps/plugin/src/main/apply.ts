@@ -7,21 +7,12 @@ import {
 import { boundVariableId, readLayerState, variableById, writeLayerState } from './layer-state';
 import { variableByKey } from './library-index';
 import { pageCandidates, snapshotText } from './propagate';
-import { baselineOf, bindRecord, copyIdOf, actual, sameValues } from './delivery';
+import { baselineOf, bindRecord, copyIdOf, actual, followFrameModes, sameValues } from './delivery';
 import { isDescendantOf } from './selection';
 import { catalog } from './registry-api';
-import { loadFont } from './perf';
+import { loadTextFonts } from './fonts';
 
 class ApplyFailure extends Error {}
-
-async function loadFonts(node: TextNode): Promise<void> {
-  if (node.hasMissingFont) throw new ApplyFailure(`Missing font in “${node.name}”`);
-  const fonts =
-    node.characters.length > 0
-      ? node.getRangeAllFontNames(0, node.characters.length)
-      : [node.fontName as FontName];
-  await Promise.all(fonts.map(loadFont));
-}
 
 /** Binds and names the layer after its string, e.g. `investment/gopay_investment_…_title`. */
 async function bind(node: TextNode, variable: Variable): Promise<boolean> {
@@ -34,7 +25,7 @@ async function bind(node: TextNode, variable: Variable): Promise<boolean> {
       : undefined);
   // Already bound and named: nothing to write, so a missing font elsewhere cannot block it.
   if (!changed && node.name === (record?.platformKey ?? variable.name)) return false;
-  await loadFonts(node);
+  await loadTextFonts(node);
   if (record && sameValues(await actual(variable), record)) {
     const c = await figma.variables.getVariableCollectionByIdAsync(variable.variableCollectionId);
     const language =
@@ -208,6 +199,8 @@ export async function applyDecisions(
     summary.framesTouched = frames.size;
   }
 
+  // Layers bound by older versions carry their own EN/ID mode; let the frame's decide.
+  await followFrameModes(frame).catch(() => 0);
   figma.commitUndo();
   return summary;
 }
@@ -238,7 +231,7 @@ export async function previewApply(
     sources.push({ nodeId: n.id, fingerprint: await fingerprint(n) });
     const boundKey = await boundKeyOf(n);
     // Fonts only matter for layers this Apply rewrites.
-    if (decision.action === 'bind' && boundKey !== decision.key) await loadFonts(n);
+    if (decision.action === 'bind' && boundKey !== decision.key) await loadTextFonts(n, false);
     if (decision.action === 'bind' || decision.action === 'skip' || boundKey)
       snapshots.push(snapshotText(n, root as SceneNode));
     sourceAction.set(n.id, {

@@ -86,7 +86,14 @@ export function readablePath(name: string): string {
 }
 
 export type IndexStatus =
-  { phase: 'starting' } | { phase: 'listing' } | { phase: 'ready' } | { phase: 'empty' };
+  | { phase: 'starting' }
+  | { phase: 'listing' }
+  | { phase: 'ready' }
+  | { phase: 'empty' }
+  | { phase: 'failed'; message: string };
+
+/** How long listing may take before the UI stops waiting; Figma's library calls can hang. */
+const LISTING_TIMEOUT_MS = 60_000;
 
 /** Most keys one `index:resolve` may carry. */
 const RESOLVE_BATCH = 100;
@@ -305,6 +312,9 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
           setStatus(message.listing.length === 0 ? { phase: 'empty' } : { phase: 'ready' });
           return;
         }
+        case 'index:failed':
+          setStatus({ phase: 'failed', message: message.message });
+          return;
         case 'index:local': {
           // Local variables changed (e.g. after Save and apply): replace only those.
           for (const [key, item] of figmaEntries.current)
@@ -334,6 +344,20 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
     bridge.send({ type: 'index:sync' });
     return stop;
   }, [bridge]);
+
+  // A listing still pending this long will not arrive: offer to check again instead.
+  useEffect(() => {
+    if (status.phase !== 'starting' && status.phase !== 'listing') return;
+    const timer = setTimeout(
+      () =>
+        setStatus({
+          phase: 'failed',
+          message: 'Figma is taking unusually long to list the string libraries.',
+        }),
+      LISTING_TIMEOUT_MS,
+    );
+    return () => clearTimeout(timer);
+  }, [status]);
 
   const refresh = useCallback(() => {
     setStatus({ phase: 'listing' });

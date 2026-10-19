@@ -20,7 +20,8 @@ import { boundVariableId } from './layer-state';
 import { readVariableValues } from './library-index';
 import { pageCandidates, snapshotText } from './propagate';
 import { isDescendantOf } from './selection';
-import { breathe, CHUNK, loadFont, textsByVariable } from './perf';
+import { breathe, CHUNK, textsByVariable } from './perf';
+import { loadTextFonts } from './fonts';
 import { activity } from './channel';
 export function copyIdOf(variable: Variable): string | null {
   return (
@@ -86,13 +87,6 @@ export async function verifiesSaved(v: Variable, r: CopyRecord): Promise<boolean
   } catch {
     return false;
   }
-}
-export async function fonts(node: TextNode): Promise<void> {
-  if (node.hasMissingFont) throw new Error(`Missing font in “${node.name}”`);
-  const names = node.characters.length
-    ? node.getRangeAllFontNames(0, node.characters.length)
-    : [node.fontName as FontName];
-  await Promise.all(names.map(loadFont));
 }
 export async function actual(variable: Variable): Promise<{ en: string; id: string }> {
   const collection = await figma.variables.getVariableCollectionByIdAsync(
@@ -256,7 +250,7 @@ export async function preview(
       }) !== row.canvasFingerprint
     )
       throw new Error(`“${n.name}” changed on canvas. Check its new copy before applying.`);
-    await fonts(n);
+    await loadTextFonts(n, false);
     sources.push(snapshotText(n, root as SceneNode));
     targets.push({
       nodeId: n.id,
@@ -399,18 +393,74 @@ export async function materialize(
   stamp(v, r, !library);
   return v;
 }
+type ModeHolder = BaseNode & ExplicitVariableModesMixin;
+
+/** Outermost frame holding the layer (below the page or a section): its EN/ID mode is the layer's. */
+function languageFrame(n: SceneNode): ModeHolder | null {
+  let top: BaseNode = n;
+  while (top.parent && !['PAGE', 'SECTION', 'DOCUMENT'].includes(top.parent.type)) top = top.parent;
+  return top !== n && 'setExplicitVariableModeForCollection' in top ? (top as ModeHolder) : null;
+}
+
+/**
+ * Lets a text layer follow its frame's EN/ID mode for `c` instead of a mode of its own,
+ * so switching the frame's language switches the layer. A frame with no mode for `c`
+ * yet gets the language the layer shows, so nothing on canvas changes.
+ */
+export function followFrame(n: TextNode, c: VariableCollection, locale: 'en' | 'id'): void {
+  const mode = c.modes.find((m) => m.name.toUpperCase() === locale.toUpperCase());
+  if (!mode) return;
+  const frame = languageFrame(n);
+  if (!frame) {
+    // A layer outside any frame has no parent to follow.
+    n.setExplicitVariableModeForCollection(c, mode.modeId);
+    return;
+  }
+  if (n.explicitVariableModes[c.id]) n.clearExplicitVariableModeForCollection(c);
+  if (!frame.explicitVariableModes[c.id] && n.resolvedVariableModes[c.id] !== mode.modeId)
+    frame.setExplicitVariableModeForCollection(c, mode.modeId);
+}
+
+/**
+ * Unpins the EN/ID mode older versions set on each bound text layer in `root`, so the
+ * frame's mode decides. Where the frame has none yet, it takes the language most of
+ * those layers showed.
+ */
+export async function followFrameModes(root: SceneNode): Promise<number> {
+  if (!('findAllWithCriteria' in root)) return 0;
+  const pinned: { node: TextNode; collection: VariableCollection; locale: 'en' | 'id' }[] = [];
+  for (const node of root.findAllWithCriteria({ types: ['TEXT'] })) {
+    const variable = await bound(node);
+    if (!variable || !node.explicitVariableModes[variable.variableCollectionId]) continue;
+    const collection = await figma.variables.getVariableCollectionByIdAsync(
+      variable.variableCollectionId,
+    );
+    const name = collection?.modes
+      .find((m) => m.modeId === node.explicitVariableModes[collection.id])
+      ?.name.toUpperCase();
+    if (collection && (name === 'EN' || name === 'ID'))
+      pinned.push({ node, collection, locale: name === 'EN' ? 'en' : 'id' });
+  }
+  const count = (p: (typeof pinned)[number]) =>
+    pinned.filter((q) => q.collection.id === p.collection.id && q.locale === p.locale).length;
+  // The majority language goes first, so a frame without a mode takes that one.
+  pinned.sort((a, b) => count(b) - count(a));
+  for (const { node, collection, locale } of pinned) followFrame(node, collection, locale);
+  return pinned.length;
+}
+
 export async function bindRecord(
   n: TextNode,
   v: Variable,
   r: CopyRecord,
   locale: 'en' | 'id',
 ): Promise<void> {
-  await fonts(n);
+  await loadTextFonts(n);
   const c = await figma.variables.getVariableCollectionByIdAsync(v.variableCollectionId);
   const mode = c?.modes.find((m) => m.name.toUpperCase() === locale.toUpperCase());
   if (!c || !mode) throw new Error('Requested language mode is missing');
   n.setBoundVariable('characters', v);
-  n.setExplicitVariableModeForCollection(c, mode.modeId);
+  followFrame(n, c, locale);
   n.name = r.platformKey;
   n.setSharedPluginData('copy', 'id', r.copyId);
   n.setSharedPluginData('copy', 'snapshot', JSON.stringify(r));
@@ -460,7 +510,7 @@ export async function deliver(
         result.conflicts.push(n.id);
         continue;
       }
-      await fonts(n);
+      await loadTextFonts(n);
       valid.push({ node: n, target });
     } catch (e) {
       result.failures.push({ nodeId: n.id, reason: String(e) });
@@ -477,7 +527,7 @@ export async function deliver(
         return !!id && copyOf.get(id) === r.copyId;
       });
       // Updating a variable changes every bound occurrence, so preflight fonts first.
-      await Promise.all(usages.map(fonts));
+      await Promise.all(usages.map((node) => loadTextFonts(node)));
       if (targets.some((t) => t.copyId === r.copyId && result.conflicts.includes(t.nodeId)))
         continue;
       const selected = valid.filter((x) => x.target.copyId === r.copyId);
@@ -661,7 +711,7 @@ export async function refreshUsed(
       const usages = safe
         .flatMap((v) => boundTo(v.id))
         .sort((a, b) => position.get(a)! - position.get(b)!);
-      await Promise.all(usages.map(fonts));
+      await Promise.all(usages.map((node) => loadTextFonts(node)));
       const mapping = mappings.find(
         (m) =>
           m.copyId === id &&

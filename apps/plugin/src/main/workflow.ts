@@ -19,7 +19,6 @@ import {
   baselineOf,
   bindRecord,
   copyIdOf,
-  fonts,
   deliver,
   localFingerprint as localHash,
   materialize,
@@ -29,6 +28,7 @@ import {
   sameValues,
   usageCounts,
 } from './delivery';
+import { loadTextFonts } from './fonts';
 import { boundVariableId } from './layer-state';
 import { breathe, textsByVariable } from './perf';
 import { activity } from './channel';
@@ -375,7 +375,7 @@ export async function workflow(action: WorkflowAction, raw: unknown): Promise<un
           const affected = [...new Set([...sourceIds, ...mirrorIds])]
             .flatMap(boundTo)
             .sort((a, b) => position.get(a)! - position.get(b)!);
-          await Promise.all(affected.map(fonts));
+          await Promise.all(affected.map((node) => loadTextFonts(node)));
           if (Date.now() - lastRenewed > 20000) {
             await api(
               'library',

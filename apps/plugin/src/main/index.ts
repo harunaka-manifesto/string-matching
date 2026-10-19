@@ -41,7 +41,8 @@ function describe(error: unknown): string {
 }
 
 let activeRootId: string | null = null;
-let syncing = false;
+/** Latest `index:sync` run; an earlier one still waiting on Figma no longer answers. */
+let syncRun = 0;
 
 async function activeRoot(): Promise<SceneNode | null> {
   if (!activeRootId) return null;
@@ -115,16 +116,38 @@ async function onSelectionChange(force = false): Promise<void> {
  * Search uses the registry's copy; binding imports the one variable it needs.
  */
 async function syncIndex(): Promise<void> {
-  if (syncing) return;
-  syncing = true;
+  // A retry starts afresh: the earlier run may be stuck on a library Figma never lists.
+  const run = ++syncRun;
   try {
     const local = await listLocalStrings();
     // A library file can list its own published strings; those are already read as local.
     const localKeys = new Set(local.listing.map((item) => item.key));
-    const library = (await listLibraryStrings()).filter((item) => !localKeys.has(item.key));
+    const { items, collections, skipped, reason } = await listLibraryStrings();
+    if (run !== syncRun) return;
+    const library = items.filter((item) => !localKeys.has(item.key));
+    // Nothing listed although Figma reports libraries: say why, not "no library is on".
+    if (!local.listing.length && !library.length && collections) {
+      post({
+        type: 'index:failed',
+        message: skipped.length
+          ? `Figma didn’t list ${skipped.join(', ')}${reason ? ` (${reason})` : ''}.`
+          : `Figma lists ${collections} library collection${collections === 1 ? '' : 's'} but no string variables in them.`,
+      });
+      return;
+    }
     post({ type: 'index:listing', listing: [...local.listing, ...library], values: local.values });
-  } finally {
-    syncing = false;
+    if (skipped.length)
+      post({
+        type: 'error',
+        message: `Couldn’t read ${skipped.join(', ')}. Their strings are missing from search until you check again.`,
+      });
+  } catch (error) {
+    // Without an answer the UI would keep "Checking the library…" up.
+    if (run === syncRun)
+      post({
+        type: 'index:failed',
+        message: `Couldn’t list the string libraries: ${describe(error)}`,
+      });
   }
 }
 

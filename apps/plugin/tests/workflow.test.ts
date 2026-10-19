@@ -182,6 +182,8 @@ it('preflights every affected font before shared library values change', async (
   const v = await materialize(r, 'Test', true);
   const n = f.text();
   n.setBoundVariable('characters', v);
+  // Neither the layer's font nor the Rupa Sans fallback is installed.
+  f.missingFonts.add('Inter').add('Rupa Sans');
   n.hasMissingFont = true;
   const l = (await scanLocal())[0]!;
   await start(
