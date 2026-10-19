@@ -161,6 +161,8 @@ export function Writer({
   const index = useStringIndex(bridge);
   const { catalog, connected } = registry;
   const [selection, setSelection] = useState<SelectionInfo | null>(null);
+  const { seed } = index;
+  useEffect(() => seed(selection?.layers ?? []), [seed, selection]);
   const [states, setStates] = useState<Map<string, RowState>>(() => new Map());
   const [locale, setLocale] = useState<Locale>('id');
   const [pending, setPending] = useState<Pending | undefined>();

@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { beforeEach, it, expect, vi } from 'vitest';
-import { readPrivate, writePrivate, writeStorage } from '../src/main/private-storage';
+import { LISTING_KEY, readPrivate, writePrivate, writeStorage } from '../src/main/private-storage';
 let stored: Map<string, unknown>;
 beforeEach(() => {
   stored = new Map();
@@ -47,6 +47,17 @@ it('evicts disposable caches before durable operations and never evicts drafts',
   });
   expect(stored.has('registry:run')).toBe(true);
   expect(stored.has('registry:catalog:test') && stored.has('string-index:v1')).toBe(false);
+});
+it('never evicts the catalog to cache the library listing, but evicts the listing for it', async () => {
+  await writeStorage('registry:catalog:test', new Uint8Array(3_000_000), false);
+  await writeStorage(LISTING_KEY, new Uint8Array(2_000_000), false, false);
+  expect(stored.has('registry:catalog:test')).toBe(true);
+  expect(stored.has(LISTING_KEY)).toBe(false);
+  await writeStorage(LISTING_KEY, new Uint8Array(1_000_000), false, false);
+  expect(stored.has(LISTING_KEY)).toBe(true);
+  await writeStorage('registry:catalog:test', new Uint8Array(4_000_000), false);
+  expect(stored.has('registry:catalog:test')).toBe(true);
+  expect(stored.has(LISTING_KEY)).toBe(false);
 });
 it('refuses an oversized durable write and leaves existing drafts recoverable', async () => {
   await writePrivate('registry:drafts:document', { requestId: 'saved-request' });

@@ -37,6 +37,9 @@ export const LayerInfoSchema = z.object({
   contextNames: z.array(z.string()).optional(),
   boundKey: z.string().nullable(),
   boundName: z.string().nullable(),
+  /** Collection and values of the bound variable, so the row shows them before the library listing arrives. */
+  boundCollection: z.string().nullable().optional(),
+  boundValues: VariableValuesSchema.nullable().optional(),
   stored: StoredLayerStateSchema.nullable(),
   /** Why the layer looks like non-copy, when it does. */
   autoSkipReason: z.string().nullable(),

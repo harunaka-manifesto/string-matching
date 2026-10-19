@@ -1,6 +1,7 @@
 import type {
   Catalog,
   CopyRecord,
+  LayerInfo,
   LibraryListingItem,
   VariableValues,
 } from '@string-binder/contracts';
@@ -16,7 +17,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ORDER_INDEX_GZIP_BASE64 } from '../generated/order-index';
 import type { UiBridge } from './bridge';
 import { catalogStore } from './catalog-store';
-import { base64ToBytes, gunzipText } from './codec';
+import { base64ToBytes, gunzipText, gzipText } from './codec';
 import { mergeIndex, registryCopyId } from './index-merge';
 
 export type StringEntry = SearchableVariable & {
@@ -253,6 +254,8 @@ export type StringIndex = {
    * The library is never imported whole; only strings someone looks at are.
    */
   resolve: (keys: Iterable<string>) => void;
+  /** Adds the strings bound in the frame, read with it, so their rows need not wait for the listing. */
+  seed: (layers: readonly LayerInfo[]) => void;
 };
 
 export function useStringIndex(bridge: UiBridge): StringIndex {
@@ -266,6 +269,10 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
   const [listingVersion, setListingVersion] = useState(0);
   // Keys asked for once per listing, and those waiting for the next batched request.
   const requested = useRef(new Set<string>());
+  // Bound strings read with the frame; kept even when a listing leaves them out (e.g. a library turned off).
+  const seeded = useRef(new Set<string>());
+  // Set once Figma's own listing arrives; the cached one from last session never replaces it.
+  const fresh = useRef(false);
   const pending = useRef<string[]>([]);
 
   const bump = () => setVersion((value) => value + 1);
@@ -297,7 +304,33 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
   useEffect(() => {
     const stop = bridge.subscribe((message) => {
       switch (message.type) {
+        case 'index:cached': {
+          const bytes = message.bytes;
+          if (!bytes || fresh.current) return;
+          gunzipText(bytes)
+            .then((text) => {
+              if (fresh.current) return;
+              const listing = JSON.parse(text) as LibraryListingItem[];
+              if (!listing.length) return;
+              for (const item of listing)
+                if (!figmaEntries.current.has(item.key))
+                  figmaEntries.current.set(item.key, entry(item));
+              bump();
+              setListingVersion((value) => value + 1);
+              // Search works from last session's listing while Figma lists the libraries again.
+              setStatus((current) =>
+                current.phase === 'starting' || current.phase === 'listing'
+                  ? { phase: 'ready' }
+                  : current,
+              );
+            })
+            .catch(() => {
+              /* A broken cache just means waiting for Figma's listing. */
+            });
+          return;
+        }
         case 'index:listing': {
+          fresh.current = true;
           const values = new Map(message.values.map((value) => [value.key, value]));
           const next = new Map<string, StringEntry>();
           for (const item of message.listing) {
@@ -305,11 +338,21 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
             const loaded = values.get(item.key) ?? (known?.loaded ? known : undefined);
             next.set(item.key, entry(item, loaded));
           }
+          for (const key of seeded.current) {
+            const known = figmaEntries.current.get(key);
+            if (known && !next.has(key)) next.set(key, known);
+          }
           figmaEntries.current = next;
           requested.current.clear();
           bump();
           setListingVersion((value) => value + 1);
           setStatus(message.listing.length === 0 ? { phase: 'empty' } : { phase: 'ready' });
+          // Library strings only: local ones are read fresh on every open.
+          const library = message.listing.filter((item) => !item.local);
+          if (library.length)
+            void gzipText(JSON.stringify(library))
+              .then((bytes) => bridge.send({ type: 'index:save', bytes }))
+              .catch(() => {});
           return;
         }
         case 'index:failed':
@@ -396,6 +439,28 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
     [bridge],
   );
 
+  const seed = useCallback((layers: readonly LayerInfo[]) => {
+    let changed = false;
+    let added = false;
+    for (const layer of layers) {
+      if (!layer.boundKey || !layer.boundValues) continue;
+      const known = figmaEntries.current.get(layer.boundKey);
+      if (known?.loaded) continue;
+      const item = known ?? {
+        key: layer.boundKey,
+        name: layer.boundName ?? layer.boundKey,
+        collection: layer.boundCollection ?? '',
+        order: Number.MAX_SAFE_INTEGER,
+      };
+      figmaEntries.current.set(layer.boundKey, entry(item, layer.boundValues));
+      seeded.current.add(layer.boundKey);
+      changed = true;
+      added ||= !known;
+    }
+    if (changed) bump();
+    if (added) setListingVersion((value) => value + 1);
+  }, []);
+
   const listed = useMemo(() => latest.current, [listingVersion, tabs]);
   const collections = useMemo(
     () => [...new Set(merged.list.map((item) => item.collection))],
@@ -448,6 +513,7 @@ export function useStringIndex(bridge: UiBridge): StringIndex {
     version,
     refresh,
     resolve,
+    seed,
   };
 }
 

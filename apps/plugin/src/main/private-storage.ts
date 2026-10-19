@@ -2,7 +2,10 @@ import { gzipSync, gunzipSync, strToU8, strFromU8 } from 'fflate';
 
 // Figma gives the entire plugin 5MB. Drafts/manifests take priority over disposable catalogs.
 const BUDGET = 4_800_000;
-const disposable = (key: string) => key.startsWith('registry:catalog') || key === 'string-index:v1';
+/** The library listing Figma can always list again; it never displaces the catalog. */
+export const LISTING_KEY = 'index:library:v1';
+const disposable = (key: string) =>
+  key.startsWith('registry:catalog') || key === 'string-index:v1' || key === LISTING_KEY;
 const size = (key: string, value: unknown) =>
   strToU8(key).byteLength +
   (value instanceof Uint8Array
@@ -25,7 +28,16 @@ export async function readPrivate<T>(key: string): Promise<T | undefined> {
     ? (JSON.parse(strFromU8(gunzipSync(stored))) as T)
     : (stored as T | undefined);
 }
-export function writeStorage(key: string, value: unknown, durable = true): Promise<void> {
+/**
+ * Stores `value`, evicting disposable caches to make room unless `evict` is off. A
+ * value that does not fit is dropped when not `durable`, else the write fails.
+ */
+export function writeStorage(
+  key: string,
+  value: unknown,
+  durable = true,
+  evict = true,
+): Promise<void> {
   const task = async () => {
     const keys = await figma.clientStorage.keysAsync();
     const present = new Set(keys);
@@ -39,7 +51,7 @@ export function writeStorage(key: string, value: unknown, durable = true): Promi
         })),
     );
     let used = entries.reduce((n, e) => n + e.bytes, 0) + size(key, value);
-    for (const e of entries.filter((e) => disposable(e.key)))
+    for (const e of entries.filter((e) => evict && disposable(e.key)))
       if (used > BUDGET) {
         await figma.clientStorage.deleteAsync(e.key);
         knownSizes.delete(e.key);

@@ -6,6 +6,7 @@ import {
   type VisibilityNode,
 } from '@string-binder/domain';
 import { boundVariableId, readLayerState, variableById } from './layer-state';
+import { readVariableValues } from './library-index';
 import { pageOf, readPageScope } from './page-scope';
 
 const SUPPORTED_ROOTS = new Set<NodeType>(['FRAME', 'COMPONENT', 'INSTANCE']);
@@ -73,9 +74,31 @@ function insideInstance(node: BaseNode, root: BaseNode): boolean {
   return false;
 }
 
-async function layerInfo(node: TextNode, root: SceneNode): Promise<LayerInfo> {
+/** Collection names by ID, for one read of the frame. */
+type Names = Map<string, Promise<string | null>>;
+
+function collectionName(variable: Variable, names: Names): Promise<string | null> {
+  let name = names.get(variable.variableCollectionId);
+  if (!name) {
+    name = figma.variables
+      .getVariableCollectionByIdAsync(variable.variableCollectionId)
+      .then((collection) => collection?.name ?? null)
+      .catch(() => null);
+    names.set(variable.variableCollectionId, name);
+  }
+  return name;
+}
+
+async function layerInfo(node: TextNode, root: SceneNode, names: Names): Promise<LayerInfo> {
   const boundId = boundVariableId(node);
   const variable = boundId ? await variableById(boundId) : null;
+  // The bound variable is already in this file: reading it needs no library round trip.
+  const [boundCollection, boundValues] = variable
+    ? await Promise.all([
+        collectionName(variable, names),
+        readVariableValues(variable).catch(() => null),
+      ])
+    : [null, null];
   return {
     id: node.id,
     name: node.name,
@@ -84,6 +107,8 @@ async function layerInfo(node: TextNode, root: SceneNode): Promise<LayerInfo> {
     contextNames: ancestorNames(node, root),
     boundKey: variable?.key ?? null,
     boundName: variable?.name ?? null,
+    boundCollection,
+    boundValues,
     stored: readLayerState(node),
     autoSkipReason: nonCopyReason({
       characters: node.characters,
@@ -94,7 +119,10 @@ async function layerInfo(node: TextNode, root: SceneNode): Promise<LayerInfo> {
 }
 
 export async function selectionInfo(root: SceneNode): Promise<SelectionInfo> {
-  const layers = await Promise.all(visibleTextLayers(root).map((node) => layerInfo(node, root)));
+  const names: Names = new Map();
+  const layers = await Promise.all(
+    visibleTextLayers(root).map((node) => layerInfo(node, root, names)),
+  );
   const page = pageOf(root);
   return {
     frameId: root.id,

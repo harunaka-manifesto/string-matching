@@ -41,6 +41,8 @@ export const UiToPluginMessageSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('index:resolve'), keys: z.array(z.string()).max(100) }),
   /** Gzipped catalog JSON for private storage; the UI compresses it natively. */
   z.object({ type: z.literal('catalog:save'), bytes: BytesSchema }),
+  /** Gzipped library listing to show on the next open while Figma lists the libraries again. */
+  z.object({ type: z.literal('index:save'), bytes: BytesSchema }),
   /** The UI's answer to `catalog:query`: only the records the controller asked for. */
   z.object({
     type: z.literal('catalog:answer'),
@@ -69,6 +71,8 @@ export type UiToPluginMessage = z.infer<typeof UiToPluginMessageSchema>;
 export const PluginToUiMessageSchema = z.discriminatedUnion('type', [
   /** Stored catalog (gzipped JSON) for the UI to decode; null on first run. */
   z.object({ type: z.literal('catalog:cached'), bytes: BytesSchema.nullable() }),
+  /** The library listing saved last session (`index:save`), if any. */
+  z.object({ type: z.literal('index:cached'), bytes: BytesSchema.nullable() }),
   /**
    * The controller needs a few saved records. The UI holds the catalog and answers with
    * `catalog:answer`: records for `copyIds` (following merges), their mappings and products.

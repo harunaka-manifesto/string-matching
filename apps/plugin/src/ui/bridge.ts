@@ -16,6 +16,7 @@ export type UiBridge = {
  */
 const TRUSTED = new Set<PluginToUiMessage['type']>([
   'catalog:cached',
+  'index:cached',
   'index:listing',
   'index:values',
   'index:local',

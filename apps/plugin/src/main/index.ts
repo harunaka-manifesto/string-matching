@@ -6,7 +6,7 @@ import {
 } from '@string-binder/contracts';
 import { applyDecisions } from './apply';
 import { workflow } from './workflow';
-import { writeStorage } from './private-storage';
+import { LISTING_KEY, writeStorage } from './private-storage';
 import { answerCatalog, CATALOG_KEY, WorkflowError } from './registry-api';
 import { post } from './channel';
 import { boundVariableId, forgetVariableCache, variableById } from './layer-state';
@@ -228,18 +228,26 @@ async function handle(message: UiToPluginMessage): Promise<void> {
       }
       return;
     }
-    case 'ui:ready':
+    case 'ui:ready': {
+      const cached = (key: string) =>
+        figma.clientStorage.getAsync(key).then(
+          (bytes: Uint8Array | undefined) => bytes ?? null,
+          () => null,
+        );
       // Saved caches go to the UI as stored bytes; it decodes them off Figma's main thread.
-      post({
-        type: 'catalog:cached',
-        bytes:
-          ((await figma.clientStorage.getAsync(CATALOG_KEY)) as Uint8Array | undefined) ?? null,
-      });
+      // They load while the frame is read, so neither waits for the other.
+      const caches = Promise.all([
+        cached(CATALOG_KEY).then((bytes) => post({ type: 'catalog:cached', bytes })),
+        // Shown until Figma lists the libraries again, which can take a while.
+        cached(LISTING_KEY).then((bytes) => post({ type: 'index:cached', bytes })),
+      ]);
       await onSelectionChange(true);
+      await caches;
       await sendUsage();
       // Frees the megabytes the old upfront import cached, so the catalog cache fits.
       await figma.clientStorage.deleteAsync(LEGACY_CACHE_KEY).catch(() => {});
       return;
+    }
     case 'selection:refresh':
       await onSelectionChange(true);
       return;
@@ -260,6 +268,9 @@ async function handle(message: UiToPluginMessage): Promise<void> {
       return;
     case 'catalog:save':
       await writeStorage(CATALOG_KEY, message.bytes, false);
+      return;
+    case 'index:save':
+      await writeStorage(LISTING_KEY, message.bytes, false, false);
       return;
     case 'catalog:answer':
       answerCatalog(message);
