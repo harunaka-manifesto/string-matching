@@ -130,6 +130,10 @@ export function figmaFixture() {
       importVariableByKeyAsync: async (key: string) => vars.find((v) => v.key === key),
     },
     getNodeByIdAsync: async (id: string) => nodes.find((n) => n.id === id) ?? null,
+    listAvailableFontsAsync: async () =>
+      ['Inter', 'Rupa Sans', 'GoPay Display']
+        .filter((family) => !missingFonts.has(family))
+        .flatMap((family) => ['Regular', 'Bold'].map((style) => ({ fontName: { family, style } }))),
     loadFontAsync: async (font: any) => {
       if (missingFonts.has(font.family)) throw new Error(`${font.family} is not available`);
     },

@@ -37,3 +37,13 @@ it('replaces a missing font with Rupa Sans Regular at the same size', async () =
   expect(n.fontName).toEqual({ family: 'Rupa Sans', style: 'Regular' });
   expect(n.fontSize).toBe(16);
 });
+
+it('replaces a font Figma lists as missing even when loading it does not fail', async () => {
+  const n = missingLayer();
+  n.fontName = { family: 'Maison Neue', style: 'Book' };
+  // Figma can resolve `loadFontAsync` for a font the layer still reports as missing.
+  fixture.figma.loadFontAsync = async () => {};
+  await loadTextFonts(n);
+  expect(n.fontName).toEqual({ family: 'Rupa Sans', style: 'Regular' });
+  expect(n.fontSize).toBe(16);
+});
