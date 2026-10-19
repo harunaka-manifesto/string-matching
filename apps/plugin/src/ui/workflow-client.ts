@@ -17,6 +17,7 @@ const SLOW: readonly WorkflowAction[] = [
   'refresh',
   'preflight',
   'deliver',
+  'writer:commit',
   'library:scan',
   'library:apply',
   'library:publish',

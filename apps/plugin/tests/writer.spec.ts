@@ -71,6 +71,8 @@ test('writes new copy inline, survives a reload, and saves and binds in one go',
   await draftTitle(page, '  New title\n{first_name} 🚀 ', '  Judul baru\n{first_name} 🚀 ');
   await page.waitForTimeout(400);
   await page.reload();
+  // The draft loads after the rows; a click before that opens search on the still-empty row.
+  await expect(row(page, '1:1')).toHaveClass(/row--create/);
   // Drafted rows open their editor instead of search.
   await row(page, '1:1').locator('.row__main').click();
   await expect(row(page, '1:1').getByPlaceholder('English copy')).toHaveValue(
@@ -165,9 +167,14 @@ test('picking existing strings applies directly without a review step', async ({
 });
 
 test('keyboard: S skips, F flags, N starts new copy', async ({ page }) => {
-  // Arrow keys move the active row without opening search.
+  // Arrow keys move the active row without opening search. Keys pressed before the rows have
+  // rendered are ignored, so repeat ArrowUp (it stops at the first row) until one lands.
+  await expect(async () => {
+    await page.keyboard.press('ArrowUp');
+    await expect(row(page, '1:1')).toHaveClass(/is-active/, { timeout: 200 });
+  }).toPass();
   await page.keyboard.press('ArrowDown');
-  await page.keyboard.press('ArrowDown');
+  await expect(row(page, '1:2')).toHaveClass(/is-active/);
   await page.keyboard.press('s');
   await expect(row(page, '1:2')).toHaveClass(/row--skip/);
   await page.keyboard.press('s');
@@ -203,7 +210,9 @@ test('pulls saved copy into the library and verifies publication', async ({ page
     page.getByRole('heading', { name: 'Library draft updated · needs publish' }),
   ).toBeVisible();
   await page.getByRole('button', { name: 'Check changes' }).click();
-  await expect(page.getByRole('group', { name: 'Show' }).getByText('Needs publish · 2')).toBeVisible();
+  await expect(
+    page.getByRole('group', { name: 'Show' }).getByText('Needs publish · 2'),
+  ).toBeVisible();
   await page.getByRole('button', { name: 'Verify publication' }).click();
   await expect(page.getByRole('heading', { name: 'Publication verified' })).toBeVisible();
   await page.getByRole('button', { name: 'Back to text layers' }).click();

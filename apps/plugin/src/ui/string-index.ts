@@ -86,10 +86,7 @@ export function readablePath(name: string): string {
 }
 
 export type IndexStatus =
-  | { phase: 'starting' }
-  | { phase: 'listing' }
-  | { phase: 'ready' }
-  | { phase: 'empty' };
+  { phase: 'starting' } | { phase: 'listing' } | { phase: 'ready' } | { phase: 'empty' };
 
 /** Most keys one `index:resolve` may carry. */
 const RESOLVE_BATCH = 100;
