@@ -56,6 +56,7 @@ beforeAll(async () => {
   await db.exec(await readFile('supabase/migrations/202610060001_registry.sql', 'utf8'));
   await db.exec(await readFile('supabase/migrations/202610060002_operations.sql', 'utf8'));
   await db.exec(await readFile('supabase/migrations/202610080001_library_fixes.sql', 'utf8'));
+  await db.exec(await readFile('supabase/migrations/202610120001_catalog_cache.sql', 'utf8'));
   await call('copy_registry_bootstrap', {
     history: [{ copyId: 'legacy', event: 'ID_ASSIGNED' }],
     records: [],
@@ -78,6 +79,8 @@ describe('registry transactions and access', () => {
     try {
       await expect(db.query('select * from copy_private.copies')).rejects.toThrow();
       await expect(db.query('select public.copy_registry_catalog()')).rejects.toThrow();
+      await expect(db.query('select public.copy_registry_catalog_cached()')).rejects.toThrow();
+      await expect(db.query('select * from copy_private.catalog_cache')).rejects.toThrow();
     } finally {
       await db.exec('reset role');
     }
@@ -341,6 +344,64 @@ describe('registry transactions and access', () => {
       await call('copy_registry_rate', { credential: key('busy'), allowed: 1000 });
     expect((await hit('busy')).status).toBe(429);
     expect((await hit('quiet')).status).toBe(200);
+  });
+  it('does not count a throttled device against the whole token', async () => {
+    const pair = (device: string) =>
+      call('copy_registry_rate_pair', {
+        device,
+        device_allowed: 1,
+        token: 'pair-token',
+        token_allowed: 2,
+      });
+    expect(await pair('pair-a')).toBe(true);
+    expect(await pair('pair-a')).toBe(false);
+    expect(await pair('pair-a')).toBe(false);
+    expect(await pair('pair-b')).toBe(true);
+    expect(await pair('pair-c')).toBe(false);
+  });
+  it('serves the catalog from one cached snapshot that every write replaces', async () => {
+    const uncached = async () =>
+      (await db.query<{ value: any }>('select public.copy_registry_catalog() as value')).rows[0]!
+        .value;
+    const cachedSeq = async () =>
+      (await db.query<{ seq: string }>('select seq from copy_private.catalog_cache')).rows[0]?.seq;
+    const first = (await request('catalog')).body;
+    expect(first).toEqual(await uncached());
+    expect(Number(await cachedSeq())).toBe(first.seq);
+    expect((await request('catalog')).body).toEqual(first);
+
+    const saved = await request('submit', batch([create()]));
+    expect(await cachedSeq()).toBeUndefined();
+    const next = (await request('catalog')).body;
+    expect(next.seq).toBeGreaterThan(first.seq);
+    expect(next.records.map((r: any) => r.copyId)).toContain(saved.body.records[0].copyId);
+    expect(next).toEqual(await uncached());
+
+    // A copy built before a concurrent write carries the older seq and is rebuilt.
+    await db.query(`update copy_private.catalog_cache set seq = 0, body = '{}'`);
+    expect((await request('catalog')).body).toEqual(next);
+  });
+  it('streams the catalog body through untouched when the runtime provides it', async () => {
+    const names: string[] = [];
+    const handler = registryHandler({
+      rpc: async (name) => {
+        names.push(name);
+        return true;
+      },
+      rpcBody: async (name) => {
+        names.push(name);
+        return '{"seq":7,"records":[],"products":[],"mappings":[]}';
+      },
+      tokens: [{ hash: sha256('writer-test'), role: 'writer' }],
+    });
+    const response = await handler(
+      new Request('https://example.test/catalog', { headers: { 'x-copy-token': 'writer-test' } }),
+    );
+    expect(response.status).toBe(200);
+    expect(response.headers.get('Content-Type')).toBe('application/json');
+    expect(response.headers.get('Access-Control-Allow-Origin')).toBe('*');
+    expect(await response.text()).toBe('{"seq":7,"records":[],"products":[],"mappings":[]}');
+    expect(names).toEqual(['copy_registry_rate_pair', 'copy_registry_catalog_cached']);
   });
   it('returns complete bounded delta pages and enforces rate counters', async () => {
     const many = batch(Array.from({ length: 510 }, () => create()));
@@ -794,7 +855,7 @@ it('reports outages as retryable so clients never discard a pending save', async
   for (const failure of ['getaddrinfo ENOTFOUND db', 'Invalid ID in connection string']) {
     const handler = registryHandler({
       rpc: async (name) => {
-        if (name === 'copy_registry_rate') return true;
+        if (name === 'copy_registry_rate_pair') return true;
         throw new Error(failure);
       },
       tokens: [{ hash: sha256('writer-test'), role: 'writer' }],

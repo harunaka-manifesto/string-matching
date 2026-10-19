@@ -22,27 +22,30 @@ const tokens = [
 ];
 const secrets = JSON.parse(Deno.env.get('SUPABASE_SECRET_KEYS') ?? '{}');
 const key = secrets.default ?? Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+async function call(name: string, args: Record<string, unknown>): Promise<Response> {
+  const response = await fetch(`${Deno.env.get('SUPABASE_URL')}/rest/v1/rpc/${name}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      apikey: key,
+      ...(key?.startsWith('eyJ') ? { Authorization: `Bearer ${key}` } : {}),
+    },
+    body: JSON.stringify(args),
+  });
+  if (!response.ok) {
+    // PostgREST reports the SQLSTATE; definite failures must not look like outages.
+    const body = await response.json().catch(() => null);
+    if (body?.code) throw new DatabaseError(String(body.code), String(body.message ?? ''));
+    throw new Error('Database operation failed');
+  }
+  return response;
+}
 Deno.serve(
   registryHandler({
     tokens,
     onResult: (event) => console.info(JSON.stringify(event)),
-    rpc: async (name, args = {}) => {
-      const response = await fetch(`${Deno.env.get('SUPABASE_URL')}/rest/v1/rpc/${name}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: key,
-          ...(key?.startsWith('eyJ') ? { Authorization: `Bearer ${key}` } : {}),
-        },
-        body: JSON.stringify(args),
-      });
-      if (!response.ok) {
-        // PostgREST reports the SQLSTATE; definite failures must not look like outages.
-        const body = await response.json().catch(() => null);
-        if (body?.code) throw new DatabaseError(String(body.code), String(body.message ?? ''));
-        throw new Error('Database operation failed');
-      }
-      return response.json();
-    },
+    rpc: async (name, args = {}) => (await call(name, args)).json(),
+    // Streamed through unparsed: the catalog is too large to decode and re-encode per request.
+    rpcBody: async (name, args = {}) => (await call(name, args)).body!,
   }),
 );

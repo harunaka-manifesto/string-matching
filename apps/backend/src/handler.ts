@@ -14,6 +14,8 @@ import {
 } from '@string-binder/domain';
 export type BackendDependencies = {
   rpc: (name: string, args?: Record<string, unknown>) => Promise<unknown>;
+  /** The RPC's JSON response unparsed, for the 10 MB catalog. Without it the catalog goes through `rpc`. */
+  rpcBody?: (name: string, args?: Record<string, unknown>) => Promise<BodyInit>;
   tokens: { hash: string; role: 'writer' | 'publisher' }[];
   onResult?: (event: {
     operation: string;
@@ -65,15 +67,13 @@ export function registryHandler(deps: BackendDependencies) {
     const started = Date.now();
     let requestId: string | undefined;
     const operation = request.url.split('?')[0]!.split('/').at(-1) ?? '';
+    const log = (status: number, error?: string) =>
+      deps.onResult?.({ operation, status, elapsedMs: Date.now() - started, requestId, error });
     const respond = (value: unknown, status = 200) => {
-      deps.onResult?.({
-        operation,
+      log(
         status,
-        elapsedMs: Date.now() - started,
-        requestId,
-        error:
-          value && typeof value === 'object' && 'error' in value ? String(value.error) : undefined,
-      });
+        value && typeof value === 'object' && 'error' in value ? String(value.error) : undefined,
+      );
       return Response.json(value, {
         status,
         headers: { ...cors, ...(status === 429 ? { 'Retry-After': '60' } : {}) },
@@ -92,12 +92,13 @@ export function registryHandler(deps: BackendDependencies) {
       );
     try {
       const device = (request.headers.get('x-copy-device') ?? '').slice(0, 128);
-      const limited =
-        !(await deps.rpc('copy_registry_rate', {
-          credential: sha256(`${hash}:${device}`),
-          allowed: DEVICE_LIMIT,
-        })) || !(await deps.rpc('copy_registry_rate', { credential: hash, allowed: TOKEN_LIMIT }));
-      if (limited)
+      const allowed = await deps.rpc('copy_registry_rate_pair', {
+        device: sha256(`${hash}:${device}`),
+        device_allowed: DEVICE_LIMIT,
+        token: hash,
+        token_allowed: TOKEN_LIMIT,
+      });
+      if (!allowed)
         return respond({ error: 'RATE_LIMIT', message: 'Too many requests; retry shortly' }, 429);
       const url = new URL(request.url);
       const action = url.pathname.split('/').at(-1);
@@ -124,7 +125,15 @@ export function registryHandler(deps: BackendDependencies) {
       let result: unknown;
       switch (action) {
         case 'catalog':
-          result = await deps.rpc('copy_registry_catalog');
+          // About 10 MB: pass the database's JSON through rather than parse and re-encode it.
+          if (deps.rpcBody) {
+            const body = await deps.rpcBody('copy_registry_catalog_cached');
+            log(200);
+            return new Response(body, {
+              headers: { ...cors, 'Content-Type': 'application/json' },
+            });
+          }
+          result = await deps.rpc('copy_registry_catalog_cached');
           break;
         case 'changes': {
           const after = Number(url.searchParams.get('after') ?? 0);

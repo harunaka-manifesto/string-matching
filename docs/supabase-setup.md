@@ -229,7 +229,12 @@ Test a real restore once during the pilot: create a second, empty Supabase proje
 
 **Rotating a token.** Generate a new token and hash (step 2). Put the old and new hashes together, comma-separated, in `.env.edge.local` and run `supabase secrets set --env-file .env.edge.local`. Distribute the rebuilt plugin (team token) or have the maintainer use **Change setup** (publisher token). Then remove the old hash and set the secrets again. A revoked token keeps local drafts but cannot read or write.
 
-**Changing the function.** `pnpm build:backend && supabase functions deploy copy-registry`.
+**Changing the function.** Push migrations first, then deploy: the function calls database functions that only the newest migrations create, and answers every request with `503` until they exist.
+
+```sh
+supabase db push
+pnpm build:backend && supabase functions deploy copy-registry
+```
 
 **Local development.** `pnpm dev:ui` runs the whole UI against a mock registry with no credentials. To run a development plugin against `supabase functions serve`, build with `COPY_REGISTRY_URL=http://localhost:54321/functions/v1/copy-registry` and `COPY_ALLOW_LOCAL_REGISTRY=1`. Never distribute that build; `pnpm sandbox:check` rejects it in CI.
 
